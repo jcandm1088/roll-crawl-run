@@ -1,0 +1,12 @@
+{
+  "name": "Growing Together (Concept 5, approved)",
+  "viewBox": 100,
+  "cornerRadius": 22,
+  "brandColors": { "background": "#EBDCCB", "primary": "#7A4F33", "accent": "#C08A5E" },
+  "shapes": [
+    { "type": "circle", "cx": 58, "cy": 30, "r": 9.5, "fill": "primary" },
+    { "type": "path", "d": "M38 84 C 38 58 46 44 58 44 C 70 44 78 58 78 84 Z", "fill": "primary" },
+    { "type": "circle", "cx": 35, "cy": 52, "r": 7.5, "fill": "accent", "stroke": "background", "strokeWidth": 3 },
+    { "type": "path", "d": "M21 84 C 21 70 27 63 35 63 C 43 63 49 70 49 84 Z", "fill": "accent", "stroke": "background", "strokeWidth": 3, "strokeLinejoin": "round" }
+  ]
+}

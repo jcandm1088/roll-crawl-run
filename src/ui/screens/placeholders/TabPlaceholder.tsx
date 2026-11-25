@@ -1,4 +1,5 @@
 import { PlaceholderCard } from '../../components/Placeholder';
+import { PageHeader } from '../../components/PageHeader';
 import type { IconName } from '../../components/Icon';
 
 /**
@@ -10,8 +11,6 @@ interface TabInfo {
   title: string;
   intro: string;
   checkpoint: number;
-  /** Use Inter for the heading where Fraunces letterforms were reported as undesirable. */
-  uiHeading?: boolean;
   items: Array<[IconName, string, string]>;
 }
 
@@ -42,7 +41,6 @@ const TABS: Record<'growth' | 'calendar' | 'journal' | 'resources', TabInfo> = {
     title: 'Journal',
     intro: 'A private space for your thoughts, and notes to share with your child’s care team.',
     checkpoint: 4,
-    uiHeading: true,
     items: [
       ['heart', 'Personal Reflections', 'Personal · excluded from sharing by default.'],
       ['fileText', 'Care Notes', 'Observations and questions for appointments.'],
@@ -63,10 +61,7 @@ export function TabPlaceholder({ tab }: { tab: keyof typeof TABS }) {
   const info = TABS[tab];
   return (
     <div>
-      <div class="stack" style={{ margin: 'var(--space-2) var(--space-1) var(--space-5)' }}>
-        <h1 class={info.uiHeading ? 'title-1 heading-ui' : 'title-1'}>{info.title}</h1>
-        <p class="muted">{info.intro}</p>
-      </div>
+      <PageHeader title={info.title} intro={info.intro} />
       <div class="banner neutral" role="note" style={{ marginBottom: 'var(--space-4)' }}>
         <span>
           <strong>Preview only.</strong> This tab is being built in Checkpoint {info.checkpoint}.

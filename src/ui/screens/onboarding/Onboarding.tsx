@@ -10,18 +10,22 @@ import { ThemePicker } from '../../components/ThemePicker';
 import { EMPTY_CORRECTED, draftToInput, saveChild, type ChildDraft } from '../profiles/saveChild';
 import { navigate } from '../../../router';
 import { newId } from '../../../data/envelope';
+import { applyTheme } from '../../../state/theme';
+import { DEFAULT_THEME, type ThemeId } from '../../theme/themes';
 
 type Step = 'welcome' | 'dob' | 'name' | 'corrected' | 'theme' | 'privacy';
 
 /**
  * First-run onboarding. `mode="firstRun"` shows every step; `mode="addChild"`
- * (used when no profiles remain) skips the welcome-only theme and privacy steps.
+ * (used when no profiles remain) skips the welcome and privacy steps but keeps
+ * the theme step, because every child has their own theme.
  */
 export function Onboarding({ mode = 'firstRun' }: { mode?: 'firstRun' | 'addChild' }) {
   const app = useApp();
-  const steps: Step[] = mode === 'firstRun' ? ['welcome', 'dob', 'name', 'corrected', 'theme', 'privacy'] : ['dob', 'name', 'corrected'];
+  const steps: Step[] = mode === 'firstRun' ? ['welcome', 'dob', 'name', 'corrected', 'theme', 'privacy'] : ['dob', 'name', 'corrected', 'theme'];
   const [index, setIndex] = useState(0);
   const [draft, setDraft] = useState<ChildDraft>({ name: '', dob: '', about: '', corrected: EMPTY_CORRECTED, photo: { kind: 'unchanged' } });
+  const [theme, setTheme] = useState<ThemeId>(DEFAULT_THEME); // this child's theme; Earth unless chosen
   const [childId] = useState(() => newId()); // one id per form, so a retried save never duplicates
   const [showErrors, setShowErrors] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -59,7 +63,7 @@ export function Onboarding({ mode = 'firstRun' }: { mode?: 'firstRun' | 'addChil
     }
     setSaving(true);
     try {
-      const child = await saveChild(app.db, app.meta.deviceId, childId, r.input, draft.photo);
+      const child = await saveChild(app.db, app.meta.deviceId, childId, { ...r.input, theme }, draft.photo);
       if (mode === 'firstRun') await requestPersistence(); // after an explicit user action; result shown in Settings → Storage
       await app.setSettings({ activeChildId: child.id });
       await app.setMeta({ onboardingComplete: true });
@@ -152,9 +156,15 @@ export function Onboarding({ mode = 'firstRun' }: { mode?: 'firstRun' | 'addChil
           <div class="stack-lg">
             <div class="stack">
               <h1 class="title-1">Choose your colors</h1>
-              <p class="muted">Pick the palette that feels right. You can change it anytime in Settings.</p>
+              <p class="muted">{draft.name.trim() ? `Pick a palette for ${draft.name.trim()}.` : 'Pick a palette for this child.'} Each child can have their own. You can change it anytime in Settings.</p>
             </div>
-            <ThemePicker value={app.settings.theme} onChange={(theme) => app.setSettings({ theme })} />
+            <ThemePicker
+              value={theme}
+              onChange={(t) => {
+                setTheme(t);
+                applyTheme(t); // live preview
+              }}
+            />
           </div>
         )}
 
@@ -216,7 +226,7 @@ export function Onboarding({ mode = 'firstRun' }: { mode?: 'firstRun' | 'addChil
     setDraft(cleared);
     setSaving(true);
     try {
-      const child = await saveChild(app.db, app.meta.deviceId, childId, r.input, cleared.photo);
+      const child = await saveChild(app.db, app.meta.deviceId, childId, { ...r.input, theme }, cleared.photo);
       await app.setSettings({ activeChildId: child.id });
       await app.setMeta({ onboardingComplete: true });
       await app.refresh();

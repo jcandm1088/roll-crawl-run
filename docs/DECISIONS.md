@@ -46,7 +46,7 @@ Details are in `docs/reviews/CHECKPOINT_1_REVIEW.md`.
 19. **Atomic profile save:** profile and photo are written in a single transaction, using a per-form ID so retries don't create duplicates.
 20. **Two-step destructive actions,** placed in collapsed “Advanced …” sections. Profile deletion requires typing DELETE PROFILE; reset requires RESET. Cancel is the primary button. *(This supersedes the original single-step DELETE confirmation.)*
 21. **Settings accordions:** Profiles and Appearance stay expanded; Your Data, Calendar & Reminders, This Device, and About are collapsed by default.
-22. **Typography option A:** selective Inter for the specific headings named in the review. Option B is pending the owner's decision.
+22. **Typography option A:** selective Inter for the specific headings named in the review. *(Superseded by decision 31.)*
 23. **Blush revised** to the reviewer's baby-pink palette.
 24. **Deployment is manual-only,** using `workflow_dispatch` with a typed confirmation.
 25. **Route re-sync** when the hash listener attaches, to close a timing gap found by the test suite.
@@ -54,3 +54,16 @@ Details are in `docs/reviews/CHECKPOINT_1_REVIEW.md`.
 27. **The Calendar tab opens directly to the current month** (a Checkpoint 3 requirement).
 28. **Backup requirements added to Checkpoint 5:** create, restore, history, last successful backup date, reminders, and a prompt to back up before destructive actions.
 29. **Language and UX standards** recorded in the development plan (R4).
+
+## Checkpoint 1 final refinement decisions
+Details are in `docs/reviews/CHECKPOINT_1_FINAL.md`.
+
+30. **Per-child themes are stored as a device preference** (`settings.childThemes`), not on the child record. Each device can keep its own colors for a child, and themes never cause partner-merge conflicts. Profile save and delete update the theme entry in the same atomic transaction.
+31. **Typography Option B.** Inter for all functional headings, using shared tokens and a `PageHeader` component; Fraunces only for the wordmark. Top-bar titles also use Inter (a small extension of the Option B mock-up, following the request for consistent primary headings).
+32. **Logo: Concept 5, “Growing Together”**, from one JSON artwork source. Installed icons use fixed brand colors; the in-app mark is themed.
+33. **Schema v2** is a data-only migration (no store or index changes), atomic within the IndexedDB upgrade transaction. Child records are unchanged.
+34. **The theme is applied synchronously** before the newly selected child renders, so the previous child's theme is never shown with the new child.
+35. **The focus trap includes only tabbable elements** (`tabIndex >= 0`), so radio groups stay one Tab stop.
+36. **The child selector has no minimum height**; it moves up in short windows and the whole panel scrolls.
+37. **Icon cache busting:** `?v=2` on icon URLs, and public files are included in the service-worker cache version.
+38. **App version raised to 0.1.1.** No dependencies were added. `package.json` changed only in its version number.

@@ -3,8 +3,15 @@ import { useLayoutEffect, type MutableRef } from 'preact/hooks';
 const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-function focusables(root: HTMLElement): HTMLElement[] {
-  return [...root.querySelectorAll<HTMLElement>(FOCUSABLE)].filter((el) => !el.closest('[inert]') && el.getClientRects().length > 0);
+/**
+ * Elements reachable with Tab, in order. Elements with a negative tabIndex
+ * (e.g. the unselected options of a radio group, which are reached with the
+ * arrow keys) are focusable but NOT in the Tab sequence, so they are excluded.
+ */
+export function tabbables(root: HTMLElement): HTMLElement[] {
+  return [...root.querySelectorAll<HTMLElement>(FOCUSABLE)].filter(
+    (el) => el.tabIndex >= 0 && !el.closest('[inert]') && !el.closest('[hidden]') && el.getClientRects().length > 0,
+  );
 }
 
 /**
@@ -18,7 +25,7 @@ export function useFocusTrap(ref: MutableRef<HTMLElement | null>, onEscape: () =
     const root = ref.current;
     if (!root) return;
     const previous = document.activeElement as HTMLElement | null;
-    (initialFocus?.() ?? focusables(root)[0] ?? root).focus();
+    (initialFocus?.() ?? tabbables(root)[0] ?? root).focus();
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -27,7 +34,7 @@ export function useFocusTrap(ref: MutableRef<HTMLElement | null>, onEscape: () =
         return;
       }
       if (e.key !== 'Tab') return;
-      const items = focusables(root);
+      const items = tabbables(root);
       if (items.length === 0) {
         e.preventDefault();
         return;

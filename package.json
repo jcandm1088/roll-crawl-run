@@ -1,7 +1,7 @@
 {
   "name": "roll-crawl-run",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "Roll, Crawl, RUN: Tracking Growth Together — a local-first parenting and development tracking PWA.",
   "scripts": {

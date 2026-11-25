@@ -74,7 +74,15 @@ export interface LayerVisibility {
 
 export interface Settings {
   id: 'settings';
+  /**
+   * Before per-child themes: the single app-wide theme. Kept for backward
+   * compatibility (migration source) and as the fallback for a child that
+   * somehow has no entry in childThemes. Screens shown before any child
+   * exists use Earth.
+   */
   theme: ThemeId;
+  /** Per-child theme preference, keyed by child id. Device-local (not part of partner sharing). */
+  childThemes: Record<string, ThemeId>;
   activeChildId: string | null;
   layers: LayerVisibility;
   vaccineSchedule: 'cdc-acip' | 'aap' | null;

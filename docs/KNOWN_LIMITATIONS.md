@@ -1,6 +1,6 @@
 # Known Limitations
 
-Updated at the Checkpoint 1 review revision. Items marked *(planned)* are scheduled for later checkpoints.
+Updated at Checkpoint 1 final refinement. Items marked *(planned)* are scheduled for later checkpoints.
 
 ## Not built yet (placeholders)
 - Growth, milestones, progress meters, custom goals and exercises *(Checkpoint 2)*
@@ -32,6 +32,11 @@ Updated at the Checkpoint 1 review revision. Items marked *(planned)* are schedu
 - No physical-device testing has been performed.
 
 ## Checkpoint 1 review notes
-- The child-selector defect depends on browser engine behavior that the headless Chromium used here does not show. The fix is verified in Chromium, including a test that forces the same positioning condition. It has **not** been verified in Safari or on the reviewer's Mac; re-checking it there is part of the second hands-on review.
-- Typography is mixed under option A: on Settings, “Profiles” is in Inter while “Appearance” and the accordion titles are in Fraunces. This awaits the owner's choice of option A or B.
+- The child-selector fix was confirmed by the **owner in Safari on their Mac** (second hands-on review). Automated tests cover Chromium only.
 - The logo concepts are exploratory. Some details, such as the toes in concept 2 and the limbs in concept 1, lose definition at 16px.
+
+## Checkpoint 1 final refinement notes
+- **Installed-app icons on iPhone:** iOS stores the home-screen icon when the app is installed, so an existing installation may keep the old icon until it is removed and re-added. Android and desktop Chrome usually refresh icons from the updated manifest, but timing varies. Stored data is unaffected either way. This has not been verified on devices.
+- **Themes are per device:** each child's theme is saved on this device only. When backups and partner sharing arrive (Checkpoint 5), themes will follow the rules in the development plan (R5).
+- **In-app logo contrast:** in the Blush, Sky, and Sage themes, the child figure (accent color) has low contrast against the soft background. As a decorative logo it is exempt from WCAG contrast rules, and the installed icons use the higher-contrast brand colors.
+- **Per-child themes, typography, logo, and the two technical fixes are verified only in automated headless Chromium** and in screenshots. Nothing here has been tested in Safari or on a physical device beyond the owner's selector check.

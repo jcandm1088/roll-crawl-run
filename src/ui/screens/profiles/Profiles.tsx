@@ -5,6 +5,9 @@ import { ageBetween, formatAge, validateDob } from '../../../domain/age';
 import { formatLongDate, todayLocal } from '../../../domain/dates';
 import { newId } from '../../../data/envelope';
 import { Accordion } from '../../components/Accordion';
+import { ThemePicker } from '../../components/ThemePicker';
+import { DEFAULT_THEME, type ThemeId } from '../../theme/themes';
+import { themeForChild } from '../../../data/repositories/metaRepo';
 import { radioGroupKeyDown, rovingTabIndex } from '../../a11y';
 import { countBackupsContainingChild, deleteChild } from '../../../data/repositories/childrenRepo';
 import { Avatar, childDisplayName, usePhotoUrl } from '../../components/Avatar';
@@ -63,6 +66,7 @@ export function ProfileForm({ childId }: { childId: string | null }) {
       : { name: '', dob: '', about: '', corrected: EMPTY_CORRECTED, photo: { kind: 'unchanged' } },
   );
   const [color, setColor] = useState<ChildColor | undefined>(existing?.color);
+  const [theme, setTheme] = useState<ThemeId>(() => (existing ? themeForChild(app.settings, existing.id) : DEFAULT_THEME));
   const [showErrors, setShowErrors] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
@@ -93,7 +97,7 @@ export function ProfileForm({ childId }: { childId: string | null }) {
     }
     setSaving(true);
     try {
-      const child = await saveChild(app.db, app.meta.deviceId, formId, { ...r.input, color }, draft.photo);
+      const child = await saveChild(app.db, app.meta.deviceId, formId, { ...r.input, color, theme }, draft.photo);
       if (!existing) await app.setSettings({ activeChildId: child.id });
       await app.refresh();
       navigate(existing ? { name: 'profiles' } : { name: 'home' });
@@ -141,6 +145,12 @@ export function ProfileForm({ childId }: { childId: string | null }) {
           <label class="label" for="child-about">Additional information (optional)</label>
           <textarea id="child-about" class="textarea" maxLength={500} value={draft.about} onInput={(e) => setDraft({ ...draft, about: (e.target as HTMLTextAreaElement).value })} />
         </div>
+      </div>
+
+      <div class="card">
+        <h2 class="title-3" style={{ marginBottom: 'var(--space-1)' }}>Theme</h2>
+        <p class="small muted" style={{ marginBottom: 'var(--space-4)' }}>The app’s colors while {existing ? childDisplayName(existing) : 'this child'} is selected.</p>
+        <ThemePicker value={theme} onChange={setTheme} />
       </div>
 
       <div class="card">

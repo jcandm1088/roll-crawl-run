@@ -37,6 +37,13 @@ Leave results blank until a test has actually been run, and record them exactly 
 | Dialog focus trap; theme and corrected-age arrow keys | tests/e2e/review-regressions.spec.ts | | |
 | Inter headings, Growth order and wording, privacy spacing, 320px layout | tests/e2e/review-regressions.spec.ts | | |
 | Data survives an app update (two real builds) | tests/e2e/update.spec.ts | | |
+| Update from the actual previous release (ade3171) → per-child theme migration | tests/e2e/update.spec.ts | | |
+| Schema v1→v2 migration, per-child theme storage, isolation, deletion | tests/unit/perChildTheme.test.ts | | |
+| Logo assets: favicon, manifest icons, sizes, artwork matches approved concept | tests/unit/perChildTheme.test.ts, tests/e2e/final-refinement.spec.ts | | |
+| Per-child themes: switching on every tab, Appearance scope, persistence, no flash, offline, deletion | tests/e2e/final-refinement.spec.ts | | |
+| Consistent primary headings; Inter everywhere except the wordmark | tests/e2e/final-refinement.spec.ts | | |
+| Focus trap skips tabindex=-1 radios; Shift+Tab cannot escape | tests/e2e/final-refinement.spec.ts | | |
+| Selector in short and landscape windows; no fixed minimum height | tests/e2e/final-refinement.spec.ts | | |
 
 ## Manual: Checkpoint 1 (physical phone required where noted)
 | # | Check | Device / browser | Date | Result | Notes |
@@ -63,13 +70,24 @@ Leave results blank until a test has actually been run, and record them exactly 
 ## Manual: Checkpoint 1 review (second hands-on review)
 | # | Check | Device / browser | Date | Result | Notes |
 |---|---|---|---|---|---|
-| R1 | Child selector opens downward and stays fully visible on the Mac (the browser where the defect was seen) | Mac | | | |
+| R1 | Child selector opens downward and stays fully visible on the Mac (the browser where the defect was seen) | Mac · Safari | (second review) | **Pass — reported by the owner** | Owner confirmed the previously off-screen selector now works |
 | R2 | Child selector on each tab, with 2+ children | Mac / phone | | | |
 | R3 | Settings: sections collapsed by default; tapping a header opens and closes it | | | | |
 | R4 | Reset and Delete feel deliberately available but not prominent | | | | |
 | R5 | Home: name and age read naturally; the corrected tag is subtle | | | | |
-| R6 | Typography A vs B: which do you prefer? | | | | |
-| R7 | Blush now reads as baby pink | | | | |
-| R8 | Logo concepts: preferred direction, if any | | | | |
+| R6 | Typography A vs B: which do you prefer? | Mac · Safari | (second review) | **Option B chosen by the owner** | |
+| R7 | Blush now reads as baby pink | Mac · Safari | (second review) | **Approved by the owner** | |
+| R8 | Logo concepts: preferred direction, if any | — | (second review) | **Concept 5 chosen by the owner** | |
 | R9 | Privacy step spacing looks balanced | | | | |
 | R10 | Keyboard: Tab through Settings, open the accordions, use arrow keys on themes | Mac | | | |
+
+## Manual: Checkpoint 1 final (third hands-on review)
+| # | Check | Device / browser | Date | Result | Notes |
+|---|---|---|---|---|---|
+| F1 | Two children with different themes: switching changes colors, with no flash of the other theme | Mac · Safari | | | |
+| F2 | Settings → Appearance says which child it applies to; the other child is unaffected | | | | |
+| F3 | Existing data from the previous build kept its theme after updating | Mac · Safari | | | |
+| F4 | All tab headings look identical; Journal now matches | | | | |
+| F5 | New logo on the welcome screen, top bar, and browser tab | | | | |
+| F6 | Installed icon (where installed): new logo appears, or note if a reinstall is needed | Phone | | | |
+| F7 | Child selector in a very short Safari window | Mac · Safari | | | |

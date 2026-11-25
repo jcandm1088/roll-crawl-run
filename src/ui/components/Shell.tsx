@@ -122,6 +122,8 @@ function radioGroupKeyDownNoSelect(e: KeyboardEvent) {
 
 const GUTTER = 12;
 const POPOVER_MAX_WIDTH = 360;
+/** Height we try to keep available below the selector before moving it up in short windows. */
+const COMFORTABLE_HEIGHT = 220;
 
 export function computePosition(anchor: HTMLElement | null) {
   const vw = document.documentElement.clientWidth;
@@ -129,10 +131,14 @@ export function computePosition(anchor: HTMLElement | null) {
   const header = anchor?.closest('.topbar')?.getBoundingClientRect();
   const a = anchor?.getBoundingClientRect();
   // Open just below the top bar — level with the top of the child's profile card on Home.
-  const top = Math.max(GUTTER, Math.round((header?.bottom ?? a?.bottom ?? 64) + 8));
+  let top = Math.max(GUTTER, Math.round((header?.bottom ?? a?.bottom ?? 64) + 8));
+  // In unusually short windows (e.g. a phone in landscape), move up so there is usable room,
+  // but never above the window.
+  if (vh - top - GUTTER < COMFORTABLE_HEIGHT) top = Math.max(GUTTER, Math.min(top, vh - GUTTER - COMFORTABLE_HEIGHT));
   const width = Math.min(POPOVER_MAX_WIDTH, vw - GUTTER * 2);
   const left = Math.min(Math.max(GUTTER, Math.round(a?.left ?? GUTTER)), vw - width - GUTTER);
-  const maxHeight = Math.max(160, vh - top - GUTTER);
+  // Never taller than the space actually available (no fixed minimum); content scrolls inside.
+  const maxHeight = Math.max(0, vh - top - GUTTER);
   return { top, left, width, maxHeight };
 }
 
@@ -152,7 +158,7 @@ export function TopBar({ title, back }: { title?: string; back?: Route }) {
           <AppMark size={36} />
         )}
         {title ? (
-          <h1 class="title-3 grow" style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 'var(--text-xl)' }}>
+          <h1 class="topbar-title grow">
             {title}
           </h1>
         ) : (

@@ -73,6 +73,7 @@ const CONCEPTS = [
     id: '5-together',
     name: '5 · Growing together',
     note: 'A parent and child side by side; the child stands in front, sheltered.',
+    // Approved as the official logo; artwork now lives in src/ui/brand/growing-together.json (identical geometry).
     art: (P, A, B) => `
       <circle cx="58" cy="30" r="9.5" fill="${P}"/>
       <path d="M38 84 C 38 58 46 44 58 44 C 70 44 78 58 78 84 Z" fill="${P}"/>

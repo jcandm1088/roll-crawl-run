@@ -3,13 +3,16 @@ import type { AgeBasis } from '../../domain/age';
 import { CHILD_SCOPED_STORES, type RcrDB } from '../db';
 import { newEnvelope, newId, nowIso, touch } from '../envelope';
 import { runAtomic } from '../transactions';
-import { CHILD_COLORS } from '../../ui/theme/themes';
+import { CHILD_COLORS, DEFAULT_THEME, getTheme, type ThemeId } from '../../ui/theme/themes';
+import { defaultSettings } from './metaRepo';
 
 export interface ChildInput {
   name: string | null;
   dob: string;
   about: string | null;
   color?: ChildColor;
+  /** Theme for this child on this device. New profiles default to Earth; omitted on edit = unchanged. */
+  theme?: ThemeId;
   correctedAge: CorrectedAgeSettings;
   ageBasis: AgeBasis;
 }
@@ -26,7 +29,7 @@ export function isActiveChild(record: ChildRecord | undefined): record is Child 
   return !!record && record.deletedAt === null;
 }
 
-function normalize(input: ChildInput): Omit<ChildInput, 'color'> {
+function normalize(input: ChildInput): Omit<ChildInput, 'color' | 'theme'> {
   const name = input.name?.trim() || null;
   const about = input.about?.trim() || null;
   const correctedAge = input.correctedAge.enabled ? input.correctedAge : NO_CORRECTED_AGE;
@@ -37,7 +40,8 @@ function normalize(input: ChildInput): Omit<ChildInput, 'color'> {
 
 export async function listChildren(db: RcrDB): Promise<Child[]> {
   const all = await db.getAll('children');
-  return all.filter(isActiveChild).sort((a, b) => a.createdAt.localeCompare(b.createdAt));
+  // Oldest first; ties (same millisecond) broken by id so the order is always deterministic.
+  return all.filter(isActiveChild).sort((a, b) => a.createdAt.localeCompare(b.createdAt) || a.id.localeCompare(b.id));
 }
 
 export async function getChild(db: RcrDB, id: string): Promise<Child | undefined> {
@@ -60,8 +64,17 @@ export async function createChild(db: RcrDB, deviceId: string, input: ChildInput
     color: input.color ?? nextColor(existing),
     photoId: null,
   };
-  await db.put('children', child);
+  await runAtomic(db, ['children', 'settings'], async (tx) => {
+    await tx.objectStore('children').put(child);
+    await putChildTheme(tx.objectStore('settings'), child.id, input.theme ?? DEFAULT_THEME);
+  });
   return child;
+}
+
+type SettingsStoreLike = { get(key: string): Promise<unknown>; put(value: never): Promise<unknown> };
+async function putChildTheme(store: SettingsStoreLike, childId: string, theme: ThemeId): Promise<void> {
+  const current = ((await store.get('settings')) as ReturnType<typeof defaultSettings> | undefined) ?? defaultSettings();
+  await store.put({ ...defaultSettings(), ...current, childThemes: { ...(current.childThemes ?? {}), [childId]: getTheme(theme).id }, updatedAt: nowIso() } as never);
 }
 
 export async function updateChild(db: RcrDB, deviceId: string, id: string, input: ChildInput): Promise<Child> {
@@ -124,7 +137,7 @@ export interface DeleteChildResult {
  * resurrect it.
  */
 export async function deleteChild(db: RcrDB, deviceId: string, childId: string, options: DeleteChildOptions): Promise<DeleteChildResult> {
-  return runAtomic(db, ['children', 'backups', ...CHILD_SCOPED_STORES], async (tx) => {
+  return runAtomic(db, ['children', 'backups', 'settings', ...CHILD_SCOPED_STORES], async (tx) => {
     const childStore = tx.objectStore('children');
     const current = await childStore.get(childId);
     if (!isActiveChild(current)) throw new Error('Child profile not found.');
@@ -150,6 +163,15 @@ export async function deleteChild(db: RcrDB, deviceId: string, childId: string, 
       lastModifiedBy: deviceId,
     };
     await childStore.put(tombstone);
+
+    // Remove the deleted child's theme preference (and stop it being the active child).
+    const settingsStore = tx.objectStore('settings');
+    const settings = await settingsStore.get('settings');
+    if (settings) {
+      const childThemes = { ...(settings.childThemes ?? {}) };
+      delete childThemes[childId];
+      await settingsStore.put({ ...settings, childThemes, activeChildId: settings.activeChildId === childId ? null : settings.activeChildId, updatedAt: nowIso() });
+    }
 
     let backupsRewritten = 0;
     let backupsDeleted = 0;
@@ -191,11 +213,13 @@ export async function saveChildProfile(
   args: { id: string; input: ChildInput; photo: PhotoChange },
 ): Promise<Child> {
   const existingChildren = await listChildren(db);
-  return runAtomic(db, ['children', 'photos'], async (tx) => {
+  return runAtomic(db, ['children', 'photos', 'settings'], async (tx) => {
     const childStore = tx.objectStore('children');
     const photoStore = tx.objectStore('photos');
     const current = await childStore.get(args.id);
     if (current && current.deletedAt !== null) throw new Error('This profile was deleted and can’t be saved again.');
+    // Theme: a new profile always gets an entry (Earth unless chosen); an edit changes it only if provided.
+    if (!isActiveChild(current) || args.input.theme) await putChildTheme(tx.objectStore('settings'), args.id, args.input.theme ?? DEFAULT_THEME);
 
     let child: Child;
     if (isActiveChild(current)) {

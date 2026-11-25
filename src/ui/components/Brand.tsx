@@ -1,24 +1,31 @@
 /**
  * Brand: app mark and wordmark.
- * The mark shows three forms rising along a gentle path — a quiet nod to
- * rolling, crawling, and running — drawn in the active theme's colors.
- * The same geometry (fixed Earth colors) is used for the installed app icon
- * (see scripts/generate-icons.mjs).
+ * The mark is "Growing Together" (approved Concept 5): a parent and child
+ * side by side. Same geometry everywhere; the installed app icons use the
+ * fixed brand (Earth) colors via scripts/generate-icons.mjs.
  */
+
+import { MARK_RADIUS, markShapes, type MarkColors } from '../brand/mark';
 
 export const APP_NAME = 'Roll, Crawl, RUN';
 export const APP_SUBTITLE = 'Tracking Growth Together';
 export const APP_FULL_NAME = `${APP_NAME}: ${APP_SUBTITLE}`;
 
+/** In-app mark, drawn in the active theme's colors. (Installed app icons use the fixed brand colors.) */
+const THEMED: MarkColors = { background: 'var(--primary-soft)', primary: 'var(--primary)', accent: 'var(--accent)' };
+
 export function AppMark({ size = 40, class: className }: { size?: number; class?: string }) {
   return (
-    <svg class={className} width={size} height={size} viewBox="0 0 100 100" role="img" aria-label={`${APP_NAME} logo`}>
-      <rect width="100" height="100" rx="26" fill="var(--primary-soft)" />
-      <path d="M18 74 C 38 80, 58 72, 82 44" fill="none" stroke="var(--accent)" stroke-width="3.5" stroke-linecap="round" />
-      <circle cx="27" cy="66" r="6.5" fill="var(--primary)" opacity="0.55" />
-      <circle cx="49" cy="61" r="9.5" fill="var(--primary)" opacity="0.78" />
-      <circle cx="72" cy="42" r="13.5" fill="var(--primary)" />
-    </svg>
+    <svg
+      class={className}
+      width={size}
+      height={size}
+      viewBox="0 0 100 100"
+      role="img"
+      aria-label={`${APP_NAME} logo`}
+      // Static artwork from src/ui/brand/growing-together.json — never user content.
+      dangerouslySetInnerHTML={{ __html: `<rect width="100" height="100" rx="${MARK_RADIUS}" fill="var(--primary-soft)"/>${markShapes(THEMED)}` }}
+    />
   );
 }
 

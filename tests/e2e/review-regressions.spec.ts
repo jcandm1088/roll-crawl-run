@@ -332,17 +332,6 @@ test('Home shows the child’s name and age in Inter without “Chronological ag
   await expect(page.getByText(/Chronological age/i)).toHaveCount(0);
 });
 
-test('Journal heading and Settings “Profiles” heading use Inter; Fraunces is kept elsewhere', async ({ page }) => {
-  await completeOnboarding(page);
-  await page.goto('./#/journal');
-  expect(await page.getByRole('heading', { name: 'Journal', level: 1 }).evaluate((el) => getComputedStyle(el).fontFamily)).toMatch(/^Inter/);
-  await page.goto('./#/growth');
-  expect(await page.getByRole('heading', { name: 'Growth', level: 1 }).evaluate((el) => getComputedStyle(el).fontFamily)).toMatch(/^Fraunces/);
-  await page.goto('./#/settings');
-  expect(await page.getByRole('heading', { name: 'Profiles' }).evaluate((el) => getComputedStyle(el).fontFamily)).toMatch(/^Inter/);
-  expect(await page.getByRole('heading', { name: 'Appearance' }).evaluate((el) => getComputedStyle(el).fontFamily)).toMatch(/^Fraunces/);
-});
-
 test('Growth uses the approved wording and section order', async ({ page }) => {
   await completeOnboarding(page);
   await page.goto('./#/growth');

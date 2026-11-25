@@ -7,6 +7,7 @@ export function defaultSettings(): Settings {
   return {
     id: 'settings',
     theme: DEFAULT_THEME,
+    childThemes: {},
     activeChildId: null,
     layers: { personal: true, wellVisits: true, vaccines: false, therapy: true },
     vaccineSchedule: null,
@@ -55,7 +56,32 @@ export async function getSettings(db: RcrDB): Promise<Settings> {
   // Tolerate missing fields from older data and unknown theme ids.
   const merged: Settings = { ...defaultSettings(), ...stored, layers: { ...defaultSettings().layers, ...stored.layers } };
   merged.theme = getTheme(merged.theme).id as ThemeId;
+  const themes: Record<string, ThemeId> = {};
+  for (const [id, t] of Object.entries(stored.childThemes ?? {})) themes[id] = getTheme(t).id;
+  merged.childThemes = themes;
   return merged;
+}
+
+/** The theme for a child on this device: its own choice, else the legacy app-wide theme. No child → Earth. */
+export function themeForChild(settings: Settings, childId: string | null | undefined): ThemeId {
+  if (!childId) return DEFAULT_THEME;
+  return settings.childThemes[childId] ?? settings.theme ?? DEFAULT_THEME;
+}
+
+/** Changes ONE child's theme. Other children's themes are untouched. */
+export async function setChildTheme(db: RcrDB, childId: string, theme: ThemeId): Promise<Settings> {
+  const tx = db.transaction(['settings', 'children'], 'readwrite');
+  const child = await tx.objectStore('children').get(childId);
+  if (!child || child.deletedAt !== null) {
+    tx.abort();
+    await tx.done.catch(() => undefined);
+    throw new Error('Child profile not found.');
+  }
+  const current = (await tx.objectStore('settings').get('settings')) ?? defaultSettings();
+  const next: Settings = { ...defaultSettings(), ...current, childThemes: { ...(current.childThemes ?? {}), [childId]: getTheme(theme).id }, updatedAt: nowIso() };
+  await tx.objectStore('settings').put(next);
+  await tx.done;
+  return getSettings(db);
 }
 
 export async function updateSettings(db: RcrDB, patch: Partial<Omit<Settings, 'id'>>): Promise<Settings> {

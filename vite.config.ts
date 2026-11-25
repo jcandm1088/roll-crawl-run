@@ -20,6 +20,9 @@ function serviceWorkerPlugin(): Plugin {
       const publicFiles = ['manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png', 'icons/apple-touch-icon.png', 'icons/favicon.svg'];
       const precache = ['./', ...files, ...publicFiles].map((f) => (f === './' ? f : `./${f}`));
       const hash = createHash('sha256').update(pkg.version).update(process.env['RCR_BUILD_TAG'] ?? '').update(files.sort().join('|'));
+      // Public files (icons, manifest) are part of the version too, so changing the
+      // logo produces a new service worker and existing installs fetch the new icons.
+      for (const f of publicFiles) hash.update(readFileSync(new URL(`./public/${f}`, import.meta.url)));
       for (const f of files) {
         const item = bundle[f]!;
         hash.update(item.type === 'chunk' ? item.code : typeof item.source === 'string' ? item.source : Buffer.from(item.source));

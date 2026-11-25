@@ -132,6 +132,7 @@ describe('child profiles', () => {
     const { deviceId } = await ensureMeta(db);
     const a = await createChild(db, deviceId, SAMPLE_CHILD_A);
     expect(a).toMatchObject({ name: 'Sample Child A', rev: 1, deletedAt: null, originDeviceId: deviceId, photoId: null });
+    await new Promise((r) => setTimeout(r, 2)); // profiles created by a person are never in the same millisecond
     const b = await createChild(db, deviceId, SAMPLE_CHILD_B);
     expect(b.color).not.toBe(a.color);
     expect((await listChildren(db)).map((c) => c.id)).toEqual([a.id, b.id]);

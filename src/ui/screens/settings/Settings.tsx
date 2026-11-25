@@ -53,7 +53,7 @@ export function Settings() {
     <div>
       {/* Profiles and Appearance stay open; the rest are collapsed by default (Checkpoint 1 review). */}
       <section class="section" style={{ marginTop: 'var(--space-2)' }}>
-        <h2 class="title-2 heading-ui section-title">Profiles</h2>
+        <h2 class="title-2 section-title">Profiles</h2>
         <ul class="list card list-card">
           <LinkRow to={href({ name: 'profiles' })} icon="users" title="Child profiles" detail={`${app.children.length} profile${app.children.length === 1 ? '' : 's'}${app.activeChild ? ` · viewing ${childDisplayName(app.activeChild)}` : ''}`} />
         </ul>
@@ -62,7 +62,12 @@ export function Settings() {
       <section class="section">
         <h2 class="title-2 section-title">Appearance</h2>
         <div class="card">
-          <ThemePicker value={app.settings.theme} onChange={(theme) => app.setSettings({ theme })} />
+          {app.activeChild && (
+            <p class="small muted" style={{ marginBottom: 'var(--space-4)' }} data-testid="appearance-scope">
+              Theme for <strong style={{ color: 'var(--text)' }}>{childDisplayName(app.activeChild)}</strong>. Each child has their own — switching children switches the colors too.
+            </p>
+          )}
+          <ThemePicker value={app.theme} onChange={(theme) => app.setActiveChildTheme(theme)} />
         </div>
       </section>
 

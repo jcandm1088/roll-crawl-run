@@ -24,6 +24,28 @@
 
 ---
 
+## R5 — Checkpoint 1 final refinement (supersede conflicting text below)
+
+The owner tested the revised build in Safari on their Mac and confirmed the selector fix. Details are in `docs/reviews/CHECKPOINT_1_FINAL.md`.
+
+**Per-child themes (permanent).** Each child has their own theme on this device, stored in `settings.childThemes[childId]`.
+- Switching children applies that child's theme immediately. Settings → Appearance changes only the active child's theme and says which child it applies to.
+- New profiles default to Earth unless another theme is chosen, during onboarding or under Add a child. With no profiles, the app uses Earth.
+- Deleting a profile removes its theme entry, in the same transaction.
+- Avatar colors are separate from themes.
+- Database schema v2 migrates existing profiles: each one receives the previous app-wide theme. The migration runs inside the atomic upgrade transaction and does not modify child records.
+
+**Effect on future backup, restore, and sharing (Checkpoint 5).**
+- *Full backups* include each child's theme. Restore brings it back, and restoring a single profile restores that profile's theme.
+- *Partner sharing:* a theme is a device preference, so it is **not** merged or conflict-checked. A partner file may carry the sender's theme as a suggestion. When joining a new shared profile, the recipient's device starts with the suggestion (or Earth). For a profile already on the device, the recipient's own theme is always kept and never silently overwritten. *(This approach needs the owner's confirmation before Checkpoint 5.)*
+- *Provider reports* are unaffected; they use a neutral print style.
+
+**Typography Option B (approved).** Inter is used for every functional heading: primary page headings (one shared `PageHeader` and identical tokens on every tab), section headings, top-bar titles, sheet and dialog titles, accordion titles, onboarding step headings, and profile names and ages. Labels and body text also use Inter. Fraunces is reserved for branding (the wordmark). Future checkpoints must use the shared heading tokens and components, never page-specific font overrides.
+
+**Logo (approved): Concept 5, “Growing Together”.** A single artwork source, `src/ui/brand/growing-together.json`, feeds all uses. Installed icons use the fixed brand colors; the in-app mark follows the active theme. The Home screen keeps its profile-card layout, with no added heading.
+
+---
+
 ## R4 — Checkpoint 1 review revisions (supersede conflicting text below)
 
 Approved by the project owner after the hands-on Checkpoint 1 review. Details are in `docs/reviews/CHECKPOINT_1_REVIEW.md`.
@@ -48,11 +70,11 @@ Approved by the project owner after the hands-on Checkpoint 1 review. Details ar
 
 **Saving and backups.** The app states that changes are saved automatically on the current device, and distinguishes this from backups, which are external copies that can be restored. **Checkpoint 5 must include:** create a backup; restore from a backup; backup history; the date of the most recent successful external backup; optional backup reminders; and encouragement to create a backup before any destructive action. All previously approved privacy, import, export, and sharing safeguards still apply. Unbuilt backup features are never presented as working.
 
-**Typography.** Inter is used for the child's name and age on Home, the Journal heading, and the Settings “Profiles” heading. Fraunces is kept elsewhere pending the owner's choice between option A (as built) and option B (Inter for functional headings).
+**Typography.** *(Superseded by R5: Option B adopted.)*
 
 **Blush theme.** Revised to a clearer baby pink: bg #FDE8F1, surface #FFF7FB, accent #F5A5C8, primary #A93669, text #492437. Earth remains the default.
 
-**Branding.** Five logo concepts are under review in `docs/branding/`. The production logo is unchanged until a replacement is approved.
+**Branding.** *(Superseded by R5: Concept 5 adopted.)*
 
 **Deployment.** The GitHub Pages workflow is manual-only (`workflow_dispatch` with a typed “deploy” confirmation). Pushing never publishes the app.
 

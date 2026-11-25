@@ -2,7 +2,7 @@
 
 A private, local-first, installable web app (PWA) that helps parents document their child's development, appointments, and reflections. It runs entirely in the browser: no account, no server, no analytics, and no AI.
 
-> **Status: Checkpoint 1 — Design & Foundation, revised after the owner's hands-on review** (see `docs/reviews/CHECKPOINT_1_REVIEW.md`). Branding, themes, navigation, onboarding, child profiles, age calculation, local storage, and a basic offline-capable PWA shell are built. Growth, Calendar, Journal, Resources, sharing, and reports are **not built yet**. They show as clearly labeled placeholders.
+> **Status: Checkpoint 1 — Design & Foundation, final refinement awaiting acceptance** (see `docs/reviews/CHECKPOINT_1_REVIEW.md` and `docs/reviews/CHECKPOINT_1_FINAL.md`). Branding, themes, navigation, onboarding, child profiles, age calculation, local storage, and a basic offline-capable PWA shell are built. Growth, Calendar, Journal, Resources, sharing, and reports are **not built yet**. They show as clearly labeled placeholders.
 
 ## Important limitations
 
@@ -72,4 +72,5 @@ The repository never contains personal information. Tests use only fictional sam
 
 - Fonts: Fraunces and Inter (SIL Open Font License 1.1), via @fontsource, bundled with the app
 - Icons: Lucide (ISC)
+- Logo: “Growing Together”, original artwork made for this project (`src/ui/brand/growing-together.json`)
 - Libraries: Preact (MIT), idb (ISC)

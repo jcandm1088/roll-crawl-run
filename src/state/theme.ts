@@ -12,6 +12,7 @@ export function applyTheme(id: ThemeId): void {
     injected = true;
   }
   const theme = getTheme(id);
+  if (document.documentElement.dataset['theme'] === theme.id) return;
   document.documentElement.dataset['theme'] = theme.id;
   // Standalone title bar / status bar color.
   document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme.tokens.bg);
