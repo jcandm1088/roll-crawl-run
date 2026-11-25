@@ -1,12 +1,13 @@
 # Known Limitations
 
-Updated at Checkpoint 1. Items marked *(planned)* are scheduled for later checkpoints.
+Updated at the Checkpoint 1 review revision. Items marked *(planned)* are scheduled for later checkpoints.
 
 ## Not built yet (placeholders)
 - Growth, milestones, progress meters, custom goals and exercises *(Checkpoint 2)*
 - Calendar, well-child and vaccination references *(Checkpoint 3)*
 - Journal, resources, motivational messages, notification settings *(Checkpoint 4)*
 - Backups, partner sharing, import and merge, reports, calendar export *(Checkpoint 5)*
+- Backup features (create, restore, history, reminders) *(Checkpoint 5)*. The app says that changes save automatically on this device and that backups are separate and not yet available.
 - "I have a file from a partner" in onboarding *(Checkpoint 5)*. It was left out of the welcome screen for now so that no button appears that can't work.
 
 ## Storage and privacy
@@ -23,9 +24,14 @@ Updated at Checkpoint 1. Items marked *(planned)* are scheduled for later checkp
 
 ## PWA and offline
 - Offline loading has been verified only in automated headless Chromium, not yet on physical phones.
-- The update flow (banner and "Refresh") is implemented but not yet covered by an automated version-to-version test. That test is planned for Checkpoint 6.
+- Data preservation across an app update is now covered by an automated test that serves two real builds in headless Chromium. It has not been verified on a physical phone.
 - Install guidance is basic and will be revised after testing on physical devices *(Checkpoint 6)*.
 
 ## Testing
 - Automated tests run only in Chromium (desktop, at phone-sized viewports). Safari and Firefox have not been tested automatically.
 - No physical-device testing has been performed.
+
+## Checkpoint 1 review notes
+- The child-selector defect depends on browser engine behavior that the headless Chromium used here does not show. The fix is verified in Chromium, including a test that forces the same positioning condition. It has **not** been verified in Safari or on the reviewer's Mac; re-checking it there is part of the second hands-on review.
+- Typography is mixed under option A: on Settings, “Profiles” is in Inter while “Appearance” and the accordion titles are in Fraunces. This awaits the owner's choice of option A or B.
+- The logo concepts are exploratory. Some details, such as the toes in concept 2 and the limbs in concept 1, lose definition at 16px.

@@ -24,6 +24,19 @@ Leave results blank until a test has actually been run, and record them exactly 
 | Manifest validity, no external requests | tests/e2e/checkpoint1.spec.ts | | |
 | Accessibility (axe, WCAG 2.1 AA rules) | tests/e2e/checkpoint1.spec.ts | | |
 | No horizontal scroll at 320/390/768/1280; nav targets | tests/e2e/responsive.spec.ts | | |
+| Atomic profile + photo save, simulated failures, no duplicates | tests/unit/profileSave.test.ts | | |
+| Blush palette and contrast; Earth default | tests/unit/profileSave.test.ts, themes.test.ts | | |
+| Deploy workflow is manual-only | tests/unit/profileSave.test.ts | | |
+| Child selector inside the viewport (5 viewport sizes × 5 tabs), downward, aligned with the profile card | tests/e2e/review-regressions.spec.ts | | |
+| Child selector with the original root-cause condition forced | tests/e2e/review-regressions.spec.ts | | |
+| Child selector with 9 profiles: internal scrolling | tests/e2e/review-regressions.spec.ts | | |
+| Child selector keyboard: focus, arrows, Tab trap, Escape | tests/e2e/review-regressions.spec.ts | | |
+| Settings accordions: defaults, click, keyboard, several open | tests/e2e/review-regressions.spec.ts | | |
+| Cancelled reset or deletion (each step) leaves data unchanged | tests/e2e/review-regressions.spec.ts | | |
+| DELETE PROFILE plus final confirmation; backup option explained | tests/e2e/review-regressions.spec.ts | | |
+| Dialog focus trap; theme and corrected-age arrow keys | tests/e2e/review-regressions.spec.ts | | |
+| Inter headings, Growth order and wording, privacy spacing, 320px layout | tests/e2e/review-regressions.spec.ts | | |
+| Data survives an app update (two real builds) | tests/e2e/update.spec.ts | | |
 
 ## Manual: Checkpoint 1 (physical phone required where noted)
 | # | Check | Device / browser | Date | Result | Notes |
@@ -46,3 +59,17 @@ Leave results blank until a test has actually been run, and record them exactly 
 | M16 | Touch targets are comfortable and text is readable at default size | Phone | | | |
 | M17 | Larger system text size: layout still works | Phone | | | |
 | M18 | Placeholders are clearly "not available yet" | | | | |
+
+## Manual: Checkpoint 1 review (second hands-on review)
+| # | Check | Device / browser | Date | Result | Notes |
+|---|---|---|---|---|---|
+| R1 | Child selector opens downward and stays fully visible on the Mac (the browser where the defect was seen) | Mac | | | |
+| R2 | Child selector on each tab, with 2+ children | Mac / phone | | | |
+| R3 | Settings: sections collapsed by default; tapping a header opens and closes it | | | | |
+| R4 | Reset and Delete feel deliberately available but not prominent | | | | |
+| R5 | Home: name and age read naturally; the corrected tag is subtle | | | | |
+| R6 | Typography A vs B: which do you prefer? | | | | |
+| R7 | Blush now reads as baby pink | | | | |
+| R8 | Logo concepts: preferred direction, if any | | | | |
+| R9 | Privacy step spacing looks balanced | | | | |
+| R10 | Keyboard: Tab through Settings, open the accordions, use arrow keys on themes | Mac | | | |

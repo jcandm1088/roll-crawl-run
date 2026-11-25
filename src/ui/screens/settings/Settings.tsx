@@ -4,6 +4,7 @@ import { href } from '../../../router';
 import { Icon, type IconName } from '../../components/Icon';
 import { ThemePicker } from '../../components/ThemePicker';
 import { PlannedTag } from '../../components/Placeholder';
+import { Accordion } from '../../components/Accordion';
 import { Sheet } from '../../components/Sheet';
 import { ErrorText } from '../../components/ChildFields';
 import { childDisplayName } from '../../components/Avatar';
@@ -50,8 +51,9 @@ export function Settings() {
 
   return (
     <div>
+      {/* Profiles and Appearance stay open; the rest are collapsed by default (Checkpoint 1 review). */}
       <section class="section" style={{ marginTop: 'var(--space-2)' }}>
-        <h2 class="title-2 section-title">Profiles</h2>
+        <h2 class="title-2 heading-ui section-title">Profiles</h2>
         <ul class="list card list-card">
           <LinkRow to={href({ name: 'profiles' })} icon="users" title="Child profiles" detail={`${app.children.length} profile${app.children.length === 1 ? '' : 's'}${app.activeChild ? ` · viewing ${childDisplayName(app.activeChild)}` : ''}`} />
         </ul>
@@ -64,99 +66,122 @@ export function Settings() {
         </div>
       </section>
 
-      <section class="section">
-        <h2 class="title-2 section-title">Your data</h2>
-        <ul class="list card list-card">
-          <LinkRow to={href({ name: 'storage' })} icon="hardDrive" title="Storage on this device" detail="Where your information is kept and how safe it is from being cleared" />
-          <LinkRow to={href({ name: 'privacy' })} icon="shield" title="Privacy" />
-          <PlannedRow icon="download" title="Backup, partner sharing & import" checkpoint={5} />
-          <PlannedRow icon="fileText" title="Provider reports" checkpoint={5} />
-        </ul>
-      </section>
-
-      <section class="section">
-        <h2 class="title-2 section-title">Calendar & reminders</h2>
-        <ul class="list card list-card">
-          <PlannedRow icon="calendar" title="Calendar layers & vaccination reference source" checkpoint={3} />
-          <PlannedRow icon="bell" title="Notifications (off)" checkpoint={4} />
-          <PlannedRow icon="share" title="Export to phone calendar (.ics)" checkpoint={5} />
-        </ul>
-      </section>
-
-      <section class="section">
-        <h2 class="title-2 section-title">This device</h2>
-        <div class="card">
-          <div class="field">
-            <label class="label" for="device-label">Device name (optional)</label>
-            <input id="device-label" class="input" maxLength={40} placeholder="e.g. Phone A" value={label} onInput={(e) => { setLabel((e.target as HTMLInputElement).value); setSavedLabel(false); }} />
-            <span class="hint">Used later to show which device recorded an entry after sharing with a partner. Leave blank if you prefer.</span>
+      <div class="section">
+        <Accordion title="Your Data" summary="Saving, storage, privacy, and backups" testId="acc-data">
+          <div class="panel-pad" style={{ paddingBottom: 0 }}>
+            <p class="autosave-note" data-testid="autosave-note">
+              <Icon name="check" size={18} />
+              <span>Changes are saved automatically on this device as you go. A backup — a copy you can keep elsewhere and restore — is a separate step, coming in a later update.</span>
+            </p>
           </div>
-          <button class="btn btn-outline btn-sm" style={{ marginTop: 'var(--space-3)' }} disabled={label === app.meta.deviceLabel} onClick={async () => { await app.setMeta({ deviceLabel: label.trim() }); setLabel(label.trim()); setSavedLabel(true); }}>
-            Save device name
-          </button>
-          {savedLabel && <span class="small muted" role="status" style={{ marginLeft: 'var(--space-3)' }}>Saved</span>}
-        </div>
-      </section>
+          <ul class="list list-card">
+            <LinkRow to={href({ name: 'storage' })} icon="hardDrive" title="Storage on this device" detail="How your information is kept safe from being cleared" />
+            <LinkRow to={href({ name: 'privacy' })} icon="shield" title="Privacy" />
+            <PlannedRow icon="download" title="Backups, partner sharing & import" checkpoint={5} />
+            <PlannedRow icon="fileText" title="Reports for appointments" checkpoint={5} />
+          </ul>
+          <Accordion title="Advanced data management" variant="subtle" level={3} testId="acc-advanced-data">
+            <p class="small muted">Permanently erase everything stored by the app on this device and start over.</p>
+            <button class="btn btn-quiet btn-sm" style={{ marginTop: 'var(--space-3)' }} onClick={() => setResetting(true)}>
+              Erase all app data…
+            </button>
+          </Accordion>
+        </Accordion>
 
-      <section class="section">
-        <h2 class="title-2 section-title">About</h2>
-        <ul class="list card list-card">
-          <LinkRow to={href({ name: 'install' })} icon="smartphone" title="Install on your phone" />
-          <LinkRow to={href({ name: 'about' })} icon="info" title="About, sources & version" detail={`Version ${APP_VERSION}`} />
-          <PlannedRow icon="sprout" title="Developmental viewing preferences" checkpoint={2} />
-        </ul>
-      </section>
+        <Accordion title="Calendar & Reminders" summary="Calendar layers, reminders, and exporting" testId="acc-calendar">
+          <ul class="list list-card">
+            <PlannedRow icon="calendar" title="Calendar layers & vaccine schedule source" checkpoint={3} />
+            <PlannedRow icon="bell" title="Notifications (off)" checkpoint={4} />
+            <PlannedRow icon="share" title="Add events to your phone’s calendar" checkpoint={5} />
+          </ul>
+        </Accordion>
 
-      <section class="section">
-        <div class="card">
-          <h2 class="title-3">Reset the app</h2>
-          <p class="small muted" style={{ marginTop: 'var(--space-2)' }}>Erases every profile and setting on this device and starts over.</p>
-          <button class="btn btn-danger btn-block" style={{ marginTop: 'var(--space-4)' }} onClick={() => setResetting(true)}>
-            <Icon name="rotate" size={18} /> Reset and erase all data…
-          </button>
-        </div>
-      </section>
+        <Accordion title="This Device" summary="Device name" testId="acc-device">
+          <div class="panel-pad">
+            <div class="field">
+              <label class="label" for="device-label">Device name (optional)</label>
+              <input id="device-label" class="input" maxLength={40} placeholder="e.g. Phone A" value={label} onInput={(e) => { setLabel((e.target as HTMLInputElement).value); setSavedLabel(false); }} />
+              <span class="hint">Shows which device added an entry, once sharing with a partner is available. You can leave it blank.</span>
+            </div>
+            <button class="btn btn-outline btn-sm" style={{ marginTop: 'var(--space-3)' }} disabled={label === app.meta.deviceLabel} onClick={async () => { await app.setMeta({ deviceLabel: label.trim() }); setLabel(label.trim()); setSavedLabel(true); }}>
+              Save device name
+            </button>
+            {savedLabel && <span class="small muted" role="status" style={{ marginLeft: 'var(--space-3)' }}>Saved</span>}
+          </div>
+        </Accordion>
+
+        <Accordion title="About" summary={`Install, sources, and version ${APP_VERSION}`} testId="acc-about">
+          <ul class="list list-card">
+            <LinkRow to={href({ name: 'install' })} icon="smartphone" title="Install on your phone" />
+            <LinkRow to={href({ name: 'about' })} icon="info" title="About, sources & version" detail={`Version ${APP_VERSION}`} />
+            <PlannedRow icon="sprout" title="Milestone viewing preferences" checkpoint={2} />
+          </ul>
+        </Accordion>
+      </div>
       {resetting && <ResetSheet onClose={() => setResetting(false)} />}
     </div>
   );
 }
 
+/**
+ * Two-step reset: (1) explanation + typed RESET, (2) a separate final
+ * confirmation. Cancelling at either step changes nothing.
+ */
 function ResetSheet({ onClose }: { onClose: () => void }) {
-  const { db } = useApp();
+  const { db, children } = useApp();
+  const [step, setStep] = useState<1 | 2>(1);
   const [typed, setTyped] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   return (
-    <Sheet title="Erase all data?" onClose={onClose}>
-      <div class="stack small">
-        <p>This permanently deletes <strong>every child profile, photo, setting, and internal backup</strong> stored by the app on this device. It can’t be undone.</p>
-        <p class="muted">Backup export isn’t available yet (Checkpoint 5), so there’s currently no way to save a copy first.</p>
-        <div class="field">
-          <label class="label" for="confirm-reset">Type RESET to confirm</label>
-          <input id="confirm-reset" class="input" autocomplete="off" autocapitalize="characters" value={typed} onInput={(e) => setTyped((e.target as HTMLInputElement).value)} />
-        </div>
-        {error && <ErrorText id="reset-error">{error}</ErrorText>}
-      </div>
-      <div class="stack" style={{ marginTop: 'var(--space-5)' }}>
-        <button
-          class="btn btn-primary btn-block"
-          disabled={typed.trim().toUpperCase() !== 'RESET' || busy}
-          onClick={async () => {
-            setBusy(true);
-            try {
-              await deleteAllData(db);
-              window.location.hash = '';
-              window.location.reload();
-            } catch (e) {
-              setError(e instanceof Error ? e.message : 'Data couldn’t be erased.');
-              setBusy(false);
-            }
-          }}
-        >
-          {busy ? 'Erasing…' : 'Erase everything'}
-        </button>
-        <button class="btn btn-ghost btn-block" onClick={onClose}>Cancel</button>
-      </div>
+    <Sheet title={step === 1 ? 'Erase all app data?' : 'Final confirmation'} onClose={onClose}>
+      {step === 1 ? (
+        <>
+          <div class="stack small">
+            <p>This permanently deletes everything the app has stored on this device:</p>
+            <ul style={{ margin: 0, paddingLeft: '1.2em' }}>
+              <li>{children.length === 1 ? '1 child profile' : `all ${children.length} child profiles`}, with their photos and everything recorded for them</li>
+              <li>your settings and any internal safety copies</li>
+            </ul>
+            <p>It can’t be undone. A backup feature isn’t available yet, so there is currently no way to keep a copy first.</p>
+            <div class="field">
+              <label class="label" for="confirm-reset">Type RESET to continue</label>
+              <input id="confirm-reset" class="input" autocomplete="off" autocapitalize="characters" value={typed} onInput={(e) => setTyped((e.target as HTMLInputElement).value)} />
+            </div>
+          </div>
+          <div class="stack" style={{ marginTop: 'var(--space-5)' }}>
+            <button class="btn btn-primary btn-block" onClick={onClose}>Cancel — keep my data</button>
+            <button class="btn btn-quiet btn-block" disabled={typed.trim().toUpperCase() !== 'RESET'} onClick={() => setStep(2)}>
+              Continue
+            </button>
+          </div>
+        </>
+      ) : (
+        <>
+          <p class="small">Are you sure? Everything will be erased from this device and the app will start over.</p>
+          {error && <ErrorText id="reset-error">{error}</ErrorText>}
+          <div class="stack" style={{ marginTop: 'var(--space-5)' }}>
+            <button class="btn btn-primary btn-block" onClick={onClose}>Cancel — keep my data</button>
+            <button
+              class="btn btn-danger btn-block"
+              disabled={busy}
+              onClick={async () => {
+                setBusy(true);
+                try {
+                  await deleteAllData(db);
+                  window.location.hash = '';
+                  window.location.reload();
+                } catch (e) {
+                  setError(e instanceof Error ? e.message : 'Data couldn’t be erased.');
+                  setBusy(false);
+                }
+              }}
+            >
+              {busy ? 'Erasing…' : 'Yes, erase everything'}
+            </button>
+          </div>
+        </>
+      )}
     </Sheet>
   );
 }
@@ -227,7 +252,7 @@ export function StorageInfo() {
       <div class="card stack small">
         <h2 class="title-3">Good to know</h2>
         <ul style={{ margin: 0, paddingLeft: '1.2em' }} class="stack">
-          <li>Your information is saved in this browser’s storage on this device only (IndexedDB). It isn’t uploaded anywhere.</li>
+          <li>Your information is saved automatically in this browser on this device only. It isn’t uploaded anywhere.</li>
           <li>It can be lost if you clear this browser’s data, uninstall the app, or lose or replace the device.</li>
           <li>On some phones, the installed app and the browser keep separate storage — information entered in one may not appear in the other. This will be confirmed on real devices and described here.</li>
           <li>Storage isn’t encrypted or password-protected by the app.</li>

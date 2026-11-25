@@ -9,6 +9,7 @@ import { Icon } from '../../components/Icon';
 import { ThemePicker } from '../../components/ThemePicker';
 import { EMPTY_CORRECTED, draftToInput, saveChild, type ChildDraft } from '../profiles/saveChild';
 import { navigate } from '../../../router';
+import { newId } from '../../../data/envelope';
 
 type Step = 'welcome' | 'dob' | 'name' | 'corrected' | 'theme' | 'privacy';
 
@@ -21,6 +22,7 @@ export function Onboarding({ mode = 'firstRun' }: { mode?: 'firstRun' | 'addChil
   const steps: Step[] = mode === 'firstRun' ? ['welcome', 'dob', 'name', 'corrected', 'theme', 'privacy'] : ['dob', 'name', 'corrected'];
   const [index, setIndex] = useState(0);
   const [draft, setDraft] = useState<ChildDraft>({ name: '', dob: '', about: '', corrected: EMPTY_CORRECTED, photo: { kind: 'unchanged' } });
+  const [childId] = useState(() => newId()); // one id per form, so a retried save never duplicates
   const [showErrors, setShowErrors] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
@@ -57,7 +59,7 @@ export function Onboarding({ mode = 'firstRun' }: { mode?: 'firstRun' | 'addChil
     }
     setSaving(true);
     try {
-      const child = await saveChild(app.db, app.meta.deviceId, null, r.input, draft.photo);
+      const child = await saveChild(app.db, app.meta.deviceId, childId, r.input, draft.photo);
       if (mode === 'firstRun') await requestPersistence(); // after an explicit user action; result shown in Settings → Storage
       await app.setSettings({ activeChildId: child.id });
       await app.setMeta({ onboardingComplete: true });
@@ -161,11 +163,11 @@ export function Onboarding({ mode = 'firstRun' }: { mode?: 'firstRun' | 'addChil
             <div class="stack">
               <h1 class="title-1">Your information stays with you</h1>
             </div>
-            <ul class="list card list-card">
+            <ul class="list card list-card privacy-list">
               {[
                 ['hardDrive', 'Stored on this device only', 'There’s no account, and nothing you enter is sent to us or anyone else.'],
                 ['shield', 'Not a medical record', 'The app isn’t encrypted or password-protected, and anyone using this unlocked device could see it.'],
-                ['download', 'Keep a backup', 'Clearing browser data or removing the app can erase what you’ve entered. Backup files will be available in a later update.'],
+                ['download', 'Keep a backup', 'Clearing browser data or removing the app can erase what you’ve entered. Backups arrive in a later update.'],
                 ['heart', 'A guide, not a test', 'Milestones are educational references, not deadlines or diagnoses. Your child’s provider is your best partner.'],
               ].map(([icon, title, body]) => (
                 <li key={title}>
@@ -214,7 +216,7 @@ export function Onboarding({ mode = 'firstRun' }: { mode?: 'firstRun' | 'addChil
     setDraft(cleared);
     setSaving(true);
     try {
-      const child = await saveChild(app.db, app.meta.deviceId, null, r.input, cleared.photo);
+      const child = await saveChild(app.db, app.meta.deviceId, childId, r.input, cleared.photo);
       await app.setSettings({ activeChildId: child.id });
       await app.setMeta({ onboardingComplete: true });
       await app.refresh();

@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { completeOnboarding, isoDaysAgo } from './helpers';
+import { completeOnboarding, deleteProfile, isoDaysAgo } from './helpers';
 
 test('first-run onboarding leads to Home and is not repeated after reload', async ({ page }) => {
   await completeOnboarding(page, { name: 'Sample Child A' });
@@ -47,7 +47,8 @@ test('name, photo, and corrected age before the due date', async ({ page }) => {
   await expect(page.getByTestId('chronological-age')).toHaveText('1 week, 3 days');
   // 30w0d at birth → due 70 days after birth; 10 days old → 60 days (8 weeks, 4 days) before due date.
   await expect(page.getByTestId('corrected-age')).toHaveText('8 weeks, 4 days before due date');
-  await expect(page.getByText('Milestone viewing will use')).toContainText('corrected age');
+  await expect(page.getByText('corrected', { exact: true })).toBeVisible();
+  await expect(page.getByText('Chronological age')).toHaveCount(0);
   await expect(page.locator('.child-hero .avatar img')).toBeVisible();
 });
 
@@ -106,12 +107,7 @@ test('multiple profiles: add, switch, edit, and delete with confirmation', async
 
   // Delete requires typed confirmation
   await page.getByRole('link', { name: 'Edit Sample Child C' }).click();
-  await page.getByRole('button', { name: 'Delete profile…' }).click();
-  const confirm = page.getByRole('button', { name: 'Permanently delete' });
-  await expect(confirm).toBeDisabled();
-  await expect(page.getByRole('checkbox')).toBeChecked(); // purge from backups checked by default
-  await page.getByLabel('Type DELETE to confirm').fill('delete');
-  await confirm.click();
+  await deleteProfile(page, 'delete profile'); // case-insensitive phrase
   await expect(page.getByText('Sample Child C')).toHaveCount(0);
   await expect(page.getByText('Sample Child A')).toBeVisible();
 });
@@ -120,9 +116,7 @@ test('deleting the only profile asks for a new child instead of breaking', async
   await completeOnboarding(page, { name: 'Sample Child A' });
   await page.goto('./#/profiles');
   await page.getByRole('link', { name: 'Edit Sample Child A' }).click();
-  await page.getByRole('button', { name: 'Delete profile…' }).click();
-  await page.getByLabel('Type DELETE to confirm').fill('DELETE');
-  await page.getByRole('button', { name: 'Permanently delete' }).click();
+  await deleteProfile(page);
   await expect(page.getByRole('heading', { name: 'When was your child born?' })).toBeVisible();
   await expect(page.getByText('Add a child')).toBeVisible();
 });
@@ -132,16 +126,19 @@ test('later-checkpoint tabs are clearly marked as not available', async ({ page 
   for (const tab of ['Growth', 'Calendar', 'Journal', 'Resources']) {
     await page.getByRole('link', { name: tab, exact: true }).click();
     await expect(page.getByRole('heading', { name: tab, level: 1 })).toBeVisible();
-    await expect(page.getByText('Not available yet.', { exact: false }).first()).toBeVisible();
+    await expect(page.getByText('Preview only.', { exact: false }).first()).toBeVisible();
   }
 });
 
 test('reset erases all data after typed confirmation', async ({ page }) => {
   await completeOnboarding(page, { name: 'Sample Child A' });
   await page.goto('./#/settings');
-  await page.getByRole('button', { name: 'Reset and erase all data…' }).click();
-  await page.getByLabel('Type RESET to confirm').fill('RESET');
-  await page.getByRole('button', { name: 'Erase everything' }).click();
+  await page.getByRole('button', { name: /Your Data/ }).click();
+  await page.getByRole('button', { name: 'Advanced data management' }).click();
+  await page.getByRole('button', { name: 'Erase all app data…' }).click();
+  await page.getByLabel('Type RESET to continue').fill('RESET');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByRole('button', { name: 'Yes, erase everything' }).click();
   await expect(page.getByRole('button', { name: 'Get started' })).toBeVisible();
 });
 

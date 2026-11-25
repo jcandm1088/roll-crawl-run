@@ -373,3 +373,55 @@ button, input, select, textarea { font: inherit; color: inherit; }
 @media (min-width: 720px) {
   .main { padding-top: var(--space-6); }
 }
+
+/* ---------- Child selector popover (opens downward from the top bar) ---------- */
+.popover-scrim { position: fixed; inset: 0; z-index: 50; background: rgba(20, 16, 12, 0.18); animation: fade-in var(--dur-fast) var(--ease); }
+.popover {
+  position: fixed; display: flex; flex-direction: column; overflow: hidden;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-float); animation: popover-in var(--dur) var(--ease); transform-origin: top left;
+}
+.popover-list { overflow-y: auto; overscroll-behavior: contain; flex: 1 1 auto; min-height: 0; }
+.popover-list .list-item { min-height: 56px; }
+.popover-list .list-item[aria-checked='true'] { background: var(--primary-soft); color: var(--on-primary-soft); }
+.popover-footer { flex: none; display: flex; flex-direction: column; gap: var(--space-1); padding: var(--space-3); border-top: 1px solid var(--border); }
+@keyframes popover-in { from { opacity: 0; transform: translateY(-6px) scale(0.98); } }
+
+/* ---------- Accordions (Settings) ---------- */
+.accordion { margin-top: var(--space-4); }
+.accordion-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); overflow: hidden; }
+.accordion-heading { margin: 0; font: inherit; }
+.accordion-trigger {
+  display: flex; align-items: center; gap: var(--space-3); width: 100%; min-height: 64px;
+  padding: var(--space-3) var(--space-5); border: 0; background: transparent; text-align: left; cursor: pointer; color: var(--text);
+}
+.accordion-trigger:focus-visible { outline-offset: -3px; border-radius: var(--radius-lg); }
+.accordion-title { display: block; font-family: var(--font-display); font-size: var(--text-xl); font-weight: 500; line-height: 1.25; }
+.accordion-summary { display: block; font-size: var(--text-sm); color: var(--text-muted); margin-top: 2px; }
+.accordion-chevron { color: var(--text-muted); transition: transform var(--dur) var(--ease); display: inline-flex; }
+.accordion.is-open > .accordion-heading .accordion-chevron { transform: rotate(180deg); }
+.accordion-card > .accordion-panel { border-top: 1px solid var(--border); }
+.accordion-card > .accordion-panel > .list-card { border: 0; border-radius: 0; box-shadow: none; }
+.accordion-card > .accordion-panel > .panel-pad { padding: var(--space-4) var(--space-5) var(--space-5); }
+/* Subtle variant: nested "Advanced …" sections — deliberately quiet. */
+.accordion-subtle { margin-top: 0; border-top: 1px solid var(--border); }
+.accordion-subtle .accordion-trigger { min-height: 56px; padding: var(--space-2) var(--space-4); }
+.accordion-subtle .accordion-title { font-family: var(--font-ui); font-size: var(--text-sm); font-weight: 600; color: var(--text-muted); }
+.accordion-subtle .accordion-panel { padding: 0 var(--space-4) var(--space-4); }
+
+/* Restrained destructive trigger: text-weight, muted until deliberately chosen. */
+.btn-quiet { background: transparent; color: var(--text-muted); border: 1px solid var(--border); font-weight: 500; }
+.btn-quiet:hover:not([disabled]) { color: var(--text); border-color: var(--border-strong); }
+
+/* ---------- Typography revisions (Checkpoint 1 review) ---------- */
+/* Functional headings that use Inter instead of Fraunces. */
+.heading-ui { font-family: var(--font-ui); font-weight: 600; letter-spacing: -0.015em; }
+.child-name { font-family: var(--font-ui); font-size: var(--text-xl); font-weight: 600; letter-spacing: -0.015em; line-height: 1.25; }
+.child-age { font-family: var(--font-ui); font-size: var(--text-lg); font-weight: 500; color: var(--text); letter-spacing: -0.005em; }
+.child-age-secondary { font-family: var(--font-ui); font-size: var(--text-sm); color: var(--text-muted); }
+
+.privacy-list { margin-top: var(--space-10) !important; }
+.autosave-note { display: flex; gap: var(--space-2); align-items: flex-start; font-size: var(--text-sm); color: var(--text-muted); }
+.child-age-secondary { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 8px; }
+.tag-mini { display: inline-block; padding: 1px 8px; border-radius: var(--radius-pill); background: var(--surface-sunken); color: var(--text-muted); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.02em; }
+.child-hero > .grow > .stack { margin-top: 2px !important; }

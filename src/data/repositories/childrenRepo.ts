@@ -174,3 +174,53 @@ export async function deleteChild(db: RcrDB, deviceId: string, childId: string, 
     return { recordsRemoved, backupsRewritten, backupsDeleted };
   });
 }
+
+export type PhotoChange = { kind: 'keep' } | { kind: 'remove' } | { kind: 'set'; blob: Blob; width: number; height: number };
+
+/**
+ * Creates or updates a child profile AND its photo in ONE atomic transaction:
+ * either the profile and photo are both saved, or nothing changes.
+ *
+ * `id` is generated once per form (not per attempt), so retrying a save —
+ * e.g. after an error or a double tap — updates the same profile instead
+ * of creating a duplicate.
+ */
+export async function saveChildProfile(
+  db: RcrDB,
+  deviceId: string,
+  args: { id: string; input: ChildInput; photo: PhotoChange },
+): Promise<Child> {
+  const existingChildren = await listChildren(db);
+  return runAtomic(db, ['children', 'photos'], async (tx) => {
+    const childStore = tx.objectStore('children');
+    const photoStore = tx.objectStore('photos');
+    const current = await childStore.get(args.id);
+    if (current && current.deletedAt !== null) throw new Error('This profile was deleted and can’t be saved again.');
+
+    let child: Child;
+    if (isActiveChild(current)) {
+      child = touch({ ...current, ...normalize(args.input), color: args.input.color ?? current.color }, deviceId);
+    } else {
+      child = {
+        ...newEnvelope(deviceId),
+        id: args.id,
+        deletedAt: null,
+        ...normalize(args.input),
+        color: args.input.color ?? nextColor(existingChildren),
+        photoId: null,
+      };
+    }
+
+    if (args.photo.kind === 'set' || args.photo.kind === 'remove') {
+      if (child.photoId) await photoStore.delete(child.photoId);
+      child.photoId = null;
+      if (args.photo.kind === 'set') {
+        const record: Photo = { id: newId(), childId: child.id, blob: args.photo.blob, width: args.photo.width, height: args.photo.height, createdAt: nowIso() };
+        await photoStore.put(record);
+        child.photoId = record.id;
+      }
+    }
+    await childStore.put(child);
+    return child;
+  });
+}

@@ -7,27 +7,22 @@ import { PlaceholderCard } from '../../components/Placeholder';
 import { href } from '../../../router';
 import type { Child } from '../../../types';
 
+/**
+ * Age on Home, in plain language. The standard (chronological) age needs no
+ * label. When corrected age is turned on for this child, it is shown as a
+ * second, quieter line marked "corrected"; details live in the profile.
+ */
 export function AgeSummary({ child }: { child: Child }) {
   const today = todayLocal();
   const chrono = formatAge(ageBetween(child.dob, today));
   const corrected = child.correctedAge.enabled ? correctedAge(child.dob, child.correctedAge.dueDate, today) : null;
   return (
     <div class="stack" style={{ marginTop: 0 }}>
-      <div class="age-line">
-        <span class="age-value" data-testid="chronological-age">{chrono}</span>
-        <span class="xsmall muted">Chronological age</span>
-      </div>
+      <p class="child-age" data-testid="chronological-age">{chrono}</p>
       {corrected && corrected.status !== 'notApplicable' && (
-        <div class="age-line">
-          <span class="age-value" style={{ fontSize: 'var(--text-lg)' }} data-testid="corrected-age">
-            {corrected.status === 'corrected' ? formatAge(corrected.age) : formatBeforeDueDate(corrected)}
-          </span>
-          <span class="xsmall muted">Corrected age</span>
-        </div>
-      )}
-      {child.correctedAge.enabled && (
-        <p class="xsmall muted">
-          Milestone viewing will use <strong>{child.ageBasis === 'corrected' ? 'corrected' : 'chronological'} age</strong>.
+        <p class="child-age-secondary">
+          <span data-testid="corrected-age">{corrected.status === 'corrected' ? formatAge(corrected.age) : formatBeforeDueDate(corrected)}</span>
+          <span class="tag-mini">corrected</span>
         </p>
       )}
     </div>
@@ -43,18 +38,18 @@ export function Home() {
         <div class="child-hero">
           <Avatar child={activeChild} size={72} />
           <div class="grow">
-            <h2 id="child-heading" class="title-1" style={{ fontSize: 'var(--text-xl)' }}>
+            <h2 id="child-heading" class="child-name">
               {childDisplayName(activeChild)}
             </h2>
-            <p class="small muted">Born {formatLongDate(activeChild.dob)}</p>
+            <AgeSummary child={activeChild} />
           </div>
           <a class="icon-btn plain" href={href({ name: 'profileEdit', id: activeChild.id })} aria-label={`Edit ${childDisplayName(activeChild)}’s profile`}>
             <Icon name="pencil" size={20} />
           </a>
         </div>
-        <div style={{ marginTop: 'var(--space-4)', paddingTop: 'var(--space-4)', borderTop: '1px solid var(--border)' }}>
-          <AgeSummary child={activeChild} />
-        </div>
+        <p class="small muted" style={{ marginTop: 'var(--space-4)', paddingTop: 'var(--space-3)', borderTop: '1px solid var(--border)' }}>
+          Born {formatLongDate(activeChild.dob)}
+        </p>
       </section>
 
       <div class="section">
@@ -82,12 +77,12 @@ export function Home() {
       <div class="section">
         <h2 class="title-2 section-title">Coming next</h2>
         <PlaceholderCard icon="sprout" title="Milestone progress" checkpoint={2}>
-          Progress meters for the five developmental categories, based only on what you record.
+          See the milestones you’ve recorded across five areas of development.
         </PlaceholderCard>
-        <PlaceholderCard icon="calendar" title="Upcoming appointments & activities" checkpoint={3} />
-        <PlaceholderCard icon="sparkles" title="Recent achievements" checkpoint={2} />
+        <PlaceholderCard icon="calendar" title="Coming up" checkpoint={3}>Appointments and activities for the days ahead.</PlaceholderCard>
+        <PlaceholderCard icon="sparkles" title="Recent milestones" checkpoint={2}>Moments you’ve recently recorded.</PlaceholderCard>
         <PlaceholderCard icon="heart" title="Daily encouragement" checkpoint={4}>
-          Original encouraging messages, written for your review before they are added.
+          A gentle note for each day.
         </PlaceholderCard>
       </div>
     </div>

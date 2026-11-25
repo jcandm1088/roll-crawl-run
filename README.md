@@ -2,7 +2,7 @@
 
 A private, local-first, installable web app (PWA) that helps parents document their child's development, appointments, and reflections. It runs entirely in the browser: no account, no server, no analytics, and no AI.
 
-> **Status: Checkpoint 1 — Design & Foundation.** Branding, themes, navigation, onboarding, child profiles, age calculation, local storage, and a basic offline-capable PWA shell are built. Growth, Calendar, Journal, Resources, sharing, and reports are **not built yet**. They show as clearly labeled placeholders.
+> **Status: Checkpoint 1 — Design & Foundation, revised after the owner's hands-on review** (see `docs/reviews/CHECKPOINT_1_REVIEW.md`). Branding, themes, navigation, onboarding, child profiles, age calculation, local storage, and a basic offline-capable PWA shell are built. Growth, Calendar, Journal, Resources, sharing, and reports are **not built yet**. They show as clearly labeled placeholders.
 
 ## Important limitations
 
@@ -42,11 +42,12 @@ npm run test:e2e
 
 The first command runs the Vitest unit tests: dates, ages, intervals, theme contrast, and storage. The second runs the Playwright end-to-end tests against the production build, including offline use and accessibility scans.
 
-## Deploy (GitHub Pages)
+## Deploy (GitHub Pages) — manual only
 
-1. Push to a public GitHub repository named `roll-crawl-run`.
+Pushing code **never** publishes the app.
+1. Push to a public GitHub repository named `roll-crawl-run`. This happens only when the owner authorizes it.
 2. In the repository's **Settings → Pages**, set **Source** to **GitHub Actions**.
-3. Each push to `main` runs `.github/workflows/deploy.yml`, which type-checks, runs the unit tests, builds, and publishes `dist/`.
+3. To publish, open **Actions → Deploy to GitHub Pages → Run workflow** and type `deploy`. The workflow type-checks, runs the unit tests, builds, and publishes `dist/` from `main`.
 
 The app uses relative paths and hash routes, so it works at `https://<username>.github.io/roll-crawl-run/`.
 
@@ -59,7 +60,8 @@ src/state/       app state and theme application
 src/ui/          components, screens, styles, theme tokens
 src/sw/          service worker and registration
 tests/unit       Vitest     tests/e2e  Playwright     tests/fixtures  fictional data only
-docs/            build log, decisions, testing checklist, limitations, sources, design system
+docs/            plan, build log, decisions, testing checklist, limitations, sources, design system,
+                 reviews/, branding/ (logo concepts), screenshots/
 ```
 
 ## Privacy in the repository

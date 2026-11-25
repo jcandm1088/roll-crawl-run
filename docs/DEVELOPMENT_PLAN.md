@@ -24,6 +24,51 @@
 
 ---
 
+## R4 — Checkpoint 1 review revisions (supersede conflicting text below)
+
+Approved by the project owner after the hands-on Checkpoint 1 review. Details are in `docs/reviews/CHECKPOINT_1_REVIEW.md`.
+
+**Growth tab — permanent structure.** The intro reads “Tracking your developmental milestones.” Sections appear in this exact order:
+1. **Progress** (replaces “progress meters”)
+2. **Goals & Exercises** (replaces “your own goals & exercises”)
+3. **What to Expect at Every Age** (replaces the “three-month age views” / “By age interval” view; it keeps the approved D2 interval rules, the empty-interval panel, and the cumulative view)
+4. **Milestone Library** (the sourced milestone catalog with source details; hide and restore live here)
+
+§5 item 3 and §6.4 are reorganized under these four sections. Their functional requirements are unchanged.
+
+**Calendar tab — permanent requirement (Checkpoint 3).** Selecting the Calendar tab opens an actual calendar showing the current month immediately, with no introductory menu. It highlights today, allows month-to-month navigation, offers an agenda view, and lists relevant upcoming events below the calendar.
+
+**Resources intro:** “A curated library of trusted, science-backed resources.” Source verification and offline requirements are unchanged.
+
+**Settings structure.** Profiles and Appearance stay expanded. Your Data, Calendar & Reminders, This Device, and About are accessible inline accordions, collapsed by default; several can be open at once. Reset sits in a collapsed “Advanced data management” subsection inside Your Data.
+
+**Destructive actions.** They must always remain possible, but are never prominent.
+- *Reset:* collapsed location, restrained styling, a plain explanation of consequences, typed RESET, then a separate final confirmation. Cancel is always the primary button.
+- *Delete profile:* inside a collapsed “Advanced profile management” section on the child's profile. It identifies the child (photo, name, date of birth), lists the categories of data removed, keeps the backup-purge option (checked by default) and explains it, requires typing DELETE PROFILE, then a separate final confirmation. Cancelling at any step changes nothing.
+
+**Saving and backups.** The app states that changes are saved automatically on the current device, and distinguishes this from backups, which are external copies that can be restored. **Checkpoint 5 must include:** create a backup; restore from a backup; backup history; the date of the most recent successful external backup; optional backup reminders; and encouragement to create a backup before any destructive action. All previously approved privacy, import, export, and sharing safeguards still apply. Unbuilt backup features are never presented as working.
+
+**Typography.** Inter is used for the child's name and age on Home, the Journal heading, and the Settings “Profiles” heading. Fraunces is kept elsewhere pending the owner's choice between option A (as built) and option B (Inter for functional headings).
+
+**Blush theme.** Revised to a clearer baby pink: bg #FDE8F1, surface #FFF7FB, accent #F5A5C8, primary #A93669, text #492437. Earth remains the default.
+
+**Branding.** Five logo concepts are under review in `docs/branding/`. The production logo is unchanged until a replacement is approved.
+
+**Deployment.** The GitHub Pages workflow is manual-only (`workflow_dispatch` with a typed “deploy” confirmation). Pushing never publishes the app.
+
+**Language and UX standards (permanent, all remaining checkpoints).**
+- Use concise, natural, parent-friendly language, with clear and actionable labels.
+- Avoid technical terminology unless it is genuinely needed.
+- Don't explain functionality that is already intuitive; use contextual help where an explanation is genuinely needed.
+- Avoid visual clutter.
+- Never word developmental tracking like grading a child.
+- Remove temporary placeholder text when features ship. Keep any remaining placeholders concise and clearly marked as temporary.
+- Keep the necessary medical, privacy, source, age-calculation, and destructive-action disclosures.
+
+**Accessibility (added).** Every dialog traps focus and returns it to the opener. Radio groups use one Tab stop plus arrow keys. Popovers render through a portal and are sized to the visible viewport.
+
+---
+
 Legend:
 - ✅ **Full** — fully implemented in v1.
 - ⚠️ **Limited** — implemented with a real technical limitation, disclosed in the app and docs.
@@ -148,8 +193,8 @@ Rules: milestone status is never irreversible — every change writes a `milesto
 Screens:
 1. **Onboarding:** Welcome → DOB (required) → name/photo (optional) → "Was your child born early?" (optional corrected age) → theme picker (Earth default, live preview) → privacy & backup note → Home. *Second option on Welcome:* **"I have a file from a partner"** → partner-import flow [R2].
 2. **Home:** child header + age(s) · daily message · category meters · next appointments · goals/exercises due · recent achievements · quick actions.
-3. **Growth** [R2 revised]: view switcher **By age interval | Through current age | Goals & exercises | History** (details §6.4).
-4. **Calendar:** Month / Agenda · **four** toggles [R2]: Personal ● · Well-child visits (reference) ◆ · Vaccination references (reference) ✚ · Therapy & activities ▲ — color + shape + text · day sheet · event editor · reference-item detail · Family view.
+3. **Growth** [R4 order]: **Progress · Goals & Exercises · What to Expect at Every Age · Milestone Library**. The interval and cumulative views live under *What to Expect at Every Age*, and history is reached from Progress (details §6.4).
+4. **Calendar** [R4: opens directly to the current month, today highlighted, upcoming events below]: Month / Agenda · **four** toggles [R2]: Personal ● · Well-child visits (reference) ◆ · Vaccination references (reference) ✚ · Therapy & activities ▲ — color + shape + text · day sheet · event editor · reference-item detail · Family view.
 5. **Journal:** filter (All / Personal Reflections / Care Notes) · search · tags/date · editor with type dropdown.
 6. **Resources:** categories · message · news-source links · "needs internet" badges.
 7. **Profiles:** list, add, edit, delete (with backup-purge option, §6.14).

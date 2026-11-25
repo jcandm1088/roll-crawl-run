@@ -1,6 +1,6 @@
 import type { Child } from '../../../types';
 import type { RcrDB } from '../../../data/db';
-import { NO_CORRECTED_AGE, createChild, setChildPhoto, updateChild, type ChildInput } from '../../../data/repositories/childrenRepo';
+import { NO_CORRECTED_AGE, saveChildProfile, type ChildInput, type PhotoChange } from '../../../data/repositories/childrenRepo';
 import { evaluateCorrectedAge, type CorrectedAgeDraft, type PhotoDraft } from '../../components/ChildFields';
 
 export interface ChildDraft {
@@ -28,9 +28,9 @@ export function draftToInput(d: ChildDraft): { ok: true; input: ChildInput } | {
   };
 }
 
-export async function saveChild(db: RcrDB, deviceId: string, existingId: string | null, input: ChildInput, photo: PhotoDraft): Promise<Child> {
-  let child = existingId ? await updateChild(db, deviceId, existingId, input) : await createChild(db, deviceId, input);
-  if (photo.kind === 'new') child = await setChildPhoto(db, deviceId, child.id, { blob: photo.blob, width: photo.width, height: photo.height });
-  else if (photo.kind === 'remove' && child.photoId) child = await setChildPhoto(db, deviceId, child.id, null);
-  return child;
+/** Saves profile and photo together atomically (see saveChildProfile). */
+export async function saveChild(db: RcrDB, deviceId: string, id: string, input: ChildInput, photo: PhotoDraft): Promise<Child> {
+  const change: PhotoChange =
+    photo.kind === 'new' ? { kind: 'set', blob: photo.blob, width: photo.width, height: photo.height } : photo.kind === 'remove' ? { kind: 'remove' } : { kind: 'keep' };
+  return saveChildProfile(db, deviceId, { id, input, photo: change });
 }

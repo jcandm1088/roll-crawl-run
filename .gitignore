@@ -9,3 +9,4 @@ coverage/
 *.rcr.json
 backups/
 exports/
+.tmp-update-test/

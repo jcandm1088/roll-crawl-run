@@ -16,6 +16,7 @@ import type { CorrectedAgeSettings } from '../../types';
 import { Icon } from './Icon';
 import { Sheet } from './Sheet';
 import { resizePhoto } from '../photo';
+import { radioGroupKeyDown, rovingTabIndex } from '../a11y';
 
 export function ErrorText({ id, children }: { id: string; children: string }) {
   return (
@@ -152,14 +153,14 @@ export function CorrectedAgeFields({ dob, draft, onChange, showErrors }: { dob: 
     <div>
       <div class="field">
         <span class="label" id="early-label">Was your child born before their due date?</span>
-        <div role="radiogroup" aria-labelledby="early-label">
+        <div role="radiogroup" aria-labelledby="early-label" onKeyDown={radioGroupKeyDown}>
           {(
             [
               ['no', 'No, or I’d rather not use corrected age'],
               ['yes', 'Yes — I’d like to see corrected age'],
             ] as const
-          ).map(([value, text]) => (
-            <button type="button" key={value} class="choice" role="radio" aria-checked={draft.bornEarly === value} onClick={() => set({ bornEarly: value })}>
+          ).map(([value, text], i) => (
+            <button type="button" key={value} class="choice" role="radio" aria-checked={draft.bornEarly === value} tabIndex={rovingTabIndex(draft.bornEarly === value, i, draft.bornEarly !== null)} onClick={() => set({ bornEarly: value })}>
               <span>{text}</span>
               {draft.bornEarly === value && <span class="check"><Icon name="check" /></span>}
             </button>
@@ -232,14 +233,14 @@ export function CorrectedAgeFields({ dob, draft, onChange, showErrors }: { dob: 
           {evaluation.kind === 'ok' && (
             <div class="field" style={{ marginTop: 'var(--space-5)' }}>
               <span class="label" id="basis-label">Age to use for viewing milestones</span>
-              <div role="radiogroup" aria-labelledby="basis-label">
+              <div role="radiogroup" aria-labelledby="basis-label" onKeyDown={radioGroupKeyDown}>
                 {(
                   [
                     ['chronological', 'Chronological age (from date of birth)'],
                     ['corrected', 'Corrected age (from due date)'],
                   ] as const
-                ).map(([value, text]) => (
-                  <button type="button" key={value} class="choice" role="radio" aria-checked={draft.basis === value} onClick={() => set({ basis: value })}>
+                ).map(([value, text], i) => (
+                  <button type="button" key={value} class="choice" role="radio" aria-checked={draft.basis === value} tabIndex={rovingTabIndex(draft.basis === value, i, true)} onClick={() => set({ basis: value })}>
                     <span>{text}</span>
                     {draft.basis === value && <span class="check"><Icon name="check" /></span>}
                   </button>

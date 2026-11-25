@@ -20,3 +20,23 @@ export function isoDaysAgo(days: number): string {
   d.setDate(d.getDate() - days);
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
+
+/** From a profile's edit screen: open Advanced profile management and delete through both confirmation steps. */
+export async function deleteProfile(page: Page, phrase = 'DELETE PROFILE') {
+  await page.getByRole('button', { name: 'Advanced profile management' }).click();
+  await page.getByRole('button', { name: 'Delete this profile…' }).click();
+  const cont = page.getByRole('button', { name: 'Continue' });
+  await expect(cont).toBeDisabled();
+  await expect(page.getByRole('checkbox')).toBeChecked(); // remove from internal copies: checked by default
+  await page.getByLabel('Type DELETE PROFILE to continue').fill(phrase);
+  await cont.click();
+  await page.getByRole('button', { name: /^Yes, delete/ }).click();
+}
+
+export async function addChild(page: Page, name: string, dob: string) {
+  await page.goto('./#/profiles/new');
+  await page.getByLabel('Name or nickname (optional)').fill(name);
+  await page.getByLabel('Date of birth').fill(dob);
+  await page.getByRole('button', { name: 'Add child' }).click();
+  await expect(page.getByRole('navigation', { name: 'Main' })).toBeVisible();
+}

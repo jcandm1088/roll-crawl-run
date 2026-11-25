@@ -1,9 +1,15 @@
 name: Deploy to GitHub Pages
 
+# Deployment is MANUAL ONLY. Pushing to any branch never publishes the app.
+# To deploy: GitHub → Actions → "Deploy to GitHub Pages" → Run workflow,
+# then type "deploy" in the confirmation box.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "deploy" to publish the current main branch to GitHub Pages'
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -16,6 +22,7 @@ concurrency:
 
 jobs:
   build:
+    if: github.event_name == 'workflow_dispatch' && inputs.confirm == 'deploy' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

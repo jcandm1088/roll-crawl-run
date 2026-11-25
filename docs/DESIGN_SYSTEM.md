@@ -1,4 +1,4 @@
-# Design System (Checkpoint 1)
+# Design System (Checkpoint 1, revised after review)
 
 The source of truth for colors is `src/ui/theme/themes.ts`. Spacing, type, and component styles are in `src/ui/styles/base.css`.
 
@@ -14,28 +14,32 @@ Premium, warm, calm, and adult. Neutral backgrounds, one confident primary color
 
 | Token | Earth (default) | Sky | Blush | Lavender | Sage | Use |
 |---|---|---|---|---|---|---|
-| bg | #F6F0E8 | #F0F5F9 | #FAF2F2 | #F5F2FA | #F2F5EF | App background |
-| surface | #FFFCF7 | #FFFFFF | #FFFDFD | #FFFEFF | #FFFFFD | Cards, sheets |
-| surfaceSunken | #EEE5D9 | #E2ECF4 | #F3E3E5 | #E9E3F3 | #E3EBDF | Wells, segmented controls, meter tracks |
-| text | #2E241C | #1C2935 | #33222A | #2A2338 | #1F2B22 | Primary text |
-| textMuted | #67564A | #4B5E6F | #6C5260 | #5D5470 | #506053 | Secondary text (≥ 4.5:1) |
-| primary | #7A4F33 | #2D6290 | #97455F | #664C99 | #466749 | Buttons, links, active nav |
-| primaryPressed | #633F28 | #224D73 | #7A364C | #523C7D | #37523A | Pressed/hover |
+| bg | #F6F0E8 | #F0F5F9 | #FDE8F1 | #F5F2FA | #F2F5EF | App background |
+| surface | #FFFCF7 | #FFFFFF | #FFF7FB | #FFFEFF | #FFFFFD | Cards, sheets |
+| surfaceSunken | #EEE5D9 | #E2ECF4 | #F9D9E7 | #E9E3F3 | #E3EBDF | Wells, segmented controls, meter tracks |
+| text | #2E241C | #1C2935 | #492437 | #2A2338 | #1F2B22 | Primary text |
+| textMuted | #67564A | #4B5E6F | #7A4560 | #5D5470 | #506053 | Secondary text (≥ 4.5:1) |
+| primary | #7A4F33 | #2D6290 | #A93669 | #664C99 | #466749 | Buttons, links, active nav |
+| primaryPressed | #633F28 | #224D73 | #8C2A56 | #523C7D | #37523A | Pressed/hover |
 | onPrimary | #FFFFFF | #FFFFFF | #FFFFFF | #FFFFFF | #FFFFFF | Text on primary |
-| primarySoft | #EBDCCB | #D6E6F3 | #F2D8DF | #E2D9F2 | #DAE7D5 | Selected chips, badges, icon wells |
-| onPrimarySoft | #4A2F1E | #1B4366 | #6A2A40 | #432F6C | #2C4730 | Text on primarySoft |
-| accent | #C08A5E | #86B6D9 | #DDA0B2 | #B4A0D8 | #9BBB96 | Decorative only (logo path, swatches) |
-| border | #E6DACB | #DAE5EE | #EFDDE1 | #E4DCEF | #DCE5D7 | Card hairlines (decorative) |
-| borderStrong | #9C8471 | #73889C | #9A7C88 | #8E84A3 | #7F9282 | Input/control outlines (≥ 3:1) |
+| primarySoft | #EBDCCB | #D6E6F3 | #FAD0E2 | #E2D9F2 | #DAE7D5 | Selected chips, badges, icon wells |
+| onPrimarySoft | #4A2F1E | #1B4366 | #6E1F45 | #432F6C | #2C4730 | Text on primarySoft |
+| accent | #C08A5E | #86B6D9 | #F5A5C8 | #B4A0D8 | #9BBB96 | Decorative only (logo path, swatches) |
+| border | #E6DACB | #DAE5EE | #F3D2E1 | #E4DCEF | #DCE5D7 | Card hairlines (decorative) |
+| borderStrong | #9C8471 | #73889C | #A86E8A | #8E84A3 | #7F9282 | Input/control outlines (≥ 3:1) |
 | focus | = primary | = primary | = primary | = primary | = primary | Focus ring |
 | navBg | = surface | = surface | = surface | = surface | = surface | Bottom navigation |
-| shadow | rgba(74,47,30,.08) | rgba(28,41,53,.08) | rgba(51,34,42,.08) | rgba(42,35,56,.08) | rgba(31,43,34,.08) | Tinted soft shadows |
+| shadow | rgba(74,47,30,.08) | rgba(28,41,53,.08) | rgba(73,36,55,.08) | rgba(42,35,56,.08) | rgba(31,43,34,.08) | Tinted soft shadows |
 
 Child profile colors are the same in every theme and always sit under a white initial (≥ 4.5:1): Clay #9A5B3C, Ocean #2F6A8A, Rose #A24B67, Plum #6D4F96, Moss #4E6B3F, Slate #4F5B66.
+
+**Blush was revised at the Checkpoint 1 review** toward a clearer baby pink. The reviewer's proposed values (bg, surface, accent, primary, text) were kept exactly; the other tokens were derived from them. The previous Blush values are in git history (commit a4e12b5).
 
 Contrast is checked automatically in `tests/unit/themes.test.ts`: WCAG AA 4.5:1 for text pairs and 3:1 for controls, focus, and meter fills.
 
 ## Typography
+**Revision (Checkpoint 1 review):** Fraunces produced undesirable letterforms in some headings (J, f), so Inter 600 is now used for the child's name on Home (22px), the child's age on Home (18px, weight 500), the Journal heading, and the Settings “Profiles” heading. Fraunces remains elsewhere. An alternative, option B (Inter for all functional headings, with Fraunces only for the wordmark, the welcome screen, and top-bar titles), is shown in `docs/screenshots/checkpoint-1-review/compare/typography-A-vs-B.png` and has **not** been adopted.
+
 | Role | Font | Size / line height |
 |---|---|---|
 | Display / screen title | Fraunces 500 | 28px / 1.2 (onboarding wordmark 36px) |
@@ -63,7 +67,15 @@ Fonts are self-hosted (latin subset, woff2) and work offline.
 - **Sheets:** bottom sheets on phones and centered dialogs on wider screens. They close with Escape or a tap on the dimmed background.
 - **Icons:** Lucide line icons at a 1.75px stroke, 22–24px.
 
+## Components added at the Checkpoint 1 review
+- **Child selector popover:** a dropdown that opens downward from just below the top bar, level with the top of the profile card. It is left-aligned to the chip, at most 360px wide, and its height is limited to the visible space below it, with the list scrolling inside. It is rendered through a portal into `<body>`, so no ancestor can affect its position. It traps focus, starting on the current child; arrow keys move between children, Enter selects, and Escape closes and returns focus to the chip.
+- **Accordion:** a full-width header button containing the title (Fraunces), a one-line summary, and a chevron that rotates 180° when open. It uses `aria-expanded` and `aria-controls`, and the panel is a labelled region. Accordions are collapsed by default and several can be open at once. The *subtle* variant (small Inter 600 muted title, hairline divider) is used for the “Advanced …” sections.
+- **Quiet button (`btn-quiet`):** a transparent button with muted text and a hairline border. It is the entry point for destructive actions until the person deliberately continues.
+- **Two-step destructive dialogs:** step 1 explains the consequences and requires a typed phrase; step 2 asks for a separate final confirmation. Cancel is always the filled primary button and is listed first.
+- **Corrected-age tag:** a small muted pill reading “corrected” next to the corrected age on Home. Standard age has no label.
+- **Sheets** now also render through a portal and trap focus.
+
 ## Motion & accessibility
 - Screens fade and rise slightly on entry (240ms), sheets slide up, and theme colors cross-fade. All motion is disabled under `prefers-reduced-motion`.
 - Layouts respect safe areas (`viewport-fit=cover` with `env(safe-area-inset-*)` padding).
-- Touch targets are at least 48px. The focus ring is 3px in the theme's focus color.
+- Touch targets are at least 48px. Radio groups have one Tab stop and support arrow, Home, and End keys. The focus ring is 3px in the theme's focus color.

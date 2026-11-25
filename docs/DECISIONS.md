@@ -36,3 +36,21 @@ Short records in the format context → decision → consequences. The full appr
 13. **Content Security Policy** in production: `default-src 'self'`, with no external scripts, fonts, or connections. `style-src` allows inline styles because the components set them.
 14. **Storage persistence** is requested once, when the parent taps "Start using the app" (a user action). Its status is shown in Settings → Storage, and the app works whether or not it's granted.
 15. **Placeholders.** Features from later checkpoints appear only as dashed "Not available yet · Checkpoint N" cards and rows, and they can't be activated.
+
+## Checkpoint 1 review decisions
+Details are in `docs/reviews/CHECKPOINT_1_REVIEW.md`.
+
+16. **Popovers and dialogs render through a portal** (`preact/compat` `createPortal`, part of the existing `preact` package, so no new dependency). This fixes the child-selector defect: the blurred top bar could become the positioning container for fixed-position content.
+17. **The child selector is a downward dropdown** anchored below the top bar, not a centered dialog. Its height is limited to the viewport and the list scrolls inside.
+18. **Focus management:** `useFocusTrap` (a layout effect) is used for every dialog, and roving-tabindex radio groups with arrow keys are used everywhere.
+19. **Atomic profile save:** profile and photo are written in a single transaction, using a per-form ID so retries don't create duplicates.
+20. **Two-step destructive actions,** placed in collapsed “Advanced …” sections. Profile deletion requires typing DELETE PROFILE; reset requires RESET. Cancel is the primary button. *(This supersedes the original single-step DELETE confirmation.)*
+21. **Settings accordions:** Profiles and Appearance stay expanded; Your Data, Calendar & Reminders, This Device, and About are collapsed by default.
+22. **Typography option A:** selective Inter for the specific headings named in the review. Option B is pending the owner's decision.
+23. **Blush revised** to the reviewer's baby-pink palette.
+24. **Deployment is manual-only,** using `workflow_dispatch` with a typed confirmation.
+25. **Route re-sync** when the hash listener attaches, to close a timing gap found by the test suite.
+26. **Growth section order and names are permanent:** Progress, Goals & Exercises, What to Expect at Every Age, Milestone Library.
+27. **The Calendar tab opens directly to the current month** (a Checkpoint 3 requirement).
+28. **Backup requirements added to Checkpoint 5:** create, restore, history, last successful backup date, reminders, and a prompt to back up before destructive actions.
+29. **Language and UX standards** recorded in the development plan (R4).

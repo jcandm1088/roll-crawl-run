@@ -19,7 +19,7 @@ function serviceWorkerPlugin(): Plugin {
       const files = Object.keys(bundle).filter((f) => !f.endsWith('.map') && !f.endsWith('.woff'));
       const publicFiles = ['manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png', 'icons/apple-touch-icon.png', 'icons/favicon.svg'];
       const precache = ['./', ...files, ...publicFiles].map((f) => (f === './' ? f : `./${f}`));
-      const hash = createHash('sha256').update(pkg.version).update(files.sort().join('|'));
+      const hash = createHash('sha256').update(pkg.version).update(process.env['RCR_BUILD_TAG'] ?? '').update(files.sort().join('|'));
       for (const f of files) {
         const item = bundle[f]!;
         hash.update(item.type === 'chunk' ? item.code : typeof item.source === 'string' ? item.source : Buffer.from(item.source));
@@ -63,7 +63,8 @@ export default defineConfig({
   base: './',
   plugins: [preact(), cspPlugin(), serviceWorkerPlugin()],
   define: {
-    __APP_VERSION__: JSON.stringify(pkg.version),
+    // RCR_BUILD_TAG is only used by the automated update test to produce two distinct builds.
+    __APP_VERSION__: JSON.stringify(process.env['RCR_BUILD_TAG'] ? `${pkg.version}+${process.env['RCR_BUILD_TAG']}` : pkg.version),
   },
   build: {
     target: 'es2020',

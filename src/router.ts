@@ -71,6 +71,11 @@ export function useRoute(): Route {
       window.scrollTo(0, 0);
     };
     window.addEventListener('hashchange', onChange);
+    // The hash may have changed between the first render and this listener being attached.
+    setRoute((current) => {
+      const latest = parseHash(window.location.hash);
+      return JSON.stringify(latest) === JSON.stringify(current) ? current : latest;
+    });
     return () => window.removeEventListener('hashchange', onChange);
   }, []);
   return route;
