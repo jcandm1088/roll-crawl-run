@@ -1,0 +1,11 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+coverage/
+*.log
+.DS_Store
+# Personal data must never be committed: exports and backups
+*.rcr.json
+backups/
+exports/
