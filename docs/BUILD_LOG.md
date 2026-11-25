@@ -45,3 +45,16 @@ Maintained by the student. Each entry records what was asked of Claude Code, wha
 **What it produced:** Per-child themes stored on the device, with a safe migration of existing profiles to schema v2. Shared heading styles and a single page-heading component (Inter). The approved logo, used everywhere including the installed icons. Confirmed and fixed both technical issues. New unit tests, end-to-end tests, and an update test that installs the actual previous version and upgrades it. See `docs/reviews/CHECKPOINT_1_FINAL.md`.
 **What I corrected or redirected:** The typography inconsistency (Journal heading), the request for per-child themes, and the logo choice.
 **Notes / next steps:** A third hands-on review; then approval of Checkpoint 1 and the decision about network access to sources for Checkpoint 2.
+
+## Draft entry — Precise age display (drafted by Claude Code from the owner's report; edit before submitting)
+**Date:**
+**What I asked Claude Code to do:** During my final acceptance testing I found that Home showed ages only in months and days (a 2-year-3-month-old appeared as “27 months”). I asked for the precise age to the calendar day, in years, months, and days, updating automatically when the date changes.
+**What it produced:**
+- One central precise-age formatter reusing the existing calendar calculation, used on Home, the profile list, and the forms.
+- A live “today” that updates at midnight and when the app resumes.
+- Unit and end-to-end tests covering every requested case.
+- Screenshots of several age groups.
+
+Developmental groupings and the database were unchanged. See `docs/reviews/CHECKPOINT_1_PRECISE_AGE.md`.
+**What I corrected or redirected:** The age display usability defect I observed.
+**Notes / next steps:** Re-check on my Mac; approve Checkpoint 1.

@@ -21,7 +21,7 @@ Short records in the format context → decision → consequences. The full appr
 - **Q1–Q11** As approved, including: well-child visit references on by default; vaccination references off until a source is chosen; device label blank by default; purge-from-backups checked by default; and five internal backup snapshots kept.
 
 ## Checkpoint 1 implementation decisions
-1. **Age calculation rule.** Age is a calendar difference. A monthly anniversary that doesn't exist falls on the last day of that month, so Jan 31 → Feb 28/29, and a Feb 29 birthday counts on Feb 28 in non-leap years. Display: days or weeks under 1 month, months and days under 2 years, then years and months.
+1. **Age calculation rule.** Age is a calendar difference. A monthly anniversary that doesn't exist falls on the last day of that month, so Jan 31 → Feb 28/29, and a Feb 29 birthday counts on Feb 28 in non-leap years. *(The original compact display rule was superseded for personal ages by decision 39.)*
 2. **Date handling.** Dates are stored as `YYYY-MM-DD` strings and computed with UTC arithmetic, so time zones and daylight-saving changes can't shift a date. "Today" is the device's local calendar date.
 3. **Date of birth input limits.** Empty, impossible (for example Feb 30), and future dates are rejected. Dates before 1900-01-01 are also rejected, as a typo guard (D7: "any valid past date").
 4. **Corrected-age input limits (Q4, provisional).** Weeks at birth: 20w0d–41w6d. Due date: after the date of birth and at most 20 weeks (140 days) after it. 40 weeks or later, or a due date on or before the birth date, means "doesn't apply" (an explanation, not an error). These limits only catch typing mistakes; they are **not clinical guidance**, and the UI says so. Out-of-range input is rejected with an explanation and left exactly as typed. *No clinical source was consulted, because source sites were unreachable from the build environment (see SOURCE_REGISTER).*
@@ -67,3 +67,8 @@ Details are in `docs/reviews/CHECKPOINT_1_FINAL.md`.
 36. **The child selector has no minimum height**; it moves up in short windows and the whole panel scrolls.
 37. **Icon cache busting:** `?v=2` on icon URLs, and public files are included in the service-worker cache version.
 38. **App version raised to 0.1.1.** No dependencies were added. `package.json` changed only in its version number.
+
+## Precise age display
+39. **Personal ages use `formatPreciseAge()`:** years, months, and days, with zero parts omitted and no weeks or rounding. It replaces the compact format on Home, the profile list, and the forms. The compact `formatAge()` remains only for developmental/internal labels. *(This fixes a usability defect found in the owner's acceptance testing.)*
+40. **`useToday()` keeps the date current:** a timer at local midnight, a re-check on resume (visibility, focus, pageshow), and a once-a-minute fallback.
+41. **Age text wraps only between parts**, so a single part such as “5 days” is never split across lines.

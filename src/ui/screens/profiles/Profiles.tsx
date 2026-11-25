@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'preact/hooks';
 import { useApp } from '../../../state/app';
 import { href, navigate } from '../../../router';
-import { ageBetween, formatAge, validateDob } from '../../../domain/age';
+import { ageBetween, formatPreciseAge, validateDob } from '../../../domain/age';
+import { useToday } from '../../../state/today';
 import { formatLongDate, todayLocal } from '../../../domain/dates';
 import { newId } from '../../../data/envelope';
 import { Accordion } from '../../components/Accordion';
@@ -20,7 +21,7 @@ import { EMPTY_CORRECTED, draftToInput, saveChild, type ChildDraft } from './sav
 
 export function ProfilesList() {
   const { children, activeChild, setActiveChild } = useApp();
-  const today = todayLocal();
+  const today = useToday();
   return (
     <div>
       <p class="muted small" style={{ margin: 'var(--space-2) var(--space-1) var(--space-4)' }}>
@@ -33,7 +34,7 @@ export function ProfilesList() {
               <Avatar child={c} size={44} />
               <span class="grow">
                 <span class="title-3" style={{ display: 'block' }}>{childDisplayName(c)}</span>
-                <span class="small muted">{formatAge(ageBetween(c.dob, today))}</span>
+                <span class="small muted">{formatPreciseAge(ageBetween(c.dob, today))}</span>
               </span>
               {c.id === activeChild?.id ? (
                 <span class="badge">Viewing</span>

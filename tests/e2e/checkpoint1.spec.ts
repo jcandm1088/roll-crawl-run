@@ -44,7 +44,7 @@ test('name, photo, and corrected age before the due date', async ({ page }) => {
   await page.getByRole('button', { name: 'Continue' }).click();
   await page.getByRole('button', { name: 'Start using the app' }).click();
 
-  await expect(page.getByTestId('chronological-age')).toHaveText('1 week, 3 days');
+  await expect(page.getByTestId('chronological-age')).toHaveText('10 days'); // precise: days, never weeks
   // 30w0d at birth → due 70 days after birth; 10 days old → 60 days (8 weeks, 4 days) before due date.
   await expect(page.getByTestId('corrected-age')).toHaveText('8 weeks, 4 days before due date');
   await expect(page.getByText('corrected', { exact: true })).toBeVisible();

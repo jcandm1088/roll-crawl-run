@@ -1,6 +1,8 @@
+import { Fragment } from 'preact';
 import { useApp } from '../../../state/app';
-import { ageBetween, correctedAge, formatAge, formatBeforeDueDate } from '../../../domain/age';
-import { formatLongDate, todayLocal } from '../../../domain/dates';
+import { ageBetween, correctedAge, formatBeforeDueDate, formatPreciseAge } from '../../../domain/age';
+import { useToday } from '../../../state/today';
+import { formatLongDate } from '../../../domain/dates';
 import { Avatar, childDisplayName } from '../../components/Avatar';
 import { Icon } from '../../components/Icon';
 import { PlaceholderCard } from '../../components/Placeholder';
@@ -12,16 +14,34 @@ import type { Child } from '../../../types';
  * label. When corrected age is turned on for this child, it is shown as a
  * second, quieter line marked "corrected"; details live in the profile.
  */
+/** Lets a long age wrap only between its parts ("1 year, 6 months, | 5 days"), never inside one. */
+function AgeParts({ text }: { text: string }) {
+  const parts = text.split(', ');
+  return (
+    <>
+      {parts.map((p, i) => (
+        <Fragment key={i}>
+          <span style={{ whiteSpace: 'nowrap' }}>
+            {p}
+            {i < parts.length - 1 ? ',' : ''}
+          </span>
+          {i < parts.length - 1 ? ' ' : ''}
+        </Fragment>
+      ))}
+    </>
+  );
+}
+
 export function AgeSummary({ child }: { child: Child }) {
-  const today = todayLocal();
-  const chrono = formatAge(ageBetween(child.dob, today));
+  const today = useToday(); // updates when the local date changes, including after resuming
+  const chrono = formatPreciseAge(ageBetween(child.dob, today));
   const corrected = child.correctedAge.enabled ? correctedAge(child.dob, child.correctedAge.dueDate, today) : null;
   return (
     <div class="stack" style={{ marginTop: 0 }}>
-      <p class="child-age" data-testid="chronological-age">{chrono}</p>
+      <p class="child-age" data-testid="chronological-age"><AgeParts text={chrono} /></p>
       {corrected && corrected.status !== 'notApplicable' && (
         <p class="child-age-secondary">
-          <span data-testid="corrected-age">{corrected.status === 'corrected' ? formatAge(corrected.age) : formatBeforeDueDate(corrected)}</span>
+          <span data-testid="corrected-age"><AgeParts text={corrected.status === 'corrected' ? formatPreciseAge(corrected.age) : formatBeforeDueDate(corrected)} /></span>
           <span class="tag-mini">corrected</span>
         </p>
       )}

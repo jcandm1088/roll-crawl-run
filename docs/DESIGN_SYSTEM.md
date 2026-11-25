@@ -50,7 +50,7 @@ Contrast is checked automatically in `tests/unit/themes.test.ts`: WCAG AA 4.5:1 
 | Section heading, sheet title, accordion title | `.title-2`, `.accordion-title` (`--h2-*`) | Inter 20px / 600 / 1.3 / −0.015em |
 | Top-bar screen title (Settings, profiles) | `.topbar-title` (`--h2-*`) | Inter 20px / 600 / 1.3 / −0.015em |
 | Child's name on Home | `.child-name` | Inter 20px / 600 |
-| Child's age on Home | `.child-age` | Inter 18px / 500 |
+| Child's age on Home (precise: “2 years, 3 months, 14 days”; wraps only between parts) | `.child-age` | Inter 18px / 500 |
 | Card title | `.title-3` | Inter 18px / 600 / 1.35 |
 | Body | — | Inter 16px / 400 / 1.5 |
 | Secondary | `.small` | Inter 14px / 400 / 1.45 |

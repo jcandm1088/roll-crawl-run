@@ -24,6 +24,15 @@
 
 ---
 
+## R6 — Precise personal age (Checkpoint 1, owner acceptance testing)
+- **Personal age**, wherever the app shows a child's own age (Home, profiles, forms), is precise to the calendar day: completed years, remaining months, remaining days, with zero parts omitted, “0 days” at birth, and no weeks, rounding, or ranges.
+- One formatter is used for all of these: `formatPreciseAge()`.
+- The displayed age stays current across local midnight and when the app resumes.
+- **Developmental groupings** (intervals, milestone reference ages, eligibility) are separate and unchanged. Growth, Goals & Exercises, What to Expect at Every Age, and the Milestone Library may use age groupings as designed.
+- Details: `docs/reviews/CHECKPOINT_1_PRECISE_AGE.md`.
+
+---
+
 ## R5 — Checkpoint 1 final refinement (supersede conflicting text below)
 
 The owner tested the revised build in Safari on their Mac and confirmed the selector fix. Details are in `docs/reviews/CHECKPOINT_1_FINAL.md`.

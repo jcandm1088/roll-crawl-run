@@ -5,7 +5,7 @@ import {
   ageBetween,
   correctedAge,
   dueDateFromGestationalAge,
-  formatAge,
+  formatPreciseAge,
   formatBeforeDueDate,
   validateDob,
   validateDueDate,
@@ -53,7 +53,7 @@ export function DobField({ value, onInput, showError, label = 'Date of birth' }:
       {invalid && !validation.ok && <ErrorText id="dob-error">{validation.message}</ErrorText>}
       {value && validation.ok && (
         <p class="hint" id="dob-age" aria-live="polite">
-          Age today: <strong style={{ color: 'var(--text)' }}>{formatAge(ageBetween(value, today))}</strong>
+          Age today: <strong style={{ color: 'var(--text)' }}>{formatPreciseAge(ageBetween(value, today))}</strong>
         </p>
       )}
     </div>
@@ -267,9 +267,9 @@ function CorrectedPreview({ dob, dueDate, today, showDueDate }: { dob: string; d
         </>
       )}
       <dt>Chronological age</dt>
-      <dd>{formatAge(ageBetween(dob, today))}</dd>
+      <dd>{formatPreciseAge(ageBetween(dob, today))}</dd>
       <dt>Corrected age</dt>
-      <dd>{c.status === 'corrected' ? formatAge(c.age) : c.status === 'beforeDueDate' ? formatBeforeDueDate(c) : '—'}</dd>
+      <dd>{c.status === 'corrected' ? formatPreciseAge(c.age) : c.status === 'beforeDueDate' ? formatBeforeDueDate(c) : '—'}</dd>
     </dl>
   );
 }

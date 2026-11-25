@@ -44,6 +44,8 @@ Leave results blank until a test has actually been run, and record them exactly 
 | Consistent primary headings; Inter everywhere except the wordmark | tests/e2e/final-refinement.spec.ts | | |
 | Focus trap skips tabindex=-1 radios; Shift+Tab cannot escape | tests/e2e/final-refinement.spec.ts | | |
 | Selector in short and landscape windows; no fixed minimum height | tests/e2e/final-refinement.spec.ts | | |
+| Precise age formatting: newborn, under 1 month, under 1 year, first birthday, 1–2 years, older, exact birthdays, leap days, month-ends, corrected, plurals, zero parts, date change, midnight scheduling | tests/unit/preciseAge.test.ts | | |
+| Precise ages on Home across age groups; profile list; leap-day birthday; corrected; pre-due-date unchanged; midnight while open; resume after suspension | tests/e2e/precise-age.spec.ts | | |
 
 ## Manual: Checkpoint 1 (physical phone required where noted)
 | # | Check | Device / browser | Date | Result | Notes |
@@ -91,3 +93,9 @@ Leave results blank until a test has actually been run, and record them exactly 
 | F5 | New logo on the welcome screen, top bar, and browser tab | | | | |
 | F6 | Installed icon (where installed): new logo appears, or note if a reinstall is needed | Phone | | | |
 | F7 | Child selector in a very short Safari window | Mac · Safari | | | |
+
+## Manual: precise age (acceptance)
+| # | Check | Device / browser | Date | Result | Notes |
+|---|---|---|---|---|---|
+| A1 | A child over 2 years shows years, months, and days (not “27 months”) | Mac · Safari | | | Defect originally observed by the owner |
+| A2 | Leave the app open past midnight, or reopen it the next morning: the age has advanced by one day | | | | |

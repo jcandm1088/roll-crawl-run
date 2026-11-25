@@ -40,3 +40,6 @@ Updated at Checkpoint 1 final refinement. Items marked *(planned)* are scheduled
 - **Themes are per device:** each child's theme is saved on this device only. When backups and partner sharing arrive (Checkpoint 5), themes will follow the rules in the development plan (R5).
 - **In-app logo contrast:** in the Blush, Sky, and Sage themes, the child figure (accent color) has low contrast against the soft background. As a decorative logo it is exempt from WCAG contrast rules, and the installed icons use the higher-contrast brand colors.
 - **Per-child themes, typography, logo, and the two technical fixes are verified only in automated headless Chromium** and in screenshots. Nothing here has been tested in Safari or on a physical device beyond the owner's selector check.
+
+## Precise age display
+- The date-change and resume behavior was verified with Playwright's simulated clock in Chromium, not on a physical device or in Safari. On some phones a suspended app may receive the resume event only when it is reopened; the age then updates at that moment.

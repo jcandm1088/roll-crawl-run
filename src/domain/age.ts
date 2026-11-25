@@ -56,7 +56,23 @@ function plural(n: number, unit: string): string {
 }
 
 /**
- * Human-friendly age:
+ * PRECISE personal age, to the calendar day: completed years, remaining
+ * months, remaining days (e.g. "2 years, 3 months, 14 days").
+ * - Years start at the first birthday ("1 year, 6 months, 5 days", never "18 months").
+ * - Zero-valued parts are omitted ("2 years", "3 years, 1 day").
+ * - Never uses weeks, rounding, or ranges. On the date of birth: "0 days".
+ * Used wherever the app shows a child's own age (Home, profiles, forms).
+ */
+export function formatPreciseAge(age: Pick<Age, 'years' | 'months' | 'days'>): string {
+  const parts: string[] = [];
+  if (age.years > 0) parts.push(plural(age.years, 'year'));
+  if (age.months > 0) parts.push(plural(age.months, 'month'));
+  if (age.days > 0) parts.push(plural(age.days, 'day'));
+  return parts.length === 0 ? '0 days' : parts.join(', ');
+}
+
+/**
+ * Compact age used for developmental groupings (not for personal age display):
  * - under 1 month: weeks and days ("2 weeks, 3 days") or days
  * - under 2 years: months and days ("7 months, 12 days")
  * - 2 years and older: years and months ("3 years, 4 months")
