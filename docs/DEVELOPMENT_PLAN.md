@@ -1,6 +1,6 @@
 # Development Plan — Roll, Crawl, RUN: Tracking Growth Together (Revision 2)
 
-> **Current status (end of Checkpoint 1):**
+> **Current status:** Checkpoint 2a has been implemented locally and is awaiting the owner's review (see R9); it is not pushed or deployed. Status at the end of Checkpoint 1:
 > - Checkpoint 1 is implemented, **accepted** after the owner's Mac Safari testing, and **deployed** at https://jcandm1088.github.io/roll-crawl-run/ (repository: https://github.com/jcandm1088/roll-crawl-run).
 > - The owner's physical iPhone checks passed: install, launches, persistence, and offline launch and navigation.
 > - Checkpoints 2–6 are not implemented.
@@ -25,6 +25,31 @@
 **Visual direction (CP1):** premium, warm, calm, adult-oriented; no cartoon imagery, not clinical, not generic dashboard. Five cohesive theme systems (Earth default, Sky, Blush, Lavender, Sage) sharing typography, spacing, iconography, components, buttons, navigation. Fraunces (display) + Inter (UI), subject to review. Initial app icon + wordmark preserving "Roll, Crawl, RUN: Tracking Growth Together". Safe-area insets, ≥44–48px targets.
 
 **Checkpoint 1 build list:** scaffold (Vite/TS/Preact, Vitest, Playwright); fonts self-hosted (fetched from npm `@fontsource` packages, OFL); icon/wordmark (SVG → PNG sizes generated with Playwright); design tokens + 5 themes + contrast test; app shell (top bar with child chip + settings, bottom nav, hash router); placeholder tabs clearly labeled "Coming in a later checkpoint"; onboarding (DOB, name/photo, corrected age, theme, privacy); profiles create/edit/switch/delete (typed confirmation; backup purge option present but backups feature labeled pending); age domain (chronological + corrected with safeguards); IndexedDB schema v1 for all planned stores with logical-key indexes and atomic transaction helper; repositories for meta/settings/children/photos; storage-persistence status; privacy disclosures in Settings; manifest + basic service worker (precache, update banner); unit + e2e tests; mobile screenshots via Playwright at deviceScaleFactor 2; docs skeletons (README, BUILD_LOG template, TESTING_CHECKLIST, KNOWN_LIMITATIONS, DECISIONS, SOURCE_REGISTER). Code lives in `/home/user/roll-crawl-run` (git init locally; no push until you provide the remote).
+
+---
+
+## R9 — Checkpoint 2a: Verified Milestone Tracking (implemented; awaiting owner review)
+- **Scope built:**
+  - the verified 159-item CDC library
+  - What to Expect at Every Age
+  - milestone detail (status, dates, notes, observations, history, date corrections, hide/restore, personal versions)
+  - Progress
+  - live Home cards and the "Record a milestone" quick action
+  - Milestone Viewing Preferences in Settings
+- **Still placeholders:** Goals & Exercises (Checkpoint 2b), Calendar, Journal, Resources.
+- **Checkpoint 2b remains separate** and needs the owner's explicit approval. Its supporting activities will come from verified CDC tips.
+- **Intervals:** the current interval now uses the same rule as milestone placement (start < age ≤ end, in completed calendar months), so milestones that have just become applicable never disappear at a boundary. Age 0 (or no milestone age yet) → 0–3 months; ages over 60 months → 57–60 months.
+- **Milestone age:** chronological by default; corrected only when the child's existing corrected-age preference is on and selected. Before a corrected due date it has no value, and nothing applies. No clinical cutoffs.
+- **Progress:** achieved ÷ applicable, counting only visible sourced milestones (reference age ≤ milestone age).
+  - Emerging gets no credit; future and hidden milestones are excluded, and personal versions are separate.
+  - Neutral states: "Nothing to track yet" and "All hidden".
+  - Interval and cumulative figures are labelled separately, and Home always uses the actual milestone age.
+- **History:** append-only events carrying an event date, a recording timestamp (always increasing), from/to status and dates, device, age-basis snapshot, hidden-at-time and status-after.
+  - Checkpoint 2b charts will use `stateAsRecordedAt()`, which shows what had been recorded at each moment, and will show corrections as separate entries.
+- **Observations:** removal adds a marker and keeps the text; a two-step "Erase permanently" overwrites the text in storage. Profile deletion and app reset remove everything.
+- **No schema change:** existing stores only (database version 2). All multi-record writes are atomic.
+- **Sources:** CDC only. AAP and HealthyChildren are excluded; Pathways.org may not be collected until its terms are approved. See `docs/reviews/CHECKPOINT_2A_SOURCE_VERIFICATION.md`.
+- **Effect on Checkpoint 3:** the plan's well-child (AAP/Bright Futures) and AAP vaccine-schedule sources are blocked by the AAP exclusion and need an owner decision before Checkpoint 3.
 
 ---
 

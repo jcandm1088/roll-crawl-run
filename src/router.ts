@@ -7,6 +7,11 @@ import { useEffect, useState } from 'preact/hooks';
 export type Route =
   | { name: 'home' }
   | { name: 'growth' }
+  | { name: 'growthProgress' }
+  | { name: 'growthExpect'; interval: number | null; view: 'interval' | 'all' }
+  | { name: 'growthLibrary' }
+  | { name: 'growthAbout' }
+  | { name: 'growthMilestone'; key: string }
   | { name: 'calendar' }
   | { name: 'journal' }
   | { name: 'resources' }
@@ -27,6 +32,16 @@ export function parseHash(hash: string): Route {
     case 'home':
       return { name: 'home' };
     case 'growth':
+      if (b === 'progress') return { name: 'growthProgress' };
+      if (b === 'library') return { name: 'growthLibrary' };
+      if (b === 'about') return { name: 'growthAbout' };
+      if (b === 'milestone' && parts[2]) return { name: 'growthMilestone', key: decodeURIComponent(parts[2]) };
+      if (b === 'expect') {
+        if (parts[2] === 'all') return { name: 'growthExpect', interval: null, view: 'all' };
+        const n = parts[2] === undefined ? null : Number(parts[2]);
+        return { name: 'growthExpect', interval: n !== null && Number.isInteger(n) && n >= 0 && n < 20 ? n : null, view: 'interval' };
+      }
+      return { name: 'growth' };
     case 'calendar':
     case 'journal':
     case 'resources':
@@ -52,6 +67,16 @@ export function href(route: Route): string {
       return `#/settings/${route.name}`;
     case 'profileNew':
       return '#/profiles/new';
+    case 'growthProgress':
+      return '#/growth/progress';
+    case 'growthLibrary':
+      return '#/growth/library';
+    case 'growthAbout':
+      return '#/growth/about';
+    case 'growthMilestone':
+      return `#/growth/milestone/${encodeURIComponent(route.key)}`;
+    case 'growthExpect':
+      return route.view === 'all' ? '#/growth/expect/all' : route.interval === null ? '#/growth/expect' : `#/growth/expect/${route.interval}`;
     case 'profileEdit':
       return `#/profiles/${encodeURIComponent(route.id)}`;
     default:

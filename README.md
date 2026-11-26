@@ -2,13 +2,16 @@
 
 A private, local-first, installable web app (PWA) that helps parents document their child's development, appointments, and reflections. It runs entirely in the browser: no account, no server, no analytics, and no AI.
 
-> **Status: Checkpoint 1 accepted and deployed.**
+> **Status: Checkpoint 2a (verified CDC milestone tracking) is implemented locally and awaiting the owner's review; it is not yet deployed.** The live site runs Checkpoint 1.
+>
+> **Checkpoint 1: accepted and deployed.**
 > - **Live app:** https://jcandm1088.github.io/roll-crawl-run/
 > - **Repository:** https://github.com/jcandm1088/roll-crawl-run
 > - **Owner's hands-on testing:** Mac Safari acceptance passed. On a physical iPhone, Home Screen install, later launches, local persistence, and offline launch and navigation passed. The first iPhone load showed a one-time “server not responding” delay whose cause has not been established.
-> - **Automated tests:** 185 unit and 80 end-to-end tests pass in headless Chromium.
+> - **Automated tests:** 228 unit and 111 end-to-end tests pass in headless Chromium (Checkpoint 2a; the Checkpoint 1 baseline was 185 and 80).
 > - **Built so far:** branding, per-child themes, navigation, onboarding, profiles, precise and corrected age, local storage, and an offline PWA shell.
-> - **Not yet built:** Checkpoints 2–6 (Growth, Calendar, Journal, Resources, sharing, reports); these appear as labeled placeholders.
+> - **Checkpoint 2a (local):** Growth with Progress, What to Expect at Every Age, the Milestone Library (159 CDC milestones), milestone history, and personal versions.
+> - **Not yet built:** Checkpoint 2b (Goals & Exercises, charts) and Checkpoints 3–6 (Calendar, Journal, Resources, sharing, reports); these appear as labeled placeholders.
 > - See `docs/HANDOFF.md`.
 
 ## Important limitations

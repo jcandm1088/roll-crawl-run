@@ -4,18 +4,43 @@ Every developmental or medical item in the app must trace to a row here. Before 
 
 | Source ID | Organization | Title | URL | Version / publication date | Retrieved | Content used | Verification notes | Usage terms / basis |
 |---|---|---|---|---|---|---|---|---|
-| — | — | — | — | — | — | — | — | — |
+| `cdc-ltsae-2-months` | CDC | Milestones by 2 Months | https://www.cdc.gov/act-early/milestones/2-months.html | Content last reviewed 2026-05-15 (page updated 2026-05-16; first published 2025-09-04); milestone revision Feb 2022 | 2026-11-26 | Milestone text, CDC category, reference age (verbatim) | Parsed programmatically; compared with printable checklist (see review) | U.S. Government public domain; CDC reuse conditions applied |
+| `cdc-ltsae-4-months` | CDC | Milestones by 4 Months | https://www.cdc.gov/act-early/milestones/4-months.html | Content last reviewed 2026-05-15 (page updated 2026-05-16; first published 2025-09-04); milestone revision Feb 2022 | 2026-11-26 | Milestone text, CDC category, reference age (verbatim) | Parsed programmatically; compared with printable checklist (see review) | U.S. Government public domain; CDC reuse conditions applied |
+| `cdc-ltsae-6-months` | CDC | Milestones by 6 Months | https://www.cdc.gov/act-early/milestones/6-months.html | Content last reviewed 2026-05-15 (page updated 2026-05-16; first published 2025-09-04); milestone revision Feb 2022 | 2026-11-26 | Milestone text, CDC category, reference age (verbatim) | Parsed programmatically; compared with printable checklist (see review) | U.S. Government public domain; CDC reuse conditions applied |
+| `cdc-ltsae-9-months` | CDC | Milestones by 9 Months | https://www.cdc.gov/act-early/milestones/9-months.html | Content last reviewed 2026-05-15 (page updated 2026-05-16; first published 2025-09-04); milestone revision Feb 2022 | 2026-11-26 | Milestone text, CDC category, reference age (verbatim) | Parsed programmatically; compared with printable checklist (see review) | U.S. Government public domain; CDC reuse conditions applied |
+| `cdc-ltsae-1-year` | CDC | Milestones by 1 Year | https://www.cdc.gov/act-early/milestones/1-year.html | Content last reviewed 2026-05-15 (page updated 2026-05-16; first published 2025-09-04); milestone revision Feb 2022 | 2026-11-26 | Milestone text, CDC category, reference age (verbatim) | Parsed programmatically; compared with printable checklist (see review) | U.S. Government public domain; CDC reuse conditions applied |
+| `cdc-ltsae-15-months` | CDC | Milestones by 15 Months | https://www.cdc.gov/act-early/milestones/15-months.html | Content last reviewed 2026-05-15 (page updated 2026-05-16; first published 2025-09-04); milestone revision Feb 2022 | 2026-11-26 | Milestone text, CDC category, reference age (verbatim) | Parsed programmatically; compared with printable checklist (see review) | U.S. Government public domain; CDC reuse conditions applied |
+| `cdc-ltsae-18-months` | CDC | Milestones by 18 Months | https://www.cdc.gov/act-early/milestones/18-months.html | Content last reviewed 2026-05-15 (page updated 2026-05-16; first published 2025-09-04); milestone revision Feb 2022 | 2026-11-26 | Milestone text, CDC category, reference age (verbatim) | Parsed programmatically; compared with printable checklist (see review) | U.S. Government public domain; CDC reuse conditions applied |
+| `cdc-ltsae-2-years` | CDC | Milestones by 2 Years | https://www.cdc.gov/act-early/milestones/2-years.html | Content last reviewed 2026-05-15 (page updated 2026-05-16; first published 2025-09-04); milestone revision Feb 2022 | 2026-11-26 | Milestone text, CDC category, reference age (verbatim) | Parsed programmatically; compared with printable checklist (see review) | U.S. Government public domain; CDC reuse conditions applied |
+| `cdc-ltsae-30-months` | CDC | Milestones by 30 Months | https://www.cdc.gov/act-early/milestones/30-months.html | Content last reviewed 2026-05-15 (page updated 2026-05-16; first published 2025-09-04); milestone revision Feb 2022 | 2026-11-26 | Milestone text, CDC category, reference age (verbatim) | Parsed programmatically; compared with printable checklist (see review) | U.S. Government public domain; CDC reuse conditions applied |
+| `cdc-ltsae-3-years` | CDC | Milestones by 3 Years | https://www.cdc.gov/act-early/milestones/3-years.html | Content last reviewed 2026-05-15 (page updated 2026-05-16; first published 2025-09-04); milestone revision Feb 2022 | 2026-11-26 | Milestone text, CDC category, reference age (verbatim) | Parsed programmatically; compared with printable checklist (see review) | U.S. Government public domain; CDC reuse conditions applied |
+| `cdc-ltsae-4-years` | CDC | Milestones by 4 Years | https://www.cdc.gov/act-early/milestones/4-years.html | Content last reviewed 2026-05-15 (page updated 2026-05-16; first published 2025-09-04); milestone revision Feb 2022 | 2026-11-26 | Milestone text, CDC category, reference age (verbatim) | Parsed programmatically; compared with printable checklist (see review) | U.S. Government public domain; CDC reuse conditions applied |
+| `cdc-ltsae-5-years` | CDC | Milestones by 5 Years | https://www.cdc.gov/act-early/milestones/5-years.html | Content last reviewed 2026-05-15 (page updated 2026-05-16; first published 2025-09-04); milestone revision Feb 2022 | 2026-11-26 | Milestone text, CDC category, reference age (verbatim) | Parsed programmatically; compared with printable checklist (see review) | U.S. Government public domain; CDC reuse conditions applied |
+| `cdc-use-of-agency-materials` | CDC | Use of Agency Materials | https://www.cdc.gov/other/agencymaterials.html | 2026-10-28 | 2026-11-26 | Reuse conditions: attribution, non-endorsement disclaimer, no substantive changes, state free availability; links open in a new window; no CDC logo; some images restricted. | — | Public domain; linked |
+| `cdc-ltsae-key-points` | CDC | Key Points about CDC's Developmental Milestone Checklists | https://www.cdc.gov/act-early/milestones/key-points.html | 2026-02-17 | 2026-11-26 | Revision date (February 2022), 75% basis, intended use (not standards; not screening or diagnostic tools). | — | Public domain; linked |
+| `cdc-ltsae-concerned` | CDC | Concerned About Your Child's Development? | https://www.cdc.gov/act-early/families/concerned.html | 2026-02-16 | 2026-11-26 | Linked only. | — | Public domain; linked |
+| `cdc-ltsae-milestones-index` | CDC | CDC's Developmental Milestones | https://www.cdc.gov/act-early/milestones/index.html | 2026-02-16 | 2026-11-26 | Linked from About these milestones. | — | Public domain; linked |
 
-**Status at Checkpoint 1:** no reference content has been added.
+**Status at Checkpoint 2a:** the 159 CDC milestones are in the app. The machine-readable register is `src/content/sources.json`, and the full item list is in `docs/MILESTONE_INVENTORY.md`. Verification details, the PDF comparison, and the AAP access record are in `docs/reviews/CHECKPOINT_2A_SOURCE_VERIFICATION.md`.
+
+**CDC reuse conditions as implemented:**
+- “Source: CDC” attribution in the Library, on every milestone detail, and on About.
+- A prominent statement that the app is not endorsed by CDC, HHS, or the U.S. Government.
+- Wording is unchanged, including pronouns.
+- A statement that the originals are available free at cdc.gov.
+- External links open in a new window.
+- No CDC logo, photos, or videos.
+
+**Excluded sources (owner decision, Checkpoint 2a):** AAP and HealthyChildren.org content is excluded, because AAP's terms restrict automated access and AI use. Those domains were removed from the development environment. Pathways.org may not be collected or analyzed until its terms are reviewed and approved.
 
 ## Pending verification
 | Planned source | For | Status |
 |---|---|---|
-| CDC "Learn the Signs. Act Early." milestone checklists (2022 revision) | Checkpoint 2 milestones | Not yet retrieved: the host was unreachable from the build environment |
-| AAP HealthyChildren.org, "Corrected Age for Preemies" | Optional supporting reference for the corrected-age explanation | Attempted; the host was unreachable. The app currently describes only the arithmetic, with no clinical claims |
-| AAP/Bright Futures periodicity schedule | Checkpoint 3 well-child references | Not yet retrieved |
+| CDC "Learn the Signs. Act Early." tips and activities (per age page) | Checkpoint 2b supporting activities (owner-approved source) | Not yet extracted — the pages are accessible; extraction is deferred to 2b |
+| AAP HealthyChildren.org, "Corrected Age for Preemies" | — | **Excluded** (AAP terms). Its content is not used. The app describes only the corrected-age arithmetic |
+| AAP/Bright Futures periodicity schedule | Checkpoint 3 well-child references | **Blocked by the AAP exclusion** — needs an owner decision before Checkpoint 3 |
 | CDC/ACIP child immunization schedule | Checkpoint 3 vaccination references | Not yet retrieved |
-| AAP child immunization schedule | Checkpoint 3 vaccination references | Not yet retrieved |
+| AAP child immunization schedule | Checkpoint 3 vaccination references | **Blocked by the AAP exclusion** — needs an owner decision before Checkpoint 3 |
 
 ## Software and fonts (licenses)
 | Item | License |

@@ -39,6 +39,19 @@ function serviceWorkerPlugin(): Plugin {
   };
 }
 
+/** Build-time validation of the sourced milestone catalog: the build fails on any content error. */
+function milestoneContentPlugin(): Plugin {
+  return {
+    name: 'rcr-milestone-content',
+    async buildStart() {
+      const { validateContent, MILESTONES, PAGE_SOURCES } = await import('./src/domain/milestones');
+      const lock = JSON.parse(readFileSync(new URL('./src/content/milestone-ids.lock.json', import.meta.url), 'utf8')) as Record<string, string>;
+      const errors = validateContent(MILESTONES, PAGE_SOURCES, lock, (s) => createHash('sha256').update(s).digest('hex').slice(0, 16));
+      if (errors.length) this.error(`Milestone content validation failed:\n${errors.join('\n')}`);
+    },
+  };
+}
+
 /** Strict Content-Security-Policy for production builds (dev server needs inline HMR scripts). */
 function cspPlugin(): Plugin {
   const csp = [
@@ -66,7 +79,7 @@ function cspPlugin(): Plugin {
 export default defineConfig({
   // Relative base works for GitHub Pages project URLs (/roll-crawl-run/) and for local preview.
   base: './',
-  plugins: [preact(), cspPlugin(), serviceWorkerPlugin()],
+  plugins: [preact(), milestoneContentPlugin(), cspPlugin(), serviceWorkerPlugin()],
   define: {
     // RCR_BUILD_TAG is only used by the automated update test to produce two distinct builds.
     __APP_VERSION__: JSON.stringify(process.env['RCR_BUILD_TAG'] ? `${pkg.version}+${process.env['RCR_BUILD_TAG']}` : pkg.version),

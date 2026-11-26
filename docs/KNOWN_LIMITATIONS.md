@@ -3,7 +3,7 @@
 Updated at Checkpoint 1 final refinement. Items marked *(planned)* are scheduled for later checkpoints.
 
 ## Not built yet (placeholders)
-- Growth, milestones, progress meters, custom goals and exercises *(Checkpoint 2)*
+- Goals & Exercises, recurring activities, CDC activities, and charts *(Checkpoint 2b)*
 - Calendar, well-child and vaccination references *(Checkpoint 3)*
 - Journal, resources, motivational messages, notification settings *(Checkpoint 4)*
 - Backups, partner sharing, import and merge, reports, calendar export *(Checkpoint 5)*
@@ -18,7 +18,7 @@ Updated at Checkpoint 1 final refinement. Items marked *(planned)* are scheduled
 - Deleting a profile removes it from the app's storage, but the app can't guarantee secure erasure at the device-storage level.
 
 ## Content and sources
-- **No developmental or medical reference content is included yet.**
+- **Developmental content:** the 159 CDC milestones (Checkpoint 2a) are included. There is no other developmental or medical content.
 - The build environment could not reach cdc.gov, healthychildren.org, aap.org, or pathways.org: the network policy blocks them. Source verification for Checkpoints 2 and 3 needs either network access to those hosts or source material you supply (see SOURCE_REGISTER.md).
 - The corrected-age explanation describes only the arithmetic. It gives no clinical guidance on when or how long to use corrected age.
 
@@ -49,3 +49,14 @@ Updated at Checkpoint 1 final refinement. Items marked *(planned)* are scheduled
 - **Initial iPhone connectivity:** the first iPhone load showed a “server not responding” message after about a minute, then loaded with no changes. **The cause has not been established, and it is not known to be resolved;** watch for a recurrence.
 - No license for the application itself has been chosen (deferred). Third-party licenses are included.
 - The workflow's GitHub Action versions are one or more major versions behind; see Decisions #46.
+
+## Checkpoint 2a
+- **Not yet reviewed by the owner:** milestone tracking is tested only in automated headless Chromium. It has not been tested in Safari or on an iPhone, and it is not deployed.
+- **Fixed source version:** the CDC content is frozen at the pages reviewed by CDC on May 15, 2026. CDC may revise it; updating requires a new verification pass (new IDs for changed items, because locked IDs never change).
+- **Printable checklists differ slightly:** the CDC PDFs (2021–2022 files) have 10 pronoun-only and 2 wording differences from the web pages. The app follows the web pages (see the source verification review).
+- **CDC's other page content isn't included:** its "share with your doctor" questions, act-early guidance, photos, and videos. The app links to CDC instead.
+- **Removed observations keep their text** in this device's history until erased permanently, the profile is deleted, or the app is reset. The app says so where removal happens.
+- **Older than five:** there are no sourced milestones beyond age 5; existing records and personal versions still work.
+- **Limits of corrected age:** the app applies only the parent's chosen basis. It has no clinical guidance on when to stop using corrected age (AAP content excluded).
+- **Checkpoint 3 sources:** AAP/Bright Futures and the AAP immunization schedule are blocked by the AAP exclusion and need an owner decision.
+- **Partner sharing isn't built yet.** The data is designed for it: stable IDs, logical keys, append-only events, device provenance, and state snapshots.

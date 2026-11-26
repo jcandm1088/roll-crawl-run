@@ -96,3 +96,29 @@ It could not establish whether the session URL is private, so it stopped before 
 | Publication compliance | `e40287f` | Third-party license notices, a service-worker file-navigation fix, and doc updates. Session-URL privacy verified by the owner; pushed. |
 | Deployment | (`e40287f` deployed) | The owner deployed via the manual workflow and tested on an iPhone (see above). |
 | Handoff | this commit | Documentation only. |
+
+## Draft entry — Checkpoint 2a: Verified Milestone Tracking (drafted by Claude Code; edit before submitting)
+**Date:**
+**What I asked Claude Code to do:**
+- Set up a dedicated environment with access to the CDC, AAP, HealthyChildren and Pathways sites.
+- Verify the CDC milestone sources and prepare an inventory for my review.
+- After I approved the inventory, the gross/fine motor classifications and the safeguards, build milestone tracking (Checkpoint 2a only).
+
+**What it produced:**
+- The source verification and the 159-item inventory.
+- The CDC content with locked IDs and build-time validation.
+- What to Expect, the Milestone Library, milestone detail with history, personal versions, Progress, live Home cards, and the Settings preferences section.
+- Tests, screenshots, and documentation.
+
+**What I corrected or redirected:**
+- Approved the borderline classifications and kept CDC pronouns.
+- Required that boundary ages never hide current milestones, and that permanent deletion still works alongside history.
+- Excluded AAP content and had those domains removed.
+
+**Issues found during the work (factual):**
+- AAP's terms restrict automated and AI access. Three AAP pages had already been loaded and saved; the copies were deleted and the content was not used.
+- The preparation report's "151 of 159 match word for word" was wrong: the check compared words, not exact wording. A strict re-check found 133 exact matches; the 26 others were checked visually (10 pronoun-only and 2 wording differences in the older PDFs).
+- History entries recorded within the same millisecond could sort out of order; fixed with recording timestamps that always increase.
+- The current-interval rule was aligned with the milestone rule at boundary ages.
+
+**Notes / next steps:** My hands-on review of 2a; then the decision on Checkpoint 2b.

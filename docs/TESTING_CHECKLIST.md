@@ -121,3 +121,42 @@ All six final acceptance criteria passed: precise age for infants; precise years
 | Initial load | A one-time “server not responding” message after about one minute, then loaded with no changes; **cause not established** |
 
 Not reported, and therefore untested: M9, M11, M13–M17 and F6 (see `docs/reviews/DEPLOYMENT_ACCEPTANCE.md`).
+
+## Checkpoint 2a — automated (run in headless Chromium; results in the delivery report)
+| Area | Test file |
+|---|---|
+| Content integrity: 159 items, category and age counts, CDC categories kept, verbatim wording spot checks, sources and reuse basis, locked IDs, validation catches each error type | tests/unit/milestoneContent.test.ts |
+| Reference-age → interval mapping; empty intervals; nearest-group links | tests/unit/milestoneContent.test.ts |
+| Current-interval rule (start < A ≤ end); replaces the Checkpoint 1 rule test | tests/unit/age.test.ts |
+| Applicability: newborn, exact reference ages, 3-month boundaries, month-end, leap day, fifth birthday, over five, corrected before/after due date | tests/unit/milestones.test.ts |
+| Progress rules: formula, no partial credit, future excluded, hidden excluded, neutral states, interval vs cumulative, single counting | tests/unit/milestones.test.ts |
+| Storage: status/reversal history, date corrections, invalid dates, observations (marker, erase), notes, hide/restore, history reconstruction, personal versions, child isolation, atomic rollback, profile deletion | tests/unit/milestones.test.ts |
+| Build fails on altered locked content | manual check during implementation (recorded in the build log); the `validateContent` checks are unit-tested |
+| Growth navigation and order; current interval; preview independence; Back to current age; boundary at 6 months; empty interval; cumulative view filters | tests/e2e/growth.spec.ts |
+| Detail: status, reversal, date correction, history; future and pre-birth dates; observations remove/erase; hide/restore; all-hidden neutral; early recording | tests/e2e/growth.spec.ts |
+| Personal versions; library search and filters; corrected-age states; over five; isolation and deletion; Settings preferences; attribution, safeguards, external links, no images | tests/e2e/growth.spec.ts |
+| Offline tracking; accessibility (8 screens); 320px layout; five themes | tests/e2e/growth.spec.ts |
+| Update from the deployed Checkpoint 1 (aa8c869) keeps data; tracking works after the update | tests/e2e/update.spec.ts |
+
+## Checkpoint 2a — manual acceptance (owner; record actual results)
+| # | Check | Device / browser | Date | Result | Notes |
+|---|---|---|---|---|---|
+| G1 | Growth shows Progress, Goals & Exercises (placeholder), What to Expect, Milestone Library in that order; Back returns to Growth | | | | |
+| G2 | "Record a milestone" on Home opens What to Expect at your child's current age range | | | | |
+| G3 | Mark one milestone Emerging, then Achieved with a past date; Home and Progress update | | | | |
+| G4 | Correct the achievement date; both dates appear in History | | | | |
+| G5 | Change an Achieved milestone back to Emerging; History keeps both entries | | | | |
+| G6 | Add an observation; status doesn't change. Remove it (it shows as removed in History); then Erase permanently (two steps) | | | | |
+| G7 | Hide a milestone; it disappears from progress counts; restore it from Library → Hidden milestones with its status intact | | | | |
+| G8 | Make a personal version; find it under Library → Your versions; edit it; the CDC original is unchanged | | | | |
+| G9 | Preview a future age range; banner shown; Home progress unchanged; "Back to current age" works | | | | |
+| G10 | Open an empty range (e.g. 18–21 months): no milestones, Earlier/Next links, "See everything up to now" | | | | |
+| G11 | Search and the area, age, and status filters in the Library | | | | |
+| G12 | A child with corrected age on and selected: ages labelled; before the due date nothing is counted | | | | |
+| G13 | Settings → Milestone Viewing Preferences shows the basis and links to the profile setting | | | | |
+| G14 | About these milestones: wording reads clearly; CDC attribution and non-endorsement visible; cdc.gov links open in the browser | | | | |
+| G15 | Airplane mode (after first load): open milestones, change a status, view the Library | iPhone | | | |
+| G16 | Two children: records don't mix; switching child switches progress and theme | | | | |
+| G17 | Readability and touch comfort on iPhone; all five themes | iPhone | | | |
+| G18 | Update from the deployed Checkpoint 1 on the iPhone (after the owner authorizes a deploy): existing profile, photo, and theme kept | iPhone | | | Deployment not authorized yet |
+| G19 | Spot-check 10 milestones against cdc.gov wording | | | | |

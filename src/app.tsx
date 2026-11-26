@@ -4,6 +4,9 @@ import { Screen } from './ui/components/Shell';
 import { Onboarding } from './ui/screens/onboarding/Onboarding';
 import { Home } from './ui/screens/home/Home';
 import { TabPlaceholder } from './ui/screens/placeholders/TabPlaceholder';
+import { ExpectScreen, GrowthHome, ProgressScreen } from './ui/screens/growth/Growth';
+import { AboutMilestonesScreen, LibraryScreen } from './ui/screens/growth/Library';
+import { MilestoneDetailScreen } from './ui/screens/growth/MilestoneDetail';
 import { ProfileForm, ProfilesList } from './ui/screens/profiles/Profiles';
 import { AboutInfo, InstallInfo, PrivacyInfo, Settings, StorageInfo } from './ui/screens/settings/Settings';
 import { UpdateBanner } from './ui/components/UpdateBanner';
@@ -29,6 +32,25 @@ function renderRoute(route: Route) {
     case 'home':
       return <Screen nav current="home"><Home /></Screen>;
     case 'growth':
+      return <Screen nav current="growth"><GrowthHome /></Screen>;
+    case 'growthProgress':
+      return <Screen nav current="growthProgress" navCurrent="growth" title="Progress" back={{ name: 'growth' }}><ProgressScreen /></Screen>;
+    case 'growthExpect':
+      return (
+        <Screen nav current="growthExpect" navCurrent="growth" title="What to Expect" back={{ name: 'growth' }}>
+          <ExpectScreen key={`${route.view}-${route.interval}`} interval={route.interval} view={route.view} />
+        </Screen>
+      );
+    case 'growthLibrary':
+      return <Screen nav current="growthLibrary" navCurrent="growth" title="Milestone Library" back={{ name: 'growth' }}><LibraryScreen /></Screen>;
+    case 'growthAbout':
+      return <Screen nav current="growthAbout" navCurrent="growth" title="About these milestones" back={{ name: 'growthLibrary' }}><AboutMilestonesScreen /></Screen>;
+    case 'growthMilestone':
+      return (
+        <Screen nav current="growthMilestone" navCurrent="growth" title="Milestone" back={{ name: 'growth' }} backUsesHistory>
+          <MilestoneDetailScreen key={route.key} routeKey={route.key} />
+        </Screen>
+      );
     case 'calendar':
     case 'journal':
     case 'resources':

@@ -333,11 +333,13 @@ test('Home shows the child’s name and age in Inter without “Chronological ag
 });
 
 test('Growth uses the approved wording and section order', async ({ page }) => {
+  // Checkpoint 2a replacement: the placeholder cards became the real Growth landing page; same order and wording.
   await completeOnboarding(page);
   await page.goto('./#/growth');
   await expect(page.getByText('Tracking your developmental milestones.')).toBeVisible();
-  const titles = await page.locator('.placeholder h3').allTextContents();
+  const titles = await page.locator('[data-testid="growth-sections"] .title-3').allTextContents();
   expect(titles).toEqual(['Progress', 'Goals & Exercises', 'What to Expect at Every Age', 'Milestone Library']);
+  await expect(page.getByTestId('section-goals')).toContainText('Not available yet · Checkpoint 2b');
   await page.goto('./#/resources');
   await expect(page.getByText('A curated library of trusted, science-backed resources.')).toBeVisible();
 });

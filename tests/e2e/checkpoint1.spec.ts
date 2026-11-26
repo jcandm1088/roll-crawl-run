@@ -123,7 +123,8 @@ test('deleting the only profile asks for a new child instead of breaking', async
 
 test('later-checkpoint tabs are clearly marked as not available', async ({ page }) => {
   await completeOnboarding(page);
-  for (const tab of ['Growth', 'Calendar', 'Journal', 'Resources']) {
+  // Checkpoint 2a: Growth is now implemented (covered in growth.spec.ts); the remaining placeholder tabs are checked here.
+  for (const tab of ['Calendar', 'Journal', 'Resources']) {
     await page.getByRole('link', { name: tab, exact: true }).click();
     await expect(page.getByRole('heading', { name: tab, level: 1 })).toBeVisible();
     await expect(page.getByText('Preview only.', { exact: false }).first()).toBeVisible();

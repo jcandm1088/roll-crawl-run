@@ -13,6 +13,8 @@ import { rmSync, mkdirSync, symlinkSync } from 'node:fs';
 
 /** The previously approved version (Checkpoint 1 review commit), built from git history. */
 const PREVIOUS_COMMIT = 'ade3171d830ae753e97c76f2389666a8db82ace4';
+/** The accepted, deployed Checkpoint 1 (docs-only commit on top of the deployed e40287f). */
+const DEPLOYED_CHECKPOINT_1 = 'aa8c869352cdd734eafb0ed8b7219069d4457241';
 
 const ROOT = join(process.cwd(), '.tmp-update-test');
 const PORT = 4190;
@@ -37,6 +39,11 @@ test.beforeAll(() => {
   execFileSync('sh', ['-c', `git archive ${PREVIOUS_COMMIT} | tar -x -C "${prevSrc}"`]);
   symlinkSync(join(process.cwd(), 'node_modules'), join(prevSrc, 'node_modules'));
   execFileSync('npx', ['vite', 'build', '--outDir', join(ROOT, 'prev'), '--emptyOutDir'], { cwd: prevSrc, stdio: 'ignore' });
+  const depSrc = join(ROOT, 'deployed-src');
+  mkdirSync(depSrc, { recursive: true });
+  execFileSync('sh', ['-c', `git archive ${DEPLOYED_CHECKPOINT_1} | tar -x -C "${depSrc}"`]);
+  symlinkSync(join(process.cwd(), 'node_modules'), join(depSrc, 'node_modules'));
+  execFileSync('npx', ['vite', 'build', '--outDir', join(ROOT, 'deployed'), '--emptyOutDir'], { cwd: depSrc, stdio: 'ignore' });
   server = createServer(async (req, res) => {
     const path = normalize(decodeURIComponent((req.url ?? '/').split('?')[0]!)).replace(/^(\.\.[/\\])+/, '');
     const file = join(ROOT, current, path.endsWith('/') ? `${path}index.html` : path);
@@ -145,4 +152,55 @@ test('updating from the previous approved version keeps all data and gives each 
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'lavender'); // B unaffected
   const dbVersionAfter = await page.evaluate(() => new Promise<number>((r) => { const q = indexedDB.open('roll-crawl-run'); q.onsuccess = () => { r(q.result.version); q.result.close(); }; }));
   expect(dbVersionAfter).toBe(2);
+});
+
+test('updating from the deployed Checkpoint 1 keeps profiles, photo, themes and settings, and milestone tracking works', async ({ page }) => {
+  test.setTimeout(120_000);
+  current = 'deployed';
+  const base = `http://localhost:${PORT}/`;
+  await page.goto(base);
+  await page.getByRole('button', { name: 'Get started' }).click();
+  await page.getByLabel('Date of birth').fill('2025-07-10');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByLabel('Name or nickname').fill('Sample Child A');
+  const png = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==', 'base64');
+  await page.getByTestId('photo-input').setInputFiles({ name: 'sample.png', mimeType: 'image/png', buffer: png });
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByTestId('theme-lavender').click();
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByRole('button', { name: 'Start using the app' }).click();
+  await expect(page.getByRole('heading', { name: 'Sample Child A' })).toBeVisible();
+  await page.goto(`${base}#/settings`);
+  await page.getByRole('button', { name: /^This Device/ }).click();
+  await page.getByLabel('Device name (optional)').fill('Phone A');
+  await page.getByRole('button', { name: 'Save device name' }).click();
+  await expect(page.getByRole('status')).toHaveText('Saved');
+  await page.evaluate(() => navigator.serviceWorker.ready);
+  await page.reload();
+  await expect.poll(() => page.evaluate(() => !!navigator.serviceWorker.controller)).toBe(true);
+
+  current = 'b';
+  await page.evaluate(async () => (await navigator.serviceWorker.getRegistration())?.update());
+  await expect(page.getByText('A new version is available.')).toBeVisible({ timeout: 20_000 });
+  await Promise.all([page.waitForEvent('load'), page.getByRole('button', { name: 'Refresh' }).click()]);
+  await expect(page.getByRole('heading', { name: 'Settings', level: 1 })).toBeVisible(); // reloaded in place
+  await page.goto(`${base}#/growth`);
+  await expect(page.getByTestId('growth-sections')).toBeVisible({ timeout: 20_000 }); // new version running
+
+  await page.goto(`${base}#/home`);
+  await expect(page.getByRole('heading', { name: 'Sample Child A' })).toBeVisible();
+  await expect(page.locator('.child-hero .avatar img')).toBeVisible();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'lavender');
+  await page.goto(`${base}#/settings`);
+  await page.getByRole('button', { name: /^This Device/ }).click();
+  await expect(page.getByLabel('Device name (optional)')).toHaveValue('Phone A');
+  // Milestone tracking works on the migrated data.
+  await page.goto(`${base}#/growth/milestone/cdc22-m02-se-01`);
+  await page.getByRole('radio', { name: 'Achieved' }).click();
+  await page.getByLabel('Date achieved').fill('2025-09-01');
+  await page.getByRole('button', { name: 'Save status' }).click();
+  await expect(page.getByTestId('saved')).toBeVisible();
+  await page.goto(`${base}#/growth/progress`);
+  await expect(page.getByTestId('progress-all').getByTestId('fraction')).toContainText('1 of');
 });

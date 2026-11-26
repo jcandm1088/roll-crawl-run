@@ -79,3 +79,19 @@ Details are in `docs/reviews/CHECKPOINT_1_FINAL.md`.
 44. **Service-worker navigations** return an exact precached file when one exists, so license texts open as text even offline. All other navigations still return the app.
 45. **Git history is preserved** (owner decision C): no commits were rewritten, and authorship and messages are unchanged.
 46. **GitHub Action versions were left unchanged.** The workflow uses checkout@v4, setup-node@v4, upload-pages-artifact@v3, and deploy-pages@v4. Newer major versions exist (v7, v7, v5, and v5, found via `git ls-remote` of the official `actions/*` repositories), but their documentation could not be read from this environment, so no speculative upgrade was made. Revisit before the first deployment.
+
+## Checkpoint 2a — verified milestone tracking
+47. **Content:** the 159 CDC milestones (current web pages, content reviewed May 15, 2026), verbatim including pronouns. The source register is machine-readable (`src/content/sources.json`).
+48. **Stable IDs** (`cdc22-mXX-{se|lc|cg|mp}-NN`) were assigned once and frozen in `milestone-ids.lock.json`. The lock pins each ID to a hash of its age, category, and text. IDs are never recomputed, removed, or reused, and any content change to a locked ID fails the build.
+49. **Build-time validation** (`validateContent`, run by a Vite plugin and by unit tests) checks: IDs, sources, approved ages, category pairs, expected counts, interval mapping, duplicates, and attribution.
+50. **Gross/fine motor** is the app's organizational split of CDC's Movement/Physical category (20/24). It is explained in the app; the 10 borderline assignments were approved.
+51. **Current interval rule** changed to start < A ≤ end, matching milestone placement. This replaces the unused Checkpoint 1 rule; the unit test was replaced with equivalent coverage.
+52. **Milestone age** is chronological by default, or corrected if selected. It is null before a corrected due date, and no clinical cutoffs are applied.
+53. **Progress formula and neutral states** are as approved. Personal versions are never counted in CDC progress.
+54. **Append-only milestone history with state snapshots.** Recording timestamps always increase, so order is exact.
+55. **Observation removal adds a marker;** permanent erase (two steps) overwrites the text and leaves an erase marker. Profile deletion and reset remove everything.
+56. **Personal versions** are separate records (`customItems`, kind `milestone`) with a provenance link (`derivedFromDefId`). The sourced original is never modified.
+57. **Nothing is inferred:** no automatic achievements from age or from later milestones. Early recordings are allowed but don't count until the milestone applies.
+58. **Settings → Milestone Viewing Preferences** displays the existing per-child setting and links to it. There is no second setting.
+59. **Source compliance:** AAP and HealthyChildren are excluded and their domains removed. Pathways.org is not to be collected until its terms are approved. A source's terms must be reviewed before any future automated collection.
+60. **No new dependencies, no schema change.** The JavaScript bundle grew from about 115 KB to about 217 KB, mainly because of the bundled milestone and source data.

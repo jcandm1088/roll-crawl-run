@@ -1,3 +1,15 @@
+# Handoff
+
+## Update — Checkpoint 2a (local, awaiting owner review)
+- **Status:** Checkpoint 2a (verified milestone tracking) is implemented and committed locally, but **not pushed or deployed**. The live site still runs Checkpoint 1 (`e40287f`).
+- **Automated results:** 228 unit and 111 end-to-end tests pass (headless Chromium).
+- **Next:** the owner's hands-on review of 2a, then explicit authorization before Checkpoint 2b (Goals & Exercises with CDC activities, recurrence, completions, charts).
+- **Sources:** CDC only. AAP and HealthyChildren are excluded; Pathways.org needs its terms reviewed first.
+- **Checkpoint 3:** the AAP/Bright Futures and AAP vaccine sources are blocked; this needs an owner decision.
+- **Details:** `docs/DEVELOPMENT_PLAN.md` R9, `docs/reviews/CHECKPOINT_2A_SOURCE_VERIFICATION.md`, `docs/MILESTONE_INVENTORY.md`.
+
+---
+
 # Handoff — End of Checkpoint 1
 
 ## Project status

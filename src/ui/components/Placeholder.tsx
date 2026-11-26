@@ -5,7 +5,7 @@ import { Icon, type IconName } from './Icon';
  * Clearly marks a feature that is planned for a later checkpoint and is NOT
  * working yet. Never styled like a working control.
  */
-export function PlannedTag({ checkpoint }: { checkpoint: number }) {
+export function PlannedTag({ checkpoint }: { checkpoint: number | string }) {
   return (
     <span class="placeholder-tag">
       <Icon name="clock" size={14} />

@@ -197,18 +197,26 @@ describe('three-month intervals', () => {
     });
   });
 
-  it('places each age in exactly one interval using [start, end)', () => {
-    for (let m = 0; m < 60; m++) {
-      const matches = INTERVALS.filter((iv) => m >= iv.startMonths && m < iv.endMonths);
+  // Checkpoint 2a replacement (owner-approved): current interval uses start < A ≤ end, the same rule as
+  // milestone placement, so milestones that just became applicable never disappear at a boundary.
+  it('places each age in exactly one interval using start < A ≤ end (same rule as milestones)', () => {
+    for (let m = 1; m <= 60; m++) {
+      const matches = INTERVALS.filter((iv) => m > iv.startMonths && m <= iv.endMonths);
       expect(matches).toHaveLength(1);
       expect(intervalForAge(m)).toBe(matches[0]);
+      // The interval for a child of age m is the interval that holds "By m months" milestones.
+      expect(intervalForAge(m)).toBe(intervalForReferenceAge(m));
     }
-    expect(intervalForAge(2).label).toBe('0–3 months'); // e.g. 2 months 30 days
-    expect(intervalForAge(3).label).toBe('3–6 months'); // 3 months 0 days
+    expect(intervalForAge(0).label).toBe('0–3 months'); // newborn
+    expect(intervalForAge(2).label).toBe('0–3 months');
+    expect(intervalForAge(3).label).toBe('0–3 months'); // exactly 3 months: 0–3 still current
+    expect(intervalForAge(4).label).toBe('3–6 months');
+    expect(intervalForAge(6).label).toBe('3–6 months'); // "By 6 months" stays visible at 6 months
+    expect(intervalForAge(7).label).toBe('6–9 months');
     expect(intervalForAge(59).label).toBe('57–60 months');
     expect(intervalForAge(60).label).toBe('57–60 months');
-    expect(intervalForAge(85).label).toBe('57–60 months');
-    expect(intervalForAge(null).label).toBe('0–3 months');
+    expect(intervalForAge(85).label).toBe('57–60 months'); // older than five
+    expect(intervalForAge(null).label).toBe('0–3 months'); // before due date
     expect(intervalForAge(-1).label).toBe('0–3 months');
   });
 

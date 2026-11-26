@@ -8,6 +8,11 @@ export function childDisplayName(child: Pick<Child, 'name'>): string {
   return child.name ?? 'Your child';
 }
 
+/** For use inside a sentence: the child's name, or "your child" (lowercase) when no name was given. */
+export function childNameInline(child: Pick<Child, 'name'>): string {
+  return child.name ?? 'your child';
+}
+
 function initial(child: Pick<Child, 'name'>): string {
   const n = child.name?.trim();
   return n ? n[0]!.toUpperCase() : '•';

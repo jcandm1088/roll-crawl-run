@@ -14,19 +14,7 @@ interface TabInfo {
   items: Array<[IconName, string, string]>;
 }
 
-const TABS: Record<'growth' | 'calendar' | 'journal' | 'resources', TabInfo> = {
-  growth: {
-    title: 'Growth',
-    intro: 'Tracking your developmental milestones.',
-    checkpoint: 2,
-    // Permanent section order (approved at the Checkpoint 1 review).
-    items: [
-      ['check', 'Progress', 'What you’ve recorded so far, across five areas of development.'],
-      ['plus', 'Goals & Exercises', 'Your own goals and regular activities, with a record of each time you do them.'],
-      ['calendar', 'What to Expect at Every Age', 'Milestones grouped by age, from birth to five years.'],
-      ['bookOpen', 'Milestone Library', 'Every milestone, with where it comes from.'],
-    ],
-  },
+const TABS: Record<'calendar' | 'journal' | 'resources', TabInfo> = {
   calendar: {
     title: 'Calendar',
     intro: 'Your family’s appointments and routines in one place.',

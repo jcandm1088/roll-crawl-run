@@ -100,3 +100,86 @@ export interface Backup {
   /** Records grouped by store name. Every child-related record carries a childId. */
   payload: Record<string, Array<Record<string, unknown>>>;
 }
+
+// ---------------------------------------------------------------------------
+// Milestone tracking (Checkpoint 2a). Stored in the existing v2 stores:
+// milestoneRecords, milestoneEvents, customItems. No schema change.
+// ---------------------------------------------------------------------------
+
+export type MilestoneStatusValue = 'not-yet' | 'emerging' | 'achieved';
+
+/** The basis used for milestone applicability at the time something was recorded. */
+export interface AgeBasisSnapshot {
+  basis: 'chronological' | 'corrected';
+  /** Completed calendar months used for milestones; null before a corrected due date. */
+  milestoneAgeMonths: number | null;
+}
+
+/** Current state of one milestone for one child (sourced or personal version). */
+export interface MilestoneRecord extends RecordEnvelope {
+  childId: string;
+  /** Set for a sourced CDC milestone (unique per child). */
+  milestoneDefId?: string;
+  /** Set for a parent's personal version (unique per child). */
+  customItemId?: string;
+  status: MilestoneStatusValue;
+  firstObservedDate: string | null;
+  achievedDate: string | null;
+  note: string;
+  hidden: boolean;
+}
+
+export type MilestoneEventType =
+  | 'status'
+  | 'achieved-date-corrected'
+  | 'observation'
+  | 'observation-removed'
+  | 'note'
+  | 'hidden'
+  | 'restored'
+  | 'personal-version-created'
+  | 'personal-version-edited'
+  | 'entry-erased';
+
+/**
+ * Append-only history entry. `eventDate` is the date the parent says it happened
+ * (observation/achievement date); `recordedAt` is when it was entered on this device.
+ * Ordinary edits never rewrite earlier entries. The only exception is a deliberate,
+ * confirmed permanent erase of an entry's personal text (see eraseEntryText).
+ */
+export interface MilestoneEvent extends RecordEnvelope {
+  childId: string;
+  recordId: string;
+  /** "def:<milestone id>" or "custom:<custom item id>" — stable logical key for future merging. */
+  recordKey: string;
+  type: MilestoneEventType;
+  eventDate: string | null;
+  recordedAt: string;
+  deviceId: string;
+  fromStatus?: MilestoneStatusValue;
+  toStatus?: MilestoneStatusValue;
+  fromDate?: string | null;
+  toDate?: string | null;
+  /** Observation or note text (null after a permanent erase). */
+  text?: string | null;
+  /** For removals / erasures: the entry they refer to. */
+  refEventId?: string;
+  erasedAt?: string;
+  /** State snapshot so past progress can be reconstructed without using current state. */
+  ageBasis: AgeBasisSnapshot;
+  hiddenAtTime: boolean;
+  statusAfter: MilestoneStatusValue;
+}
+
+/** A parent's personal version of a milestone. Never modifies the sourced original. */
+export interface PersonalMilestone extends RecordEnvelope {
+  childId: string;
+  kind: 'milestone';
+  title: string;
+  description: string;
+  appCategory: string;
+  /** Provenance: the sourced milestone it was based on (if any). */
+  derivedFromDefId: string | null;
+  /** Copied reference age of the original, for context only (never counted in sourced progress). */
+  referenceAgeMonths: number | null;
+}

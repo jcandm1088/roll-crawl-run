@@ -7,7 +7,7 @@ import { PlannedTag } from '../../components/Placeholder';
 import { Accordion } from '../../components/Accordion';
 import { Sheet } from '../../components/Sheet';
 import { ErrorText } from '../../components/ChildFields';
-import { childDisplayName } from '../../components/Avatar';
+import { childDisplayName, childNameInline } from '../../components/Avatar';
 import { deleteAllData, getPersistenceStatus, getStorageEstimate, requestPersistence, type PersistenceStatus, type StorageEstimate } from '../../../data/storage';
 import { APP_FULL_NAME } from '../../components/Brand';
 
@@ -115,11 +115,14 @@ export function Settings() {
           </div>
         </Accordion>
 
+        <Accordion title="Milestone Viewing Preferences" summary="Which age is used for milestones" testId="acc-milestone-prefs">
+          <MilestonePreferences />
+        </Accordion>
+
         <Accordion title="About" summary={`Install, sources, and version ${APP_VERSION}`} testId="acc-about">
           <ul class="list list-card">
             <LinkRow to={href({ name: 'install' })} icon="smartphone" title="Install on your phone" />
             <LinkRow to={href({ name: 'about' })} icon="info" title="About, sources & version" detail={`Version ${APP_VERSION}`} />
-            <PlannedRow icon="sprout" title="Milestone viewing preferences" checkpoint={2} />
           </ul>
         </Accordion>
       </div>
@@ -371,6 +374,29 @@ export function AboutInfo() {
           ))}
         </ul>
       </div>
+    </div>
+  );
+}
+
+/**
+ * Shows the active child's existing corrected-age preference and links to where it is set.
+ * Deliberately NOT a second setting: the single source of truth stays in the child's profile.
+ */
+function MilestonePreferences() {
+  const { activeChild } = useApp();
+  if (!activeChild) return null;
+  const name = childNameInline(activeChild);
+  const usingCorrected = activeChild.correctedAge.enabled && activeChild.ageBasis === 'corrected';
+  return (
+    <div class="panel-pad stack small" data-testid="milestone-prefs">
+      <p>
+        Milestones for <strong>{name}</strong> use <strong data-testid="prefs-basis">{usingCorrected ? 'corrected age' : 'chronological age'}</strong>
+        {activeChild.correctedAge.enabled ? '' : ' (corrected age is off)'}.
+      </p>
+      <p class="muted">Chronological age is the default. If {name} was born early, you can turn on corrected age and choose to use it for milestones in {name}’s profile.</p>
+      <a class="btn btn-outline btn-sm" style={{ alignSelf: 'flex-start' }} href={href({ name: 'profileEdit', id: activeChild.id })}>
+        Change in {name}’s profile
+      </a>
     </div>
   );
 }

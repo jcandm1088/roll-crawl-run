@@ -87,3 +87,21 @@ History: Fraunces produced undesirable letterforms (J, f) in functional headings
 - Screens fade and rise slightly on entry (240ms), sheets slide up, and theme colors cross-fade. All motion is disabled under `prefers-reduced-motion`.
 - Layouts respect safe areas (`viewport-fit=cover` with `env(safe-area-inset-*)` padding).
 - Touch targets are at least 48px. Radio groups have one Tab stop and support arrow, Home, and End keys. The focus ring is 3px in the theme's focus color.
+
+## Checkpoint 2a components
+- **Growth landing:** the shared `PageHeader`, a "For [child]" line, and four section cards in the approved order. Goals & Exercises stays a dashed placeholder (2b).
+- **Sub-screens** (Progress, What to Expect, Milestone Library, About these milestones, Milestone): the top bar shows the title and a Back button. The Growth tab stays highlighted, and Back on a milestone returns to the previous screen.
+- **Progress line:** a label, the raw fraction "N of M achieved", an 8px neutral meter in the theme's primary colour on the sunken track, and "Emerging · Not yet observed · hidden" counts. Neutral text ("Nothing to track yet", "All hidden") appears instead of a meter. No red, amber, grades, or percentiles.
+- **Status badge:**
+  - Not yet observed: outlined, muted.
+  - Emerging: dashed, soft tint.
+  - Achieved: filled primary, with a check icon.
+
+  Status is shown by text, shape, and icon, not colour alone.
+- **Milestone rows:** CDC text, an area label, and a status badge, grouped under "By X months" headings ("upcoming" when not yet applicable).
+- **Info note:** a sunken panel with an info icon, used for safeguards (compact on Home, full on Progress).
+- **CDC attribution card:** "Source: CDC", free availability, and non-endorsement. External links use an inline external-link icon with screen-reader text ("opens cdc.gov in a new window; needs internet").
+- **Filter chips:** pill toggles with `aria-pressed`. Area and age filters use selects.
+- **History timeline:** a vertical rule with dots. Each entry shows the event date, its recorded date, the change, and the text. Removed text is struck through, with an explanation.
+- **Age panel:** Age (precise chronological), Corrected age (if on), and Age used for milestones (basis labelled).
+- **Home:** "Record a milestone" is now a solid, active quick action; the others stay dashed placeholders.

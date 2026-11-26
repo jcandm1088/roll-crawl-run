@@ -142,7 +142,7 @@ export function computePosition(anchor: HTMLElement | null) {
   return { top, left, width, maxHeight };
 }
 
-export function TopBar({ title, back }: { title?: string; back?: Route }) {
+export function TopBar({ title, back, backUsesHistory }: { title?: string; back?: Route; backUsesHistory?: boolean }) {
   const { activeChild } = useApp();
   const [switching, setSwitching] = useState(false);
   const chipRef = useRef<HTMLButtonElement>(null);
@@ -151,7 +151,7 @@ export function TopBar({ title, back }: { title?: string; back?: Route }) {
     <header class="topbar">
       <div class="topbar-inner">
         {back ? (
-          <button class="icon-btn plain" onClick={() => navigate(back)} aria-label="Back">
+          <button class="icon-btn plain" onClick={() => (backUsesHistory && window.history.length > 1 ? window.history.back() : navigate(back))} aria-label="Back">
             <Icon name="chevronLeft" />
           </button>
         ) : (
@@ -182,14 +182,14 @@ export function TopBar({ title, back }: { title?: string; back?: Route }) {
   );
 }
 
-export function Screen({ children, nav, current, title, back }: { children: ComponentChildren; nav: boolean; current: Route['name']; title?: string; back?: Route }) {
+export function Screen({ children, nav, current, title, back, navCurrent, backUsesHistory }: { children: ComponentChildren; nav: boolean; current: Route['name']; title?: string; back?: Route; navCurrent?: Route['name']; backUsesHistory?: boolean }) {
   return (
     <div class="app">
-      <TopBar title={title} back={back} />
+      <TopBar title={title} back={back} backUsesHistory={backUsesHistory} />
       <main id="main" class={`main screen-enter${nav ? '' : ' no-nav'}`} key={current}>
         {children}
       </main>
-      {nav && <BottomNav current={current} />}
+      {nav && <BottomNav current={navCurrent ?? current} />}
     </div>
   );
 }

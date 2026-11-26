@@ -1,11 +1,14 @@
 /**
  * Three-month viewing intervals from birth through 60 months (approved D2, option A).
  *
- * - A child's age belongs to exactly one interval using half-open bounds
- *   [start, end) in completed months: 3 months 0 days → "3–6 months".
- *   Ages of 60 months and older use the last interval (57–60 months).
- *   An age that doesn't apply yet (corrected age before the due date) uses
- *   the first interval.
+ * - Checkpoint 2a (owner-approved): the child's CURRENT interval uses the SAME
+ *   rule as milestone placement — start < A ≤ end, where A is the milestone
+ *   age in completed calendar months — so a milestone that has just become
+ *   applicable (e.g. "By 6 months" at exactly 6 months) is always shown in the
+ *   current interval and never "disappears" at a boundary. A = 0 (newborn, or
+ *   no milestone age yet before a corrected due date) uses 0–3 months; ages of
+ *   60 months and older use the last interval (57–60 months).
+ *   (This replaces the Checkpoint 1 rule [start, end), which was not yet used by any screen.)
  * - A milestone published as "By X months" belongs to the interval that
  *   ENDS at X (start < X ≤ end): "By 6 months" → "3–6 months",
  *   "By 60 months (5 years)" → "57–60 months".
@@ -31,8 +34,8 @@ export const INTERVALS: readonly AgeInterval[] = Array.from({ length: MAX_MONTHS
 });
 
 export function intervalForAge(completedMonths: number | null): AgeInterval {
-  if (completedMonths === null || completedMonths < 0) return INTERVALS[0]!;
-  const index = Math.min(Math.floor(completedMonths / INTERVAL_MONTHS), INTERVALS.length - 1);
+  if (completedMonths === null || completedMonths <= 0) return INTERVALS[0]!;
+  const index = Math.min(Math.ceil(completedMonths / INTERVAL_MONTHS) - 1, INTERVALS.length - 1);
   return INTERVALS[index]!;
 }
 

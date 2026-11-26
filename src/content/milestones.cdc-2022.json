@@ -1,0 +1,1607 @@
+{
+  "format": "rcr-milestones",
+  "version": 1,
+  "contentVersion": "cdc-2022-web-reviewed-2026-05-15",
+  "items": [
+    {
+      "id": "cdc22-m02-se-01",
+      "sourceId": "cdc-ltsae-2-months",
+      "referenceAgeMonths": 2,
+      "referenceAgeLabel": "By 2 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 1,
+      "text": "Calms down when spoken to or picked up"
+    },
+    {
+      "id": "cdc22-m02-se-02",
+      "sourceId": "cdc-ltsae-2-months",
+      "referenceAgeMonths": 2,
+      "referenceAgeLabel": "By 2 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 2,
+      "text": "Looks at your face"
+    },
+    {
+      "id": "cdc22-m02-se-03",
+      "sourceId": "cdc-ltsae-2-months",
+      "referenceAgeMonths": 2,
+      "referenceAgeLabel": "By 2 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 3,
+      "text": "Seems happy to see you when you walk up to her"
+    },
+    {
+      "id": "cdc22-m02-se-04",
+      "sourceId": "cdc-ltsae-2-months",
+      "referenceAgeMonths": 2,
+      "referenceAgeLabel": "By 2 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 4,
+      "text": "Smiles when you talk to or smile at her"
+    },
+    {
+      "id": "cdc22-m02-lc-01",
+      "sourceId": "cdc-ltsae-2-months",
+      "referenceAgeMonths": 2,
+      "referenceAgeLabel": "By 2 months",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 5,
+      "text": "Makes sounds other than crying"
+    },
+    {
+      "id": "cdc22-m02-lc-02",
+      "sourceId": "cdc-ltsae-2-months",
+      "referenceAgeMonths": 2,
+      "referenceAgeLabel": "By 2 months",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 6,
+      "text": "Reacts to loud sounds"
+    },
+    {
+      "id": "cdc22-m02-cg-01",
+      "sourceId": "cdc-ltsae-2-months",
+      "referenceAgeMonths": 2,
+      "referenceAgeLabel": "By 2 months",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 7,
+      "text": "Watches you as you move"
+    },
+    {
+      "id": "cdc22-m02-cg-02",
+      "sourceId": "cdc-ltsae-2-months",
+      "referenceAgeMonths": 2,
+      "referenceAgeLabel": "By 2 months",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 8,
+      "text": "Looks at a toy for several seconds"
+    },
+    {
+      "id": "cdc22-m02-mp-01",
+      "sourceId": "cdc-ltsae-2-months",
+      "referenceAgeMonths": 2,
+      "referenceAgeLabel": "By 2 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "gross-motor",
+      "order": 9,
+      "text": "Holds head up when on tummy"
+    },
+    {
+      "id": "cdc22-m02-mp-02",
+      "sourceId": "cdc-ltsae-2-months",
+      "referenceAgeMonths": 2,
+      "referenceAgeLabel": "By 2 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "gross-motor",
+      "order": 10,
+      "text": "Moves both arms and both legs",
+      "classificationNote": "Borderline gross/fine assignment approved by the project owner (Checkpoint 2a)."
+    },
+    {
+      "id": "cdc22-m02-mp-03",
+      "sourceId": "cdc-ltsae-2-months",
+      "referenceAgeMonths": 2,
+      "referenceAgeLabel": "By 2 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "fine-motor",
+      "order": 11,
+      "text": "Opens hands briefly"
+    },
+    {
+      "id": "cdc22-m04-se-01",
+      "sourceId": "cdc-ltsae-4-months",
+      "referenceAgeMonths": 4,
+      "referenceAgeLabel": "By 4 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 1,
+      "text": "Smiles on his own to get your attention"
+    },
+    {
+      "id": "cdc22-m04-se-02",
+      "sourceId": "cdc-ltsae-4-months",
+      "referenceAgeMonths": 4,
+      "referenceAgeLabel": "By 4 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 2,
+      "text": "Chuckles (not yet a full laugh) when you try to make him laugh"
+    },
+    {
+      "id": "cdc22-m04-se-03",
+      "sourceId": "cdc-ltsae-4-months",
+      "referenceAgeMonths": 4,
+      "referenceAgeLabel": "By 4 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 3,
+      "text": "Looks at you, moves, or makes sounds to get or keep your attention"
+    },
+    {
+      "id": "cdc22-m04-lc-01",
+      "sourceId": "cdc-ltsae-4-months",
+      "referenceAgeMonths": 4,
+      "referenceAgeLabel": "By 4 months",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 4,
+      "text": "Makes sounds like “oooo”, “aahh” (cooing)"
+    },
+    {
+      "id": "cdc22-m04-lc-02",
+      "sourceId": "cdc-ltsae-4-months",
+      "referenceAgeMonths": 4,
+      "referenceAgeLabel": "By 4 months",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 5,
+      "text": "Makes sounds back when you talk to him"
+    },
+    {
+      "id": "cdc22-m04-lc-03",
+      "sourceId": "cdc-ltsae-4-months",
+      "referenceAgeMonths": 4,
+      "referenceAgeLabel": "By 4 months",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 6,
+      "text": "Turns head towards the sound of your voice"
+    },
+    {
+      "id": "cdc22-m04-cg-01",
+      "sourceId": "cdc-ltsae-4-months",
+      "referenceAgeMonths": 4,
+      "referenceAgeLabel": "By 4 months",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 7,
+      "text": "If hungry, opens mouth when he sees breast or bottle"
+    },
+    {
+      "id": "cdc22-m04-cg-02",
+      "sourceId": "cdc-ltsae-4-months",
+      "referenceAgeMonths": 4,
+      "referenceAgeLabel": "By 4 months",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 8,
+      "text": "Looks at her hands with interest"
+    },
+    {
+      "id": "cdc22-m04-mp-01",
+      "sourceId": "cdc-ltsae-4-months",
+      "referenceAgeMonths": 4,
+      "referenceAgeLabel": "By 4 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "gross-motor",
+      "order": 9,
+      "text": "Holds head steady without support when you are holding him"
+    },
+    {
+      "id": "cdc22-m04-mp-02",
+      "sourceId": "cdc-ltsae-4-months",
+      "referenceAgeMonths": 4,
+      "referenceAgeLabel": "By 4 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "fine-motor",
+      "order": 10,
+      "text": "Holds a toy when you put it in his hand"
+    },
+    {
+      "id": "cdc22-m04-mp-03",
+      "sourceId": "cdc-ltsae-4-months",
+      "referenceAgeMonths": 4,
+      "referenceAgeLabel": "By 4 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "fine-motor",
+      "order": 11,
+      "text": "Uses his arm to swing at toys",
+      "classificationNote": "Borderline gross/fine assignment approved by the project owner (Checkpoint 2a)."
+    },
+    {
+      "id": "cdc22-m04-mp-04",
+      "sourceId": "cdc-ltsae-4-months",
+      "referenceAgeMonths": 4,
+      "referenceAgeLabel": "By 4 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "fine-motor",
+      "order": 12,
+      "text": "Brings hands to mouth",
+      "classificationNote": "Borderline gross/fine assignment approved by the project owner (Checkpoint 2a)."
+    },
+    {
+      "id": "cdc22-m04-mp-05",
+      "sourceId": "cdc-ltsae-4-months",
+      "referenceAgeMonths": 4,
+      "referenceAgeLabel": "By 4 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "gross-motor",
+      "order": 13,
+      "text": "Pushes up onto elbows/forearms when on tummy"
+    },
+    {
+      "id": "cdc22-m06-se-01",
+      "sourceId": "cdc-ltsae-6-months",
+      "referenceAgeMonths": 6,
+      "referenceAgeLabel": "By 6 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 1,
+      "text": "Knows familiar people"
+    },
+    {
+      "id": "cdc22-m06-se-02",
+      "sourceId": "cdc-ltsae-6-months",
+      "referenceAgeMonths": 6,
+      "referenceAgeLabel": "By 6 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 2,
+      "text": "Likes to look at self in a mirror"
+    },
+    {
+      "id": "cdc22-m06-se-03",
+      "sourceId": "cdc-ltsae-6-months",
+      "referenceAgeMonths": 6,
+      "referenceAgeLabel": "By 6 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 3,
+      "text": "Laughs"
+    },
+    {
+      "id": "cdc22-m06-lc-01",
+      "sourceId": "cdc-ltsae-6-months",
+      "referenceAgeMonths": 6,
+      "referenceAgeLabel": "By 6 months",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 4,
+      "text": "Takes turns making sounds with you"
+    },
+    {
+      "id": "cdc22-m06-lc-02",
+      "sourceId": "cdc-ltsae-6-months",
+      "referenceAgeMonths": 6,
+      "referenceAgeLabel": "By 6 months",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 5,
+      "text": "Blows “raspberries” (sticks tongue out and blows)"
+    },
+    {
+      "id": "cdc22-m06-lc-03",
+      "sourceId": "cdc-ltsae-6-months",
+      "referenceAgeMonths": 6,
+      "referenceAgeLabel": "By 6 months",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 6,
+      "text": "Makes squealing noises"
+    },
+    {
+      "id": "cdc22-m06-cg-01",
+      "sourceId": "cdc-ltsae-6-months",
+      "referenceAgeMonths": 6,
+      "referenceAgeLabel": "By 6 months",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 7,
+      "text": "Puts things in her mouth to explore them"
+    },
+    {
+      "id": "cdc22-m06-cg-02",
+      "sourceId": "cdc-ltsae-6-months",
+      "referenceAgeMonths": 6,
+      "referenceAgeLabel": "By 6 months",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 8,
+      "text": "Reaches to grab a toy she wants"
+    },
+    {
+      "id": "cdc22-m06-cg-03",
+      "sourceId": "cdc-ltsae-6-months",
+      "referenceAgeMonths": 6,
+      "referenceAgeLabel": "By 6 months",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 9,
+      "text": "Closes lips to show she doesn’t want more food"
+    },
+    {
+      "id": "cdc22-m06-mp-01",
+      "sourceId": "cdc-ltsae-6-months",
+      "referenceAgeMonths": 6,
+      "referenceAgeLabel": "By 6 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "gross-motor",
+      "order": 10,
+      "text": "Rolls from tummy to back"
+    },
+    {
+      "id": "cdc22-m06-mp-02",
+      "sourceId": "cdc-ltsae-6-months",
+      "referenceAgeMonths": 6,
+      "referenceAgeLabel": "By 6 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "gross-motor",
+      "order": 11,
+      "text": "Pushes up with straight arms when on tummy"
+    },
+    {
+      "id": "cdc22-m06-mp-03",
+      "sourceId": "cdc-ltsae-6-months",
+      "referenceAgeMonths": 6,
+      "referenceAgeLabel": "By 6 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "gross-motor",
+      "order": 12,
+      "text": "Leans on hands to support herself when sitting",
+      "classificationNote": "Borderline gross/fine assignment approved by the project owner (Checkpoint 2a)."
+    },
+    {
+      "id": "cdc22-m09-se-01",
+      "sourceId": "cdc-ltsae-9-months",
+      "referenceAgeMonths": 9,
+      "referenceAgeLabel": "By 9 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 1,
+      "text": "Is shy, clingy, or fearful around strangers"
+    },
+    {
+      "id": "cdc22-m09-se-02",
+      "sourceId": "cdc-ltsae-9-months",
+      "referenceAgeMonths": 9,
+      "referenceAgeLabel": "By 9 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 2,
+      "text": "Shows several facial expressions, like happy, sad, angry, and surprised"
+    },
+    {
+      "id": "cdc22-m09-se-03",
+      "sourceId": "cdc-ltsae-9-months",
+      "referenceAgeMonths": 9,
+      "referenceAgeLabel": "By 9 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 3,
+      "text": "Looks when you call her name"
+    },
+    {
+      "id": "cdc22-m09-se-04",
+      "sourceId": "cdc-ltsae-9-months",
+      "referenceAgeMonths": 9,
+      "referenceAgeLabel": "By 9 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 4,
+      "text": "Reacts when you leave (looks, reaches for you, or cries)"
+    },
+    {
+      "id": "cdc22-m09-se-05",
+      "sourceId": "cdc-ltsae-9-months",
+      "referenceAgeMonths": 9,
+      "referenceAgeLabel": "By 9 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 5,
+      "text": "Smiles or laughs when you play peek-a-boo"
+    },
+    {
+      "id": "cdc22-m09-lc-01",
+      "sourceId": "cdc-ltsae-9-months",
+      "referenceAgeMonths": 9,
+      "referenceAgeLabel": "By 9 months",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 6,
+      "text": "Makes a lot of different sounds like “mamamama” and “bababababa”"
+    },
+    {
+      "id": "cdc22-m09-lc-02",
+      "sourceId": "cdc-ltsae-9-months",
+      "referenceAgeMonths": 9,
+      "referenceAgeLabel": "By 9 months",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 7,
+      "text": "Lifts arms up to be picked up"
+    },
+    {
+      "id": "cdc22-m09-cg-01",
+      "sourceId": "cdc-ltsae-9-months",
+      "referenceAgeMonths": 9,
+      "referenceAgeLabel": "By 9 months",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 8,
+      "text": "Looks for objects when dropped out of sight (like his spoon or toy)"
+    },
+    {
+      "id": "cdc22-m09-cg-02",
+      "sourceId": "cdc-ltsae-9-months",
+      "referenceAgeMonths": 9,
+      "referenceAgeLabel": "By 9 months",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 9,
+      "text": "Bangs two things together"
+    },
+    {
+      "id": "cdc22-m09-mp-01",
+      "sourceId": "cdc-ltsae-9-months",
+      "referenceAgeMonths": 9,
+      "referenceAgeLabel": "By 9 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "gross-motor",
+      "order": 10,
+      "text": "Gets to a sitting position by herself"
+    },
+    {
+      "id": "cdc22-m09-mp-02",
+      "sourceId": "cdc-ltsae-9-months",
+      "referenceAgeMonths": 9,
+      "referenceAgeLabel": "By 9 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "fine-motor",
+      "order": 11,
+      "text": "Moves things from one hand to her other hand"
+    },
+    {
+      "id": "cdc22-m09-mp-03",
+      "sourceId": "cdc-ltsae-9-months",
+      "referenceAgeMonths": 9,
+      "referenceAgeLabel": "By 9 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "fine-motor",
+      "order": 12,
+      "text": "Uses fingers to “rake” food towards himself"
+    },
+    {
+      "id": "cdc22-m09-mp-04",
+      "sourceId": "cdc-ltsae-9-months",
+      "referenceAgeMonths": 9,
+      "referenceAgeLabel": "By 9 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "gross-motor",
+      "order": 13,
+      "text": "Sits without support"
+    },
+    {
+      "id": "cdc22-m12-se-01",
+      "sourceId": "cdc-ltsae-1-year",
+      "referenceAgeMonths": 12,
+      "referenceAgeLabel": "By 1 year",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 1,
+      "text": "Plays games with you, like pat-a-cake"
+    },
+    {
+      "id": "cdc22-m12-lc-01",
+      "sourceId": "cdc-ltsae-1-year",
+      "referenceAgeMonths": 12,
+      "referenceAgeLabel": "By 1 year",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 2,
+      "text": "Waves “bye-bye”"
+    },
+    {
+      "id": "cdc22-m12-lc-02",
+      "sourceId": "cdc-ltsae-1-year",
+      "referenceAgeMonths": 12,
+      "referenceAgeLabel": "By 1 year",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 3,
+      "text": "Calls a parent “mama” or “dada” or another special name"
+    },
+    {
+      "id": "cdc22-m12-lc-03",
+      "sourceId": "cdc-ltsae-1-year",
+      "referenceAgeMonths": 12,
+      "referenceAgeLabel": "By 1 year",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 4,
+      "text": "Understands “no” (pauses briefly or stops when you say it)"
+    },
+    {
+      "id": "cdc22-m12-cg-01",
+      "sourceId": "cdc-ltsae-1-year",
+      "referenceAgeMonths": 12,
+      "referenceAgeLabel": "By 1 year",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 5,
+      "text": "Puts something in a container, like a block in a cup"
+    },
+    {
+      "id": "cdc22-m12-cg-02",
+      "sourceId": "cdc-ltsae-1-year",
+      "referenceAgeMonths": 12,
+      "referenceAgeLabel": "By 1 year",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 6,
+      "text": "Looks for things he sees you hide, like a toy under a blanket"
+    },
+    {
+      "id": "cdc22-m12-mp-01",
+      "sourceId": "cdc-ltsae-1-year",
+      "referenceAgeMonths": 12,
+      "referenceAgeLabel": "By 1 year",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "gross-motor",
+      "order": 7,
+      "text": "Pulls up to stand"
+    },
+    {
+      "id": "cdc22-m12-mp-02",
+      "sourceId": "cdc-ltsae-1-year",
+      "referenceAgeMonths": 12,
+      "referenceAgeLabel": "By 1 year",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "gross-motor",
+      "order": 8,
+      "text": "Walks, holding on to furniture"
+    },
+    {
+      "id": "cdc22-m12-mp-03",
+      "sourceId": "cdc-ltsae-1-year",
+      "referenceAgeMonths": 12,
+      "referenceAgeLabel": "By 1 year",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "fine-motor",
+      "order": 9,
+      "text": "Drinks from a cup without a lid, as you hold it",
+      "classificationNote": "Borderline gross/fine assignment approved by the project owner (Checkpoint 2a)."
+    },
+    {
+      "id": "cdc22-m12-mp-04",
+      "sourceId": "cdc-ltsae-1-year",
+      "referenceAgeMonths": 12,
+      "referenceAgeLabel": "By 1 year",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "fine-motor",
+      "order": 10,
+      "text": "Picks things up between thumb and pointer finger, like small bits of food"
+    },
+    {
+      "id": "cdc22-m15-se-01",
+      "sourceId": "cdc-ltsae-15-months",
+      "referenceAgeMonths": 15,
+      "referenceAgeLabel": "By 15 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 1,
+      "text": "Copies other children while playing, like taking toys out of a container when another child does"
+    },
+    {
+      "id": "cdc22-m15-se-02",
+      "sourceId": "cdc-ltsae-15-months",
+      "referenceAgeMonths": 15,
+      "referenceAgeLabel": "By 15 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 2,
+      "text": "Shows you an object she likes"
+    },
+    {
+      "id": "cdc22-m15-se-03",
+      "sourceId": "cdc-ltsae-15-months",
+      "referenceAgeMonths": 15,
+      "referenceAgeLabel": "By 15 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 3,
+      "text": "Claps when excited"
+    },
+    {
+      "id": "cdc22-m15-se-04",
+      "sourceId": "cdc-ltsae-15-months",
+      "referenceAgeMonths": 15,
+      "referenceAgeLabel": "By 15 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 4,
+      "text": "Hugs stuffed doll or other toy"
+    },
+    {
+      "id": "cdc22-m15-se-05",
+      "sourceId": "cdc-ltsae-15-months",
+      "referenceAgeMonths": 15,
+      "referenceAgeLabel": "By 15 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 5,
+      "text": "Shows you affection (hugs, cuddles, or kisses you)"
+    },
+    {
+      "id": "cdc22-m15-lc-01",
+      "sourceId": "cdc-ltsae-15-months",
+      "referenceAgeMonths": 15,
+      "referenceAgeLabel": "By 15 months",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 6,
+      "text": "Tries to say one or two words besides “mama” or “dada,” like “ba” for ball or “da” for dog"
+    },
+    {
+      "id": "cdc22-m15-lc-02",
+      "sourceId": "cdc-ltsae-15-months",
+      "referenceAgeMonths": 15,
+      "referenceAgeLabel": "By 15 months",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 7,
+      "text": "Looks at a familiar object when you name it"
+    },
+    {
+      "id": "cdc22-m15-lc-03",
+      "sourceId": "cdc-ltsae-15-months",
+      "referenceAgeMonths": 15,
+      "referenceAgeLabel": "By 15 months",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 8,
+      "text": "Follows directions given with both a gesture and words. For example, he gives you a toy when you hold out your hand and say, “Give me the toy.”"
+    },
+    {
+      "id": "cdc22-m15-lc-04",
+      "sourceId": "cdc-ltsae-15-months",
+      "referenceAgeMonths": 15,
+      "referenceAgeLabel": "By 15 months",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 9,
+      "text": "Points to ask for something or to get help"
+    },
+    {
+      "id": "cdc22-m15-cg-01",
+      "sourceId": "cdc-ltsae-15-months",
+      "referenceAgeMonths": 15,
+      "referenceAgeLabel": "By 15 months",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 10,
+      "text": "Tries to use things the right way, like a phone, cup, or book"
+    },
+    {
+      "id": "cdc22-m15-cg-02",
+      "sourceId": "cdc-ltsae-15-months",
+      "referenceAgeMonths": 15,
+      "referenceAgeLabel": "By 15 months",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 11,
+      "text": "Stacks at least two small objects, like blocks"
+    },
+    {
+      "id": "cdc22-m15-mp-01",
+      "sourceId": "cdc-ltsae-15-months",
+      "referenceAgeMonths": 15,
+      "referenceAgeLabel": "By 15 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "gross-motor",
+      "order": 12,
+      "text": "Takes a few steps on his own"
+    },
+    {
+      "id": "cdc22-m15-mp-02",
+      "sourceId": "cdc-ltsae-15-months",
+      "referenceAgeMonths": 15,
+      "referenceAgeLabel": "By 15 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "fine-motor",
+      "order": 13,
+      "text": "Uses fingers to feed herself some food"
+    },
+    {
+      "id": "cdc22-m18-se-01",
+      "sourceId": "cdc-ltsae-18-months",
+      "referenceAgeMonths": 18,
+      "referenceAgeLabel": "By 18 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 1,
+      "text": "Moves away from you, but looks to make sure you are close by"
+    },
+    {
+      "id": "cdc22-m18-se-02",
+      "sourceId": "cdc-ltsae-18-months",
+      "referenceAgeMonths": 18,
+      "referenceAgeLabel": "By 18 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 2,
+      "text": "Points to show you something interesting"
+    },
+    {
+      "id": "cdc22-m18-se-03",
+      "sourceId": "cdc-ltsae-18-months",
+      "referenceAgeMonths": 18,
+      "referenceAgeLabel": "By 18 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 3,
+      "text": "Puts hands out for you to wash them"
+    },
+    {
+      "id": "cdc22-m18-se-04",
+      "sourceId": "cdc-ltsae-18-months",
+      "referenceAgeMonths": 18,
+      "referenceAgeLabel": "By 18 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 4,
+      "text": "Looks at a few pages in a book with you"
+    },
+    {
+      "id": "cdc22-m18-se-05",
+      "sourceId": "cdc-ltsae-18-months",
+      "referenceAgeMonths": 18,
+      "referenceAgeLabel": "By 18 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 5,
+      "text": "Helps you dress him by pushing arm through sleeve or lifting up foot"
+    },
+    {
+      "id": "cdc22-m18-lc-01",
+      "sourceId": "cdc-ltsae-18-months",
+      "referenceAgeMonths": 18,
+      "referenceAgeLabel": "By 18 months",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 6,
+      "text": "Tries to say three or more words besides “mama” or “dada”"
+    },
+    {
+      "id": "cdc22-m18-lc-02",
+      "sourceId": "cdc-ltsae-18-months",
+      "referenceAgeMonths": 18,
+      "referenceAgeLabel": "By 18 months",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 7,
+      "text": "Follows one-step directions without any gestures, like giving you the toy when you say, “Give it to me.”"
+    },
+    {
+      "id": "cdc22-m18-cg-01",
+      "sourceId": "cdc-ltsae-18-months",
+      "referenceAgeMonths": 18,
+      "referenceAgeLabel": "By 18 months",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 8,
+      "text": "Copies you doing chores, like sweeping with a broom"
+    },
+    {
+      "id": "cdc22-m18-cg-02",
+      "sourceId": "cdc-ltsae-18-months",
+      "referenceAgeMonths": 18,
+      "referenceAgeLabel": "By 18 months",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 9,
+      "text": "Plays with toys in a simple way, like pushing a toy car"
+    },
+    {
+      "id": "cdc22-m18-mp-01",
+      "sourceId": "cdc-ltsae-18-months",
+      "referenceAgeMonths": 18,
+      "referenceAgeLabel": "By 18 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "gross-motor",
+      "order": 10,
+      "text": "Walks without holding on to anyone or anything"
+    },
+    {
+      "id": "cdc22-m18-mp-02",
+      "sourceId": "cdc-ltsae-18-months",
+      "referenceAgeMonths": 18,
+      "referenceAgeLabel": "By 18 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "fine-motor",
+      "order": 11,
+      "text": "Scribbles"
+    },
+    {
+      "id": "cdc22-m18-mp-03",
+      "sourceId": "cdc-ltsae-18-months",
+      "referenceAgeMonths": 18,
+      "referenceAgeLabel": "By 18 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "fine-motor",
+      "order": 12,
+      "text": "Drinks from a cup without a lid and may spill sometimes",
+      "classificationNote": "Borderline gross/fine assignment approved by the project owner (Checkpoint 2a)."
+    },
+    {
+      "id": "cdc22-m18-mp-04",
+      "sourceId": "cdc-ltsae-18-months",
+      "referenceAgeMonths": 18,
+      "referenceAgeLabel": "By 18 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "fine-motor",
+      "order": 13,
+      "text": "Feeds himself with his fingers"
+    },
+    {
+      "id": "cdc22-m18-mp-05",
+      "sourceId": "cdc-ltsae-18-months",
+      "referenceAgeMonths": 18,
+      "referenceAgeLabel": "By 18 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "fine-motor",
+      "order": 14,
+      "text": "Tries to use a spoon"
+    },
+    {
+      "id": "cdc22-m18-mp-06",
+      "sourceId": "cdc-ltsae-18-months",
+      "referenceAgeMonths": 18,
+      "referenceAgeLabel": "By 18 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "gross-motor",
+      "order": 15,
+      "text": "Climbs on and off a couch or chair without help"
+    },
+    {
+      "id": "cdc22-m24-se-01",
+      "sourceId": "cdc-ltsae-2-years",
+      "referenceAgeMonths": 24,
+      "referenceAgeLabel": "By 2 years",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 1,
+      "text": "Notices when others are hurt or upset, like pausing or looking sad when someone is crying"
+    },
+    {
+      "id": "cdc22-m24-se-02",
+      "sourceId": "cdc-ltsae-2-years",
+      "referenceAgeMonths": 24,
+      "referenceAgeLabel": "By 2 years",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 2,
+      "text": "Looks at your face to see how to react in a new situation"
+    },
+    {
+      "id": "cdc22-m24-lc-01",
+      "sourceId": "cdc-ltsae-2-years",
+      "referenceAgeMonths": 24,
+      "referenceAgeLabel": "By 2 years",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 3,
+      "text": "Points to things in a book when you ask, like “Where is the bear?”"
+    },
+    {
+      "id": "cdc22-m24-lc-02",
+      "sourceId": "cdc-ltsae-2-years",
+      "referenceAgeMonths": 24,
+      "referenceAgeLabel": "By 2 years",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 4,
+      "text": "Says at least two words together, like “More milk.”"
+    },
+    {
+      "id": "cdc22-m24-lc-03",
+      "sourceId": "cdc-ltsae-2-years",
+      "referenceAgeMonths": 24,
+      "referenceAgeLabel": "By 2 years",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 5,
+      "text": "Points to at least two body parts when you ask him to show you"
+    },
+    {
+      "id": "cdc22-m24-lc-04",
+      "sourceId": "cdc-ltsae-2-years",
+      "referenceAgeMonths": 24,
+      "referenceAgeLabel": "By 2 years",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 6,
+      "text": "Uses more gestures than just waving and pointing, like blowing a kiss or nodding yes"
+    },
+    {
+      "id": "cdc22-m24-cg-01",
+      "sourceId": "cdc-ltsae-2-years",
+      "referenceAgeMonths": 24,
+      "referenceAgeLabel": "By 2 years",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 7,
+      "text": "Holds something in one hand while using the other hand; for example, holding a container and taking the lid off"
+    },
+    {
+      "id": "cdc22-m24-cg-02",
+      "sourceId": "cdc-ltsae-2-years",
+      "referenceAgeMonths": 24,
+      "referenceAgeLabel": "By 2 years",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 8,
+      "text": "Tries to use switches, knobs, or buttons on a toy"
+    },
+    {
+      "id": "cdc22-m24-cg-03",
+      "sourceId": "cdc-ltsae-2-years",
+      "referenceAgeMonths": 24,
+      "referenceAgeLabel": "By 2 years",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 9,
+      "text": "Plays with more than one toy at the same time, like putting toy food on a toy plate"
+    },
+    {
+      "id": "cdc22-m24-mp-01",
+      "sourceId": "cdc-ltsae-2-years",
+      "referenceAgeMonths": 24,
+      "referenceAgeLabel": "By 2 years",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "gross-motor",
+      "order": 10,
+      "text": "Kicks a ball"
+    },
+    {
+      "id": "cdc22-m24-mp-02",
+      "sourceId": "cdc-ltsae-2-years",
+      "referenceAgeMonths": 24,
+      "referenceAgeLabel": "By 2 years",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "gross-motor",
+      "order": 11,
+      "text": "Runs"
+    },
+    {
+      "id": "cdc22-m24-mp-03",
+      "sourceId": "cdc-ltsae-2-years",
+      "referenceAgeMonths": 24,
+      "referenceAgeLabel": "By 2 years",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "gross-motor",
+      "order": 12,
+      "text": "Walks (not climbs) up a few stairs with or without help"
+    },
+    {
+      "id": "cdc22-m24-mp-04",
+      "sourceId": "cdc-ltsae-2-years",
+      "referenceAgeMonths": 24,
+      "referenceAgeLabel": "By 2 years",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "fine-motor",
+      "order": 13,
+      "text": "Eats with a spoon"
+    },
+    {
+      "id": "cdc22-m30-se-01",
+      "sourceId": "cdc-ltsae-30-months",
+      "referenceAgeMonths": 30,
+      "referenceAgeLabel": "By 30 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 1,
+      "text": "Plays next to other children and sometimes plays with them"
+    },
+    {
+      "id": "cdc22-m30-se-02",
+      "sourceId": "cdc-ltsae-30-months",
+      "referenceAgeMonths": 30,
+      "referenceAgeLabel": "By 30 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 2,
+      "text": "Shows you what she can do by saying, “Look at me!”"
+    },
+    {
+      "id": "cdc22-m30-se-03",
+      "sourceId": "cdc-ltsae-30-months",
+      "referenceAgeMonths": 30,
+      "referenceAgeLabel": "By 30 months",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 3,
+      "text": "Follows simple routines when told, like helping to pick up toys when you say, “It’s clean-up time.”"
+    },
+    {
+      "id": "cdc22-m30-lc-01",
+      "sourceId": "cdc-ltsae-30-months",
+      "referenceAgeMonths": 30,
+      "referenceAgeLabel": "By 30 months",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 4,
+      "text": "Says about 50 words"
+    },
+    {
+      "id": "cdc22-m30-lc-02",
+      "sourceId": "cdc-ltsae-30-months",
+      "referenceAgeMonths": 30,
+      "referenceAgeLabel": "By 30 months",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 5,
+      "text": "Says two or more words together, with one action word, like “Doggie run”"
+    },
+    {
+      "id": "cdc22-m30-lc-03",
+      "sourceId": "cdc-ltsae-30-months",
+      "referenceAgeMonths": 30,
+      "referenceAgeLabel": "By 30 months",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 6,
+      "text": "Names things in a book when you point and ask, “What is this?”"
+    },
+    {
+      "id": "cdc22-m30-lc-04",
+      "sourceId": "cdc-ltsae-30-months",
+      "referenceAgeMonths": 30,
+      "referenceAgeLabel": "By 30 months",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 7,
+      "text": "Says words like “I,” “me,” or “we”"
+    },
+    {
+      "id": "cdc22-m30-cg-01",
+      "sourceId": "cdc-ltsae-30-months",
+      "referenceAgeMonths": 30,
+      "referenceAgeLabel": "By 30 months",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 8,
+      "text": "Uses things to pretend, like feeding a block to a doll as if it were food"
+    },
+    {
+      "id": "cdc22-m30-cg-02",
+      "sourceId": "cdc-ltsae-30-months",
+      "referenceAgeMonths": 30,
+      "referenceAgeLabel": "By 30 months",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 9,
+      "text": "Shows simple problem-solving skills, like standing on a small stool to reach something"
+    },
+    {
+      "id": "cdc22-m30-cg-03",
+      "sourceId": "cdc-ltsae-30-months",
+      "referenceAgeMonths": 30,
+      "referenceAgeLabel": "By 30 months",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 10,
+      "text": "Follows two-step instructions like “Put the toy down and close the door.”"
+    },
+    {
+      "id": "cdc22-m30-cg-04",
+      "sourceId": "cdc-ltsae-30-months",
+      "referenceAgeMonths": 30,
+      "referenceAgeLabel": "By 30 months",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 11,
+      "text": "Shows he knows at least one color, like pointing to a red crayon when you ask, “Which one is red?”"
+    },
+    {
+      "id": "cdc22-m30-mp-01",
+      "sourceId": "cdc-ltsae-30-months",
+      "referenceAgeMonths": 30,
+      "referenceAgeLabel": "By 30 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "fine-motor",
+      "order": 12,
+      "text": "Uses hands to twist things, like turning doorknobs or unscrewing lids"
+    },
+    {
+      "id": "cdc22-m30-mp-02",
+      "sourceId": "cdc-ltsae-30-months",
+      "referenceAgeMonths": 30,
+      "referenceAgeLabel": "By 30 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "fine-motor",
+      "order": 13,
+      "text": "Takes some clothes off by himself, like loose pants or an open jacket",
+      "classificationNote": "Borderline gross/fine assignment approved by the project owner (Checkpoint 2a)."
+    },
+    {
+      "id": "cdc22-m30-mp-03",
+      "sourceId": "cdc-ltsae-30-months",
+      "referenceAgeMonths": 30,
+      "referenceAgeLabel": "By 30 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "gross-motor",
+      "order": 14,
+      "text": "Jumps off the ground with both feet"
+    },
+    {
+      "id": "cdc22-m30-mp-04",
+      "sourceId": "cdc-ltsae-30-months",
+      "referenceAgeMonths": 30,
+      "referenceAgeLabel": "By 30 months",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "fine-motor",
+      "order": 15,
+      "text": "Turns book pages, one at a time, when you read to her"
+    },
+    {
+      "id": "cdc22-m36-se-01",
+      "sourceId": "cdc-ltsae-3-years",
+      "referenceAgeMonths": 36,
+      "referenceAgeLabel": "By 3 years",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 1,
+      "text": "Calms down within 10 minutes after you leave her, like at a childcare drop off"
+    },
+    {
+      "id": "cdc22-m36-se-02",
+      "sourceId": "cdc-ltsae-3-years",
+      "referenceAgeMonths": 36,
+      "referenceAgeLabel": "By 3 years",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 2,
+      "text": "Notices other children and joins them to play"
+    },
+    {
+      "id": "cdc22-m36-lc-01",
+      "sourceId": "cdc-ltsae-3-years",
+      "referenceAgeMonths": 36,
+      "referenceAgeLabel": "By 3 years",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 3,
+      "text": "Talks with you in conversation using at least two back-and-forth exchanges"
+    },
+    {
+      "id": "cdc22-m36-lc-02",
+      "sourceId": "cdc-ltsae-3-years",
+      "referenceAgeMonths": 36,
+      "referenceAgeLabel": "By 3 years",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 4,
+      "text": "Asks “who,” “what,” “where,” or “why” questions, like “Where is mommy/daddy?”"
+    },
+    {
+      "id": "cdc22-m36-lc-03",
+      "sourceId": "cdc-ltsae-3-years",
+      "referenceAgeMonths": 36,
+      "referenceAgeLabel": "By 3 years",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 5,
+      "text": "Says what action is happening in a picture or book when asked, like “running,” “eating,” or “playing”"
+    },
+    {
+      "id": "cdc22-m36-lc-04",
+      "sourceId": "cdc-ltsae-3-years",
+      "referenceAgeMonths": 36,
+      "referenceAgeLabel": "By 3 years",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 6,
+      "text": "Says first name, when asked"
+    },
+    {
+      "id": "cdc22-m36-lc-05",
+      "sourceId": "cdc-ltsae-3-years",
+      "referenceAgeMonths": 36,
+      "referenceAgeLabel": "By 3 years",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 7,
+      "text": "Talks well enough for others to understand, most of the time"
+    },
+    {
+      "id": "cdc22-m36-cg-01",
+      "sourceId": "cdc-ltsae-3-years",
+      "referenceAgeMonths": 36,
+      "referenceAgeLabel": "By 3 years",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 8,
+      "text": "Draws a circle, when you show him how"
+    },
+    {
+      "id": "cdc22-m36-cg-02",
+      "sourceId": "cdc-ltsae-3-years",
+      "referenceAgeMonths": 36,
+      "referenceAgeLabel": "By 3 years",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 9,
+      "text": "Avoids touching hot objects, like a stove, when you warn her"
+    },
+    {
+      "id": "cdc22-m36-mp-01",
+      "sourceId": "cdc-ltsae-3-years",
+      "referenceAgeMonths": 36,
+      "referenceAgeLabel": "By 3 years",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "fine-motor",
+      "order": 10,
+      "text": "Strings items together, like large beads or macaroni"
+    },
+    {
+      "id": "cdc22-m36-mp-02",
+      "sourceId": "cdc-ltsae-3-years",
+      "referenceAgeMonths": 36,
+      "referenceAgeLabel": "By 3 years",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "fine-motor",
+      "order": 11,
+      "text": "Puts on some clothes by himself, like loose pants or a jacket",
+      "classificationNote": "Borderline gross/fine assignment approved by the project owner (Checkpoint 2a)."
+    },
+    {
+      "id": "cdc22-m36-mp-03",
+      "sourceId": "cdc-ltsae-3-years",
+      "referenceAgeMonths": 36,
+      "referenceAgeLabel": "By 3 years",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "fine-motor",
+      "order": 12,
+      "text": "Uses a fork"
+    },
+    {
+      "id": "cdc22-m48-se-01",
+      "sourceId": "cdc-ltsae-4-years",
+      "referenceAgeMonths": 48,
+      "referenceAgeLabel": "By 4 years",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 1,
+      "text": "Pretends to be something else during play (teacher, superhero, dog)"
+    },
+    {
+      "id": "cdc22-m48-se-02",
+      "sourceId": "cdc-ltsae-4-years",
+      "referenceAgeMonths": 48,
+      "referenceAgeLabel": "By 4 years",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 2,
+      "text": "Asks to go play with children if none are around, like “Can I play with Alex?”"
+    },
+    {
+      "id": "cdc22-m48-se-03",
+      "sourceId": "cdc-ltsae-4-years",
+      "referenceAgeMonths": 48,
+      "referenceAgeLabel": "By 4 years",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 3,
+      "text": "Comforts others who are hurt or sad, like hugging a crying friend"
+    },
+    {
+      "id": "cdc22-m48-se-04",
+      "sourceId": "cdc-ltsae-4-years",
+      "referenceAgeMonths": 48,
+      "referenceAgeLabel": "By 4 years",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 4,
+      "text": "Avoids danger, like not jumping from tall heights at the playground"
+    },
+    {
+      "id": "cdc22-m48-se-05",
+      "sourceId": "cdc-ltsae-4-years",
+      "referenceAgeMonths": 48,
+      "referenceAgeLabel": "By 4 years",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 5,
+      "text": "Likes to be a “helper”"
+    },
+    {
+      "id": "cdc22-m48-se-06",
+      "sourceId": "cdc-ltsae-4-years",
+      "referenceAgeMonths": 48,
+      "referenceAgeLabel": "By 4 years",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 6,
+      "text": "Changes behavior based on where she is (place of worship, library, playground)"
+    },
+    {
+      "id": "cdc22-m48-lc-01",
+      "sourceId": "cdc-ltsae-4-years",
+      "referenceAgeMonths": 48,
+      "referenceAgeLabel": "By 4 years",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 7,
+      "text": "Says sentences with four or more words"
+    },
+    {
+      "id": "cdc22-m48-lc-02",
+      "sourceId": "cdc-ltsae-4-years",
+      "referenceAgeMonths": 48,
+      "referenceAgeLabel": "By 4 years",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 8,
+      "text": "Says some words from a song, story, or nursery rhyme"
+    },
+    {
+      "id": "cdc22-m48-lc-03",
+      "sourceId": "cdc-ltsae-4-years",
+      "referenceAgeMonths": 48,
+      "referenceAgeLabel": "By 4 years",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 9,
+      "text": "Talks about at least one thing that happened during her day, like “I played soccer.”"
+    },
+    {
+      "id": "cdc22-m48-lc-04",
+      "sourceId": "cdc-ltsae-4-years",
+      "referenceAgeMonths": 48,
+      "referenceAgeLabel": "By 4 years",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 10,
+      "text": "Answers simple questions like “What is a coat for?” or “What is a crayon for?”"
+    },
+    {
+      "id": "cdc22-m48-cg-01",
+      "sourceId": "cdc-ltsae-4-years",
+      "referenceAgeMonths": 48,
+      "referenceAgeLabel": "By 4 years",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 11,
+      "text": "Names a few colors of items"
+    },
+    {
+      "id": "cdc22-m48-cg-02",
+      "sourceId": "cdc-ltsae-4-years",
+      "referenceAgeMonths": 48,
+      "referenceAgeLabel": "By 4 years",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 12,
+      "text": "Tells what comes next in a well-known story"
+    },
+    {
+      "id": "cdc22-m48-cg-03",
+      "sourceId": "cdc-ltsae-4-years",
+      "referenceAgeMonths": 48,
+      "referenceAgeLabel": "By 4 years",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 13,
+      "text": "Draws a person with three or more body parts"
+    },
+    {
+      "id": "cdc22-m48-mp-01",
+      "sourceId": "cdc-ltsae-4-years",
+      "referenceAgeMonths": 48,
+      "referenceAgeLabel": "By 4 years",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "gross-motor",
+      "order": 14,
+      "text": "Catches a large ball most of the time",
+      "classificationNote": "Borderline gross/fine assignment approved by the project owner (Checkpoint 2a)."
+    },
+    {
+      "id": "cdc22-m48-mp-02",
+      "sourceId": "cdc-ltsae-4-years",
+      "referenceAgeMonths": 48,
+      "referenceAgeLabel": "By 4 years",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "fine-motor",
+      "order": 15,
+      "text": "Serves herself food or pours water, with adult supervision",
+      "classificationNote": "Borderline gross/fine assignment approved by the project owner (Checkpoint 2a)."
+    },
+    {
+      "id": "cdc22-m48-mp-03",
+      "sourceId": "cdc-ltsae-4-years",
+      "referenceAgeMonths": 48,
+      "referenceAgeLabel": "By 4 years",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "fine-motor",
+      "order": 16,
+      "text": "Unbuttons some buttons"
+    },
+    {
+      "id": "cdc22-m48-mp-04",
+      "sourceId": "cdc-ltsae-4-years",
+      "referenceAgeMonths": 48,
+      "referenceAgeLabel": "By 4 years",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "fine-motor",
+      "order": 17,
+      "text": "Holds crayon or pencil between fingers and thumb (not a fist)"
+    },
+    {
+      "id": "cdc22-m60-se-01",
+      "sourceId": "cdc-ltsae-5-years",
+      "referenceAgeMonths": 60,
+      "referenceAgeLabel": "By 5 years",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 1,
+      "text": "Follows rules or takes turns when playing games with other children"
+    },
+    {
+      "id": "cdc22-m60-se-02",
+      "sourceId": "cdc-ltsae-5-years",
+      "referenceAgeMonths": 60,
+      "referenceAgeLabel": "By 5 years",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 2,
+      "text": "Sings, dances, or acts for you"
+    },
+    {
+      "id": "cdc22-m60-se-03",
+      "sourceId": "cdc-ltsae-5-years",
+      "referenceAgeMonths": 60,
+      "referenceAgeLabel": "By 5 years",
+      "cdcCategory": "Social/Emotional",
+      "appCategory": "social-emotional",
+      "order": 3,
+      "text": "Does simple chores at home, like matching socks or clearing the table after eating"
+    },
+    {
+      "id": "cdc22-m60-lc-01",
+      "sourceId": "cdc-ltsae-5-years",
+      "referenceAgeMonths": 60,
+      "referenceAgeLabel": "By 5 years",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 4,
+      "text": "Tells a story she heard or made up with at least two events. For example, a cat was stuck in a tree and a firefighter saved it"
+    },
+    {
+      "id": "cdc22-m60-lc-02",
+      "sourceId": "cdc-ltsae-5-years",
+      "referenceAgeMonths": 60,
+      "referenceAgeLabel": "By 5 years",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 5,
+      "text": "Answers simple questions about a book or story after you read or tell it to him"
+    },
+    {
+      "id": "cdc22-m60-lc-03",
+      "sourceId": "cdc-ltsae-5-years",
+      "referenceAgeMonths": 60,
+      "referenceAgeLabel": "By 5 years",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 6,
+      "text": "Keeps a conversation going with more than three back-and-forth exchanges"
+    },
+    {
+      "id": "cdc22-m60-lc-04",
+      "sourceId": "cdc-ltsae-5-years",
+      "referenceAgeMonths": 60,
+      "referenceAgeLabel": "By 5 years",
+      "cdcCategory": "Language/Communication",
+      "appCategory": "language-communication",
+      "order": 7,
+      "text": "Uses or recognizes simple rhymes (bat-cat, ball-tall)"
+    },
+    {
+      "id": "cdc22-m60-cg-01",
+      "sourceId": "cdc-ltsae-5-years",
+      "referenceAgeMonths": 60,
+      "referenceAgeLabel": "By 5 years",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 8,
+      "text": "Counts to 10"
+    },
+    {
+      "id": "cdc22-m60-cg-02",
+      "sourceId": "cdc-ltsae-5-years",
+      "referenceAgeMonths": 60,
+      "referenceAgeLabel": "By 5 years",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 9,
+      "text": "Names some numbers between 1 and 5 when you point to them"
+    },
+    {
+      "id": "cdc22-m60-cg-03",
+      "sourceId": "cdc-ltsae-5-years",
+      "referenceAgeMonths": 60,
+      "referenceAgeLabel": "By 5 years",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 10,
+      "text": "Uses words about time, like “yesterday,” “tomorrow,” “morning,” or “night”"
+    },
+    {
+      "id": "cdc22-m60-cg-04",
+      "sourceId": "cdc-ltsae-5-years",
+      "referenceAgeMonths": 60,
+      "referenceAgeLabel": "By 5 years",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 11,
+      "text": "Pays attention for 5 to 10 minutes during activities. For example, during story time or making arts and crafts (screen time does not count)"
+    },
+    {
+      "id": "cdc22-m60-cg-05",
+      "sourceId": "cdc-ltsae-5-years",
+      "referenceAgeMonths": 60,
+      "referenceAgeLabel": "By 5 years",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 12,
+      "text": "Writes some letters in her name"
+    },
+    {
+      "id": "cdc22-m60-cg-06",
+      "sourceId": "cdc-ltsae-5-years",
+      "referenceAgeMonths": 60,
+      "referenceAgeLabel": "By 5 years",
+      "cdcCategory": "Cognitive",
+      "appCategory": "cognitive",
+      "order": 13,
+      "text": "Names some letters when you point to them"
+    },
+    {
+      "id": "cdc22-m60-mp-01",
+      "sourceId": "cdc-ltsae-5-years",
+      "referenceAgeMonths": 60,
+      "referenceAgeLabel": "By 5 years",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "fine-motor",
+      "order": 14,
+      "text": "Buttons some buttons"
+    },
+    {
+      "id": "cdc22-m60-mp-02",
+      "sourceId": "cdc-ltsae-5-years",
+      "referenceAgeMonths": 60,
+      "referenceAgeLabel": "By 5 years",
+      "cdcCategory": "Movement/Physical",
+      "appCategory": "gross-motor",
+      "order": 15,
+      "text": "Hops on one foot"
+    }
+  ]
+}

@@ -35,11 +35,20 @@ import sparkles from 'lucide-static/icons/sparkles.svg?raw';
 import tag from 'lucide-static/icons/tag.svg?raw';
 import refresh from 'lucide-static/icons/refresh-cw.svg?raw';
 import eye from 'lucide-static/icons/eye.svg?raw';
+import search from 'lucide-static/icons/search.svg?raw';
+import externalLink from 'lucide-static/icons/external-link.svg?raw';
+import eyeOff from 'lucide-static/icons/eye-off.svg?raw';
+import copyPlus from 'lucide-static/icons/copy-plus.svg?raw';
+import chart from 'lucide-static/icons/chart-no-axes-column.svg?raw';
+import listChecks from 'lucide-static/icons/list-checks.svg?raw';
+import history from 'lucide-static/icons/history.svg?raw';
+import target from 'lucide-static/icons/target.svg?raw';
+import map from 'lucide-static/icons/map.svg?raw';
 
 const ICONS = {
   house, sprout, calendar, notebook, library, settings, chevronRight, chevronLeft, chevronDown, plus, check, x,
   camera, users, palette, shield, hardDrive, info, download, trash, pencil, bell, share, fileText, smartphone,
-  bookOpen, heart, clock, rotate, sparkles, tag, refresh, eye,
+  bookOpen, heart, clock, rotate, sparkles, tag, refresh, eye, search, externalLink, eyeOff, copyPlus, chart, listChecks, history, target, map,
 } as const;
 
 export type IconName = keyof typeof ICONS;
