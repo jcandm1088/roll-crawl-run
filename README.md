@@ -2,17 +2,13 @@
 
 A private, local-first, installable web app (PWA) that helps parents document their child's development, appointments, and reflections. It runs entirely in the browser: no account, no server, no analytics, and no AI.
 
-> **Status: Checkpoint 2a (verified CDC milestone tracking) is implemented locally and awaiting the owner's review; it is not yet deployed.** The live site runs Checkpoint 1.
->
-> **Checkpoint 1: accepted and deployed.**
-> - **Live app:** https://jcandm1088.github.io/roll-crawl-run/
-> - **Repository:** https://github.com/jcandm1088/roll-crawl-run
-> - **Owner's hands-on testing:** Mac Safari acceptance passed. On a physical iPhone, Home Screen install, later launches, local persistence, and offline launch and navigation passed. The first iPhone load showed a one-time “server not responding” delay whose cause has not been established.
-> - **Automated tests:** 228 unit and 111 end-to-end tests pass in headless Chromium (Checkpoint 2a; the Checkpoint 1 baseline was 185 and 80).
-> - **Built so far:** branding, per-child themes, navigation, onboarding, profiles, precise and corrected age, local storage, and an offline PWA shell.
-> - **Checkpoint 2a (local):** Growth with Progress, What to Expect at Every Age, the Milestone Library (159 CDC milestones), milestone history, and personal versions.
-> - **Not yet built:** Checkpoint 2b (Goals & Exercises, charts) and Checkpoints 3–6 (Calendar, Journal, Resources, sharing, reports); these appear as labeled placeholders.
-> - See `docs/HANDOFF.md`.
+> **Status (2026-11-26):**
+> - **Checkpoint 1 — completed, accepted and deployed.** Live app: https://jcandm1088.github.io/roll-crawl-run/ (deployed commit `e40287f`). Repository: https://github.com/jcandm1088/roll-crawl-run.
+> - **Checkpoint 2a — implemented, awaiting the owner's acceptance testing.** Verified CDC milestone tracking: Growth with Progress, What to Expect at Every Age, the Milestone Library (159 CDC milestones), milestone history and personal versions. It is on the remote branch `checkpoint-2a` (`73d9f6f`), **not** merged into `main` and **not** deployed.
+> - **Planned, not started:** Checkpoint 2b (Goals & Exercises, charts) and Checkpoints 3–6 (Calendar, Journal, Resources, backups and sharing, reports). These appear in the app as labeled placeholders.
+> - **Owner's hands-on testing (Checkpoint 1):** Mac Safari acceptance passed. On a physical iPhone, Home Screen install, later launches, local persistence, and offline launch and navigation passed. The first iPhone load showed a one-time “server not responding” delay whose cause has not been established. Checkpoint 2a has **not** yet been tested in Safari or on an iPhone.
+> - **Automated tests:** 228 unit and 111 end-to-end tests (headless Chromium) at Checkpoint 2a; the Checkpoint 1 baseline was 185 and 80.
+> - **Current state and next steps:** `docs/HANDOFF.md`.
 
 ## Important limitations
 
@@ -50,7 +46,7 @@ npm test
 npm run test:e2e
 ```
 
-The first command runs the Vitest unit tests: dates, ages, intervals, theme contrast, and storage. The second runs the Playwright end-to-end tests against the production build, including offline use and accessibility scans.
+The first command runs the Vitest unit tests: dates, ages, intervals, theme contrast, storage, and milestone content, applicability, progress and history. The second runs the Playwright end-to-end tests against the production build, including offline use and accessibility scans.
 
 ## Deploy (GitHub Pages) — manual only
 
@@ -65,13 +61,14 @@ The app uses relative paths and hash routes, so it works at `https://<username>.
 
 ```
 src/domain/      pure, deterministic logic (dates, age, intervals, contrast)
+src/content/     bundled, versioned CDC milestone content, source register, locked IDs
 src/data/        IndexedDB schema, transactions, repositories (only layer touching storage)
 src/state/       app state and theme application
 src/ui/          components, screens, styles, theme tokens
 src/sw/          service worker and registration
 tests/unit       Vitest     tests/e2e  Playwright     tests/fixtures  fictional data only
-docs/            plan, build log, decisions, testing checklist, limitations, sources, design system,
-                 reviews/, branding/ (logo concepts), screenshots/
+docs/            handoff, plan, build log, decisions, testing checklist, limitations, refinement backlog,
+                 sources, milestone inventory, design system, reviews/, branding/ (logo concepts), screenshots/
 ```
 
 ## Privacy in the repository
@@ -89,17 +86,19 @@ See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). The full license texts are
 - Libraries: Preact (MIT), idb (ISC)
 
 ## Resuming development
+Each cloud conversation works in its own temporary copy of the repository. Only what has been pushed to GitHub (or kept in an owner-held backup) carries over to a new conversation.
 1. Start a Claude Code session with this repository attached (`jcandm1088/roll-crawl-run`), or upload the latest project ZIP.
-2. Ask Claude to read `docs/HANDOFF.md` and `docs/DEVELOPMENT_PLAN.md` (sections R7 to R2 take precedence over the original plan), and to verify that `main` is clean and matches `origin/main`.
-3. Install the dependencies:
+2. Ask Claude to read `docs/HANDOFF.md` (current state) and `docs/DEVELOPMENT_PLAN.md` (the R-sections, newest first, take precedence over the original plan).
+3. Ask Claude to verify the workspace against `docs/HANDOFF.md` section 2: remote `main`, the latest checkpoint branch (currently `checkpoint-2a`), the expected commit hashes, and a clean working tree. If an expected commit is missing, it must stop and report rather than reconstruct anything.
+4. Install the dependencies:
    ```bash
    npm ci
    ```
-4. Run the unit tests and the end-to-end tests to confirm a green baseline:
+5. Run the unit tests and the end-to-end tests to confirm a green baseline:
    ```bash
    npm test
    ```
    ```bash
    npm run test:e2e
    ```
-5. Resolve the Checkpoint 2 source-access prerequisite before any milestone content is written.
+6. At the end of a checkpoint, preserve the work on a separate remote branch only after a publication safety review and the owner's explicit authorization (see `docs/HANDOFF.md` section 7).

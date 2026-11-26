@@ -1,10 +1,12 @@
 # Development Plan — Roll, Crawl, RUN: Tracking Growth Together (Revision 2)
 
-> **Current status:** Checkpoint 2a has been implemented locally and is awaiting the owner's review (see R9); it is not pushed or deployed. Status at the end of Checkpoint 1:
+> **Current status (2026-11-26):** Checkpoint 1 is completed, accepted and deployed (`e40287f`). Checkpoint 2a is implemented and awaiting the owner's acceptance testing (see R9 and R10); it is preserved on the remote branch `checkpoint-2a` (`73d9f6f`), not merged into `main` and not deployed. Checkpoint 2b and Checkpoints 3–6 are planned and not started. The current-state handoff is `docs/HANDOFF.md`.
+>
+> *Historical status at the end of Checkpoint 1 (kept as recorded):*
 > - Checkpoint 1 is implemented, **accepted** after the owner's Mac Safari testing, and **deployed** at https://jcandm1088.github.io/roll-crawl-run/ (repository: https://github.com/jcandm1088/roll-crawl-run).
 > - The owner's physical iPhone checks passed: install, launches, persistence, and offline launch and navigation.
-> - Checkpoints 2–6 are not implemented.
-> - Handoff notes are in `docs/HANDOFF.md`. *(The original header said “PLAN ONLY — no application code has been written”; that was true when this plan was first written.)*
+> - Checkpoints 2–6 are not implemented. *(Superseded: see the current status above.)*
+> - Handoff notes are in `docs/HANDOFF.md`. *(The end-of-Checkpoint-1 handoff is now `docs/reviews/CHECKPOINT_1_HANDOFF.md`.)* *(The original header said “PLAN ONLY — no application code has been written”; that was true when this plan was first written.)*
 > Revision 2 incorporates your decisions on D1–D15 and your requested revisions (vaccination references, age navigation, journal privacy & export modes, partner collaboration, technical safeguards, review checkpoints). Changes from Revision 1 are marked **[R2]**.
 > *(Historical)* At planning time the workspace was empty.
 
@@ -25,6 +27,15 @@
 **Visual direction (CP1):** premium, warm, calm, adult-oriented; no cartoon imagery, not clinical, not generic dashboard. Five cohesive theme systems (Earth default, Sky, Blush, Lavender, Sage) sharing typography, spacing, iconography, components, buttons, navigation. Fraunces (display) + Inter (UI), subject to review. Initial app icon + wordmark preserving "Roll, Crawl, RUN: Tracking Growth Together". Safe-area insets, ≥44–48px targets.
 
 **Checkpoint 1 build list:** scaffold (Vite/TS/Preact, Vitest, Playwright); fonts self-hosted (fetched from npm `@fontsource` packages, OFL); icon/wordmark (SVG → PNG sizes generated with Playwright); design tokens + 5 themes + contrast test; app shell (top bar with child chip + settings, bottom nav, hash router); placeholder tabs clearly labeled "Coming in a later checkpoint"; onboarding (DOB, name/photo, corrected age, theme, privacy); profiles create/edit/switch/delete (typed confirmation; backup purge option present but backups feature labeled pending); age domain (chronological + corrected with safeguards); IndexedDB schema v1 for all planned stores with logical-key indexes and atomic transaction helper; repositories for meta/settings/children/photos; storage-persistence status; privacy disclosures in Settings; manifest + basic service worker (precache, update banner); unit + e2e tests; mobile screenshots via Playwright at deviceScaleFactor 2; docs skeletons (README, BUILD_LOG template, TESTING_CHECKLIST, KNOWN_LIMITATIONS, DECISIONS, SOURCE_REGISTER). Code lives in `/home/user/roll-crawl-run` (git init locally; no push until you provide the remote).
+
+---
+
+## R10 — Checkpoint 2a handoff consolidation and recovery (documentation only)
+- **Status categories used from now on:** completed (accepted), implemented but not accepted, planned (not started), deferred. Current values are in `docs/HANDOFF.md` section 1.
+- **Conversation transfer:** the original Checkpoint 2a commit (`73d9f6f`) existed only in the previous conversation's workspace. It was recovered unchanged through the remote branch `checkpoint-2a` and verified (hash, parent `aa8c869`, seven-commit history). `main` (`aa8c869`) and the deployment (`e40287f`) were unaffected. Details: `docs/HANDOFF.md` section 6.
+- **Workflow addition:** remote checkpoint preservation on a separate branch, subject to a publication safety review and the owner's explicit authorization (Decision #63).
+- **New document:** `docs/REFINEMENT_BACKLOG.md` (first item R-001, onboarding child-name input overflow; pending investigation).
+- **Unchanged:** Checkpoint 2a scope and requirements (R9); no application code, dependency or schema change.
 
 ---
 
@@ -58,7 +69,7 @@
 - **Owner's physical iPhone results:** Home Screen install, later launches, local data persistence, and offline launch and navigation passed.
 - **Initial connectivity observation:** a one-time “server not responding” delay at first load. Its cause has not been established; it is not recorded as a defect and is not claimed to be resolved.
 - **Publication review:** the owner verified in a signed-out private browser window that the session URL redirects to sign-in, so it is private. History was pushed unchanged.
-- **Next:** Checkpoint 2 prerequisites are in `docs/HANDOFF.md`.
+- **Next:** Checkpoint 2 prerequisites are in `docs/HANDOFF.md`. *(Superseded: those prerequisites were resolved during Checkpoint 2a and are preserved in `docs/reviews/CHECKPOINT_1_HANDOFF.md`; see R9 and R10.)*
 
 ---
 

@@ -1,6 +1,6 @@
 # Known Limitations
 
-Updated at Checkpoint 1 final refinement. Items marked *(planned)* are scheduled for later checkpoints.
+Last updated 2026-11-26 (Checkpoint 2a handoff consolidation). Earlier sections are kept as dated records; where a later statement supersedes an earlier one, the earlier one is marked. Items marked *(planned)* are scheduled for later checkpoints. Refinements and suspected defects awaiting correction are tracked in `docs/REFINEMENT_BACKLOG.md`.
 
 ## Not built yet (placeholders)
 - Goals & Exercises, recurring activities, CDC activities, and charts *(Checkpoint 2b)*
@@ -19,7 +19,7 @@ Updated at Checkpoint 1 final refinement. Items marked *(planned)* are scheduled
 
 ## Content and sources
 - **Developmental content:** the 159 CDC milestones (Checkpoint 2a) are included. There is no other developmental or medical content.
-- The build environment could not reach cdc.gov, healthychildren.org, aap.org, or pathways.org: the network policy blocks them. Source verification for Checkpoints 2 and 3 needs either network access to those hosts or source material you supply (see SOURCE_REGISTER.md).
+- *(Superseded at Checkpoint 2a.)* At Checkpoint 1 the build environment could not reach cdc.gov, healthychildren.org, aap.org, or pathways.org. The dedicated `roll-crawl-run` environment now allows only cdc.gov, www.cdc.gov, pathways.org, www.pathways.org and jcandm1088.github.io. AAP and HealthyChildren are excluded; Pathways.org content may not be collected until its terms are approved. Checkpoint 3 well-child and vaccine sources still need an owner decision (see SOURCE_REGISTER.md).
 - The corrected-age explanation describes only the arithmetic. It gives no clinical guidance on when or how long to use corrected age.
 
 ## PWA and offline
@@ -60,3 +60,11 @@ Updated at Checkpoint 1 final refinement. Items marked *(planned)* are scheduled
 - **Limits of corrected age:** the app applies only the parent's chosen basis. It has no clinical guidance on when to stop using corrected age (AAP content excluded).
 - **Checkpoint 3 sources:** AAP/Bright Futures and the AAP immunization schedule are blocked by the AAP exclusion and need an owner decision.
 - **Partner sharing isn't built yet.** The data is designed for it: stable IDs, logical keys, append-only events, device provenance, and state snapshots.
+
+## Refinement backlog
+- **R-001 — Onboarding child-name input overflow:** the owner observed on a physical mobile device that an input on the initial child-profile screen, believed to be the name field, extends past the right edge of the viewport. It still works. **Pending investigation; not corrected.** See `docs/REFINEMENT_BACKLOG.md`.
+
+## Development workflow (cloud sessions)
+- Each Claude Code cloud conversation works in its **own temporary workspace**. Local commits, installed packages and scratch files there are lost if the conversation ends or its container is reclaimed before they are pushed. The environment settings (allowed hosts) persist separately.
+- This caused the conversation-transfer incident of 2026-11-26: Checkpoint 2a existed only in the previous workspace until it was recovered through the `checkpoint-2a` branch (see `docs/HANDOFF.md` section 6). Checkpoints are now preserved on a separate remote branch, with the owner's authorization and after a publication safety review.
+- Sessions may be assigned a session-specific Git branch; pushes go only to branches the owner authorizes.

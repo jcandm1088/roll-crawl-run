@@ -95,3 +95,11 @@ Details are in `docs/reviews/CHECKPOINT_1_FINAL.md`.
 58. **Settings → Milestone Viewing Preferences** displays the existing per-child setting and links to it. There is no second setting.
 59. **Source compliance:** AAP and HealthyChildren are excluded and their domains removed. Pathways.org is not to be collected until its terms are approved. A source's terms must be reviewed before any future automated collection.
 60. **No new dependencies, no schema change.** The JavaScript bundle grew from about 115 KB to about 217 KB, mainly because of the bundled milestone and source data.
+
+## Checkpoint 2a — handoff consolidation and recovery (2026-11-26, documentation only)
+*Earlier decisions are kept as recorded. Where one is updated, the update is a new entry that names it.*
+
+61. **Update to #46 (GitHub Action versions).** #46 said to revisit the versions “before the first deployment”. The first deployment (`e40287f`) then went ahead with the unchanged versions and succeeded. The upgrade **remains deferred pending the owner's review**, to be resolved before relying on future deployments.
+62. **Single current-state handoff.** `docs/HANDOFF.md` is the one authoritative current-state handoff. The end-of-Checkpoint-1 handoff is preserved unchanged as `docs/reviews/CHECKPOINT_1_HANDOFF.md`.
+63. **Remote checkpoint preservation.** After the conversation-transfer incident (Checkpoint 2a existed only in a previous conversation's workspace), completed checkpoints are preserved on a separate, non-`main` remote branch (for example `checkpoint-2a`), only after a publication safety review and with the owner's explicit authorization naming the branch. This never merges into `main` and never deploys. Session-specific branch restrictions are respected; any conflict is reported before pushing.
+64. **Refinement backlog.** `docs/REFINEMENT_BACKLOG.md` records observed refinements and suspected defects. Recording an item does not authorize a fix. First item: R-001, onboarding child-name input overflow.
