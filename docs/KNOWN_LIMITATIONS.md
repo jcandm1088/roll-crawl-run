@@ -14,7 +14,7 @@ Updated at Checkpoint 1 final refinement. Items marked *(planned)* are scheduled
 - Data lives only in this browser's IndexedDB on this device. It is **not encrypted or password-protected** and is **not** a clinical or HIPAA-compliant record.
 - Data can be lost if browser data is cleared, the app is uninstalled, or the device is lost. **No backup feature exists yet** (Checkpoint 5).
 - Persistent-storage permission may be denied or unsupported. The app still works, and Settings → Storage explains the risk.
-- On iPhone, the installed Home Screen app and Safari may keep **separate** storage. This has **not yet been verified on a physical device**.
+- On iPhone, the installed Home Screen app and Safari may keep **separate** storage. This is **still unverified** (persistence within the installed app was reported as passing).
 - Deleting a profile removes it from the app's storage, but the app can't guarantee secure erasure at the device-storage level.
 
 ## Content and sources
@@ -23,13 +23,13 @@ Updated at Checkpoint 1 final refinement. Items marked *(planned)* are scheduled
 - The corrected-age explanation describes only the arithmetic. It gives no clinical guidance on when or how long to use corrected age.
 
 ## PWA and offline
-- Offline loading has been verified only in automated headless Chromium, not yet on physical phones.
+- Offline launch and navigation passed on the owner's physical iPhone. Offline editing on a device has not been reported.
 - Data preservation across an app update is now covered by an automated test that serves two real builds in headless Chromium. It has not been verified on a physical phone.
 - Install guidance is basic and will be revised after testing on physical devices *(Checkpoint 6)*.
 
 ## Testing
 - Automated tests run only in Chromium (desktop, at phone-sized viewports). Safari and Firefox have not been tested automatically.
-- **The owner has completed hands-on acceptance testing in Safari on a Mac.** No testing has been done on a physical iPhone or Android device yet.
+- **Owner's hands-on testing:** Mac Safari acceptance passed. On a physical iPhone, install, later launches, local persistence, and offline launch and navigation passed. Android and the remaining iPhone checks are untested.
 
 ## Checkpoint 1 review notes
 - The child-selector fix was confirmed by the **owner in Safari on their Mac** (second hands-on review). Automated tests cover Chromium only.
@@ -45,6 +45,7 @@ Updated at Checkpoint 1 final refinement. Items marked *(planned)* are scheduled
 - The date-change and resume behavior was verified with Playwright's simulated clock in Chromium, not on a physical device or in Safari. On some phones a suspended app may receive the resume event only when it is reopened; the age then updates at that moment.
 
 ## Publication
-- GitHub Pages deployment is **pending** (the repository must be public on GitHub Free; Pages has not been enabled and no deployment has run).
+- **Deployed** (manual workflow, by the owner) at https://jcandm1088.github.io/roll-crawl-run/ from commit `e40287f`.
+- **Initial iPhone connectivity:** the first iPhone load showed a “server not responding” message after about a minute, then loaded with no changes. **The cause has not been established, and it is not known to be resolved;** watch for a recurrence.
 - No license for the application itself has been chosen (deferred). Third-party licenses are included.
 - The workflow's GitHub Action versions are one or more major versions behind; see Decisions #46.

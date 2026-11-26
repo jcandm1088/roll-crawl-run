@@ -57,11 +57,11 @@ Leave results blank until a test has actually been run, and record them exactly 
 | M5 | Each of the 5 themes looks cohesive and readable | | | | |
 | M6 | Add a second child, switch, and confirm the active child is obvious on every screen | | | | |
 | M7 | Delete a profile: the confirmation is clear and the other child is untouched | | | | |
-| M8 | Close the app completely, reopen, and the data is still there | Phone | | | |
+| M8 | Close the app completely, reopen, and the data is still there | Phone | iPhone (owner) | **Pass — owner reported “local data persistence passed” and later launches passed** | Force-quit specifically not stated |
 | M9 | Restart the phone, reopen, and the data is still there | Phone | | | |
-| M10 | Install to the home screen (iPhone Safari) and it opens standalone | iPhone | | | |
+| M10 | Install to the home screen (iPhone Safari) and it opens standalone | iPhone | iPhone (owner) | **Pass — added to the Home Screen; later launches passed (owner reported)** | Standalone display not separately described |
 | M11 | Install to the home screen (Android Chrome) and it opens standalone | Android | | | |
-| M12 | Airplane mode after install: the app opens and profiles can be edited | Phone | | | |
+| M12 | Airplane mode after install: the app opens and profiles can be edited | Phone | iPhone (owner) | **Partial — offline launch and navigation passed (owner reported)** | Offline editing not reported |
 | M13 | iPhone: is data entered in Safari visible in the installed app? (record what happens) | iPhone | | | |
 | M14 | Settings → Storage: record the protection status shown | Each device | | | |
 | M15 | Safe areas: nothing hidden under the notch or home indicator | Phone | | | |
@@ -108,3 +108,16 @@ All six final acceptance criteria passed: precise age for infants; precise years
 |---|---|
 | License files are exact copies of the installed packages; versions match; About lists them; no project license added | tests/unit/licenses.test.ts |
 | About → Third-party licenses: links are relative, open online and offline, and show the license text, not the app | tests/e2e/final-refinement.spec.ts |
+
+## Deployment acceptance (reported by the owner — physical iPhone)
+| Check | Result |
+|---|---|
+| GitHub Pages workflow | Passed (green checkmark) |
+| Live URL reachable | Passed |
+| Added to the iPhone Home Screen | Passed |
+| Later launches | Passed |
+| Local data persistence | Passed |
+| Offline launch and navigation | Passed |
+| Initial load | A one-time “server not responding” message after about one minute, then loaded with no changes; **cause not established** |
+
+Not reported, and therefore untested: M9, M11, M13–M17 and F6 (see `docs/reviews/DEPLOYMENT_ACCEPTANCE.md`).

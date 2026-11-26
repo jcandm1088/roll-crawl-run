@@ -72,3 +72,27 @@ Developmental groupings and the database were unchanged. See `docs/reviews/CHECK
 It could not establish whether the session URL is private, so it stopped before pushing, as instructed.
 **What I corrected or redirected:**
 **Notes / next steps:** Confirm the session-link privacy; then authorize the private push.
+
+## Draft entry — Deployment and physical-device testing (drafted by Claude Code from the owner's report; edit before submitting)
+**Date:**
+**What I asked Claude Code to do:** After I confirmed the session link is private, I authorized pushing the existing history to my public repository. I then enabled GitHub Pages and ran the manual deployment myself.
+**What it produced:**
+- Verified the repository was public and empty, and pushed `main` without force; the remote matched local `e40287f`, with all five commits.
+- Afterwards, documentation-only updates and a handoff document.
+
+**What I tested myself (physical iPhone):** the deployment succeeded; the live URL works; I added the app to the Home Screen; later launches, local persistence, and offline launch and navigation passed. On the first attempt the app showed “server not responding” after about a minute, then loaded with no changes. The cause is unknown.
+**Notes / next steps:** Checkpoint 2 needs access to the CDC/AAP sources first (see `docs/HANDOFF.md`).
+
+---
+
+## Project history summary (factual; for the final write-up)
+| Stage | Commit | What happened |
+|---|---|---|
+| Planning | — | Plan drafted; the owner revised it twice (R2, R3) with decisions D1–D15 and Q1–Q11; Checkpoint 1 only was authorized. |
+| Checkpoint 1 build | `a4e12b5` | Foundation: themes, navigation, onboarding, profiles, ages, IndexedDB, PWA; 140 unit and 28 end-to-end tests. |
+| Owner review 1 (Mac) | `ade3171` | The owner found an off-screen child selector, prominent destructive actions, unwanted heading letterforms, tight privacy spacing, and an overwhelming Settings page. Fixed, plus four secondary-review issues and a routing timing bug. |
+| Owner review 2 (Mac Safari) | `820bb0e` | Selector fix confirmed by the owner. Per-child themes, typography Option B, logo Concept 5, focus-trap and selector-height fixes, and a schema v2 migration. |
+| Acceptance testing | `873ed1c` | The owner found ages shown only in months (“27 months”); fixed with precise years, months, and days. |
+| Publication compliance | `e40287f` | Third-party license notices, a service-worker file-navigation fix, and doc updates. Session-URL privacy verified by the owner; pushed. |
+| Deployment | (`e40287f` deployed) | The owner deployed via the manual workflow and tested on an iPhone (see above). |
+| Handoff | this commit | Documentation only. |

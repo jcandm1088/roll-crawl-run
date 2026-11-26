@@ -21,3 +21,8 @@
 Checked: credentials, personal data, emails, filesystem paths, and data files.
 - **Credentials, personal data, filesystem paths, data files:** none found.
 - **Emails:** one new address appears, `jaffathecake@gmail.com`, inside the idb copyright notice. The license requires that notice to be reproduced, and it is the author's public notice.
+
+## Resolution (later)
+- **Session URL:** the owner opened the session URL in a signed-out Safari Private Browsing window. It redirected to the Claude sign-in page and showed no conversation content. The owner accepted this as privacy verification.
+- **Push:** the repository was already **public** and was left unchanged. `main` was pushed without force or rewriting; the remote `main` matched local `e40287f`, with all five commits.
+- **Deployment:** the owner enabled Pages and ran the manual deployment, which succeeded (see `DEPLOYMENT_ACCEPTANCE.md`).

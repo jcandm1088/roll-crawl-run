@@ -1,6 +1,10 @@
 # Development Plan — Roll, Crawl, RUN: Tracking Growth Together (Revision 2)
 
-> **Current status (updated at publication-compliance review):** Checkpoint 1 is implemented and **accepted** after the owner's hands-on Mac Safari testing, including the precise age correction. Checkpoints 2–6 are not implemented. GitHub publishing and physical iPhone testing are pending. *(The original header said “PLAN ONLY — no application code has been written”; that was true when this plan was first written.)*
+> **Current status (end of Checkpoint 1):**
+> - Checkpoint 1 is implemented, **accepted** after the owner's Mac Safari testing, and **deployed** at https://jcandm1088.github.io/roll-crawl-run/ (repository: https://github.com/jcandm1088/roll-crawl-run).
+> - The owner's physical iPhone checks passed: install, launches, persistence, and offline launch and navigation.
+> - Checkpoints 2–6 are not implemented.
+> - Handoff notes are in `docs/HANDOFF.md`. *(The original header said “PLAN ONLY — no application code has been written”; that was true when this plan was first written.)*
 > Revision 2 incorporates your decisions on D1–D15 and your requested revisions (vaccination references, age navigation, journal privacy & export modes, partner collaboration, technical safeguards, review checkpoints). Changes from Revision 1 are marked **[R2]**.
 > *(Historical)* At planning time the workspace was empty.
 
@@ -24,6 +28,15 @@
 
 ---
 
+## R8 — Deployment acceptance (Checkpoint 1)
+- **Deployment:** the owner ran the manual GitHub Pages workflow on commit `e40287f`; it succeeded. The app is live at https://jcandm1088.github.io/roll-crawl-run/.
+- **Owner's physical iPhone results:** Home Screen install, later launches, local data persistence, and offline launch and navigation passed.
+- **Initial connectivity observation:** a one-time “server not responding” delay at first load. Its cause has not been established; it is not recorded as a defect and is not claimed to be resolved.
+- **Publication review:** the owner verified in a signed-out private browser window that the session URL redirects to sign-in, so it is private. History was pushed unchanged.
+- **Next:** Checkpoint 2 prerequisites are in `docs/HANDOFF.md`.
+
+---
+
 ## R7 — Publication compliance (Checkpoint 1)
 - **Third-party license compliance:**
   - `THIRD_PARTY_NOTICES.md` and exact copies of the license files in `public/licenses/`, covering Fraunces and Inter (OFL 1.1), Preact (MIT), idb (ISC), and Lucide (ISC, plus MIT for Feather-derived icons).
@@ -31,7 +44,7 @@
   - Tests check that the copies match the installed packages and versions.
 - **Project license:** deferred by the owner. None has been added.
 - **Service worker:** a navigation to a precached file (such as a license text) now returns that file instead of the app shell. The app's own behavior is unchanged.
-- **Publishing status:** the private push is authorized, but it is **on hold** until the privacy of the session URL in the commit messages is confirmed (see `docs/reviews/PUBLICATION_REVIEW.md`). Pages has not been enabled and nothing has been deployed.
+- **Publishing status:** *(superseded by R8)* At the time of R7, the push was on hold pending verification of the session URL.
 
 ---
 

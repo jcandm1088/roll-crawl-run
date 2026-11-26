@@ -2,7 +2,14 @@
 
 A private, local-first, installable web app (PWA) that helps parents document their child's development, appointments, and reflections. It runs entirely in the browser: no account, no server, no analytics, and no AI.
 
-> **Status: Checkpoint 1 accepted.** The owner completed hands-on acceptance testing in Safari on a Mac, including the precise age display correction. Built so far: branding, five themes (chosen per child), navigation, onboarding, child profiles, chronological and corrected age, local storage, and an offline-capable PWA shell. **Checkpoints 2–6 are not implemented yet**: Growth, Calendar, Journal, Resources, sharing, and reports appear as clearly labeled placeholders. **Still pending:** publishing to GitHub Pages and testing on a physical iPhone. Latest automated results: 185 unit tests and 80 end-to-end tests passing (headless Chromium), and the production build succeeds.
+> **Status: Checkpoint 1 accepted and deployed.**
+> - **Live app:** https://jcandm1088.github.io/roll-crawl-run/
+> - **Repository:** https://github.com/jcandm1088/roll-crawl-run
+> - **Owner's hands-on testing:** Mac Safari acceptance passed. On a physical iPhone, Home Screen install, later launches, local persistence, and offline launch and navigation passed. The first iPhone load showed a one-time “server not responding” delay whose cause has not been established.
+> - **Automated tests:** 185 unit and 80 end-to-end tests pass in headless Chromium.
+> - **Built so far:** branding, per-child themes, navigation, onboarding, profiles, precise and corrected age, local storage, and an offline PWA shell.
+> - **Not yet built:** Checkpoints 2–6 (Growth, Calendar, Journal, Resources, sharing, reports); these appear as labeled placeholders.
+> - See `docs/HANDOFF.md`.
 
 ## Important limitations
 
@@ -77,3 +84,19 @@ See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). The full license texts are
 - Icons: Lucide (ISC)
 - Logo: “Growing Together”, original artwork made for this project (`src/ui/brand/growing-together.json`)
 - Libraries: Preact (MIT), idb (ISC)
+
+## Resuming development
+1. Start a Claude Code session with this repository attached (`jcandm1088/roll-crawl-run`), or upload the latest project ZIP.
+2. Ask Claude to read `docs/HANDOFF.md` and `docs/DEVELOPMENT_PLAN.md` (sections R7 to R2 take precedence over the original plan), and to verify that `main` is clean and matches `origin/main`.
+3. Install the dependencies:
+   ```bash
+   npm ci
+   ```
+4. Run the unit tests and the end-to-end tests to confirm a green baseline:
+   ```bash
+   npm test
+   ```
+   ```bash
+   npm run test:e2e
+   ```
+5. Resolve the Checkpoint 2 source-access prerequisite before any milestone content is written.
