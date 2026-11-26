@@ -2,14 +2,14 @@
 
 **This is the single authoritative, current-state handoff.** It replaces the earlier handoff notes. The original end-of-Checkpoint-1 handoff is kept unchanged as a historical record in `docs/reviews/CHECKPOINT_1_HANDOFF.md`; statements there describe the project as it was at commit `aa8c869` and are no longer current.
 
-*Last updated: 2026-11-26 (Checkpoint 2a handoff consolidation, documentation only).*
+*Last updated: 2026-11-26 (Checkpoint 2a Growth UX refinement, local commit).*
 
 ## 1. Status at a glance
 
 | Area | Status |
 |---|---|
 | **Checkpoint 1** — Design & Foundation | ✅ **Completed, accepted and deployed** |
-| **Checkpoint 2a** — Verified Milestone Tracking | 🟡 **Implemented, not yet accepted.** Awaiting the owner's hands-on acceptance testing. Not merged into `main`, not deployed |
+| **Checkpoint 2a** — Verified Milestone Tracking, **plus the Growth UX refinement** (R-002, plan R11) | 🟡 **Implemented, not yet accepted.** The owner's first hands-on testing led to the refinement; acceptance testing resumes on the refined build. Not merged into `main`, not deployed |
 | **Checkpoint 2b** — Goals & Exercises (CDC activities, recurrence, completions, charts) | ⏳ **Planned, not started.** Needs the owner's explicit authorization |
 | **Checkpoints 3–6** — Calendar, Journal & Resources, Backups/Sharing/Reports, Device polish | ⏳ **Planned, not started.** Checkpoints 3 and 5 have pending decisions (section 5) |
 | **Deferred** | Project license; GitHub Actions version upgrades; live multi-device sync and other 🔮 Future items in the plan |
@@ -23,11 +23,23 @@
 | **Deployed version** | `e40287f` (Checkpoint 1: Publication Compliance and Documentation) |
 | **Remote `main`** | `aa8c869352cdd734eafb0ed8b7219069d4457241` (Checkpoint 1: Deployment Acceptance and Handoff; documentation only, so no redeploy was needed) |
 | **Remote `checkpoint-2a`** | `73d9f6fc356b3f792a9f71cc8f38ff421e13581d` (Checkpoint 2a: Verified Milestone Tracking), a direct child of `aa8c869`. This is the **recovered original commit** (section 6) |
-| Local session branch | Cloud sessions may be assigned a session-specific branch (for example `claude/…`). Local work is based on `73d9f6f`; any commit made there stays local until the owner authorizes a push and names the target branch |
+| Session branch `claude/beautiful-allen-1vjobt` | Remote: `9ca6149` (handoff consolidation, preserved with the owner's authorization). Local: one further commit, “Checkpoint 2a: Growth UX Refinement”, **not pushed** (see BUILD_LOG for its hash). Pushes only with the owner's authorization |
 
-**History (7 commits, unchanged):** `a4e12b5` → `ade3171` → `820bb0e` → `873ed1c` → `e40287f` → `aa8c869` → `73d9f6f`.
+**History:** `a4e12b5` → `ade3171` → `820bb0e` → `873ed1c` → `e40287f` → `aa8c869` → `73d9f6f` → `9ca6149` → Growth UX refinement (local).
 
 `main` is not to receive Checkpoint 2a until the owner accepts it and authorizes the merge. Pushing never deploys: deployment is a separate manual workflow (section 7).
+
+## 3a. Growth UX refinement (implemented, not yet accepted)
+- **Why:** R-002. The owner's first hands-on acceptance testing found the Growth sections repetitive and unclear about what updates progress, even though all 339 automated tests passed.
+- **What changed:**
+  - Growth order is now Progress → Milestone Library → Goals & Exercises → What to Expect, with subtitles.
+  - What to Expect is a read-only guide with verified Option A educational content.
+  - The Library is the recording tool (Up to now / Upcoming / All 159).
+  - Progress is the review dashboard.
+  - Save confirmations describe the actual effect.
+  - No development terms appear in the app.
+- **Details:** `docs/DEVELOPMENT_PLAN.md` R11, Decisions #65–#74, `docs/reviews/CHECKPOINT_2A_GUIDE_CONTENT.md`.
+- **Unchanged:** schema (version 2), dependencies, milestone content and IDs, calculation engine, history and profile isolation.
 
 ## 3. Checkpoint 2a — what is implemented (not yet accepted)
 Details: `docs/DEVELOPMENT_PLAN.md` R9, `docs/MILESTONE_INVENTORY.md`, `docs/reviews/CHECKPOINT_2A_SOURCE_VERIFICATION.md`.
@@ -50,7 +62,7 @@ Details: `docs/BUILD_LOG.md` → “Recovery and baseline verification”.
 Automated tests run in headless Chromium only. **No Safari or physical-iPhone testing of Checkpoint 2a has occurred.**
 
 ## 4. Checkpoint 2a acceptance requirements
-The owner's hands-on checks G1–G19 are in `docs/TESTING_CHECKLIST.md` → “Checkpoint 2a — manual acceptance”. Record only actual results.
+Use the **updated hands-on acceptance checklist** (H1–H18, plus the still-applicable G3–G8, G12–G17, G19) in `docs/TESTING_CHECKLIST.md`. G1, G2, G9–G11 are superseded by the refinement. Record only actual results. H1–H15 are local (Mac); H16–H17 need the app on an iPhone; H18 needs a deployment.
 - **Testable locally** (production build on the Mac, Safari): G1–G14, G16, G19; G15 and G17 can be approximated on a Mac but are defined for iPhone.
 - **Need the app on a physical iPhone:** G15 (airplane mode), G17 (readability and touch comfort). Testing these on an iPhone requires either a deployment or a local-network test the owner sets up.
 - **Deployment-dependent:** G18 (update from the deployed Checkpoint 1 on the iPhone) requires an owner-authorized deployment of Checkpoint 2a.
@@ -60,7 +72,9 @@ Acceptance is complete only when the owner says so. Defects found during accepta
 ## 5. Outstanding decisions
 | Decision | Needed before | Notes |
 |---|---|---|
-| Owner acceptance of Checkpoint 2a | Merging into `main`, deployment, Checkpoint 2b | Section 4 |
+| Owner acceptance of Checkpoint 2a (with the refinement) | Merging into `main`, deployment, Checkpoint 2b | Section 4 |
+| Remote preservation of the refinement commit | Avoiding loss in a conversation transfer | Push to the session branch only with authorization |
+| Option B educational excerpts | Optional | Deferred (D-10) |
 | Authorization to begin Checkpoint 2b | Checkpoint 2b | Supporting activities to come from verified CDC tips |
 | Pathways.org terms review | Any collection or analysis of Pathways.org content | Domain is reachable but its content must not be collected until terms are reviewed and approved |
 | Alternative well-child visit and vaccine reference sources | Checkpoint 3 | AAP/Bright Futures and the AAP immunization schedule are blocked by the AAP exclusion. CDC/ACIP not yet retrieved |
@@ -102,7 +116,7 @@ It never merges into `main` and never deploys. Claude Code must respect any sess
 
 ## 9. Known limitations and refinement backlog
 - **Limitations:** `docs/KNOWN_LIMITATIONS.md`. Key items: no backup or export yet (Checkpoint 5), so data lives only on the device; automated testing in Chromium only; Checkpoint 2a untested in Safari and on iPhone; Android untested; the one-time initial iPhone “server not responding” delay remains unexplained; iOS may keep an old Home Screen icon.
-- **Refinement backlog:** `docs/REFINEMENT_BACKLOG.md`. Open item: **R-001**, onboarding child-name input overflow on mobile (pending investigation, not yet corrected).
+- **Refinement backlog:** `docs/REFINEMENT_BACKLOG.md`. **R-001**, onboarding child-name input overflow on mobile: pending investigation, not corrected. **R-002**, Growth usability: corrected, awaiting the owner's verification.
 
 ## 10. Where things are
 `README.md` (overview, running locally) · `docs/DEVELOPMENT_PLAN.md` (R-sections take precedence over the original plan; newest first) · `docs/DECISIONS.md` · `docs/BUILD_LOG.md` · `docs/TESTING_CHECKLIST.md` · `docs/KNOWN_LIMITATIONS.md` · `docs/REFINEMENT_BACKLOG.md` · `docs/SOURCE_REGISTER.md` · `docs/MILESTONE_INVENTORY.md` · `docs/DESIGN_SYSTEM.md` · `docs/reviews/`.

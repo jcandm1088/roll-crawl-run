@@ -141,17 +141,17 @@ Not reported, and therefore untested: M9, M11, M13–M17 and F6 (see `docs/revie
 ## Checkpoint 2a — manual acceptance (owner; record actual results)
 | # | Check | Device / browser | Date | Result | Notes |
 |---|---|---|---|---|---|
-| G1 | Growth shows Progress, Goals & Exercises (placeholder), What to Expect, Milestone Library in that order; Back returns to Growth | | | | |
-| G2 | "Record a milestone" on Home opens What to Expect at your child's current age range | | | | |
+| G1 | Growth shows Progress, Goals & Exercises (placeholder), What to Expect, Milestone Library in that order; Back returns to Growth | | | | *Superseded by the Growth UX refinement (new order) → H1* |
+| G2 | "Record a milestone" on Home opens What to Expect at your child's current age range | | | | *Superseded: now opens the Library → H2* |
 | G3 | Mark one milestone Emerging, then Achieved with a past date; Home and Progress update | | | | |
 | G4 | Correct the achievement date; both dates appear in History | | | | |
 | G5 | Change an Achieved milestone back to Emerging; History keeps both entries | | | | |
 | G6 | Add an observation; status doesn't change. Remove it (it shows as removed in History); then Erase permanently (two steps) | | | | |
 | G7 | Hide a milestone; it disappears from progress counts; restore it from Library → Hidden milestones with its status intact | | | | |
 | G8 | Make a personal version; find it under Library → Your versions; edit it; the CDC original is unchanged | | | | |
-| G9 | Preview a future age range; banner shown; Home progress unchanged; "Back to current age" works | | | | |
-| G10 | Open an empty range (e.g. 18–21 months): no milestones, Earlier/Next links, "See everything up to now" | | | | |
-| G11 | Search and the area, age, and status filters in the Library | | | | |
+| G9 | Preview a future age range; banner shown; Home progress unchanged; "Back to current age" works | | | | *Superseded by the refinement → H8* |
+| G10 | Open an empty range (e.g. 18–21 months): no milestones, Earlier/Next links, "See everything up to now" | | | | *Superseded by the refinement → H8* |
+| G11 | Search and the area, age, and status filters in the Library | | | | *Superseded by the refinement → H12* |
 | G12 | A child with corrected age on and selected: ages labelled; before the due date nothing is counted | | | | |
 | G13 | Settings → Milestone Viewing Preferences shows the basis and links to the profile setting | | | | |
 | G14 | About these milestones: wording reads clearly; CDC attribution and non-endorsement visible; cdc.gov links open in the browser | | | | |
@@ -160,3 +160,53 @@ Not reported, and therefore untested: M9, M11, M13–M17 and F6 (see `docs/revie
 | G17 | Readability and touch comfort on iPhone; all five themes | iPhone | | | |
 | G18 | Update from the deployed Checkpoint 1 on the iPhone (after the owner authorizes a deploy): existing profile, photo, and theme kept | iPhone | | | Deployment not authorized yet |
 | G19 | Spot-check 10 milestones against cdc.gov wording | | | | |
+
+## Checkpoint 2a Growth UX refinement — automated (headless Chromium; results in BUILD_LOG)
+| Area | Test file |
+|---|---|
+| Guide content validation: traceability, coverage, quotes, empty ranges, sources, wording; each error type caught | tests/unit/guide.test.ts |
+| guideFor: all 20 ranges; all 159 milestones exactly once, verbatim; empty-range neighbours; record-independence; no write imports in the guide screen | tests/unit/guide.test.ts |
+| Library selection: views, sorting, area order, hidden counts, newborn / before due date / over five, filters, matches elsewhere | tests/unit/guide.test.ts |
+| Progress by CDC age (applicable ages only; totals equal current progress) | tests/unit/guide.test.ts |
+| Confirmation messages for every action type | tests/unit/guide.test.ts |
+| Growth order, subtitles, live lines; Goals “Coming soon” | tests/e2e/growth-refinement.spec.ts; growth.spec.ts; review-regressions.spec.ts |
+| No checkpoint terminology on any parent-facing screen (accordions opened) | tests/e2e/growth-refinement.spec.ts |
+| Home shortcut → Library Up to now; old expect/all address redirect | growth-refinement.spec.ts; growth.spec.ts |
+| Library sorting in all three views; catalog label with hidden counts; search matches in other views | growth-refinement.spec.ts |
+| Library scroll, view, filter and search restoration; reset when switching child | growth-refinement.spec.ts |
+| Zero applicable and all-applicable-hidden states (Library and Progress) | growth-refinement.spec.ts |
+| Progress headline, “What updates Progress?”, area links, By CDC age | growth-refinement.spec.ts |
+| Confirmations: new vs early achievement; date, note and observation edits add no credit; emerging; reversals; hide and restore | growth-refinement.spec.ts |
+| Guide: 20 ranges, 159 once, nine empty mappings, verbatim wording, last range, disabled ends | growth-refinement.spec.ts |
+| Guide: no recording controls, status, progress or record/Library links on any range | growth-refinement.spec.ts |
+| Guide: no guide-initiated database writes (shell control; record stores byte-identical); progress and history unchanged | growth-refinement.spec.ts |
+| Guide: identical content across children whatever is recorded, hidden or personalized (header excluded) | growth-refinement.spec.ts |
+| Guide: exact boundary, corrected age before and after the due date, over five; five themes; offline | growth-refinement.spec.ts |
+| Upgrade from the original Checkpoint 2a (`73d9f6f`): records, events, personal versions and profile byte-identical; progress equal | tests/e2e/update.spec.ts |
+| Accessibility scans (guide, Library views) and 320px layouts | tests/e2e/growth.spec.ts |
+
+## Checkpoint 2a — updated hands-on acceptance checklist (owner; after the refinement)
+*Local* = testable with the local production build on the Mac (Safari). *iPhone* = needs the app on a physical iPhone, either deployed or reached over the local network. *Deploy* = needs an owner-authorized deployment.
+
+| # | Check | Where | Date | Result | Notes |
+|---|---|---|---|---|---|
+| H1 | Growth order is Progress, Milestone Library, Goals & Exercises, What to Expect, and each subtitle makes the section's purpose clear | Local | | | |
+| H2 | Home “Record a milestone” opens the Library on Up to now, and it's obvious how to record | Local | | | |
+| H3 | Record an applicable milestone Achieved: the message says it now counts; Progress and Home rise by one | Local | | | |
+| H4 | Record an upcoming milestone early: the message says when it would count; Progress is unchanged | Local | | | |
+| H5 | Emerging is clearly not counted as achieved; a reversal message says whether it had counted | Local | | | |
+| H6 | Correct a date and save a note: the messages don't suggest a new achievement; Progress is unchanged | Local | | | |
+| H7 | Progress makes clear what updates it and that it isn't an assessment; tapping an area opens the matching Library list; By CDC age shows only ages that apply | Local | | | |
+| H8 | What to Expect reads like a calm guide: no status, no tapping on milestones, no meters; Earlier/Next, an empty range (18–21 months) and Back to current age are clear | Local | | | |
+| H9 | After browsing the guide, nothing in Progress, Home or any milestone has changed | Local | | | |
+| H10 | Hide a milestone and make a personal version: the guide is unchanged | Local | | | |
+| H11 | Corrected age: the guide and Library use the labelled age; before the due date the guide says so and is still readable | Local | | | |
+| H12 | Library: search, filters, hidden milestones and your versions work; Back from a milestone keeps your place; switching child starts fresh | Local | | | |
+| H13 | Spot-check the guide overviews against the CDC milestones listed beneath them | Local | | | |
+| H14 | No “checkpoint” wording anywhere; “Coming soon” placeholders read naturally | Local | | | |
+| H15 | All five themes: the guide, Library and Progress are readable | Local | | | |
+| H16 | Readability and touch comfort of the guide and Library on iPhone | iPhone | | | |
+| H17 | Airplane mode after first load: guide, Library and Progress work | iPhone | | | |
+| H18 | Update from the deployed Checkpoint 1 keeps profile, photo and theme (G18) | Deploy | | | Deployment not authorized yet |
+
+Still applicable from the original list: **G3–G8, G12–G17, G19** (G18 = H18).

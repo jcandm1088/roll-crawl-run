@@ -22,6 +22,17 @@ export function milestoneAgeFor(child: Child, today: string): ViewingAge {
   return viewingAge(child.dob, child.correctedAge.enabled ? child.correctedAge.dueDate : null, child.ageBasis, today);
 }
 
+/**
+ * Read-only milestone age for the educational guide. Loads NO milestone records: the guide's content
+ * is structurally independent of what has been recorded, and it never writes anything.
+ */
+export function useMilestoneAge(child: Child | null) {
+  const today = useToday();
+  const age = child ? milestoneAgeFor(child, today) : null;
+  const corrected = child?.correctedAge.enabled ? correctedAge(child.dob, child.correctedAge.dueDate, today) : null;
+  return { today, age, corrected, currentInterval: intervalForAge(age?.months ?? null) };
+}
+
 export function useChildMilestones(child: Child | null) {
   const { db, meta } = useApp();
   const today = useToday();

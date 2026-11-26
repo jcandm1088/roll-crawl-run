@@ -38,13 +38,13 @@ function renderRoute(route: Route) {
     case 'growthExpect':
       return (
         <Screen nav current="growthExpect" navCurrent="growth" title="What to Expect" back={{ name: 'growth' }}>
-          <ExpectScreen key={`${route.view}-${route.interval}`} interval={route.interval} view={route.view} />
+          <ExpectScreen key={`${route.interval}`} interval={route.interval} />
         </Screen>
       );
     case 'growthLibrary':
-      return <Screen nav current="growthLibrary" navCurrent="growth" title="Milestone Library" back={{ name: 'growth' }}><LibraryScreen /></Screen>;
+      return <Screen nav current="growthLibrary" navCurrent="growth" title="Milestone Library" back={{ name: 'growth' }}><LibraryScreen preset={route.preset} /></Screen>;
     case 'growthAbout':
-      return <Screen nav current="growthAbout" navCurrent="growth" title="About these milestones" back={{ name: 'growthLibrary' }}><AboutMilestonesScreen /></Screen>;
+      return <Screen nav current="growthAbout" navCurrent="growth" title="About these milestones" back={{ name: 'growthLibrary', preset: null }} backUsesHistory><AboutMilestonesScreen /></Screen>;
     case 'growthMilestone':
       return (
         <Screen nav current="growthMilestone" navCurrent="growth" title="Milestone" back={{ name: 'growth' }} backUsesHistory>

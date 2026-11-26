@@ -1,6 +1,6 @@
 # Development Plan — Roll, Crawl, RUN: Tracking Growth Together (Revision 2)
 
-> **Current status (2026-11-26):** Checkpoint 1 is completed, accepted and deployed (`e40287f`). Checkpoint 2a is implemented and awaiting the owner's acceptance testing (see R9 and R10); it is preserved on the remote branch `checkpoint-2a` (`73d9f6f`), not merged into `main` and not deployed. Checkpoint 2b and Checkpoints 3–6 are planned and not started. The current-state handoff is `docs/HANDOFF.md`.
+> **Current status (2026-11-26):** Checkpoint 1 is completed, accepted and deployed (`e40287f`). Checkpoint 2a, including the Growth UX refinement (R11), is implemented and awaiting the owner's acceptance testing (see R9–R11); it is preserved on the remote branch `checkpoint-2a` (`73d9f6f`), not merged into `main` and not deployed. Checkpoint 2b and Checkpoints 3–6 are planned and not started. The current-state handoff is `docs/HANDOFF.md`.
 >
 > *Historical status at the end of Checkpoint 1 (kept as recorded):*
 > - Checkpoint 1 is implemented, **accepted** after the owner's Mac Safari testing, and **deployed** at https://jcandm1088.github.io/roll-crawl-run/ (repository: https://github.com/jcandm1088/roll-crawl-run).
@@ -27,6 +27,76 @@
 **Visual direction (CP1):** premium, warm, calm, adult-oriented; no cartoon imagery, not clinical, not generic dashboard. Five cohesive theme systems (Earth default, Sky, Blush, Lavender, Sage) sharing typography, spacing, iconography, components, buttons, navigation. Fraunces (display) + Inter (UI), subject to review. Initial app icon + wordmark preserving "Roll, Crawl, RUN: Tracking Growth Together". Safe-area insets, ≥44–48px targets.
 
 **Checkpoint 1 build list:** scaffold (Vite/TS/Preact, Vitest, Playwright); fonts self-hosted (fetched from npm `@fontsource` packages, OFL); icon/wordmark (SVG → PNG sizes generated with Playwright); design tokens + 5 themes + contrast test; app shell (top bar with child chip + settings, bottom nav, hash router); placeholder tabs clearly labeled "Coming in a later checkpoint"; onboarding (DOB, name/photo, corrected age, theme, privacy); profiles create/edit/switch/delete (typed confirmation; backup purge option present but backups feature labeled pending); age domain (chronological + corrected with safeguards); IndexedDB schema v1 for all planned stores with logical-key indexes and atomic transaction helper; repositories for meta/settings/children/photos; storage-persistence status; privacy disclosures in Settings; manifest + basic service worker (precache, update banner); unit + e2e tests; mobile screenshots via Playwright at deviceScaleFactor 2; docs skeletons (README, BUILD_LOG template, TESTING_CHECKLIST, KNOWN_LIMITATIONS, DECISIONS, SOURCE_REGISTER). Code lives in `/home/user/roll-crawl-run` (git init locally; no push until you provide the remote).
+
+---
+
+## R11 — Checkpoint 2a Growth UX refinement (implemented; awaiting owner acceptance) — supersedes conflicting R4, R9 and §6.4 text
+**Why:** owner hands-on acceptance testing (before 2a was accepted) found the Growth sections repetitive and unclear about which actions update progress (R-002, a human-discovered usability and product-design issue). The original 2a implementation had passed all 339 automated tests.
+
+**Growth order (supersedes R4's order; an intentional requirements change, not a regression):**
+1. **Progress:** “See how far we've come.”
+2. **Milestone Library:** “Record what we've accomplished.”
+3. **Goals & Exercises:** “Know what to work on.”
+4. **What to Expect at Every Age:** “Learn what's ahead.”
+
+The navigation hierarchy is Review → Record → Support → Learn. Section names, the page subtitle, branding, typography and themes are unchanged.
+
+| Section | Responsibility | Modifies records |
+|---|---|---|
+| Progress | Review recorded achievements (automatically calculated) | None |
+| Milestone Library | Record and manage milestones | Milestone records (via milestone detail) |
+| Goals & Exercises | Plan and track support activities | Goal and exercise records, from Checkpoint 2b; placeholder until then |
+| What to Expect | Learn about CDC's milestones | None: exclusively informational |
+
+**What to Expect (supersedes the tracking parts of §6.4 and R9):**
+- A read-only guide.
+- **Kept:**
+  - opens at the current range (same interval rule);
+  - the 20 three-month ranges, plus Earlier/Next;
+  - Back to current age;
+  - neighbouring CDC-age navigation;
+  - corrected-age, pre-due-date and over-five behavior;
+  - the five areas;
+  - verbatim CDC milestones;
+  - attribution and safeguards.
+- **Removed:** status badges and filters; recording controls; progress meters and figures; links to milestone detail or the Library; personal versions; hidden-milestone management; the “Everything up to now” view (its old address redirects to the Library).
+- **Content:** shows all CDC milestones regardless of the child's records. Educational text is Option A, original and traceable (`docs/reviews/CHECKPOINT_2A_GUIDE_CONTENT.md`).
+
+**Milestone Library:**
+- The primary recording interface.
+- **Views:**
+  - Up to now: the default, showing applicable visible milestones, most recent CDC age first;
+  - Upcoming: nearest CDC age first;
+  - All 159: youngest first.
+  - Within an age, the five app areas in established order, then CDC order.
+- **Kept:** search, area, age and status filters, hidden milestones, and personal versions.
+- **Catalog label:** distinguishes the 159 CDC milestones from shown and hidden counts.
+- **State:** view, filters, search and scroll position are kept in memory when returning from a milestone; never carried to another child.
+- **Entry points:** Home “Record a milestone” and the Growth card open Up to now.
+
+**Progress:**
+- Headline “Milestones recorded as achieved”.
+- An always-visible “What updates Progress?” card with a shortcut to the Library.
+- Five area meters that open the filtered Library.
+- A collapsed “By CDC age” breakdown (applicable ages only).
+- The safeguard, age basis and method.
+- **The calculation engine and rules are unchanged.**
+
+**Recording confirmations:** they describe the actual effect on the resulting record:
+- a new applicable achievement;
+- an early achievement, which counts conditionally against the named age basis;
+- Emerging;
+- reversals, which say whether the milestone had counted;
+- date, note and observation edits, which never claim another achievement;
+- hide and restore;
+- personal versions;
+- permanent erase.
+
+**Parent-facing wording:** no checkpoint or development-process terms anywhere in the app. Placeholders say “Coming soon.”
+
+**Unchanged:** database schema (version 2), repositories, dependencies, milestone content, IDs, the lock file, the calculation engine, history and profile isolation.
+
+**Still deferred to Checkpoint 2b:** goals, exercises, CDC activities, historical charts, and goal and exercise progress.
 
 ---
 

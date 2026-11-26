@@ -16,6 +16,8 @@ import { ErrorText } from '../../components/ChildFields';
 import { childNameInline } from '../../components/Avatar';
 import { radioGroupKeyDown, rovingTabIndex } from '../../a11y';
 import { ExternalLink, StatusBadge } from './parts';
+import { confirmationFor, type Confirmation, type SavedAction } from '../../../domain/confirmations';
+import { bareAge } from '../../../domain/guide';
 
 const STATUSES: MilestoneStatus[] = ['not-yet', 'emerging', 'achieved'];
 
@@ -61,7 +63,7 @@ export function MilestoneDetailScreen({ routeKey }: { routeKey: string }) {
   const [obsDate, setObsDate] = useState(m.today);
   const [obsText, setObsText] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const [saved, setSaved] = useState<string | null>(null);
+  const [saved, setSaved] = useState<Confirmation | null>(null);
   const [sheet, setSheet] = useState<null | { kind: 'personal' } | { kind: 'edit' } | { kind: 'remove'; id: string } | { kind: 'erase'; id: string; step: 1 | 2 }>(null);
 
   if (!child || !m.ctx || !m.age) return null;
@@ -70,13 +72,26 @@ export function MilestoneDetailScreen({ routeKey }: { routeKey: string }) {
     return (
       <div class="card stack">
         <p>This milestone isn’t available for {childNameInline(child)}.</p>
-        <a class="btn btn-secondary" href={href({ name: 'growthLibrary' })}>Open the Milestone Library</a>
+        <a class="btn btn-secondary" href={href({ name: 'growthLibrary', preset: null })}>Open the Milestone Library</a>
       </div>
     );
   }
   const ctx: WriteContext = m.ctx;
   const name = childNameInline(child);
-  const run = async (fn: () => Promise<void>, message: string) => {
+  // The confirmation describes the RESULTING record (owner rule): applicability uses the same rule
+  // as Progress, and hidden/status are those after the save.
+  const applicableNow = def ? isApplicable(def, m.age.months) : false;
+  const confirm = (action: SavedAction, after: { hidden?: boolean; status?: MilestoneStatus } = {}) =>
+    confirmationFor(action, {
+      personal: !!personal,
+      applicable: applicableNow,
+      hidden: after.hidden ?? !!rec?.hidden,
+      status: after.status ?? status,
+      childName: name,
+      basis: child.correctedAge.enabled && child.ageBasis === 'corrected' ? 'corrected' : 'chronological',
+      ageWords: def ? bareAge(def.referenceAgeMonths) : '',
+    });
+  const run = async (fn: () => Promise<void>, message: Confirmation) => {
     setError(null);
     setSaved(null);
     try {
@@ -129,12 +144,17 @@ export function MilestoneDetailScreen({ routeKey }: { routeKey: string }) {
         <div class="banner neutral" role="status" data-testid="hidden-banner">
           <Icon name="eyeOff" size={18} />
           <span class="grow">Hidden — not counted in progress. Its status and history are kept.</span>
-          <button type="button" class="btn btn-secondary btn-sm" onClick={() => run(() => setHidden(app.db, ctx, target, false), 'Restored')}>Restore</button>
+          <button type="button" class="btn btn-secondary btn-sm" onClick={() => run(() => setHidden(app.db, ctx, target, false), confirm({ kind: 'restored' }, { hidden: false }))}>Restore</button>
         </div>
       )}
 
       {error && <ErrorText id="ms-error">{error}</ErrorText>}
-      {saved && <p class="banner" role="status" data-testid="saved"><Icon name="check" size={18} /><span>{saved}. Saved on this device.</span></p>}
+      {saved && (
+        <p class="banner" role="status" data-testid="saved">
+          <Icon name="check" size={18} />
+          <span data-testid="saved-text">{saved.text}{saved.showProgressLink && <> <a class="text-link" href={href({ name: 'growthProgress' })}>See Progress</a></>}</span>
+        </p>
+      )}
 
       <section class="card stack" aria-labelledby="status-heading">
         <h2 class="title-3" id="status-heading">Update status</h2>
@@ -152,7 +172,7 @@ export function MilestoneDetailScreen({ routeKey }: { routeKey: string }) {
               <label class="label" for="status-date">{chosen === 'achieved' ? 'Date achieved' : 'Date'}</label>
               <input id="status-date" class="input" type="date" min={child.dob} max={m.today} value={statusDate} onInput={(e) => setStatusDate((e.target as HTMLInputElement).value)} />
             </div>
-            <button type="button" class="btn btn-primary btn-block" onClick={() => run(async () => { await setStatus(app.db, ctx, target, chosen, statusDate); setDraftStatus(null); }, `Marked ${STATUS_LABEL[chosen].toLowerCase()}`)}>
+            <button type="button" class="btn btn-primary btn-block" onClick={() => run(async () => { await setStatus(app.db, ctx, target, chosen, statusDate); setDraftStatus(null); }, confirm({ kind: 'status', from: status, to: chosen }, { status: chosen }))}>
               Save status
             </button>
           </div>
@@ -163,7 +183,7 @@ export function MilestoneDetailScreen({ routeKey }: { routeKey: string }) {
             <div class="stack" style={{ marginTop: 'var(--space-2)' }}>
               <label class="label" for="fix-date">Correct date</label>
               <input id="fix-date" class="input" type="date" min={child.dob} max={m.today} value={fixDate || rec!.achievedDate!} onInput={(e) => setFixDate((e.target as HTMLInputElement).value)} />
-              <button type="button" class="btn btn-outline btn-block" onClick={() => run(() => correctAchievedDate(app.db, ctx, target, fixDate || rec!.achievedDate!), 'Date corrected')}>Save corrected date</button>
+              <button type="button" class="btn btn-outline btn-block" onClick={() => run(() => correctAchievedDate(app.db, ctx, target, fixDate || rec!.achievedDate!), confirm({ kind: 'date-corrected' }))}>Save corrected date</button>
               <p class="xsmall muted">The earlier date stays in the history.</p>
             </div>
           </details>
@@ -174,7 +194,7 @@ export function MilestoneDetailScreen({ routeKey }: { routeKey: string }) {
         <h2 class="title-3" id="note-heading">Note</h2>
         <label class="visually-hidden" for="ms-note">Note</label>
         <textarea id="ms-note" class="textarea" maxLength={1000} value={note ?? rec?.note ?? ''} onInput={(e) => setNoteDraft((e.target as HTMLTextAreaElement).value)} />
-        <button type="button" class="btn btn-outline btn-sm" style={{ alignSelf: 'flex-start' }} disabled={note === null || note.trim() === (rec?.note ?? '')} onClick={() => run(async () => { await setNote(app.db, ctx, target, note ?? ''); setNoteDraft(null); }, 'Note saved')}>
+        <button type="button" class="btn btn-outline btn-sm" style={{ alignSelf: 'flex-start' }} disabled={note === null || note.trim() === (rec?.note ?? '')} onClick={() => run(async () => { await setNote(app.db, ctx, target, note ?? ''); setNoteDraft(null); }, confirm({ kind: 'note' }))}>
           Save note
         </button>
       </section>
@@ -190,7 +210,7 @@ export function MilestoneDetailScreen({ routeKey }: { routeKey: string }) {
         </div>
         <label class="label" for="obs-text">What you noticed</label>
         <textarea id="obs-text" class="textarea" maxLength={1000} value={obsText} onInput={(e) => setObsText((e.target as HTMLTextAreaElement).value)} />
-        <button type="button" class="btn btn-secondary btn-sm" style={{ alignSelf: 'flex-start' }} disabled={!obsText.trim()} onClick={() => run(async () => { await addObservation(app.db, ctx, target, obsDate, obsText); setObsText(''); }, 'Observation added')}>
+        <button type="button" class="btn btn-secondary btn-sm" style={{ alignSelf: 'flex-start' }} disabled={!obsText.trim()} onClick={() => run(async () => { await addObservation(app.db, ctx, target, obsDate, obsText); setObsText(''); }, confirm({ kind: 'observation-added' }))}>
           <Icon name="plus" size={16} /> Add observation
         </button>
         {visibleObs.length > 0 && (
@@ -245,7 +265,7 @@ export function MilestoneDetailScreen({ routeKey }: { routeKey: string }) {
           </button>
         )}
         {!rec?.hidden && (
-          <button type="button" class="btn btn-quiet btn-block" onClick={() => run(() => setHidden(app.db, ctx, target, true), 'Hidden')}>
+          <button type="button" class="btn btn-quiet btn-block" onClick={() => run(() => setHidden(app.db, ctx, target, true), confirm({ kind: 'hidden' }, { hidden: true }))}>
             <Icon name="eyeOff" size={18} /> Hide this milestone
           </button>
         )}
@@ -275,6 +295,7 @@ export function MilestoneDetailScreen({ routeKey }: { routeKey: string }) {
             await updatePersonalVersion(app.db, ctx, personal.id, v);
             notifyMilestonesChanged();
             setSheet(null);
+            setSaved(confirm({ kind: 'personal-saved' }));
           }}
         />
       )}
@@ -283,7 +304,7 @@ export function MilestoneDetailScreen({ routeKey }: { routeKey: string }) {
           <p class="small">It will be removed from this list. Its text stays in this milestone’s history on this device, marked as removed. To remove the text completely, use “Erase permanently” in the history.</p>
           <div class="stack" style={{ marginTop: 'var(--space-5)' }}>
             <button type="button" class="btn btn-primary btn-block" onClick={() => setSheet(null)}>Cancel</button>
-            <button type="button" class="btn btn-quiet btn-block" onClick={async () => { const id = sheet.id; setSheet(null); await run(() => removeObservation(app.db, ctx, target, id), 'Observation removed'); }}>Remove</button>
+            <button type="button" class="btn btn-quiet btn-block" onClick={async () => { const id = sheet.id; setSheet(null); await run(() => removeObservation(app.db, ctx, target, id), confirm({ kind: 'observation-removed' })); }}>Remove</button>
           </div>
         </Sheet>
       )}
@@ -295,7 +316,7 @@ export function MilestoneDetailScreen({ routeKey }: { routeKey: string }) {
             {sheet.step === 1 ? (
               <button type="button" class="btn btn-quiet btn-block" onClick={() => setSheet({ ...sheet, step: 2 })}>Continue</button>
             ) : (
-              <button type="button" class="btn btn-danger btn-block" onClick={async () => { const id = sheet.id; setSheet(null); await run(() => eraseEntryText(app.db, ctx, target, id), 'Text erased'); }}>Yes, erase permanently</button>
+              <button type="button" class="btn btn-danger btn-block" onClick={async () => { const id = sheet.id; setSheet(null); await run(() => eraseEntryText(app.db, ctx, target, id), confirm({ kind: 'text-erased' })); }}>Yes, erase permanently</button>
             )}
           </div>
         </Sheet>

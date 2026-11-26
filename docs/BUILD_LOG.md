@@ -98,7 +98,8 @@ It could not establish whether the session URL is private, so it stopped before 
 | Handoff | `aa8c869` | Documentation only (the end-of-Checkpoint-1 handoff). *(Originally written as “this commit”; the hash is added for clarity.)* |
 | Checkpoint 2a build | `73d9f6f` | Verified CDC milestone tracking; 228 unit and 111 end-to-end tests reported. Committed locally; not merged into `main` or deployed. Awaiting owner acceptance. |
 | Conversation transfer and recovery | `73d9f6f` on `checkpoint-2a` | The new conversation's workspace lacked the unpushed 2a commit. The original commit was pushed to a separate branch from the previous conversation and verified unchanged. |
-| Handoff consolidation | (documentation-only commit after `73d9f6f`) | Single current-state handoff, refinement backlog, recovery record, challenge log, baseline re-run. Local only. |
+| Handoff consolidation | `9ca6149` | Single current-state handoff, refinement backlog, recovery record, challenge log, baseline re-run. Preserved on `claude/beautiful-allen-1vjobt` after owner authorization. |
+| Growth UX refinement | (this commit, local) | Owner acceptance testing found the Growth sections repetitive and unclear (R-002). New order and responsibilities, read-only guide with verified educational content, Library as the recording tool, Progress as the review dashboard, clearer confirmations. Not pushed or deployed. |
 
 ## Draft entry — Checkpoint 2a: Verified Milestone Tracking (drafted by Claude Code; edit before submitting)
 **Date:**
@@ -179,7 +180,61 @@ Compiled on 2026-11-26 from the review documents, decisions and earlier entries 
 | 10 | **Context utilization and conversation transfer** | Environmental limitation | Development moved to a new conversation to manage context. Each cloud conversation has its own temporary workspace, and the unpushed 2a commit existed only in the previous one. | The new conversation stopped and reported; nothing was reconstructed or reset. |
 | 11 | **Recovery of the unpublished checkpoint** | Resolved | The previous conversation, after a publication safety audit, pushed the original commit to a separate branch, `checkpoint-2a`, leaving `main` and the deployment unchanged. | Verified unchanged (`73d9f6f`, parent `aa8c869`, seven commits). Remote checkpoint preservation adopted (Decision #63). |
 
+| 12 | **Growth sections repetitive; unclear what updates progress (R-002)** | Design refinement (owner-discovered usability / product-design issue) | During initial hands-on acceptance testing of Checkpoint 2a, before accepting it, the owner found that What to Expect, its “Everything up to now” view and the Library presented variations of the same checklist, and that it wasn't clear which actions update progress. The implementation had followed the approved specification and passed all **339 automated tests** (228 unit, 111 end-to-end). | Growth UX refinement (plan R11, Decisions #65–#74). Another case of human review finding what automated tests could not, because the tests verified the specification, not whether the specification served parents. |
+| 13 | **Phase A content: fine motor missing from five overviews** | AI self-correction (content) | In the first educational-content draft, five overviews omitted fine-motor examples although CDC lists fine-motor milestones at those ages, contrary to the stated coverage objective. Claude found this in its own review before delivering the draft; the owner did not have to find it. | One fine-motor example added to each. The rule is now enforced by `validateGuide()`. |
+| 14 | **Automated traceability vs semantic accuracy** | Process safeguard | Valid milestone IDs show that a sentence is linked to verified content, not that it says the same thing. | Two layers: build-time traceability checks, plus a documented sentence-by-sentence meaning review. Qualifiers that change meaning were kept, and three dropped qualifiers were restored at the owner's request (Q-6). |
+| 15 | **Library preset address could override a newer navigation** | Confirmed defect (in new refinement code, found by tests) | When the Library opened from a shortcut it replaced its address with the plain Library address. If the parent navigated away immediately, the late replacement could make the next screen show the Library again. Surfaced as one intermittent failure of the new offline end-to-end test. | The replacement now happens only while the address still matches the preset. A first version of the guard compared address text, which would have skipped the old `expect/all` redirect; Claude caught this before running the tests and switched to comparing the parsed route. |
+| 16 | **New-test defects during the refinement** | Testing defect | Two unit tests had wrong expected values (Claude's arithmetic): with one of the 72 applicable milestones hidden, “Up to now” is 71, not the 66 first written; and “cup” matches three applicable milestones, not two. Several end-to-end tests had defects: an ambiguous “Note” selector (section and text box); a no-percentage check that wrongly flagged CDC's “75% or more”; a terminology scan that clicked non-accordion or hidden controls and timed out (twice); and a history count taken before the history had loaded (intermittent). | Each test corrected; the application code was not changed for any of them. |
+| 17 | **Styling slips found by review** | Design refinement (self-found) | A non-existent CSS token (`--text-base`) was used for guide text. Wrapping Progress area rows in links removed their spacing (seen in screenshot review). Full-page screenshots drew the fixed bottom navigation over the content (screenshot tooling only). | Token corrected; spacing rule added; screenshots pin the navigation to the page end. |
+
 **Still unresolved:**
 - The one-time “server not responding” delay on the first iPhone load (cause unknown).
 - R-001, the onboarding name-input overflow (pending investigation).
 - Whether iPhone Safari and the installed app share storage (M13, untested).
+- R-002 is corrected in code but **not yet verified by the owner** (hands-on acceptance pending).
+- The Library's controls fill most of a phone's first screen (recorded for owner review; unchanged).
+
+## Draft entry — Growth UX refinement (drafted by Claude Code; edit before submitting)
+**Date:** 2026-11-26
+**What I asked Claude Code to do:**
+- During my first hands-on acceptance testing of Checkpoint 2a, I found the Growth sections repetitive and unclear about what updates progress.
+- I asked for a plan first, then a separate educational-content review (Option A), and then authorized implementation, tests, screenshots and documentation.
+
+**What it produced:**
+- A refinement plan with wireframes and 14 decisions; a complete educational-content review with sentence-by-sentence traceability.
+- Then the implementation:
+  - the new Growth order and subtitles;
+  - a read-only What to Expect guide (all 20 ranges, 11 overviews, 9 empty-range explanations, structurally independent of records);
+  - the Library as the recording tool (Up to now / Upcoming / All 159, restored state);
+  - Progress as a review dashboard (what updates it, area links, by CDC age);
+  - accurate save confirmations;
+  - “Coming soon” wording in place of checkpoint terms;
+  - build-time guide validation;
+  - new tests, screenshots and documentation.
+- No schema or dependency changes.
+
+**What I corrected or redirected:**
+- The original section order and responsibilities (R-002).
+- Decisions D-1–D-14.
+- Educational content: “children” throughout; area explanations once per range; three qualifiers restored; revised SH-2, SH-5 and pre-due-date wording; compact neighbour cards; All 159 ordering; no development terms in the app.
+
+### Automated results (run by Claude Code in this conversation)
+Environment: Linux cloud container, Node 22.23.5, headless Chromium (Playwright; phone-sized viewport 390×844 plus a desktop project for responsive tests). **No Safari, iPhone or Android testing was performed.**
+
+| Check | Baseline before the refinement (`9ca6149`, rerun 2026-11-26) | Final (3 consecutive full runs, 2026-11-26) |
+|---|---|---|
+| Type check | Passed | Passed ×3 |
+| Unit tests | 228 passed (9 files) | **252 passed ×3** (10 files; +24 in `guide.test.ts`) |
+| Production build (includes milestone and guide content validation) | Passed | Passed ×3 (JavaScript 240.6 KB, 62.7 KB gzip) |
+| End-to-end tests | 111 passed | **135 passed ×3** (2.1–2.2 min each), no failures, no retries, no flaky results |
+
+**End-to-end changes:**
+- **Updated for superseded requirements, each marked in the test:**
+  - in `growth.spec.ts`: the landing order; the Home shortcut target and the preview wording; the empty-range test; the “everything up to now” test, now testing the Library redirect; the Library default count; the safeguard wording (Q-5); the offline Library count; the accessibility and 320px screen lists;
+  - in `review-regressions.spec.ts`: the order and the “Coming soon” wording.
+- **Added:** 21 tests in `growth-refinement.spec.ts`, plus one upgrade test from the original Checkpoint 2a build in `update.spec.ts`.
+- **Unchanged:** the remaining coverage, including all storage, history, calculation and isolation unit tests.
+
+During development (before the final runs), new tests failed for the reasons listed in challenges #15 and #16. All were corrected before the three final runs.
+
+**Notes / next steps:** My hands-on acceptance testing (checklist H1–H18 and the remaining G-items), then decisions on remote preservation, deployment and Checkpoint 2b.

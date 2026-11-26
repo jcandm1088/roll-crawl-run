@@ -46,8 +46,9 @@ test('Growth landing shows the four sections in order; each opens its own screen
   await page.getByRole('link', { name: 'Growth', exact: true }).click();
   await expect(page.getByTestId('page-title')).toHaveText('Growth');
   const titles = await page.locator('[data-testid="growth-sections"] .title-3').allTextContents();
-  expect(titles).toEqual(['Progress', 'Goals & Exercises', 'What to Expect at Every Age', 'Milestone Library']);
-  await expect(page.getByTestId('section-goals')).toContainText('Checkpoint 2b');
+  // Growth UX refinement (owner-approved requirements change, not a regression): Review → Record → Support → Learn.
+  expect(titles).toEqual(['Progress', 'Milestone Library', 'Goals & Exercises', 'What to Expect at Every Age']);
+  await expect(page.getByTestId('section-goals')).toContainText('Coming soon');
   await expect(page.getByTestId('section-goals').getByRole('link')).toHaveCount(0); // placeholder is not clickable
   for (const [id, title] of [['section-progress', 'Progress'], ['section-expect', 'What to Expect'], ['section-library', 'Milestone Library']] as const) {
     await page.getByTestId(id).click();
@@ -67,12 +68,13 @@ test('opens on the current interval; previewing never changes Home progress; Bac
   await mark(page, 'cdc22-m02-se-01', 'Achieved', '2025-08-20');
   await page.goto('./#/home');
   const homeGross = await page.getByTestId('home-progress').getByTestId('progress-social-emotional').getByTestId('fraction').textContent();
-  await page.getByTestId('qa-record-milestone').click();
+  // Refinement: Home's "Record a milestone" opens the Library (tested in growth-refinement.spec.ts); the guide opens on the current range.
+  await page.goto('./#/growth/expect');
   await expect(page.getByLabel('Age range')).toHaveValue('5'); // 15–18 months
   await expect(page.locator('#interval-select option:checked')).toHaveText('15–18 months (current)');
   await expect(page.getByTestId('preview-banner')).toHaveCount(0);
   await page.getByLabel('Age range').selectOption('12'); // 36–39 (future, empty)
-  await expect(page.getByTestId('preview-banner')).toContainText('doesn’t change Sample Child A’s age');
+  await expect(page.getByTestId('preview-banner')).toContainText('doesn’t change Sample Child A’s records');
   await page.goto('./#/home');
   await expect(page.getByTestId('home-progress').getByTestId('progress-social-emotional').getByTestId('fraction')).toHaveText(homeGross!);
   await page.goto('./#/growth/expect/12');
@@ -88,32 +90,37 @@ test('exact boundary: at exactly 6 months the "By 6 months" milestones are in th
   await expect(page.getByRole('heading', { name: /By 6 months.*upcoming/ })).toHaveCount(0);
 });
 
-test('empty interval shows no invented milestones and links to earlier, later, and everything up to now', async ({ page }) => {
+test('empty interval shows no invented milestones and links to the neighbouring CDC ages', async ({ page }) => {
+  // Refinement: the guide is read-only — no progress summary, no "everything up to now" link (decision D-1).
   await start(page, { dob: '2025-07-10' });
   await page.goto('./#/growth/expect/6'); // 18–21
-  await expect(page.getByTestId('empty-interval')).toContainText('No new milestones in this range');
-  await expect(page.getByTestId('milestone-row')).toHaveCount(0);
-  await expect(page.getByTestId('interval-summary').getByTestId('progress-all').getByTestId('neutral-state')).toHaveText('Nothing to track yet');
-  await page.getByRole('button', { name: /Earlier: By 18 months/ }).click();
+  await expect(page.getByTestId('empty-interval')).toContainText('CDC doesn’t publish a milestone checklist for this range');
+  await expect(page.getByTestId('empty-interval')).toContainText('Its checklists go from 18 months to 2 years');
+  await expect(page.getByTestId('guide-milestone')).toHaveCount(0);
+  await expect(page.getByTestId('progress-all')).toHaveCount(0);
+  await expect(page.getByTestId('neighbour-previous')).toContainText('Most recent CDC age: by 18 months');
+  await expect(page.getByTestId('neighbour-previous')).toContainText('Shown in 15–18 months');
+  await page.getByTestId('neighbour-previous').getByRole('button', { name: 'Open 15–18 months' }).click();
   await expect(page.getByLabel('Age range')).toHaveValue('5');
   await page.goto('./#/growth/expect/6');
-  await page.getByRole('button', { name: /Next: By 2 years/ }).click();
+  await page.getByTestId('neighbour-next').getByRole('button', { name: 'Open 21–24 months' }).click();
   await expect(page.getByLabel('Age range')).toHaveValue('7');
-  await page.goto('./#/growth/expect/6');
-  await page.getByRole('link', { name: 'See everything up to now' }).click();
-  await expect(page.getByRole('button', { name: 'Everything up to now' })).toHaveAttribute('aria-pressed', 'true');
 });
 
-test('everything up to now lists applicable milestones with status and area filters', async ({ page }) => {
+test('the superseded "everything up to now" address opens the Library’s Up to now view, with status and area filters', async ({ page }) => {
+  // Refinement: the cumulative tracking view moved from What to Expect to the Library (decision D-1).
   await start(page, { dob: '2025-07-10' }); // 16 months → 72 applicable
   await mark(page, 'cdc22-m12-lc-01', 'Emerging', '2026-08-15');
   await page.goto('./#/growth/expect/all');
-  await expect(page.getByTestId('result-count')).toHaveText('Showing 72 of 72 milestones that apply now.');
-  await page.getByRole('button', { name: 'Emerging', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Milestone Library', level: 1 })).toBeVisible();
+  await expect(page).toHaveURL(/#\/growth\/library$/);
+  await expect(page.getByTestId('view-now')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByTestId('result-count')).toHaveText('72 milestones');
+  await page.getByLabel('Status').selectOption('emerging');
   await expect(page.getByTestId('milestone-row')).toHaveCount(1);
-  await page.getByRole('button', { name: 'All', exact: true }).click();
+  await page.getByLabel('Status').selectOption('all');
   await page.getByRole('button', { name: 'Fine motor', exact: true }).click();
-  await expect(page.getByTestId('result-count')).toHaveText('Showing 9 of 72 milestones that apply now.');
+  await expect(page.getByTestId('result-count')).toHaveText('9 milestones');
 });
 
 // ---------------------------------------------------------------------------
@@ -250,6 +257,9 @@ test('library: 159 milestones, search, area, age and status filters', async ({ p
   await start(page, { dob: '2025-07-10' });
   await mark(page, 'cdc22-m12-mp-03', 'Achieved', '2026-07-01');
   await page.goto('./#/growth/library');
+  // Refinement: the Library opens on "Up to now"; the full catalog is the "All 159" view.
+  await expect(page.getByTestId('result-count')).toHaveText('72 milestones');
+  await page.getByTestId('view-all').click();
   await expect(page.getByTestId('result-count')).toHaveText('159 milestones');
   await page.getByLabel('Search milestones').fill('cup');
   await expect(page.getByTestId('result-count')).toHaveText('4 milestones');
@@ -355,10 +365,11 @@ test('Settings → Milestone Viewing Preferences reflects and links to the singl
 
 test('CDC attribution, free-availability and non-endorsement statements, and safeguards are present', async ({ page }) => {
   await start(page, { dob: '2025-07-10' });
-  await expect(page.getByTestId('home-progress').getByTestId('milestone-safeguard')).toContainText('isn’t a screening or clinical assessment');
+  // Refinement (decision Q-5): the unsourced "Children develop at different rates" was replaced by the approved 75%-basis wording.
+  await expect(page.getByTestId('home-progress').getByTestId('milestone-safeguard')).toContainText('isn’t a screening or an assessment of your child’s development');
   await page.goto('./#/growth/progress');
-  await expect(page.getByTestId('milestone-safeguard')).toContainText('Children develop at different rates');
-  await expect(page.getByTestId('milestone-safeguard')).toContainText('aren’t deadlines');
+  await expect(page.getByTestId('milestone-safeguard')).toContainText('not an assessment of your child’s development');
+  await expect(page.getByTestId('milestone-safeguard')).toContainText('an age isn’t a deadline');
   await expect(page.getByTestId('milestone-safeguard')).toContainText('talk with your child’s healthcare provider');
   await page.goto('./#/growth/library');
   const attr = page.getByTestId('cdc-attribution');
@@ -391,8 +402,12 @@ test('milestone tracking works offline after the app is cached', async ({ page, 
   await context.setOffline(true);
   await page.reload();
   await mark(page, 'cdc22-m02-lc-01', 'Achieved', '2026-11-25');
-  await page.goto('./#/growth/library');
+  await page.goto('./#/growth/library'); // Refinement: opens on Up to now (11 apply at 2 months)
+  await expect(page.getByTestId('result-count')).toHaveText('11 milestones');
+  await page.getByTestId('view-all').click();
   await expect(page.getByTestId('result-count')).toHaveText('159 milestones');
+  await page.goto('./#/growth/expect/1');
+  await expect(page.getByTestId('guide-milestone')).toHaveCount(25);
   await page.goto('./#/growth/about');
   await expect(page.getByTestId('about-milestones')).toContainText('What these milestones are');
   await page.goto('./#/growth/progress');
@@ -401,7 +416,7 @@ test('milestone tracking works offline after the app is cached', async ({ page, 
 });
 
 for (const [name, path] of [
-  ['growth landing', './#/growth'], ['progress', './#/growth/progress'], ['what to expect', './#/growth/expect'], ['everything up to now', './#/growth/expect/all'],
+  ['growth landing', './#/growth'], ['progress', './#/growth/progress'], ['what to expect', './#/growth/expect'], ['guide 3–6 months', './#/growth/expect/1'], ['library upcoming', './#/growth/library/upcoming'], ['library all', './#/growth/library/all'],
   ['empty interval', './#/growth/expect/6'], ['library', './#/growth/library'], ['about', './#/growth/about'], ['milestone detail', './#/growth/milestone/cdc22-m15-mp-01'],
 ] as const) {
   test(`accessibility scan: ${name}`, async ({ page }) => {
@@ -416,7 +431,7 @@ for (const [name, path] of [
 test('narrow phone (320px): Growth screens fit without horizontal scrolling', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 640 });
   await start(page, { name: 'Sample Child With A Long Name', dob: '2025-07-10' });
-  for (const p of ['./#/growth', './#/growth/progress', './#/growth/expect', './#/growth/expect/all', './#/growth/expect/6', './#/growth/library', './#/growth/about', './#/growth/milestone/cdc22-m15-lc-04']) {
+  for (const p of ['./#/growth', './#/growth/progress', './#/growth/expect', './#/growth/expect/1', './#/growth/library/all', './#/growth/expect/6', './#/growth/library', './#/growth/about', './#/growth/milestone/cdc22-m15-lc-04']) {
     await page.goto(p);
     await page.waitForTimeout(200);
     expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), p).toBeLessThanOrEqual(0);

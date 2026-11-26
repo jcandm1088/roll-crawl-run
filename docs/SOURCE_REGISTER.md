@@ -23,6 +23,13 @@ Every developmental or medical item in the app must trace to a row here. Before 
 
 **Status at Checkpoint 2a:** the 159 CDC milestones are in the app. The machine-readable register is `src/content/sources.json`, and the full item list is in `docs/MILESTONE_INVENTORY.md`. Verification details, the PDF comparison, and the AAP access record are in `docs/reviews/CHECKPOINT_2A_SOURCE_VERIFICATION.md`.
 
+**Educational guide (What to Expect), Growth UX refinement:**
+- **Text:** original explanatory text (Option A), written for this app and labelled as such.
+- **Basis:** derived only from the 159 verified milestones above (`cdc-ltsae-*` pages) and the registered Key Points page (75% basis; not standards; not screening or diagnostic tools).
+- **Where:** `src/content/guide.cdc-2022.json` records the basis milestone IDs and source IDs for every overview and area explanation.
+- **Records:** full text, traceability and the sentence-by-sentence meaning review are in `docs/reviews/CHECKPOINT_2A_GUIDE_CONTENT.md`.
+- **No new external content was collected.** The only access was a narrow, owner-authorized check of the section headings on four registered CDC milestone pages, which confirmed the display heading “Movement/Physical Development Milestones” (2026-11-26).
+
 **CDC reuse conditions as implemented:**
 - “Source: CDC” attribution in the Library, on every milestone detail, and on About.
 - A prominent statement that the app is not endorsed by CDC, HHS, or the U.S. Government.

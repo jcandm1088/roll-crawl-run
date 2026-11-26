@@ -507,3 +507,31 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .search-field .input { padding-left: 44px; }
 .inline-icon { display: inline-flex; vertical-align: -2px; margin-left: 3px; }
 .quick-action.active { border-style: solid; border-color: var(--primary); background: var(--surface); color: var(--primary); text-decoration: none; box-shadow: var(--shadow-card); }
+
+/* ---------------- Growth UX refinement (Checkpoint 2a) ---------------- */
+.section-subtitle { display: block; color: var(--text); margin-top: 2px; }
+.plain-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
+.plain-list li { display: flex; gap: var(--space-2); align-items: flex-start; }
+.plain-list li .icon { flex: 0 0 auto; margin-top: 2px; color: var(--text-muted); }
+.progress-link { display: block; color: inherit; text-decoration: none; border-radius: var(--radius-sm); }
+.progress-link:hover .progress-row, .progress-link:focus-visible .progress-row { background: var(--surface-sunken); }
+.progress-link .progress-row { padding-inline: var(--space-1); }
+/* Guide: calm reading layout — comfortable line length and spacing, no badges or tap targets on milestones. */
+.guide-age { margin: 0 var(--space-1) var(--space-4); }
+.guide-age p + p { margin-top: 4px; }
+.guide-stepper { margin-top: var(--space-3); }
+.guide-range-title { margin: var(--space-6) var(--space-1) var(--space-1); }
+.guide-text { font-size: var(--text-md); line-height: 1.6; max-width: 38em; }
+.guide-overview { margin: var(--space-4) var(--space-1) 0; }
+.guide-overview .guide-text { margin: var(--space-2) 0 var(--space-1); }
+.guide-age-group { margin-top: var(--space-6); }
+.guide-age-title { margin: 0 var(--space-1) var(--space-2); padding-bottom: var(--space-2); border-bottom: 1px solid var(--border); }
+.guide-area { margin: var(--space-4) var(--space-1) 0; }
+.guide-area-title { font-size: var(--text-sm); font-weight: 600; margin: 0; }
+.guide-area-explain { margin: 2px 0 var(--space-2); }
+.guide-milestones { margin: var(--space-1) 0 0; padding-left: 1.2em; display: grid; gap: 6px; line-height: 1.5; }
+.neighbour-card { display: flex; align-items: center; gap: var(--space-3); box-shadow: none; }
+.guide-details { margin-inline: var(--space-1); }
+.guide-details summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; }
+.guide-details p { margin-top: var(--space-2); }
+.progress-link + .progress-link { margin-top: var(--space-4); }

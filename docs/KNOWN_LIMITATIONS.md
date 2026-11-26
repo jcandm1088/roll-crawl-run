@@ -68,3 +68,12 @@ Last updated 2026-11-26 (Checkpoint 2a handoff consolidation). Earlier sections 
 - Each Claude Code cloud conversation works in its **own temporary workspace**. Local commits, installed packages and scratch files there are lost if the conversation ends or its container is reclaimed before they are pushed. The environment settings (allowed hosts) persist separately.
 - This caused the conversation-transfer incident of 2026-11-26: Checkpoint 2a existed only in the previous workspace until it was recovered through the `checkpoint-2a` branch (see `docs/HANDOFF.md` section 6). Checkpoints are now preserved on a separate remote branch, with the owner's authorization and after a publication safety review.
 - Sessions may be assigned a session-specific Git branch; pushes go only to branches the owner authorizes.
+
+## Checkpoint 2a Growth UX refinement
+- **Not yet reviewed by the owner:** the refined Growth screens are tested only in automated headless Chromium (desktop Chromium at phone-sized viewports). They have **not** been tested in Safari, on an iPhone, or on Android, and they are not deployed.
+- **Educational text accuracy** rests on a documented, human-readable meaning review. The build-time validation proves traceability to verified milestones, not accuracy (`docs/reviews/CHECKPOINT_2A_GUIDE_CONTENT.md`).
+- **Library state is in memory only:** the view, filters, search and scroll position are restored when returning from a milestone, but reset when the app is reloaded or reopened.
+- **Library first screen:** on a phone, the views, search, area chips, age and status selectors and the hidden toggle fill most of the first screen, so the first milestones begin just below it. This is recorded for the owner's hands-on review; no change has been made.
+- **Option B** (verbatim CDC overview excerpts from other CDC pages) is deferred; the guide uses only original text based on the verified milestones.
+- **Still deferred to Checkpoint 2b:** goals and exercises, CDC activities, historical charts, goal and exercise progress.
+- **R-001** (onboarding name-field overflow) remains pending and was not investigated in this refinement.

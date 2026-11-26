@@ -187,6 +187,18 @@ export function currentProgress(milestoneAgeMonths: number | null, records: Read
   return byCategory(MILESTONES.filter((m) => isApplicable(m, milestoneAgeMonths)), records);
 }
 
+/**
+ * Progress for each CDC reference age that APPLIES at the child's milestone age (never future ages).
+ * Same rules as currentProgress(); the totals across ages equal currentProgress().overall.
+ */
+export function progressByReferenceAge(milestoneAgeMonths: number | null, records: ReadonlyMap<string, RecordState>) {
+  return REFERENCE_AGES.filter((a) => milestoneAgeMonths !== null && a <= milestoneAgeMonths).map((age) => ({
+    referenceAgeMonths: age,
+    label: referenceAgeLabel(age),
+    progress: summarize('all', MILESTONES.filter((m) => m.referenceAgeMonths === age), records),
+  }));
+}
+
 /** "In this interval": all visible milestones placed in the interval (descriptive; may be future ones). */
 export function intervalProgress(index: number, records: ReadonlyMap<string, RecordState>) {
   return byCategory(milestonesInInterval(index), records);

@@ -79,18 +79,18 @@ export function Home() {
       <div class="section">
         <h2 class="title-2 section-title">Quick actions</h2>
         <div class="quick-actions">
-          <a class="quick-action active" href={href({ name: 'growthExpect', interval: null, view: 'interval' })} data-testid="qa-record-milestone">
+          <a class="quick-action active" href={href({ name: 'growthLibrary', preset: { view: 'now', area: null } })} data-testid="qa-record-milestone">
             <Icon name="sprout" />
             <span>Record a milestone</span>
           </a>
           {[
-            ['notebook', 'Journal entry', 4],
-            ['calendar', 'New event', 3],
-          ].map(([icon, label, cp]) => (
-            <div class="quick-action" key={label as string} aria-disabled="true" aria-label={`${label} — not available yet`}>
+            ['notebook', 'Journal entry'],
+            ['calendar', 'New event'],
+          ].map(([icon, label]) => (
+            <div class="quick-action" key={label as string} aria-disabled="true" aria-label={`${label} — coming soon`}>
               <Icon name={icon as 'sprout'} />
               <span>{label}</span>
-              <span class="xsmall" style={{ fontWeight: 500 }}>Checkpoint {cp}</span>
+              <span class="xsmall" style={{ fontWeight: 500 }}>Coming soon</span>
             </div>
           ))}
         </div>
@@ -100,8 +100,8 @@ export function Home() {
 
       <div class="section">
         <h2 class="title-2 section-title">Coming next</h2>
-        <PlaceholderCard icon="calendar" title="Coming up" checkpoint={3}>Appointments and activities for the days ahead.</PlaceholderCard>
-        <PlaceholderCard icon="heart" title="Daily encouragement" checkpoint={4}>
+        <PlaceholderCard icon="calendar" title="Coming up">Appointments and activities for the days ahead.</PlaceholderCard>
+        <PlaceholderCard icon="heart" title="Daily encouragement">
           A gentle note for each day.
         </PlaceholderCard>
       </div>

@@ -4,12 +4,21 @@ import { useEffect, useState } from 'preact/hooks';
  * Minimal hash router. Hash URLs (#/growth) never hit the server, so they
  * work on GitHub Pages (no SPA rewrite rules) and offline.
  */
+export interface LibraryPreset { view: 'now' | 'upcoming' | 'all'; area: (typeof LIBRARY_AREAS)[number] | null }
+export const LIBRARY_AREAS = ['gross-motor', 'fine-motor', 'cognitive', 'language-communication', 'social-emotional'] as const;
+
+/** Replace the current address without adding history or triggering navigation (e.g. after applying a preset). */
+export function replaceRoute(route: Route): void {
+  window.history.replaceState(window.history.state, '', href(route));
+}
+
 export type Route =
   | { name: 'home' }
   | { name: 'growth' }
   | { name: 'growthProgress' }
-  | { name: 'growthExpect'; interval: number | null; view: 'interval' | 'all' }
-  | { name: 'growthLibrary' }
+  | { name: 'growthExpect'; interval: number | null }
+  /** preset: open a specific Library view (resetting filters); null = restore the Library as it was left. */
+  | { name: 'growthLibrary'; preset: LibraryPreset | null }
   | { name: 'growthAbout' }
   | { name: 'growthMilestone'; key: string }
   | { name: 'calendar' }
@@ -33,13 +42,21 @@ export function parseHash(hash: string): Route {
       return { name: 'home' };
     case 'growth':
       if (b === 'progress') return { name: 'growthProgress' };
-      if (b === 'library') return { name: 'growthLibrary' };
+      if (b === 'library') {
+        const view = parts[2];
+        const area = parts[3];
+        if (view === 'now' || view === 'upcoming' || view === 'all') {
+          return { name: 'growthLibrary', preset: { view, area: area && (LIBRARY_AREAS as readonly string[]).includes(area) ? (area as LibraryPreset['area']) : null } };
+        }
+        return { name: 'growthLibrary', preset: null };
+      }
       if (b === 'about') return { name: 'growthAbout' };
       if (b === 'milestone' && parts[2]) return { name: 'growthMilestone', key: decodeURIComponent(parts[2]) };
       if (b === 'expect') {
-        if (parts[2] === 'all') return { name: 'growthExpect', interval: null, view: 'all' };
+        // Superseded "Everything up to now" tracking view (owner decision D-1) → the Library's Up to now view.
+        if (parts[2] === 'all') return { name: 'growthLibrary', preset: { view: 'now', area: null } };
         const n = parts[2] === undefined ? null : Number(parts[2]);
-        return { name: 'growthExpect', interval: n !== null && Number.isInteger(n) && n >= 0 && n < 20 ? n : null, view: 'interval' };
+        return { name: 'growthExpect', interval: n !== null && Number.isInteger(n) && n >= 0 && n < 20 ? n : null };
       }
       return { name: 'growth' };
     case 'calendar':
@@ -70,13 +87,13 @@ export function href(route: Route): string {
     case 'growthProgress':
       return '#/growth/progress';
     case 'growthLibrary':
-      return '#/growth/library';
+      return route.preset ? `#/growth/library/${route.preset.view}${route.preset.area ? `/${route.preset.area}` : ''}` : '#/growth/library';
     case 'growthAbout':
       return '#/growth/about';
     case 'growthMilestone':
       return `#/growth/milestone/${encodeURIComponent(route.key)}`;
     case 'growthExpect':
-      return route.view === 'all' ? '#/growth/expect/all' : route.interval === null ? '#/growth/expect' : `#/growth/expect/${route.interval}`;
+      return route.interval === null ? '#/growth/expect' : `#/growth/expect/${route.interval}`;
     case 'profileEdit':
       return `#/profiles/${encodeURIComponent(route.id)}`;
     default:

@@ -48,6 +48,10 @@ function milestoneContentPlugin(): Plugin {
       const lock = JSON.parse(readFileSync(new URL('./src/content/milestone-ids.lock.json', import.meta.url), 'utf8')) as Record<string, string>;
       const errors = validateContent(MILESTONES, PAGE_SOURCES, lock, (s) => createHash('sha256').update(s).digest('hex').slice(0, 16));
       if (errors.length) this.error(`Milestone content validation failed:\n${errors.join('\n')}`);
+      // Educational guide (What to Expect): traceability to verified milestones and registered sources.
+      const { validateGuide } = await import('./src/domain/guide');
+      const guideErrors = validateGuide();
+      if (guideErrors.length) this.error(`Guide content validation failed:\n${guideErrors.join('\n')}`);
     },
   };
 }

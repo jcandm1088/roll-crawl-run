@@ -1,31 +1,40 @@
-import { useState } from 'preact/hooks';
 import { useApp } from '../../../state/app';
-import { keyFromTarget, useChildMilestones } from '../../../state/milestones';
+import { useChildMilestones, useMilestoneAge } from '../../../state/milestones';
 import { href, navigate } from '../../../router';
 import { INTERVALS } from '../../../domain/intervals';
-import {
-  APP_CATEGORIES, MILESTONES, appCategoryLabel, cumulativeThroughInterval, currentProgress, intervalOf, intervalProgress, isApplicable,
-  isEmptyInterval, milestonesInInterval, neighbouringReferenceIntervals, referenceAgeLabel, type AppCategory, type MilestoneDef, type MilestoneStatus,
-} from '../../../domain/milestones';
+import { currentProgress, progressByReferenceAge, type AppCategory } from '../../../domain/milestones';
+import { GUIDE, bareAge, guideFor, inlineAge, type GuideRange, type NeighbourAge } from '../../../domain/guide';
+import { viewCounts } from '../../../domain/library';
+import { ageBetween, formatPreciseAge } from '../../../domain/age';
 import { PageHeader } from '../../components/PageHeader';
 import { Icon, type IconName } from '../../components/Icon';
 import { PlannedTag } from '../../components/Placeholder';
 import { Accordion } from '../../components/Accordion';
 import { childNameInline } from '../../components/Avatar';
-import { AgeBasisPanel, CategoryProgressList, ForChild, MilestoneSafeguard, OlderThanFiveNote, ProgressLine, StatusBadge } from './parts';
-import type { PersonalMilestone } from '../../../types';
+import { AgeBasisPanel, CDC_CONCERNED_URL, CDC_MILESTONES_URL, CategoryProgressList, ExternalLink, ForChild, MilestoneSafeguard, OlderThanFiveNote, ProgressLine } from './parts';
+import { PAGE_SOURCES } from '../../../domain/milestones';
+import type { Child } from '../../../types';
 
 // ---------------------------------------------------------------------------
-// Growth landing page — four sections in the approved order.
+// Growth landing page — Review → Record → Support → Learn (owner-approved order and subtitles).
 // ---------------------------------------------------------------------------
 
-function SectionLink({ to, icon, title, detail, testId }: { to: string; icon: IconName; title: string; detail: string; testId: string }) {
+export const GROWTH_SECTIONS = [
+  { title: 'Progress', subtitle: 'See how far we’ve come.' },
+  { title: 'Milestone Library', subtitle: 'Record what we’ve accomplished.' },
+  { title: 'Goals & Exercises', subtitle: 'Know what to work on.' },
+  { title: 'What to Expect at Every Age', subtitle: 'Learn what’s ahead.' },
+] as const;
+
+function SectionLink({ to, icon, index, live, testId }: { to: string; icon: IconName; index: number; live: string; testId: string }) {
+  const s = GROWTH_SECTIONS[index]!;
   return (
     <a class="card section-link" href={to} data-testid={testId}>
       <span class="icon-wrap"><Icon name={icon} /></span>
       <span class="grow">
-        <span class="title-3" style={{ display: 'block' }}>{title}</span>
-        <span class="small muted">{detail}</span>
+        <span class="title-3" style={{ display: 'block' }}>{s.title}</span>
+        <span class="small section-subtitle" data-testid="section-subtitle">{s.subtitle}</span>
+        <span class="xsmall muted" style={{ display: 'block' }} data-testid="section-live">{live}</span>
       </span>
       <span class="chev"><Icon name="chevronRight" size={20} /></span>
     </a>
@@ -37,235 +46,301 @@ export function GrowthHome() {
   const m = useChildMilestones(activeChild);
   if (!activeChild || !m.age) return null;
   const overall = currentProgress(m.age.months, m.sourcedStates).overall;
-  const progressDetail =
-    overall.state === 'ok' ? `${overall.achieved} of ${overall.applicable} achieved so far` : overall.state === 'all-hidden' ? 'All current milestones are hidden' : 'Nothing to track yet at this age';
+  const counts = viewCounts(m.age.months, m.sourcedStates);
+  const progressLive = overall.state === 'ok' ? `${overall.achieved} of ${overall.applicable} recorded as achieved` : overall.state === 'all-hidden' ? 'All current milestones are hidden' : 'Nothing to track yet at this age';
+  const libraryLive = counts.now === 0 ? 'No CDC milestones apply yet' : `${counts.now} milestone${counts.now === 1 ? '' : 's'} apply now`;
+  const goals = GROWTH_SECTIONS[2];
   return (
     <div>
       <PageHeader title="Growth" intro="Tracking your developmental milestones." />
       <ForChild child={activeChild} />
       <div class="stack" data-testid="growth-sections">
-        <SectionLink to={href({ name: 'growthProgress' })} icon="chart" title="Progress" detail={progressDetail} testId="section-progress" />
-        <section class="card placeholder" aria-label="Goals & Exercises — not available yet" data-testid="section-goals">
+        <SectionLink to={href({ name: 'growthProgress' })} icon="chart" index={0} live={progressLive} testId="section-progress" />
+        <SectionLink to={href({ name: 'growthLibrary', preset: { view: 'now', area: null } })} icon="bookOpen" index={1} live={libraryLive} testId="section-library" />
+        <section class="card placeholder" aria-label={`${goals.title} — coming soon`} data-testid="section-goals">
           <div class="row" style={{ alignItems: 'flex-start' }}>
             <span class="muted"><Icon name="target" /></span>
             <div class="grow stack" style={{ marginTop: 0 }}>
-              <h3 class="title-3">Goals & Exercises</h3>
-              <p class="small muted">Your own goals and regular activities, with a record of each time you do them.</p>
-              <PlannedTag checkpoint="2b" />
+              <h3 class="title-3">{goals.title}</h3>
+              <p class="small section-subtitle" data-testid="section-subtitle">{goals.subtitle}</p>
+              <PlannedTag />
             </div>
           </div>
         </section>
-        <SectionLink to={href({ name: 'growthExpect', interval: null, view: 'interval' })} icon="map" title="What to Expect at Every Age" detail={`Now showing ${m.currentInterval.label}`} testId="section-expect" />
-        <SectionLink to={href({ name: 'growthLibrary' })} icon="bookOpen" title="Milestone Library" detail={`${MILESTONES.length} milestones from CDC`} testId="section-library" />
+        <SectionLink to={href({ name: 'growthExpect', interval: null })} icon="map" index={3} live={`Now: ${m.currentInterval.label}`} testId="section-expect" />
       </div>
     </div>
   );
 }
 
 // ---------------------------------------------------------------------------
-// Progress
+// Progress — review only. Calculated automatically; no editing controls.
 // ---------------------------------------------------------------------------
 
 export function ProgressScreen() {
   const { activeChild } = useApp();
   const m = useChildMilestones(activeChild);
   if (!activeChild || !m.age) return null;
+  const name = childNameInline(activeChild);
   const p = currentProgress(m.age.months, m.sourcedStates);
+  const byAge = progressByReferenceAge(m.age.months, m.sourcedStates);
+  const libraryFor = (area: AppCategory | null) => href({ name: 'growthLibrary', preset: { view: 'now', area } });
   return (
     <div>
       <ForChild child={activeChild} />
-      <div class="card"><AgeBasisPanel child={activeChild} age={m.age} corrected={m.corrected} today={m.today} /></div>
-      <div class="section"><MilestoneSafeguard /></div>
       <OlderThanFiveNote months={m.age.months} />
-      <section class="card section" aria-labelledby="progress-up-to-now">
-        <h2 class="title-2" id="progress-up-to-now">Up to now</h2>
-        <p class="small muted" style={{ margin: '4px 0 var(--space-4)' }}>CDC milestones for {m.age.months === null ? 'this age' : `${m.age.months} months and younger`}, as you’ve recorded them.</p>
+      <section class="card section" aria-labelledby="progress-headline" data-testid="progress-headline">
+        <h2 class="title-2" id="progress-headline">Milestones recorded as achieved</h2>
+        <p class="small muted" style={{ margin: '4px 0 var(--space-4)' }} data-testid="progress-scope">
+          {m.age.months === null
+            ? `${name}’s due date hasn’t arrived yet, so no CDC milestones are counted using corrected age.`
+            : `CDC milestones for ${m.age.months} month${m.age.months === 1 ? '' : 's'} and younger, as you’ve recorded them.`}
+        </p>
         <ProgressLine p={p.overall} label="All areas" />
-        <div style={{ borderTop: '1px solid var(--border)', margin: 'var(--space-4) 0', paddingTop: 'var(--space-4)' }}>
-          <CategoryProgressList categories={p.categories} />
-        </div>
+        {p.overall.state === 'none-applicable' && m.age.months !== null && (
+          <p class="small muted" style={{ marginTop: 'var(--space-2)' }}>The first CDC milestones are listed “by 2 months.”</p>
+        )}
+      </section>
+
+      <section class="card section stack" aria-labelledby="what-updates" data-testid="what-updates">
+        <h2 class="title-3" id="what-updates">What updates Progress?</h2>
+        <ul class="plain-list small">
+          <li><Icon name="check" size={16} /> <span>Marking a milestone <strong>Achieved</strong> in the Milestone Library, if it applies to {name} now and isn’t hidden.</span></li>
+          <li><Icon name="info" size={16} /> <span>Emerging milestones are shown separately and don’t count as achieved.</span></li>
+          <li><Icon name="info" size={16} /> <span>Upcoming milestones count once {name} reaches their CDC age. Hidden milestones and your personal versions aren’t counted.</span></li>
+          <li><Icon name="info" size={16} /> <span>Reading What to Expect doesn’t change Progress.</span></li>
+        </ul>
+        <a class="btn btn-secondary btn-block" href={libraryFor(null)} data-testid="record-in-library">Record in the Milestone Library</a>
+      </section>
+
+      <section class="card section" aria-labelledby="by-area">
+        <h2 class="title-3" id="by-area">By area</h2>
+        <p class="xsmall muted" style={{ margin: '4px 0 var(--space-3)' }}>Tap an area to see its milestones in the Milestone Library.</p>
+        <CategoryProgressList categories={p.categories} linkFor={(c) => libraryFor(c)} />
         <p class="xsmall muted">Your personal versions aren’t included here.</p>
       </section>
+
+      <div class="section"><MilestoneSafeguard /></div>
+
+      <Accordion title="By CDC age" testId="acc-by-age">
+        <div class="panel-pad stack small" data-testid="by-age">
+          <p class="muted">Only CDC ages that apply to {name} now are shown.</p>
+          {byAge.length === 0 ? (
+            <p>No CDC ages apply yet.</p>
+          ) : (
+            <ul class="plain-list">
+              {[...byAge].reverse().map((a) => (
+                <li key={a.referenceAgeMonths} class="row-between" data-testid="by-age-row" data-age={a.referenceAgeMonths}>
+                  <span>{a.label}</span>
+                  <span class="progress-figure">{a.progress.state === 'ok' ? `${a.progress.achieved} of ${a.progress.applicable} achieved` : 'All hidden'}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </Accordion>
       <Accordion title="How is this calculated?" testId="acc-how">
         <div class="panel-pad stack small">
-          <p>For each area, we count the CDC milestones that apply to {childNameInline(activeChild)}’s milestone age — those listed for that age or younger — and show how many you’ve marked <strong>Achieved</strong>.</p>
-          <p><strong>Achieved ÷ milestones that apply.</strong> Emerging milestones are shown separately and don’t count as achieved. Milestones for older ages aren’t counted until {childNameInline(activeChild)} reaches them, even if you record them early. Hidden milestones and your personal versions aren’t counted.</p>
+          <p>For each area, we count the CDC milestones that apply to {name}’s milestone age — those listed for that age or younger — and show how many you’ve marked <strong>Achieved</strong>.</p>
+          <p><strong>Achieved ÷ milestones that apply.</strong> Emerging milestones are shown separately and don’t count as achieved. Milestones for older ages aren’t counted until {name} reaches them, even if you record them early. Hidden milestones and your personal versions aren’t counted.</p>
           <p>When nothing applies yet, or everything that applies is hidden, we show that instead of a percentage.</p>
           <p>This reflects only what you’ve recorded. It isn’t a measure of development or health, and it isn’t a screening.</p>
         </div>
       </Accordion>
-    </div>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// What to Expect at Every Age
-// ---------------------------------------------------------------------------
-
-type StatusFilter = 'all' | MilestoneStatus;
-const STATUS_FILTERS: Array<[StatusFilter, string]> = [['all', 'All'], ['not-yet', 'Not yet observed'], ['emerging', 'Emerging'], ['achieved', 'Achieved']];
-
-function MilestoneList({ defs, statusOf, applicableAt, childName }: { defs: MilestoneDef[]; statusOf: (id: string) => MilestoneStatus; applicableAt: number | null; childName: string }) {
-  const ages = [...new Set(defs.map((d) => d.referenceAgeMonths))].sort((a, b) => a - b);
-  return (
-    <div>
-      {ages.map((age) => (
-        <section key={age} aria-label={referenceAgeLabel(age)}>
-          <h3 class="ms-group-title">{referenceAgeLabel(age)}{!isApplicable({ referenceAgeMonths: age }, applicableAt) && <span class="xsmall" style={{ fontWeight: 500 }}> · upcoming for {childName}</span>}</h3>
-          <ul class="ms-list card list-card">
-            {defs.filter((d) => d.referenceAgeMonths === age).map((d) => (
-              <li key={d.id}>
-                <a class="ms-item" href={href({ name: 'growthMilestone', key: d.id })} data-testid="milestone-row" data-id={d.id}>
-                  <span class="ms-text">
-                    {d.text}
-                    <span class="ms-meta">{appCategoryLabel(d.appCategory)}</span>
-                  </span>
-                  <StatusBadge status={statusOf(d.id)} />
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ))}
-    </div>
-  );
-}
-
-export function ExpectScreen({ interval, view }: { interval: number | null; view: 'interval' | 'all' }) {
-  const { activeChild } = useApp();
-  const m = useChildMilestones(activeChild);
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
-  const [catFilter, setCatFilter] = useState<AppCategory | 'all'>('all');
-  if (!activeChild || !m.age) return null;
-  const name = childNameInline(activeChild);
-  const current = m.currentInterval.index;
-  const selected = interval ?? current;
-  const iv = INTERVALS[selected]!;
-  const isPreview = selected !== current;
-  const statusOf = (id: string): MilestoneStatus => m.sourcedStates.get(id)?.status ?? 'not-yet';
-  const hiddenIds = new Set([...m.sourcedStates].filter(([, s]) => s.hidden).map(([id]) => id));
-  const visible = (d: MilestoneDef) => !hiddenIds.has(d.id);
-
-  const header = (
-    <>
-      <ForChild child={activeChild} />
-      <p class="small" style={{ margin: '0 var(--space-1) var(--space-4)' }} data-testid="milestone-age-line">
-        Age used for milestones:{' '}
-        <strong>{m.age.months === null ? 'not yet (before due date)' : `${m.age.months} month${m.age.months === 1 ? '' : 's'}`}</strong>{' '}
-        <span class="muted">({activeChild.correctedAge.enabled && activeChild.ageBasis === 'corrected' ? 'corrected' : 'chronological'})</span>
+      <div class="card section"><AgeBasisPanel child={activeChild} age={m.age} corrected={m.corrected} today={m.today} /></div>
+      <p class="small muted" style={{ margin: 'var(--space-4) var(--space-1)' }} data-testid="coming-soon-note">
+        Charts of your records over time, and progress on your own goals and activities, are coming soon.
       </p>
-      <div class="segmented" role="group" aria-label="View" style={{ marginBottom: 'var(--space-4)' }}>
-        <button type="button" aria-pressed={view === 'interval'} onClick={() => navigate({ name: 'growthExpect', interval, view: 'interval' })}>By age range</button>
-        <button type="button" aria-pressed={view === 'all'} onClick={() => navigate({ name: 'growthExpect', interval: null, view: 'all' })}>Everything up to now</button>
-      </div>
-    </>
+    </div>
   );
+}
 
-  if (view === 'all') {
-    const upToNow = MILESTONES.filter((d) => visible(d) && isApplicable(d, m.age!.months));
-    const shown = upToNow.filter((d) => (statusFilter === 'all' || statusOf(d.id) === statusFilter) && (catFilter === 'all' || d.appCategory === catFilter));
+// ---------------------------------------------------------------------------
+// What to Expect at Every Age — exclusively informational, read-only guide.
+// It uses only the child's milestone AGE (to choose the starting range) and never loads or
+// writes milestone records. All content comes from guideFor(), which takes no records.
+// ---------------------------------------------------------------------------
+
+function GuideAgeLine({ child, months, today }: { child: Child; months: number | null; today: string }) {
+  const name = childNameInline(child);
+  const usingCorrected = child.correctedAge.enabled && child.ageBasis === 'corrected';
+  if (months === null) {
     return (
-      <div>
-        {header}
-        <MilestoneSafeguard compact />
-        <div class="section stack">
-          <div class="chips" role="group" aria-label="Status">
-            {STATUS_FILTERS.map(([v, l]) => <button type="button" key={v} class="chip" aria-pressed={statusFilter === v} onClick={() => setStatusFilter(v)}>{l}</button>)}
-          </div>
-          <div class="chips" role="group" aria-label="Area">
-            <button type="button" class="chip" aria-pressed={catFilter === 'all'} onClick={() => setCatFilter('all')}>All areas</button>
-            {APP_CATEGORIES.map((c) => <button type="button" key={c.id} class="chip" aria-pressed={catFilter === c.id} onClick={() => setCatFilter(c.id)}>{c.label}</button>)}
-          </div>
-        </div>
-        <p class="small muted" style={{ margin: 'var(--space-4) var(--space-1) 0' }} data-testid="result-count">
-          {upToNow.length === 0 ? 'No CDC milestones apply yet at this age.' : `Showing ${shown.length} of ${upToNow.length} milestones that apply now.`}
-        </p>
-        <MilestoneList defs={shown} statusOf={statusOf} applicableAt={m.age.months} childName={name} />
+      <div class="guide-age" data-testid="milestone-age-line">
+        <p class="small">Age used for milestones: <strong>Before due date</strong></p>
+        <p class="xsmall muted" data-testid="pre-due-note">{name}’s due date hasn’t arrived yet. No CDC milestones are counted as applicable using corrected age at this time. You can still explore the developmental guide.</p>
       </div>
     );
   }
-
-  const inInterval = milestonesInInterval(selected);
-  const visibleInInterval = inInterval.filter(visible);
-  const hiddenHere = inInterval.length - visibleInInterval.length;
-  const ip = intervalProgress(selected, m.sourcedStates).overall;
-  const cp = cumulativeThroughInterval(selected, m.sourcedStates).overall;
-  const empty = isEmptyInterval(selected);
-  const near = neighbouringReferenceIntervals(selected);
-  const personalHere = (m.data?.personal ?? []).filter((p: PersonalMilestone) =>
-    p.referenceAgeMonths === null ? empty : intervalOf({ referenceAgeMonths: p.referenceAgeMonths }).index === selected,
-  );
-
   return (
-    <div>
-      {header}
-      <div class="field">
-        <label class="label" for="interval-select">Age range</label>
-        <select id="interval-select" class="select" value={String(selected)} onChange={(e) => navigate({ name: 'growthExpect', interval: Number((e.target as HTMLSelectElement).value), view: 'interval' })}>
-          {INTERVALS.map((x) => <option key={x.index} value={String(x.index)}>{x.label}{x.index === current ? ' (current)' : ''}</option>)}
-        </select>
-      </div>
-      {isPreview && (
-        <div class="banner neutral" role="status" style={{ marginTop: 'var(--space-3)' }} data-testid="preview-banner">
-          <Icon name="eye" size={18} />
-          <span class="grow">
-            Previewing {iv.label}. This doesn’t change {name}’s age, saved preferences, or progress on Home.
-            <button type="button" class="btn btn-secondary btn-sm" style={{ marginTop: 'var(--space-2)', display: 'flex' }} onClick={() => navigate({ name: 'growthExpect', interval: null, view: 'interval' })}>
-              Back to current age
-            </button>
-          </span>
-        </div>
+    <div class="guide-age" data-testid="milestone-age-line">
+      <p class="small">
+        Age used for milestones: <strong>{months} month{months === 1 ? '' : 's'}</strong> <span class="muted">({usingCorrected ? 'corrected' : 'chronological'})</span>
+      </p>
+      {usingCorrected && (
+        <p class="xsmall muted" data-testid="corrected-note">
+          Chronological age: {formatPreciseAge(ageBetween(child.dob, today))}. Corrected age is counted from {name}’s due date instead of birth date. You chose to use it for milestones in {name}’s profile.
+        </p>
       )}
-      <OlderThanFiveNote months={m.age.months} />
+      {months > 60 && (
+        <p class="xsmall muted" data-testid="over-five-note">CDC’s milestone checklists end at age 5, so there are no milestones after “by 5 years.” The guide opens at 57–60 months, the last range.</p>
+      )}
+    </div>
+  );
+}
 
-      <section class="card section" aria-label="Progress for this range" data-testid="interval-summary">
-        <ProgressLine p={ip} label={`In ${iv.label}`} />
-        <div style={{ marginTop: 'var(--space-4)' }}>
-          <ProgressLine p={cp} label={`Cumulative, up to ${iv.endMonths} months`} />
-        </div>
-        <p class="xsmall muted" style={{ marginTop: 'var(--space-3)' }}>These describe this range only. {name}’s current progress is on the Progress screen.</p>
-      </section>
+function NeighbourCard({ kind, n }: { kind: 'previous' | 'next'; n: NeighbourAge }) {
+  return (
+    <div class="card neighbour-card" data-testid={`neighbour-${kind}`}>
+      <span class="grow">
+        <span class="small" style={{ display: 'block', fontWeight: 600 }}>{kind === 'previous' ? 'Most recent CDC age' : 'Next CDC age'}: {inlineAge(n.referenceAgeMonths)}</span>
+        <span class="xsmall muted">Shown in {n.interval.label}</span>
+      </span>
+      <button type="button" class="btn btn-outline btn-sm" onClick={() => navigate({ name: 'growthExpect', interval: n.interval.index })} aria-label={`Open ${n.interval.label}`}>
+        Open <Icon name="chevronRight" size={16} />
+      </button>
+    </div>
+  );
+}
 
-      {empty ? (
-        <section class="card section stack" data-testid="empty-interval">
-          <h2 class="title-3">No new milestones in this range</h2>
-          <p class="small muted">CDC hasn’t published milestones for {iv.label}. Earlier milestones still count, and the next ones are listed further on.</p>
-          <div class="stack">
-            {near.previous && (
-              <button type="button" class="btn btn-outline btn-block" onClick={() => navigate({ name: 'growthExpect', interval: near.previous!.index, view: 'interval' })}>
-                <Icon name="chevronLeft" size={18} /> Earlier: {referenceAgeLabel(Math.max(...milestonesInInterval(near.previous.index).map((d) => d.referenceAgeMonths)))}
-              </button>
-            )}
-            {near.next && (
-              <button type="button" class="btn btn-outline btn-block" onClick={() => navigate({ name: 'growthExpect', interval: near.next!.index, view: 'interval' })}>
-                Next: {referenceAgeLabel(Math.min(...milestonesInInterval(near.next.index).map((d) => d.referenceAgeMonths)))} <Icon name="chevronRight" size={18} />
-              </button>
-            )}
-            <a class="btn btn-ghost btn-block" href={href({ name: 'growthExpect', interval: null, view: 'all' })}>See everything up to now</a>
-          </div>
+function GuideBody({ g }: { g: GuideRange }) {
+  const s = GUIDE.shared;
+  return (
+    <>
+      <h2 class="title-2 guide-range-title" data-testid="guide-range-title">{g.interval.label}</h2>
+      {g.kind === 'empty' ? (
+        <section class="stack" data-testid="empty-interval">
+          <p class="guide-text">
+            CDC doesn’t publish a milestone checklist for this range. Its checklists go from {bareAge(g.previous.referenceAgeMonths)} to {bareAge(g.next.referenceAgeMonths)}, so
+            the app doesn’t add any milestones here. For a child in this range, CDC’s most recent milestones are the ones listed “{inlineAge(g.previous.referenceAgeMonths)}.”
+          </p>
+          <NeighbourCard kind="previous" n={g.previous} />
+          <NeighbourCard kind="next" n={g.next} />
         </section>
       ) : (
-        <MilestoneList defs={visibleInInterval} statusOf={statusOf} applicableAt={m.age.months} childName={name} />
+        <>
+          <p class="small muted" data-testid="range-includes">
+            This range includes CDC’s {g.referenceAges.map((a, i) => <span key={a}>{i > 0 && ' and '}“{inlineAge(a)}”</span>)} milestones.
+          </p>
+          <section class="guide-overview" aria-labelledby="overview-title" data-testid="guide-overview">
+            <h3 class="title-3" id="overview-title">Overview</h3>
+            <p class="guide-text">{g.overview.text}</p>
+            <p class="xsmall muted">{s.overviewLabel}</p>
+          </section>
+          {g.groups.map((grp) => (
+            <section key={grp.referenceAgeMonths} class="guide-age-group" aria-label={grp.label} data-testid="guide-age-group" data-age={grp.referenceAgeMonths}>
+              <h3 class="title-3 guide-age-title">{grp.label}</h3>
+              {grp.areas.map((a) => (
+                <div key={a.category} class="guide-area" data-testid="guide-area" data-category={a.category}>
+                  <h4 class="guide-area-title">{a.label}</h4>
+                  {a.explanation && <p class="small muted guide-area-explain">{a.explanation}</p>}
+                  {a.milestones.length > 0 ? (
+                    <ul class="guide-milestones">
+                      {a.milestones.map((d) => <li key={d.id} data-testid="guide-milestone" data-id={d.id}>{d.text}</li>)}
+                    </ul>
+                  ) : (
+                    <p class="xsmall muted" data-testid="area-empty-note">No milestones from CDC’s “{inlineAge(grp.referenceAgeMonths)}” checklist are assigned to this category in our app.</p>
+                  )}
+                </div>
+              ))}
+            </section>
+          ))}
+          <section class="card section stack small" aria-label="About gross and fine motor" data-testid="motor-note">
+            <h3 class="title-3">About gross and fine motor</h3>
+            {s.motor.paragraphs.map((t) => <p key={t}>{t}</p>)}
+          </section>
+          <section class="section" aria-label="Looking ahead" data-testid="looking-ahead">
+            <h3 class="title-3">Looking ahead</h3>
+            {g.next ? <NeighbourCard kind="next" n={g.next} /> : <p class="small" data-testid="last-age">{s.lastAge}</p>}
+          </section>
+        </>
       )}
-      {hiddenHere > 0 && <p class="small muted" style={{ margin: 'var(--space-3) var(--space-1)' }}>{hiddenHere} hidden in this range. <a class="text-link" href={href({ name: 'growthLibrary' })}>Manage in the Milestone Library</a></p>}
-      {personalHere.length > 0 && (
-        <section class="section" aria-label="Your versions">
-          <h3 class="ms-group-title">Your versions</h3>
-          <ul class="ms-list card list-card">
-            {personalHere.map((p) => {
-              const rec = m.recordFor({ kind: 'personal', customId: p.id });
-              return (
-                <li key={p.id}>
-                  <a class="ms-item" href={href({ name: 'growthMilestone', key: keyFromTarget({ kind: 'personal', customId: p.id }) })}>
-                    <span class="ms-text">{p.title}<span class="ms-meta">Your version</span></span>
-                    <StatusBadge status={rec?.status ?? 'not-yet'} />
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
+      <details class="guide-details section">
+        <summary class="small text-link">How the age ranges work</summary>
+        {s.ranges.paragraphs.map((t) => <p key={t} class="small">{t}</p>)}
+      </details>
+    </>
+  );
+}
+
+function GuideSources({ g }: { g: GuideRange }) {
+  const pages = g.kind === 'populated' ? PAGE_SOURCES.filter((p) => g.referenceAges.includes(p.referenceAgeMonths)) : [];
+  return (
+    <section class="card section stack small" aria-label="Sources and safeguards" data-testid="guide-sources">
+      <h3 class="title-3">Sources</h3>
+      {g.kind === 'populated' ? (
+        <p>
+          Milestones are from the Centers for Disease Control and Prevention (CDC), “Learn the Signs. Act Early.” (
+          {pages.map((p, i) => <span key={p.id}>{i > 0 && '; '}<ExternalLink url={p.url}>{p.title}</ExternalLink></span>)}), shown word for word. The overviews and
+          explanations are written for this app from those milestones. CDC’s milestone checklists are available free at <ExternalLink url={CDC_MILESTONES_URL}>cdc.gov</ExternalLink>.
+          This app is not endorsed by CDC, HHS, or the U.S. Government.
+        </p>
+      ) : (
+        <p>
+          Information about CDC’s milestone ages is from the Centers for Disease Control and Prevention (CDC), available free at <ExternalLink url={CDC_MILESTONES_URL}>cdc.gov</ExternalLink>.
+          This app is not endorsed by CDC, HHS, or the U.S. Government.
+        </p>
+      )}
+      <h3 class="title-3">A note for parents</h3>
+      <p data-testid="guide-safeguard">
+        CDC explains that its milestone checklists aren’t developmental standards and aren’t screening or diagnostic tools. This guide doesn’t assess your child and doesn’t
+        replace your child’s healthcare provider. If you have a concern about your child’s development, talk with your child’s healthcare provider. CDC’s page{' '}
+        <ExternalLink url={CDC_CONCERNED_URL}>Concerned About Your Child’s Development?</ExternalLink> has more information.
+      </p>
+      <p class="xsmall muted">Links open cdc.gov in your browser and need an internet connection. Everything else in this guide works offline.</p>
+    </section>
+  );
+}
+
+export function ExpectScreen({ interval }: { interval: number | null }) {
+  const { activeChild } = useApp();
+  const a = useMilestoneAge(activeChild);
+  if (!activeChild || !a.age) return null;
+  const name = childNameInline(activeChild);
+  const current = a.currentInterval.index;
+  const selected = interval ?? current;
+  const g = guideFor(selected);
+  const isPreview = selected !== current;
+  const go = (i: number) => navigate({ name: 'growthExpect', interval: i });
+  return (
+    <div data-testid="guide">
+      <div data-testid="guide-header">
+        <ForChild child={activeChild} />
+        <GuideAgeLine child={activeChild} months={a.age.months} today={a.today} />
+        <div class="field">
+          <label class="label" for="interval-select">Age range</label>
+          <select id="interval-select" class="select" value={String(selected)} onChange={(e) => go(Number((e.target as HTMLSelectElement).value))}>
+            {INTERVALS.map((x) => <option key={x.index} value={String(x.index)}>{x.label}{x.index === current ? ' (current)' : ''}</option>)}
+          </select>
+        </div>
+        <div class="row-between guide-stepper">
+          <button type="button" class="btn btn-outline btn-sm" disabled={selected === 0} onClick={() => go(selected - 1)} data-testid="guide-earlier">
+            <Icon name="chevronLeft" size={16} /> Earlier
+          </button>
+          <button type="button" class="btn btn-outline btn-sm" disabled={selected === INTERVALS.length - 1} onClick={() => go(selected + 1)} data-testid="guide-next">
+            Next <Icon name="chevronRight" size={16} />
+          </button>
+        </div>
+        {isPreview && (
+          <div class="banner neutral" role="status" style={{ marginTop: 'var(--space-3)' }} data-testid="preview-banner">
+            <Icon name="eye" size={18} />
+            <span class="grow">
+              You’re looking at {INTERVALS[selected]!.label}. Viewing the guide doesn’t change {name}’s records.
+              <button type="button" class="btn btn-secondary btn-sm" style={{ marginTop: 'var(--space-2)', display: 'flex' }} onClick={() => navigate({ name: 'growthExpect', interval: null })}>
+                Back to current age
+              </button>
+            </span>
+          </div>
+        )}
+      </div>
+      <article data-testid="guide-content">
+        <section class="card section stack small" aria-label="About this guide" data-testid="guide-about">
+          <h2 class="title-3">About this guide</h2>
+          {GUIDE.shared.about.paragraphs.map((t) => <p key={t}>{t}</p>)}
         </section>
-      )}
+        <GuideBody g={g} />
+        <GuideSources g={g} />
+      </article>
     </div>
   );
 }

@@ -338,8 +338,9 @@ test('Growth uses the approved wording and section order', async ({ page }) => {
   await page.goto('./#/growth');
   await expect(page.getByText('Tracking your developmental milestones.')).toBeVisible();
   const titles = await page.locator('[data-testid="growth-sections"] .title-3').allTextContents();
-  expect(titles).toEqual(['Progress', 'Goals & Exercises', 'What to Expect at Every Age', 'Milestone Library']);
-  await expect(page.getByTestId('section-goals')).toContainText('Not available yet · Checkpoint 2b');
+  // Growth UX refinement: owner-approved new order (Review → Record → Support → Learn); no development terms in the app.
+  expect(titles).toEqual(['Progress', 'Milestone Library', 'Goals & Exercises', 'What to Expect at Every Age']);
+  await expect(page.getByTestId('section-goals')).toContainText('Coming soon');
   await page.goto('./#/resources');
   await expect(page.getByText('A curated library of trusted, science-backed resources.')).toBeVisible();
 });

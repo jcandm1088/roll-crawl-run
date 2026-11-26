@@ -29,14 +29,14 @@ function LinkRow({ to, icon, title, detail }: { to: string; icon: IconName; titl
   );
 }
 
-function PlannedRow({ icon, title, checkpoint }: { icon: IconName; title: string; checkpoint: number }) {
+function PlannedRow({ icon, title }: { icon: IconName; title: string }) {
   return (
     <li>
       <div class="list-item" style={{ cursor: 'default' }} aria-disabled="true">
         <span class="icon-wrap" style={{ background: 'var(--surface-sunken)', color: 'var(--text-muted)' }}><Icon name={icon} size={20} /></span>
         <span class="grow">
           <span style={{ display: 'block', fontWeight: 600 }}>{title}</span>
-          <PlannedTag checkpoint={checkpoint} />
+          <PlannedTag />
         </span>
       </div>
     </li>
@@ -82,8 +82,8 @@ export function Settings() {
           <ul class="list list-card">
             <LinkRow to={href({ name: 'storage' })} icon="hardDrive" title="Storage on this device" detail="How your information is kept safe from being cleared" />
             <LinkRow to={href({ name: 'privacy' })} icon="shield" title="Privacy" />
-            <PlannedRow icon="download" title="Backups, partner sharing & import" checkpoint={5} />
-            <PlannedRow icon="fileText" title="Reports for appointments" checkpoint={5} />
+            <PlannedRow icon="download" title="Backups, partner sharing & import" />
+            <PlannedRow icon="fileText" title="Reports for appointments" />
           </ul>
           <Accordion title="Advanced data management" variant="subtle" level={3} testId="acc-advanced-data">
             <p class="small muted">Permanently erase everything stored by the app on this device and start over.</p>
@@ -95,9 +95,9 @@ export function Settings() {
 
         <Accordion title="Calendar & Reminders" summary="Calendar layers, reminders, and exporting" testId="acc-calendar">
           <ul class="list list-card">
-            <PlannedRow icon="calendar" title="Calendar layers & vaccine schedule source" checkpoint={3} />
-            <PlannedRow icon="bell" title="Notifications (off)" checkpoint={4} />
-            <PlannedRow icon="share" title="Add events to your phone’s calendar" checkpoint={5} />
+            <PlannedRow icon="calendar" title="Calendar layers & vaccine schedule source" />
+            <PlannedRow icon="bell" title="Notifications (off)" />
+            <PlannedRow icon="share" title="Add events to your phone’s calendar" />
           </ul>
         </Accordion>
 
@@ -346,12 +346,12 @@ export function AboutInfo() {
           <dt>Version</dt>
           <dd data-testid="app-version">{APP_VERSION}</dd>
           <dt>Stage</dt>
-          <dd>Checkpoint 1 — design & foundation</dd>
+          <dd>Early version — some features are coming soon</dd>
         </dl>
       </div>
       <div class="card stack small">
         <h2 class="title-3">Sources</h2>
-        <p>No developmental or medical reference content has been added yet. Every milestone and care reference added later will show its source, publication or version date, and a link, and will be listed here.</p>
+        <p>Developmental milestones come word for word from CDC’s “Learn the Signs. Act Early.” checklists. Each one shows its source, and the full list of sources, with dates and links, is in Growth → Milestone Library → About these milestones. No other developmental or medical reference content has been added yet.</p>
       </div>
       <div class="card stack small">
         <h2 class="title-3">Credits</h2>

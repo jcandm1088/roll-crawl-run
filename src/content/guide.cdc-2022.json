@@ -1,0 +1,107 @@
+{
+  "contentVersion": "guide-2026-11-26",
+  "basis": "Option A (owner-approved): original explanatory text written for this app, derived only from the verified CDC milestones (milestones.cdc-2022.json) and registered CDC reference sources (sources.json). The CDC milestone descriptions themselves are shown verbatim from milestones.cdc-2022.json and are not repeated here.",
+  "movementHeading": "Movement/Physical Development",
+  "shared": {
+    "about": {
+      "kind": "original",
+      "sources": ["cdc-ltsae-key-points", "app"],
+      "paragraphs": [
+        "Each CDC age, like “by 6 months,” lists things most children (75% or more) do by that age. Because these are things most children do, not all, an age in this guide isn’t a deadline.",
+        "If you’re concerned about your child’s development, talk with your child’s healthcare provider.",
+        "This guide is for learning about CDC’s milestones. It isn’t a screening or a diagnosis, and reading it doesn’t change anything you’ve recorded."
+      ]
+    },
+    "ranges": {
+      "kind": "original",
+      "sources": ["app"],
+      "paragraphs": [
+        "The app groups CDC’s milestones into three-month ranges to make browsing easier. The ranges are the app’s, not CDC’s. A milestone CDC lists “by 6 months” appears in 3–6 months, and its CDC age stays “by 6 months.” Some ranges have no CDC milestones, and the app doesn’t add any to fill them."
+      ]
+    },
+    "motor": {
+      "kind": "original",
+      "sources": ["cdc-ltsae-pages", "app"],
+      "paragraphs": [
+        "CDC lists movement milestones together in one area, Movement/Physical Development. This app divides them into gross motor and fine motor to make them easier to follow. CDC doesn’t publish separate gross motor and fine motor checklists, and every milestone keeps its CDC area."
+      ]
+    },
+    "overviewLabel": "Written for this app from CDC’s milestones.",
+    "lastAge": "“By 5 years” is the last age in CDC’s checklists."
+  },
+  "areas": [
+    { "category": "gross-motor", "kind": "original", "text": "Larger movements, like holding the head up, rolling, sitting, and walking.", "basis": ["cdc22-m02-mp-01", "cdc22-m06-mp-01", "cdc22-m09-mp-04", "cdc22-m18-mp-01"] },
+    { "category": "fine-motor", "kind": "original", "text": "Using hands and fingers, like holding, picking up, and feeding.", "basis": ["cdc22-m04-mp-02", "cdc22-m12-mp-04", "cdc22-m15-mp-02"] },
+    { "category": "cognitive", "kind": "original", "text": "How your child explores, plays, and figures things out.", "basis": ["cdc22-m06-cg-01", "cdc22-m18-cg-02", "cdc22-m30-cg-02", "cdc22-m09-cg-01"] },
+    { "category": "language-communication", "kind": "original", "text": "Sounds, gestures, words, and understanding what others say.", "basis": ["cdc22-m02-lc-01", "cdc22-m09-lc-02", "cdc22-m12-lc-01", "cdc22-m15-lc-01", "cdc22-m12-lc-03", "cdc22-m18-lc-02"] },
+    { "category": "social-emotional", "kind": "original", "text": "How your child responds to and connects with people, and shows feelings.", "basis": ["cdc22-m02-se-01", "cdc22-m02-se-04", "cdc22-m09-se-02", "cdc22-m15-se-05", "cdc22-m24-se-01", "cdc22-m48-se-03"] }
+  ],
+  "overviews": [
+    {
+      "id": "OV-0", "intervalIndex": 0, "referenceAges": [2], "kind": "original",
+      "text": "“By 2 months” is the first age in CDC’s checklists. CDC lists things like calming down when spoken to or picked up, looking at your face, making sounds other than crying, watching you as you move, holding their head up when on their tummy, and opening their hands briefly.",
+      "basis": ["cdc22-m02-se-01", "cdc22-m02-se-02", "cdc22-m02-lc-01", "cdc22-m02-cg-01", "cdc22-m02-mp-01", "cdc22-m02-mp-03"]
+    },
+    {
+      "id": "OV-1", "intervalIndex": 1, "referenceAges": [4, 6], "kind": "original",
+      "text": "By 4 months, CDC lists things like smiling on their own to get your attention, cooing (“oooo”, “aahh”), turning their head toward the sound of your voice, holding their head steady without support while you hold them, and holding a toy when you put it in their hand. By 6 months, CDC lists things like laughing, taking turns making sounds with you, reaching to grab a toy they want, and rolling from tummy to back.",
+      "basis": ["cdc22-m04-se-01", "cdc22-m04-lc-01", "cdc22-m04-lc-03", "cdc22-m04-mp-01", "cdc22-m04-mp-02", "cdc22-m06-se-03", "cdc22-m06-lc-01", "cdc22-m06-cg-02", "cdc22-m06-mp-01"]
+    },
+    {
+      "id": "OV-2", "intervalIndex": 2, "referenceAges": [9], "kind": "original",
+      "text": "By 9 months, CDC lists things like being shy, clingy, or fearful around strangers, looking when you call their name, smiling or laughing at peek-a-boo, making a lot of different sounds like “mamamama” and “bababababa”, lifting their arms up to be picked up, looking for things dropped out of sight, moving things from one hand to the other, and sitting without support.",
+      "basis": ["cdc22-m09-se-01", "cdc22-m09-se-03", "cdc22-m09-se-05", "cdc22-m09-lc-01", "cdc22-m09-lc-02", "cdc22-m09-cg-01", "cdc22-m09-mp-02", "cdc22-m09-mp-04"]
+    },
+    {
+      "id": "OV-3", "intervalIndex": 3, "referenceAges": [12], "kind": "original",
+      "text": "By 1 year, CDC lists things like playing games with you, like pat-a-cake, waving “bye-bye”, calling a parent “mama” or “dada” or another special name, looking for things they see you hide, pulling up to stand, and picking things up between thumb and pointer finger.",
+      "basis": ["cdc22-m12-se-01", "cdc22-m12-lc-01", "cdc22-m12-lc-02", "cdc22-m12-cg-02", "cdc22-m12-mp-01", "cdc22-m12-mp-04"]
+    },
+    {
+      "id": "OV-4", "intervalIndex": 4, "referenceAges": [15], "kind": "original",
+      "text": "By 15 months, CDC lists things like copying other children while playing, showing you affection, trying to say one or two words besides “mama” or “dada”, pointing to ask for something or to get help, stacking at least two small objects, using their fingers to feed themselves some food, and taking a few steps on their own.",
+      "basis": ["cdc22-m15-se-01", "cdc22-m15-se-05", "cdc22-m15-lc-01", "cdc22-m15-lc-04", "cdc22-m15-cg-02", "cdc22-m15-mp-02", "cdc22-m15-mp-01"]
+    },
+    {
+      "id": "OV-5", "intervalIndex": 5, "referenceAges": [18], "kind": "original",
+      "text": "By 18 months, CDC lists things like moving away from you but looking to make sure you are close by, trying to say three or more words besides “mama” or “dada”, following one-step directions without any gestures, copying you doing chores, walking without holding on to anyone or anything, and scribbling.",
+      "basis": ["cdc22-m18-se-01", "cdc22-m18-lc-01", "cdc22-m18-lc-02", "cdc22-m18-cg-01", "cdc22-m18-mp-01", "cdc22-m18-mp-02"]
+    },
+    {
+      "id": "OV-6", "intervalIndex": 7, "referenceAges": [24], "kind": "original",
+      "text": "By 2 years, CDC lists things like noticing when others are hurt or upset, saying at least two words together, like “More milk.”, pointing to things in a book when you ask, trying to use switches, knobs, or buttons on a toy, kicking a ball, running, and eating with a spoon.",
+      "basis": ["cdc22-m24-se-01", "cdc22-m24-lc-02", "cdc22-m24-lc-01", "cdc22-m24-cg-02", "cdc22-m24-mp-01", "cdc22-m24-mp-02", "cdc22-m24-mp-04"]
+    },
+    {
+      "id": "OV-7", "intervalIndex": 9, "referenceAges": [30], "kind": "original",
+      "text": "By 30 months, CDC lists things like playing next to other children and sometimes playing with them, saying about 50 words, saying words like “I,” “me,” or “we”, using things to pretend, following two-step instructions, jumping off the ground with both feet, and turning book pages one at a time when you read to them.",
+      "basis": ["cdc22-m30-se-01", "cdc22-m30-lc-01", "cdc22-m30-lc-04", "cdc22-m30-cg-01", "cdc22-m30-cg-03", "cdc22-m30-mp-03", "cdc22-m30-mp-04"]
+    },
+    {
+      "id": "OV-8", "intervalIndex": 11, "referenceAges": [36], "kind": "original",
+      "text": "By 3 years, CDC lists things like noticing other children and joining them to play, talking with you in conversation using at least two back-and-forth exchanges, asking “who,” “what,” “where,” or “why” questions, drawing a circle when you show them how, and using a fork.",
+      "basis": ["cdc22-m36-se-02", "cdc22-m36-lc-01", "cdc22-m36-lc-02", "cdc22-m36-cg-01", "cdc22-m36-mp-03"]
+    },
+    {
+      "id": "OV-9", "intervalIndex": 15, "referenceAges": [48], "kind": "original",
+      "text": "By 4 years, CDC lists things like pretending to be something else during play, comforting others who are hurt or sad, saying sentences with four or more words, talking about at least one thing that happened during their day, naming a few colors of items, drawing a person with three or more body parts, catching a large ball most of the time, and holding a crayon or pencil between fingers and thumb, rather than in a fist.",
+      "basis": ["cdc22-m48-se-01", "cdc22-m48-se-03", "cdc22-m48-lc-01", "cdc22-m48-lc-03", "cdc22-m48-cg-01", "cdc22-m48-cg-03", "cdc22-m48-mp-01", "cdc22-m48-mp-04"]
+    },
+    {
+      "id": "OV-10", "intervalIndex": 19, "referenceAges": [60], "kind": "original",
+      "text": "By 5 years, CDC lists things like following rules or taking turns when playing games with other children, telling a story they heard or made up that includes at least two events, keeping a conversation going with more than three back-and-forth exchanges, counting to 10, writing some letters in their name, buttoning some buttons, and hopping on one foot.",
+      "basis": ["cdc22-m60-se-01", "cdc22-m60-lc-01", "cdc22-m60-lc-03", "cdc22-m60-cg-01", "cdc22-m60-cg-05", "cdc22-m60-mp-01", "cdc22-m60-mp-02"]
+    }
+  ],
+  "emptyRanges": [
+    { "intervalIndex": 6, "previousReferenceAge": 18, "nextReferenceAge": 24 },
+    { "intervalIndex": 8, "previousReferenceAge": 24, "nextReferenceAge": 30 },
+    { "intervalIndex": 10, "previousReferenceAge": 30, "nextReferenceAge": 36 },
+    { "intervalIndex": 12, "previousReferenceAge": 36, "nextReferenceAge": 48 },
+    { "intervalIndex": 13, "previousReferenceAge": 36, "nextReferenceAge": 48 },
+    { "intervalIndex": 14, "previousReferenceAge": 36, "nextReferenceAge": 48 },
+    { "intervalIndex": 16, "previousReferenceAge": 48, "nextReferenceAge": 60 },
+    { "intervalIndex": 17, "previousReferenceAge": 48, "nextReferenceAge": 60 },
+    { "intervalIndex": 18, "previousReferenceAge": 48, "nextReferenceAge": 60 }
+  ]
+}

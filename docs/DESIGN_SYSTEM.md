@@ -105,3 +105,26 @@ History: Fraunces produced undesirable letterforms (J, f) in functional headings
 - **History timeline:** a vertical rule with dots. Each entry shows the event date, its recorded date, the change, and the text. Removed text is struck through, with an explanation.
 - **Age panel:** Age (precise chronological), Corrected age (if on), and Age used for milestones (basis labelled).
 - **Home:** "Record a milestone" is now a solid, active quick action; the others stay dashed placeholders.
+
+## Growth UX refinement components (Checkpoint 2a)
+- **Growth section card:** title, the approved subtitle (body text color, so the purpose reads first), and one muted live line, such as “6 of 72 recorded as achieved”, “72 milestones apply now” or “Now: 15–18 months”. Goals & Exercises stays a dashed placeholder with the “Coming soon” tag.
+- **“Coming soon” tag:** replaces “Not available yet · Checkpoint N” everywhere. No development terms appear in the app.
+- **Guide (What to Expect):** a reading layout, not a list of controls.
+  - Header (outside the compared content): child, age line, range select, Earlier/Next, preview banner.
+  - Content:
+    - an “About this guide” card;
+    - the range title and the “This range includes CDC's … milestones” line;
+    - the overview (16px, line-height 1.6, max about 38em) with its “Written for this app” label;
+    - per CDC age, the five areas with a small heading, a one-line muted explanation (first CDC age only) and a plain bulleted list of CDC milestones, with no badges or tap targets;
+    - the gross/fine note, “Looking ahead”, the collapsed “How the age ranges work”, and the Sources and parent-note card.
+- **Neighbour card (empty ranges and Looking ahead):** compact; the CDC age (“Most recent CDC age: by 18 months”), “Shown in [range]”, and an outline “Open” button. It is educational navigation only.
+- **Library view control:** a segmented control, “Up to now (N)”, “Upcoming (N)”, “All 159”, with a muted catalog label below it, such as “All 159 CDC milestones · 157 shown · 2 hidden”. A one-line info note explains recording. Rows are grouped under CDC-age headings in the view's order.
+- **Progress:**
+  - a headline card (“Milestones recorded as achieved” and the overall line);
+  - a “What updates Progress?” card (icon list and a secondary “Record in the Milestone Library” button);
+  - a “By area” card whose rows are links with a hover/focus tint;
+  - the safeguard;
+  - collapsed “By CDC age” and “How is this calculated?” accordions;
+  - the age panel;
+  - a one-line “coming soon” note.
+- **Confirmation banner:** the check icon, the effect message and, when progress was affected, a “See Progress” link.

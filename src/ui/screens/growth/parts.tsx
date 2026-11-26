@@ -1,7 +1,7 @@
 import type { ComponentChildren } from 'preact';
 import { Icon } from '../../components/Icon';
 import { href } from '../../../router';
-import { APP_CATEGORIES, STATUS_LABEL, type CategoryProgress, type MilestoneStatus } from '../../../domain/milestones';
+import { APP_CATEGORIES, STATUS_LABEL, type AppCategory, type CategoryProgress, type MilestoneStatus } from '../../../domain/milestones';
 import type { ViewingAge, CorrectedAgeResult } from '../../../domain/age';
 import { ageBetween, formatBeforeDueDate, formatPreciseAge } from '../../../domain/age';
 import type { Child } from '../../../types';
@@ -28,9 +28,9 @@ export function MilestoneSafeguard({ compact = false }: { compact?: boolean }) {
       <Icon name="info" size={18} />
       <span>
         {compact
-          ? 'Children develop at different rates. This shows what you’ve recorded — it isn’t a screening or clinical assessment.'
-          : 'Children develop at different rates. CDC’s milestones describe skills most children (75% or more) show by each age — they aren’t deadlines. What you record here isn’t a screening, diagnosis, or clinical assessment.'}{' '}
-        If you have concerns, talk with your child’s healthcare provider.{' '}
+          ? 'This shows what you’ve recorded. It isn’t a screening or an assessment of your child’s development.'
+          : 'These figures reflect what you’ve recorded, not an assessment of your child’s development. CDC’s milestones are things most children (75% or more) do by each age, so an age isn’t a deadline. What you record here isn’t a screening or a diagnosis.'}{' '}
+        If you’re concerned about your child’s development, talk with your child’s healthcare provider.{' '}
         <a class="text-link" href={href({ name: 'growthAbout' })}>About these milestones</a>
       </span>
     </p>
@@ -95,12 +95,19 @@ export function ProgressLine({ p, label }: { p: CategoryProgress; label: string 
   );
 }
 
-export function CategoryProgressList({ categories }: { categories: CategoryProgress[] }) {
+/** Area progress lines. With linkFor, each area opens the matching filtered Library view (Progress only). */
+export function CategoryProgressList({ categories, linkFor }: { categories: CategoryProgress[]; linkFor?: (c: AppCategory) => string }) {
   return (
     <div>
-      {categories.map((c) => (
-        <ProgressLine key={c.category} p={c} label={APP_CATEGORIES.find((x) => x.id === c.category)?.label ?? 'All milestones'} />
-      ))}
+      {categories.map((c) => {
+        const label = APP_CATEGORIES.find((x) => x.id === c.category)?.label ?? 'All milestones';
+        const line = <ProgressLine key={c.category} p={c} label={label} />;
+        return linkFor && c.category !== 'all' ? (
+          <a key={c.category} class="progress-link" href={linkFor(c.category)} data-testid={`area-link-${c.category}`} aria-label={`${label}: see these milestones in the Milestone Library`}>
+            {line}
+          </a>
+        ) : line;
+      })}
     </div>
   );
 }

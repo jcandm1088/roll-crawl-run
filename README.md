@@ -4,10 +4,10 @@ A private, local-first, installable web app (PWA) that helps parents document th
 
 > **Status (2026-11-26):**
 > - **Checkpoint 1 — completed, accepted and deployed.** Live app: https://jcandm1088.github.io/roll-crawl-run/ (deployed commit `e40287f`). Repository: https://github.com/jcandm1088/roll-crawl-run.
-> - **Checkpoint 2a — implemented, awaiting the owner's acceptance testing.** Verified CDC milestone tracking: Growth with Progress, What to Expect at Every Age, the Milestone Library (159 CDC milestones), milestone history and personal versions. It is on the remote branch `checkpoint-2a` (`73d9f6f`), **not** merged into `main` and **not** deployed.
+> - **Checkpoint 2a — implemented, awaiting the owner's acceptance testing.** Verified CDC milestone tracking, refined after the owner's first hands-on review: Growth with Progress (review), the Milestone Library (record; 159 CDC milestones), Goals & Exercises (coming soon) and What to Expect at Every Age (a read-only guide), plus milestone history and personal versions. The original 2a commit is on `checkpoint-2a` (`73d9f6f`); the refinement is a local commit. **Not** merged into `main` and **not** deployed.
 > - **Planned, not started:** Checkpoint 2b (Goals & Exercises, charts) and Checkpoints 3–6 (Calendar, Journal, Resources, backups and sharing, reports). These appear in the app as labeled placeholders.
 > - **Owner's hands-on testing (Checkpoint 1):** Mac Safari acceptance passed. On a physical iPhone, Home Screen install, later launches, local persistence, and offline launch and navigation passed. The first iPhone load showed a one-time “server not responding” delay whose cause has not been established. Checkpoint 2a has **not** yet been tested in Safari or on an iPhone.
-> - **Automated tests:** 228 unit and 111 end-to-end tests (headless Chromium) at Checkpoint 2a; the Checkpoint 1 baseline was 185 and 80.
+> - **Automated tests:** 252 unit and 135 end-to-end tests (headless Chromium) after the Growth UX refinement; 228 and 111 at the original Checkpoint 2a; 185 and 80 at Checkpoint 1.
 > - **Current state and next steps:** `docs/HANDOFF.md`.
 
 ## Important limitations
@@ -61,7 +61,7 @@ The app uses relative paths and hash routes, so it works at `https://<username>.
 
 ```
 src/domain/      pure, deterministic logic (dates, age, intervals, contrast)
-src/content/     bundled, versioned CDC milestone content, source register, locked IDs
+src/content/     bundled, versioned CDC milestone content, source register, locked IDs, guide text
 src/data/        IndexedDB schema, transactions, repositories (only layer touching storage)
 src/state/       app state and theme application
 src/ui/          components, screens, styles, theme tokens

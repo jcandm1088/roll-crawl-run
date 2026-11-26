@@ -103,3 +103,23 @@ Details are in `docs/reviews/CHECKPOINT_1_FINAL.md`.
 62. **Single current-state handoff.** `docs/HANDOFF.md` is the one authoritative current-state handoff. The end-of-Checkpoint-1 handoff is preserved unchanged as `docs/reviews/CHECKPOINT_1_HANDOFF.md`.
 63. **Remote checkpoint preservation.** After the conversation-transfer incident (Checkpoint 2a existed only in a previous conversation's workspace), completed checkpoints are preserved on a separate, non-`main` remote branch (for example `checkpoint-2a`), only after a publication safety review and with the owner's explicit authorization naming the branch. This never merges into `main` and never deploys. Session-specific branch restrictions are respected; any conflict is reported before pushing.
 64. **Refinement backlog.** `docs/REFINEMENT_BACKLOG.md` records observed refinements and suspected defects. Recording an item does not authorize a fix. First item: R-001, onboarding child-name input overflow.
+
+## Checkpoint 2a — Growth UX refinement (owner-approved, 2026-11-26)
+*These supersede earlier Growth decisions where they conflict; earlier entries are kept as recorded.*
+
+65. **Growth order** Progress → Milestone Library → Goals & Exercises → What to Expect, with the approved subtitles (supersedes the R4 order). This is a requirements change, not a regression.
+66. **What to Expect is exclusively informational (D-1, D-2, D-3).** It has no status, recording, progress, hidden-item or personal-version features and no link to the Library. The superseded `#/growth/expect/all` address redirects to the Library's Up to now view. Educational content comes from `guideFor(range)`, which takes no records. The screen loads only the child's milestone age (`useMilestoneAge`), never milestone records.
+67. **Educational content: Option A only (D-9); Option B deferred (D-10).** Validated at build time by `validateGuide()` for traceability; accuracy rests on the documented meaning review. The CDC display heading “Movement/Physical Development” was verified on registered pages (Q-3); the identifier is unchanged.
+68. **Library views and ordering (D-4, D-5, Q-8).**
+    - Up to now (default; most recent CDC age first), Upcoming (nearest first), All 159 (youngest first).
+    - Within an age, the app areas in established order, then CDC order.
+    - Personal versions are listed when “All areas” or “Your versions” is selected.
+69. **Library state (D-11).**
+    - **In memory only:** view, filters, search and scroll position are restored after visiting a milestone.
+    - **Reset:** they reset for another child and when opened from a shortcut.
+    - **Preset address replaced:** a preset address is replaced by the plain Library address only while it is still current, avoiding a race with a newer navigation.
+70. **Progress (D-6, D-7).** Adds the “Milestones recorded as achieved” headline, the “What updates Progress?” card, area rows linking to the filtered Library, and a collapsed “By CDC age” breakdown (`progressByReferenceAge`, applicable ages only, built on the existing `summarize`). No calculation rule changed.
+71. **Recording confirmations (D-8).** `confirmationFor()` (pure) computes each message from the resulting record using the same applicability rule as Progress; the milestone detail workflow is otherwise unchanged.
+72. **No development terms in the app (D-12).** `PlannedTag` now reads “Coming soon”. Home, tab previews, Settings planned rows and Settings → About no longer mention checkpoints. Settings → About now names the CDC milestone source.
+73. **Q-5 alignment.** The unsourced “Children develop at different rates” was replaced by the 75%-basis wording, and the CDC “Concerned” page is described neutrally (“has more information”).
+74. **No schema change and no new dependency.** The JavaScript bundle grew from about 217 KB to about 241 KB (63 KB gzip), mainly the guide content and screens.

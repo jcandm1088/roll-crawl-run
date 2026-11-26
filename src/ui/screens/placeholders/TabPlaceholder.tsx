@@ -52,11 +52,11 @@ export function TabPlaceholder({ tab }: { tab: keyof typeof TABS }) {
       <PageHeader title={info.title} intro={info.intro} />
       <div class="banner neutral" role="note" style={{ marginBottom: 'var(--space-4)' }}>
         <span>
-          <strong>Preview only.</strong> This tab is being built in Checkpoint {info.checkpoint}.
+          <strong>Preview only.</strong> This tab is coming soon.
         </span>
       </div>
       {info.items.map(([icon, title, body]) => (
-        <PlaceholderCard key={title} icon={icon} title={title} checkpoint={info.checkpoint}>
+        <PlaceholderCard key={title} icon={icon} title={title}>
           {body}
         </PlaceholderCard>
       ))}
