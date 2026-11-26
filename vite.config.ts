@@ -1,7 +1,7 @@
 /// <reference types="vitest/config" />
 import { defineConfig, type Plugin } from 'vite';
 import preact from '@preact/preset-vite';
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 
 const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8')) as { version: string };
@@ -17,7 +17,9 @@ function serviceWorkerPlugin(): Plugin {
     generateBundle(_options, bundle) {
       // Legacy .woff fallbacks are skipped: every supported browser uses the .woff2 files.
       const files = Object.keys(bundle).filter((f) => !f.endsWith('.map') && !f.endsWith('.woff'));
-      const publicFiles = ['manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png', 'icons/apple-touch-icon.png', 'icons/favicon.svg'];
+      // Third-party license texts are precached so they are available offline after installation.
+      const licenseFiles = readdirSync(new URL('./public/licenses/', import.meta.url)).sort().map((f) => `licenses/${f}`);
+      const publicFiles = ['manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png', 'icons/apple-touch-icon.png', 'icons/favicon.svg', ...licenseFiles];
       const precache = ['./', ...files, ...publicFiles].map((f) => (f === './' ? f : `./${f}`));
       const hash = createHash('sha256').update(pkg.version).update(process.env['RCR_BUILD_TAG'] ?? '').update(files.sort().join('|'));
       // Public files (icons, manifest) are part of the version too, so changing the

@@ -1,8 +1,8 @@
 # Development Plan — Roll, Crawl, RUN: Tracking Growth Together (Revision 2)
 
-> Status: **PLAN ONLY — no application code has been written.** Implementation begins only after your express approval of this revision.
+> **Current status (updated at publication-compliance review):** Checkpoint 1 is implemented and **accepted** after the owner's hands-on Mac Safari testing, including the precise age correction. Checkpoints 2–6 are not implemented. GitHub publishing and physical iPhone testing are pending. *(The original header said “PLAN ONLY — no application code has been written”; that was true when this plan was first written.)*
 > Revision 2 incorporates your decisions on D1–D15 and your requested revisions (vaccination references, age navigation, journal privacy & export modes, partner collaboration, technical safeguards, review checkpoints). Changes from Revision 1 are marked **[R2]**.
-> The working directory (`/home/user`) is currently empty; there is no existing code to reuse.
+> *(Historical)* At planning time the workspace was empty.
 
 ## R3 — Approved decisions and clarifications (supersede conflicting text below)
 
@@ -21,6 +21,17 @@
 **Visual direction (CP1):** premium, warm, calm, adult-oriented; no cartoon imagery, not clinical, not generic dashboard. Five cohesive theme systems (Earth default, Sky, Blush, Lavender, Sage) sharing typography, spacing, iconography, components, buttons, navigation. Fraunces (display) + Inter (UI), subject to review. Initial app icon + wordmark preserving "Roll, Crawl, RUN: Tracking Growth Together". Safe-area insets, ≥44–48px targets.
 
 **Checkpoint 1 build list:** scaffold (Vite/TS/Preact, Vitest, Playwright); fonts self-hosted (fetched from npm `@fontsource` packages, OFL); icon/wordmark (SVG → PNG sizes generated with Playwright); design tokens + 5 themes + contrast test; app shell (top bar with child chip + settings, bottom nav, hash router); placeholder tabs clearly labeled "Coming in a later checkpoint"; onboarding (DOB, name/photo, corrected age, theme, privacy); profiles create/edit/switch/delete (typed confirmation; backup purge option present but backups feature labeled pending); age domain (chronological + corrected with safeguards); IndexedDB schema v1 for all planned stores with logical-key indexes and atomic transaction helper; repositories for meta/settings/children/photos; storage-persistence status; privacy disclosures in Settings; manifest + basic service worker (precache, update banner); unit + e2e tests; mobile screenshots via Playwright at deviceScaleFactor 2; docs skeletons (README, BUILD_LOG template, TESTING_CHECKLIST, KNOWN_LIMITATIONS, DECISIONS, SOURCE_REGISTER). Code lives in `/home/user/roll-crawl-run` (git init locally; no push until you provide the remote).
+
+---
+
+## R7 — Publication compliance (Checkpoint 1)
+- **Third-party license compliance:**
+  - `THIRD_PARTY_NOTICES.md` and exact copies of the license files in `public/licenses/`, covering Fraunces and Inter (OFL 1.1), Preact (MIT), idb (ISC), and Lucide (ISC, plus MIT for Feather-derived icons).
+  - The licenses deploy with the app, are precached for offline use, and are linked from Settings → About.
+  - Tests check that the copies match the installed packages and versions.
+- **Project license:** deferred by the owner. None has been added.
+- **Service worker:** a navigation to a precached file (such as a license text) now returns that file instead of the app shell. The app's own behavior is unchanged.
+- **Publishing status:** the private push is authorized, but it is **on hold** until the privacy of the session URL in the commit messages is confirmed (see `docs/reviews/PUBLICATION_REVIEW.md`). Pages has not been enabled and nothing has been deployed.
 
 ---
 

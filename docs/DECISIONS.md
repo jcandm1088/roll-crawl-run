@@ -72,3 +72,10 @@ Details are in `docs/reviews/CHECKPOINT_1_FINAL.md`.
 39. **Personal ages use `formatPreciseAge()`:** years, months, and days, with zero parts omitted and no weeks or rounding. It replaces the compact format on Home, the profile list, and the forms. The compact `formatAge()` remains only for developmental/internal labels. *(This fixes a usability defect found in the owner's acceptance testing.)*
 40. **`useToday()` keeps the date current:** a timer at local midnight, a re-check on resume (visibility, focus, pageshow), and a once-a-minute fallback.
 41. **Age text wraps only between parts**, so a single part such as “5 days” is never split across lines.
+
+## Publication compliance
+42. **Third-party licenses** ship with the app (`public/licenses/`, precached) and are summarized in `THIRD_PARTY_NOTICES.md` and Settings → About. A test checks that they match the installed versions.
+43. **The project license is deferred** by the owner; none has been added (a test checks this).
+44. **Service-worker navigations** return an exact precached file when one exists, so license texts open as text even offline. All other navigations still return the app.
+45. **Git history is preserved** (owner decision C): no commits were rewritten, and authorship and messages are unchanged.
+46. **GitHub Action versions were left unchanged.** The workflow uses checkout@v4, setup-node@v4, upload-pages-artifact@v3, and deploy-pages@v4. Newer major versions exist (v7, v7, v5, and v5, found via `git ls-remote` of the official `actions/*` repositories), but their documentation could not be read from this environment, so no speculative upgrade was made. Revisit before the first deployment.

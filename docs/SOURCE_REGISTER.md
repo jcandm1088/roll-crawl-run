@@ -20,7 +20,9 @@ Every developmental or medical item in the app must trace to a row here. Before 
 ## Software and fonts (licenses)
 | Item | License |
 |---|---|
-| Fraunces, Inter (via @fontsource) | SIL Open Font License 1.1 |
-| Lucide icons (lucide-static) | ISC |
-| Preact | MIT |
-| idb | ISC |
+| Fraunces 5.3.0, Inter 5.3.0 (via @fontsource) | SIL Open Font License 1.1 |
+| Lucide icons (lucide-static 1.80.0) | ISC; Feather-derived icons also MIT |
+| Preact 10.29.8 | MIT |
+| idb 8.0.4 | ISC |
+
+Full notices: `THIRD_PARTY_NOTICES.md`; license texts: `public/licenses/`.

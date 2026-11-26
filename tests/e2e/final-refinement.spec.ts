@@ -360,3 +360,36 @@ test('selector at normal sizes still opens downward below the top bar', async ({
   expect(top).toBeGreaterThanOrEqual(header);
   expect(await theme(page)).toBe('earth');
 });
+
+// ---------------------------------------------------------------------------
+// Third-party licenses (publication compliance)
+// ---------------------------------------------------------------------------
+
+test('About lists third-party licenses and every license file opens, also offline', async ({ page, context }) => {
+  await completeOnboarding(page);
+  await page.goto('./#/settings/about');
+  const section = page.getByTestId('third-party-licenses');
+  await expect(section.getByRole('heading', { name: 'Third-party licenses' })).toBeVisible();
+  const links = section.getByRole('link');
+  await expect(links).toHaveCount(5);
+  const hrefs = await links.evaluateAll((els) => els.map((e) => (e as HTMLAnchorElement).getAttribute('href')!));
+  for (const h of hrefs) expect(h).toMatch(/^\.\/licenses\/[A-Za-z0-9.-]+\.txt$/); // relative: works under /roll-crawl-run/
+  // Online
+  for (const h of hrefs) {
+    const res = await page.request.get(new URL(h, page.url()).href);
+    expect(res.status()).toBe(200);
+    expect(await res.text()).toMatch(/Copyright/);
+  }
+  // Offline (served by the service worker)
+  await page.evaluate(() => navigator.serviceWorker.ready);
+  await page.reload();
+  await expect.poll(() => page.evaluate(() => !!navigator.serviceWorker.controller)).toBe(true);
+  await context.setOffline(true);
+  const offline = await page.evaluate(async (list) => Promise.all(list.map(async (h) => { const r = await fetch(h); return `${r.status}:${(await r.text()).includes('Copyright')}`; })), hrefs);
+  expect(offline).toEqual(hrefs.map(() => '200:true'));
+  // Opening a license as a page (navigation) shows the license, not the app
+  const tab = await context.newPage();
+  await tab.goto(new URL(hrefs[0]!, page.url()).href);
+  await expect(tab.locator('body')).toContainText('SIL Open Font License');
+  await context.setOffline(false);
+});

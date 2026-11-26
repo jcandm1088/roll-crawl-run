@@ -2,7 +2,7 @@
 
 A private, local-first, installable web app (PWA) that helps parents document their child's development, appointments, and reflections. It runs entirely in the browser: no account, no server, no analytics, and no AI.
 
-> **Status: Checkpoint 1 — Design & Foundation, final refinement awaiting acceptance** (see `docs/reviews/CHECKPOINT_1_REVIEW.md` and `docs/reviews/CHECKPOINT_1_FINAL.md`). Branding, themes, navigation, onboarding, child profiles, age calculation, local storage, and a basic offline-capable PWA shell are built. Growth, Calendar, Journal, Resources, sharing, and reports are **not built yet**. They show as clearly labeled placeholders.
+> **Status: Checkpoint 1 accepted.** The owner completed hands-on acceptance testing in Safari on a Mac, including the precise age display correction. Built so far: branding, five themes (chosen per child), navigation, onboarding, child profiles, chronological and corrected age, local storage, and an offline-capable PWA shell. **Checkpoints 2–6 are not implemented yet**: Growth, Calendar, Journal, Resources, sharing, and reports appear as clearly labeled placeholders. **Still pending:** publishing to GitHub Pages and testing on a physical iPhone. Latest automated results: 185 unit tests and 80 end-to-end tests passing (headless Chromium), and the production build succeeds.
 
 ## Important limitations
 
@@ -68,7 +68,10 @@ docs/            plan, build log, decisions, testing checklist, limitations, sou
 
 The repository never contains personal information. Tests use only fictional sample data. Export and backup files (`*.rcr.json`) are git-ignored.
 
-## Credits
+## Credits and third-party licenses
+
+See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). The full license texts are in `public/licenses/`, ship with the app, and are linked from **Settings → About**. No license for the application itself has been chosen yet.
+
 
 - Fonts: Fraunces and Inter (SIL Open Font License 1.1), via @fontsource, bundled with the app
 - Icons: Lucide (ISC)

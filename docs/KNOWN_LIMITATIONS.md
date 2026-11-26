@@ -29,7 +29,7 @@ Updated at Checkpoint 1 final refinement. Items marked *(planned)* are scheduled
 
 ## Testing
 - Automated tests run only in Chromium (desktop, at phone-sized viewports). Safari and Firefox have not been tested automatically.
-- No physical-device testing has been performed.
+- **The owner has completed hands-on acceptance testing in Safari on a Mac.** No testing has been done on a physical iPhone or Android device yet.
 
 ## Checkpoint 1 review notes
 - The child-selector fix was confirmed by the **owner in Safari on their Mac** (second hands-on review). Automated tests cover Chromium only.
@@ -43,3 +43,8 @@ Updated at Checkpoint 1 final refinement. Items marked *(planned)* are scheduled
 
 ## Precise age display
 - The date-change and resume behavior was verified with Playwright's simulated clock in Chromium, not on a physical device or in Safari. On some phones a suspended app may receive the resume event only when it is reopened; the age then updates at that moment.
+
+## Publication
+- GitHub Pages deployment is **pending** (the repository must be public on GitHub Free; Pages has not been enabled and no deployment has run).
+- No license for the application itself has been chosen (deferred). Third-party licenses are included.
+- The workflow's GitHub Action versions are one or more major versions behind; see Decisions #46.

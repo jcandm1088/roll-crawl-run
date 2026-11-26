@@ -36,6 +36,10 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       (async () => {
         const cache = await caches.open(CACHE);
+        // A navigation to a precached file (e.g. ./licenses/*.txt) gets that file;
+        // every other navigation gets the app shell.
+        const exact = await cache.match(req, { ignoreSearch: true, ignoreVary: true });
+        if (exact) return exact;
         return (await cache.match('./', { ignoreSearch: true })) || (await cache.match('./index.html')) || fetch(req);
       })(),
     );

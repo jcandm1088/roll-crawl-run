@@ -97,5 +97,14 @@ Leave results blank until a test has actually been run, and record them exactly 
 ## Manual: precise age (acceptance)
 | # | Check | Device / browser | Date | Result | Notes |
 |---|---|---|---|---|---|
-| A1 | A child over 2 years shows years, months, and days (not “27 months”) | Mac · Safari | | | Defect originally observed by the owner |
+| A1 | A child over 2 years shows years, months, and days (not “27 months”) | Mac · Safari | (acceptance) | **Pass — reported by the owner** | Defect originally observed by the owner |
 | A2 | Leave the app open past midnight, or reopen it the next morning: the age has advanced by one day | | | | |
+
+## Owner acceptance (reported by the owner, Mac · Safari)
+All six final acceptance criteria passed: precise age for infants; precise years, months, and days for older children; per-child themes; consistent primary headings; the new logo; and overall approval for deployment. **Checkpoint 1 accepted.**
+
+## Publication compliance (automated)
+| Area | Test file |
+|---|---|
+| License files are exact copies of the installed packages; versions match; About lists them; no project license added | tests/unit/licenses.test.ts |
+| About → Third-party licenses: links are relative, open online and offline, and show the license text, not the app | tests/e2e/final-refinement.spec.ts |

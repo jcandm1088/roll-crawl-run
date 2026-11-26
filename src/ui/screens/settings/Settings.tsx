@@ -325,6 +325,15 @@ export function InstallInfo() {
   );
 }
 
+/** Must match THIRD_PARTY_NOTICES.md and public/licenses/ (checked by tests/unit/licenses.test.ts). */
+export const THIRD_PARTY = [
+  { name: 'Fraunces font 5.3.0', license: 'SIL Open Font License 1.1', copyright: '© 2020 The Fraunces Project Authors', file: 'fraunces-OFL-1.1.txt' },
+  { name: 'Inter font 5.3.0', license: 'SIL Open Font License 1.1', copyright: '© 2016 The Inter Project Authors', file: 'inter-OFL-1.1.txt' },
+  { name: 'Preact 10.29.8', license: 'MIT License', copyright: '© 2015-present Jason Miller', file: 'preact-MIT.txt' },
+  { name: 'idb 8.0.4', license: 'ISC License', copyright: '© 2016 Jake Archibald', file: 'idb-ISC.txt' },
+  { name: 'Lucide icons 1.80.0', license: 'ISC License (Feather-derived icons: MIT)', copyright: '© Lucide Icons and Contributors; © Cole Bemis', file: 'lucide-ISC-and-feather-MIT.txt' },
+] as const;
+
 export function AboutInfo() {
   return (
     <div class="stack-lg">
@@ -343,10 +352,23 @@ export function AboutInfo() {
       </div>
       <div class="card stack small">
         <h2 class="title-3">Credits</h2>
-        <ul style={{ margin: 0, paddingLeft: '1.2em' }} class="stack">
-          <li>Fonts: Fraunces and Inter (SIL Open Font License 1.1), included with the app.</li>
-          <li>Icons: Lucide (ISC License), included with the app.</li>
-          <li>Built with Preact (MIT) and idb (ISC).</li>
+        <p>The “Growing Together” logo was created for this app.</p>
+      </div>
+      <div class="card stack small" data-testid="third-party-licenses">
+        <h2 class="title-3" id="third-party-licenses">Third-party licenses</h2>
+        <p class="muted">This app includes the following fonts and open-source software. Tap a license to read it; they are available offline.</p>
+        <ul class="list" style={{ margin: 0 }}>
+          {THIRD_PARTY.map((t) => (
+            <li key={t.file}>
+              <a class="list-item" style={{ paddingLeft: 0, paddingRight: 0, minHeight: '52px' }} href={`./licenses/${t.file}`} target="_blank" rel="noopener">
+                <span class="grow">
+                  <span style={{ display: 'block', fontWeight: 600 }}>{t.name}</span>
+                  <span class="xsmall muted">{t.license} · {t.copyright}</span>
+                </span>
+                <span class="chev"><Icon name="chevronRight" size={18} /></span>
+              </a>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

@@ -58,3 +58,17 @@ Maintained by the student. Each entry records what was asked of Claude Code, wha
 Developmental groupings and the database were unchanged. See `docs/reviews/CHECKPOINT_1_PRECISE_AGE.md`.
 **What I corrected or redirected:** The age display usability defect I observed.
 **Notes / next steps:** Re-check on my Mac; approve Checkpoint 1.
+
+## Draft entry — Publication compliance (drafted by Claude Code; edit before submitting)
+**Date:**
+**What I asked Claude Code to do:** After accepting Checkpoint 1, I asked for a pre-publication audit. I then approved adding third-party license notices (A), deferred a project license (B), kept the commit history unchanged (C), asked it to verify whether the session URLs in commit messages are private (D), and approved documentation updates (E). I authorized a private push only if every check passed.
+**What it produced:**
+- Third-party notices and license texts, available offline and linked from Settings → About.
+- A small service-worker fix so license files open correctly.
+- Tests for the licenses.
+- Updated status documentation.
+- A local commit.
+
+It could not establish whether the session URL is private, so it stopped before pushing, as instructed.
+**What I corrected or redirected:**
+**Notes / next steps:** Confirm the session-link privacy; then authorize the private push.
