@@ -29,7 +29,7 @@ export function MilestoneSafeguard({ compact = false }: { compact?: boolean }) {
       <span>
         {compact
           ? 'This shows what you’ve recorded. It isn’t a screening or an assessment of your child’s development.'
-          : 'These figures reflect what you’ve recorded, not an assessment of your child’s development. CDC’s milestones are things most children (75% or more) do by each age, so an age isn’t a deadline. What you record here isn’t a screening or a diagnosis.'}{' '}
+          : 'These figures reflect what you’ve recorded, not an assessment of your child’s development. Milestones are things most children (75% or more) do by each age, so an age isn’t a deadline. What you record here isn’t a screening or a diagnosis.'}{' '}
         If you’re concerned about your child’s development, talk with your child’s healthcare provider.{' '}
         <a class="text-link" href={href({ name: 'growthAbout' })}>About these milestones</a>
       </span>
@@ -37,20 +37,37 @@ export function MilestoneSafeguard({ compact = false }: { compact?: boolean }) {
   );
 }
 
-/** Prominent CDC attribution + free availability + non-endorsement (CDC reuse conditions). */
+/**
+ * Full attribution (CDC reuse conditions): source, wording adaptation, free availability and
+ * non-endorsement. Shown on About these milestones, the one place for fuller source information.
+ */
 export function CdcAttribution() {
   return (
     <div class="card stack small" data-testid="cdc-attribution" style={{ boxShadow: 'none' }}>
-      <p style={{ fontWeight: 600 }}>Milestones: Source: CDC</p>
-      <p class="attribution" style={{ fontSize: 'var(--text-sm)' }}>
-        The milestone wording comes from the Centers for Disease Control and Prevention’s “Learn the Signs. Act Early.” checklists (2022 revision), shown
-        without changes. The original materials are available free from CDC at <ExternalLink url={CDC_MILESTONES_URL}>cdc.gov</ExternalLink>.
+      <p style={{ fontWeight: 600 }}>Source: CDC</p>
+      <p class="attribution" style={{ fontSize: 'var(--text-sm)' }} data-testid="attribution-wording">
+        The milestones come from the Centers for Disease Control and Prevention’s “Learn the Signs. Act Early.” checklists (2022 revision). Where CDC’s
+        wording says “he” or “she,” the app uses gender-neutral wording such as “they” instead. Nothing else in the wording is changed, and each milestone’s
+        page shows CDC’s original wording. The original materials are available free from CDC at <ExternalLink url={CDC_MILESTONES_URL}>cdc.gov</ExternalLink>.
       </p>
       <p class="attribution" style={{ fontSize: 'var(--text-sm)', color: 'var(--text)' }}>
         <strong>Not endorsed:</strong> Roll, Crawl, RUN is an independent app. It is not endorsed by CDC, the U.S. Department of Health and Human Services
         (HHS), or the U.S. Government.
       </p>
     </div>
+  );
+}
+
+/**
+ * Concise source disclosure for screens that show milestones (parent-first: one short line instead of
+ * repeated source wording). Links to About these milestones for the full sources.
+ */
+export function SourceNote() {
+  return (
+    <p class="source-note xsmall muted" data-testid="source-note">
+      Milestones are based on CDC’s “Learn the Signs. Act Early.” checklists, in gender-neutral wording. Not endorsed by CDC, HHS, or the U.S. Government.{' '}
+      <a class="text-link" href={href({ name: 'growthAbout' })}>Sources</a>
+    </p>
   );
 }
 
@@ -144,7 +161,7 @@ export function OlderThanFiveNote({ months }: { months: number | null }) {
   return (
     <p class="info-note" data-testid="over-five-note">
       <Icon name="info" size={18} />
-      <span>CDC’s milestone checklists go up to age 5, so there are no published milestones beyond 5 years. Everything you’ve recorded is kept, and you can keep tracking existing milestones and your own versions.</span>
+      <span>The milestone checklists go up to age 5, so there are no milestones beyond 5 years. Everything you’ve recorded is kept, and you can keep updating it.</span>
     </p>
   );
 }

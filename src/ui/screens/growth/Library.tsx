@@ -10,17 +10,22 @@ import { DEFAULT_FILTERS, matchesElsewhere, selectSourced, viewCounts, type Libr
 import { formatLongDate } from '../../../domain/dates';
 import { Icon } from '../../components/Icon';
 import { childNameInline } from '../../components/Avatar';
-import { CDC_CONCERNED_URL, CDC_MILESTONES_URL, CdcAttribution, ExternalLink, ForChild, StatusBadge } from './parts';
+import { Accordion } from '../../components/Accordion';
+import { displayTextOf } from '../../../domain/milestoneDisplay';
+import type { PersonalMilestone } from '../../../types';
+import { CDC_CONCERNED_URL, CDC_MILESTONES_URL, CdcAttribution, ExternalLink, ForChild, SourceNote, StatusBadge } from './parts';
 
-const VIEW_LABEL: Record<LibraryView, string> = { now: 'Up to now', upcoming: 'Upcoming', all: 'All 159' };
+const VIEW_LABEL: Record<LibraryView, string> = { now: 'Up to now', upcoming: 'Upcoming', all: 'All' };
 
 function filtersFromPreset(preset: LibraryPreset): LibraryFilters {
   return { ...DEFAULT_FILTERS, view: preset.view, area: preset.area ?? 'all' };
 }
 
 /**
- * Milestone Library — the place to RECORD milestones. Opens on "Up to now" (applicable, visible CDC
- * milestones, most recent CDC age first). Its view, filters, search and scroll position are kept in
+ * Milestone Library — the place to RECORD established milestones. Opens on "Up to now" (applicable,
+ * visible milestones, most recent age first). Personal entries created by earlier versions of the app
+ * are no longer mixed into the list and can't be created here (R-005); they stay reachable, unchanged,
+ * in a separate "Your personal entries" section that appears only when some exist. Its view, filters, search and scroll position are kept in
  * memory (never stored) while moving to a milestone and back, for the same child only.
  */
 export function LibraryScreen({ preset }: { preset: LibraryPreset | null }) {
@@ -69,29 +74,21 @@ export function LibraryScreen({ preset }: { preset: LibraryPreset | null }) {
   const counts = viewCounts(months, m.sourcedStates);
   const hiddenApplicable = MILESTONES.filter((d) => m.sourcedStates.get(d.id)?.hidden && isApplicable(d, months)).length;
   const sourced = selectSourced(f, months, m.sourcedStates);
-  const q = f.query.trim().toLowerCase();
-  const personal = (m.data?.personal ?? []).filter((p) => {
-    const rec = m.recordFor({ kind: 'personal', customId: p.id });
-    return (f.area === 'all' || f.area === 'personal' || p.appCategory === f.area) &&
-      (f.showHidden ? !!rec?.hidden : !rec?.hidden) &&
-      (f.age === 'all' || p.referenceAgeMonths === f.age) &&
-      (f.status === 'all' || (rec?.status ?? 'not-yet') === f.status) &&
-      (!q || `${p.title} ${p.description}`.toLowerCase().includes(q));
-  });
-  const total = sourced.length + personal.length;
-  const filtered = !!q || f.area !== 'all' || f.age !== 'all' || f.status !== 'all';
+  const personal = m.data?.personal ?? [];
+  const total = sourced.length;
+  const filtered = !!f.query.trim() || f.area !== 'all' || f.age !== 'all' || f.status !== 'all';
   const elsewhere = total === 0 && filtered ? matchesElsewhere(f, months, m.sourcedStates) : null;
 
   const catalogLabel =
     f.view === 'all'
       ? counts.hidden > 0
-        ? `All ${counts.catalog} CDC milestones · ${counts.visible} shown · ${counts.hidden} hidden`
-        : `All ${counts.catalog} CDC milestones`
+        ? `All milestones · ${counts.visible} shown · ${counts.hidden} hidden`
+        : `All ${counts.catalog} milestones`
       : f.view === 'now'
-        ? `${counts.now} CDC milestone${counts.now === 1 ? '' : 's'} apply to ${name} now`
-        : `${counts.upcoming} upcoming CDC milestone${counts.upcoming === 1 ? '' : 's'}, nearest first`;
+        ? `${counts.now} milestone${counts.now === 1 ? '' : 's'} apply to ${name} now`
+        : `${counts.upcoming} upcoming milestone${counts.upcoming === 1 ? '' : 's'}, nearest first`;
 
-  // Group rows under their CDC age, keeping the view's order.
+  // Group rows under their age, keeping the view's order.
   const groups: Array<{ age: number; defs: MilestoneDef[] }> = [];
   for (const d of sourced) {
     const last = groups[groups.length - 1];
@@ -115,7 +112,7 @@ export function LibraryScreen({ preset }: { preset: LibraryPreset | null }) {
       <div class="segmented section" role="group" aria-label="Which milestones" data-testid="library-views">
         {(['now', 'upcoming', 'all'] as const).map((v) => (
           <button type="button" key={v} aria-pressed={f.view === v} data-testid={`view-${v}`} onClick={() => { set({ view: v }); window.scrollTo(0, 0); }}>
-            {v === 'all' ? VIEW_LABEL.all : `${VIEW_LABEL[v]} (${v === 'now' ? counts.now : counts.upcoming})`}
+            {`${VIEW_LABEL[v]} (${v === 'now' ? counts.now : v === 'upcoming' ? counts.upcoming : counts.catalog})`}
           </button>
         ))}
       </div>
@@ -130,12 +127,11 @@ export function LibraryScreen({ preset }: { preset: LibraryPreset | null }) {
         <div class="chips" role="group" aria-label="Area">
           <button type="button" class="chip" aria-pressed={f.area === 'all'} onClick={() => set({ area: 'all' })}>All areas</button>
           {APP_CATEGORIES.map((c) => <button type="button" key={c.id} class="chip" aria-pressed={f.area === c.id} onClick={() => set({ area: c.id })}>{c.label}</button>)}
-          <button type="button" class="chip" aria-pressed={f.area === 'personal'} onClick={() => set({ area: 'personal' })}>Your versions</button>
         </div>
         <div class="input-row">
           <label>
             <span class="label">Age</span>
-            <select class="select" value={String(f.age)} onChange={(e) => { const v = (e.target as HTMLSelectElement).value; set({ age: v === 'all' ? 'all' : Number(v) }); }} aria-label="Reference age">
+            <select class="select" value={String(f.age)} onChange={(e) => { const v = (e.target as HTMLSelectElement).value; set({ age: v === 'all' ? 'all' : Number(v) }); }} aria-label="Age">
               <option value="all">All ages</option>
               {REFERENCE_AGES.map((a) => <option key={a} value={String(a)}>{referenceAgeLabel(a)}</option>)}
             </select>
@@ -163,11 +159,11 @@ export function LibraryScreen({ preset }: { preset: LibraryPreset | null }) {
         <div class="card small stack" data-testid="library-empty">
           {emptyNow ? (
             months === null ? (
-              <p>No CDC milestones apply yet, because {name}’s due date hasn’t arrived. You can still record milestones early.</p>
+              <p>No milestones apply yet, because {name}’s due date hasn’t arrived. You can still record milestones early.</p>
             ) : hiddenApplicable > 0 ? (
               <p>All the milestones that apply to {name} now are hidden. Hidden milestones aren’t counted in progress; you can restore them anytime.</p>
             ) : (
-              <p>No CDC milestones apply yet. The first are listed “by 2 months.” You can still record milestones early.</p>
+              <p>No milestones apply yet. The first are listed “by 2 months.” You can still record milestones early.</p>
             )
           ) : (
             <p class="muted">{f.showHidden ? 'Nothing is hidden here. Hidden milestones aren’t counted in progress; you can restore them anytime.' : 'No milestones match. Try a different search or filter.'}</p>
@@ -182,24 +178,6 @@ export function LibraryScreen({ preset }: { preset: LibraryPreset | null }) {
         </div>
       ) : (
         <div onClickCapture={rememberScroll}>
-          {personal.length > 0 && (
-            <section aria-label="Your versions">
-              <h3 class="ms-group-title">Your versions</h3>
-              <ul class="ms-list card list-card">
-                {personal.map((p) => {
-                  const rec = m.recordFor({ kind: 'personal', customId: p.id });
-                  return (
-                    <li key={p.id}>
-                      <a class="ms-item" href={href({ name: 'growthMilestone', key: keyFromTarget({ kind: 'personal', customId: p.id }) })} data-testid="milestone-row">
-                        <span class="ms-text">{p.title}<span class="ms-meta">Your version{p.referenceAgeMonths ? ` · based on CDC, ${referenceAgeLabel(p.referenceAgeMonths)}` : ''}</span></span>
-                        <StatusBadge status={rec?.status ?? 'not-yet'} />
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            </section>
-          )}
           {groups.map((g) => (
             <section key={g.age} aria-label={referenceAgeLabel(g.age)} data-testid="library-group" data-age={g.age}>
               <h3 class="ms-group-title">{referenceAgeLabel(g.age)}{!isApplicable({ referenceAgeMonths: g.age }, months) && <span class="xsmall" style={{ fontWeight: 500 }}> · upcoming for {name}</span>}</h3>
@@ -208,7 +186,7 @@ export function LibraryScreen({ preset }: { preset: LibraryPreset | null }) {
                   <li key={d.id}>
                     <a class="ms-item" href={href({ name: 'growthMilestone', key: d.id })} data-testid="milestone-row" data-id={d.id}>
                       <span class="ms-text">
-                        {d.text}
+                        {displayTextOf(d)}
                         <span class="ms-meta">{appCategoryLabel(d.appCategory)}</span>
                       </span>
                       <StatusBadge status={statusOf(d.id)} />
@@ -226,7 +204,39 @@ export function LibraryScreen({ preset }: { preset: LibraryPreset | null }) {
         <span class="grow"><span class="title-3" style={{ display: 'block' }}>About these milestones</span><span class="small muted">What they mean, where they come from, and how progress works</span></span>
         <span class="chev"><Icon name="chevronRight" size={20} /></span>
       </a>
-      <div class="section"><CdcAttribution /></div>
+      {personal.length > 0 && <PersonalEntries items={personal} recordFor={(id) => m.recordFor({ kind: 'personal', customId: id })} onOpen={rememberScroll} />}
+      <SourceNote />
+    </div>
+  );
+}
+
+/**
+ * Personal entries created with an earlier version of the app (R-005). Kept exactly as they were —
+ * never deleted, converted or merged — and never counted in Progress. Collapsed, clearly labelled and
+ * shown only when some exist, so it doesn't invite new ones. Personal goals and activities will have
+ * their own place in Goals & Exercises.
+ */
+function PersonalEntries({ items, recordFor, onOpen }: { items: readonly PersonalMilestone[]; recordFor: (id: string) => { status: MilestoneStatus; hidden: boolean } | undefined; onOpen: () => void }) {
+  return (
+    <div class="card section" style={{ padding: 0, overflow: 'hidden' }} data-testid="personal-entries">
+      <Accordion title={`Your personal entries (${items.length})`} summary="Added with an earlier version of the app" variant="subtle" level={2} testId="acc-personal-entries">
+        <div class="stack small">
+          <p class="muted">These are kept just as you left them, and they aren’t counted in Progress. You can still open, update or hide them. New personal goals and activities will have their own place in Goals & Exercises, coming soon.</p>
+          <ul class="ms-list" onClickCapture={onOpen}>
+            {items.map((p) => {
+              const rec = recordFor(p.id);
+              return (
+                <li key={p.id}>
+                  <a class="ms-item" style={{ paddingLeft: 0, paddingRight: 0 }} href={href({ name: 'growthMilestone', key: keyFromTarget({ kind: 'personal', customId: p.id }) })} data-testid="personal-entry-row">
+                    <span class="ms-text">{p.title}<span class="ms-meta">Personal entry{p.referenceAgeMonths ? ` · ${referenceAgeLabel(p.referenceAgeMonths).toLowerCase()}` : ''}{rec?.hidden ? ' · hidden' : ''}</span></span>
+                    <StatusBadge status={rec?.status ?? 'not-yet'} />
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </Accordion>
     </div>
   );
 }
@@ -240,35 +250,36 @@ export function AboutMilestonesScreen() {
       <CdcAttribution />
       <section class="card stack small">
         <h2 class="title-2">What these milestones are</h2>
-        <p>Developmental milestones are things most children can do by a certain age — in how they play, learn, speak, act, and move. Each milestone here comes word-for-word from CDC’s “Learn the Signs. Act Early.” checklists, which list skills <strong>most children (75% or more)</strong> show by each age.</p>
-        <p><strong>A milestone age isn’t a deadline.</strong> Because CDC’s milestones are things most children (75% or more) do by that age, not all, a milestone age isn’t the age every child reaches it.</p>
+        <p>Developmental milestones are things most children can do by a certain age — in how they play, learn, speak, act, and move. The milestones here come from CDC’s “Learn the Signs. Act Early.” checklists, which list skills <strong>most children (75% or more)</strong> show by each age.</p>
+        <p data-testid="about-wording"><strong>Gender-neutral wording.</strong> CDC’s checklists alternate between “he” and “she.” This app uses “they,” “them,” and “their” instead (or no pronoun where that reads naturally), changing only the pronoun and the verb that goes with it. The meaning, examples, and ages stay the same, and each milestone’s page shows CDC’s original wording.</p>
+        <p><strong>A milestone age isn’t a deadline.</strong> Because milestones are things most children (75% or more) do by that age, not all, a milestone age isn’t the age every child reaches it.</p>
         <p>CDC explains that its checklists aren’t developmental guidelines or standards, and shouldn’t be used as screening or diagnostic tools. In the same way, what you record in this app isn’t a clinical assessment, a screening, or a diagnosis.</p>
         <p>If {name} isn’t showing a milestone, has lost skills, or you have any concern, talk with {name}’s healthcare provider. CDC’s page <ExternalLink url={CDC_CONCERNED_URL}>Concerned About Your Child’s Development?</ExternalLink> has more information.</p>
       </section>
 
       <section class="card stack small">
         <h2 class="title-2">How they’re organized</h2>
-        <p>CDC groups milestones into four areas: Social/Emotional, Language/Communication, Cognitive, and Movement/Physical Development. Every milestone keeps its CDC area.</p>
+        <p>CDC groups milestones into four areas: Social/Emotional, Language/Communication, Cognitive, and Movement/Physical Development.</p>
         <p><strong>Gross motor and fine motor are this app’s own grouping</strong>, not CDC’s and not a clinical classification. To make movement easier to follow, the app splits CDC’s Movement/Physical milestones into gross motor (head control, posture, balance, and getting around) and fine motor (using hands and fingers — like grasping, feeding, drawing, and dressing). Each milestone appears in exactly one area.</p>
-        <p>Milestones are listed by CDC’s ages: 2, 4, 6, and 9 months; 1 year; 15, 18 months; 2 years; 30 months; 3, 4, and 5 years. The three-month age ranges in What to Expect at Every Age are just a way to browse — a milestone published “by 6 months” is shown in 3–6 months, and its age never changes. CDC has no milestones for some ranges (such as 18–21 months), and none are added to fill them. CDC’s checklists end at age 5.</p>
+        <p>Milestones are listed by age: 2, 4, 6, and 9 months; 1 year; 15, 18 months; 2 years; 30 months; 3, 4, and 5 years. The three-month age ranges in What to Expect at Every Age are just a way to browse — a milestone published “by 6 months” is shown in 3–6 months, and its age never changes. Some ranges (such as 18–21 months) have no milestones, and none are added to fill them. The checklists end at age 5.</p>
       </section>
 
       <section class="card stack small">
         <h2 class="title-2">How progress works</h2>
-        <p>Progress counts the CDC milestones for {name}’s age and younger, and shows how many you’ve marked <strong>Achieved</strong> — for example “7 of 9 achieved.” Emerging milestones are shown separately and don’t count as achieved. Milestones for older ages don’t count until {name} reaches them, even if you record them early. Hidden milestones and your personal versions aren’t counted.</p>
+        <p>Progress counts the milestones for {name}’s age and younger, and shows how many you’ve marked <strong>Achieved</strong> — for example “7 of 9 achieved.” Emerging milestones are shown separately and don’t count as achieved. Milestones for older ages don’t count until {name} reaches them, even if you record them early. Hidden milestones aren’t counted.</p>
         <p>The app never marks anything achieved for you — not based on age, and not because a later milestone was achieved.</p>
         <p><strong>Age used for milestones:</strong> chronological age (from the date of birth) unless you turned on corrected age for {name} and chose to use it. Before the due date, no milestones count yet. The app doesn’t decide whether or how long to use corrected age — ask your child’s provider. You can change this in {name}’s profile.</p>
       </section>
 
       <section class="card stack small">
         <h2 class="title-2">Your records</h2>
-        <p>Changes are saved on this device and kept in each milestone’s history, so earlier entries aren’t lost when you change a status or correct a date. Removing an observation hides it but keeps it in this device’s history; you can erase it permanently from the history. Deleting {name}’s profile or resetting the app permanently removes everything.</p>
-        <p>A personal version is your own copy of a milestone that you can reword. It’s marked “Your version,” never changes the CDC milestone, and isn’t counted in CDC progress.</p>
+        <p>Changes are saved on this device and kept in each milestone’s history, so earlier entries aren’t lost when you change a status, correct a date, or edit a note. Removing an entry from Notes & Observations hides it but keeps it in this device’s history; you can erase it permanently from the history. Deleting {name}’s profile or resetting the app permanently removes everything.</p>
+        <p>Personal entries you may have added with an earlier version of the app are kept as you left them, under “Your personal entries” in the Milestone Library. They aren’t counted in Progress.</p>
       </section>
 
       <section class="card stack small" data-testid="about-sources">
         <h2 class="title-2">Sources</h2>
-        <p>Centers for Disease Control and Prevention, “Learn the Signs. Act Early.” milestone checklists. CDC made the revised (2022) checklists available in February 2022 (<ExternalLink url={keyPoints.url}>Key Points</ExternalLink>). The age pages used here were last reviewed by CDC on {formatLongDate(PAGE_SOURCES[0]!.contentLastReviewed)} and copied on {formatLongDate(PAGE_SOURCES[0]!.retrieved)}.</p>
+        <p>Centers for Disease Control and Prevention, “Learn the Signs. Act Early.” milestone checklists, shown in gender-neutral wording as described above. CDC made the revised (2022) checklists available in February 2022 (<ExternalLink url={keyPoints.url}>Key Points</ExternalLink>). The age pages used here were last reviewed by CDC on {formatLongDate(PAGE_SOURCES[0]!.contentLastReviewed)} and copied on {formatLongDate(PAGE_SOURCES[0]!.retrieved)}.</p>
         <p>The original checklists, photos, and videos are available free from CDC at <ExternalLink url={CDC_MILESTONES_URL}>cdc.gov</ExternalLink>. CDC’s photos and videos aren’t included in this app. CDC may update its materials, so check cdc.gov for the latest version.</p>
         <ul class="small" style={{ paddingLeft: '1.2em', margin: 0 }}>
           {PAGE_SOURCES.map((s) => <li key={s.id}><ExternalLink url={s.url}>{s.title}</ExternalLink></li>)}

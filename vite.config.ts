@@ -52,6 +52,11 @@ function milestoneContentPlugin(): Plugin {
       const { validateGuide } = await import('./src/domain/guide');
       const guideErrors = validateGuide();
       if (guideErrors.length) this.error(`Guide content validation failed:\n${guideErrors.join('\n')}`);
+      // Gender-neutral display wording: exactly the CDC text with only declared pronoun/agreement changes.
+      const { validateDisplay } = await import('./src/domain/milestoneDisplay');
+      const { CONTENT_VERSION } = await import('./src/domain/milestones');
+      const displayErrors = validateDisplay(undefined, undefined, CONTENT_VERSION);
+      if (displayErrors.length) this.error(`Milestone display wording validation failed:\n${displayErrors.join('\n')}`);
     },
   };
 }

@@ -2,6 +2,16 @@
 
 The source of truth for colors is `src/ui/theme/themes.ts`. Spacing, type, and component styles are in `src/ui/styles/base.css`.
 
+## Guiding principle: parent-first interface, evidence-backed infrastructure
+*Adopted at the Checkpoint 2a human acceptance refinements (owner, 2026-11-27); applies to every future checkpoint.*
+- **Underneath:** rigorous source verification, accurate developmental information, reliable calculations and robust data safeguards. This includes validators, locks, append-only history and two-step erasure.
+- **On screen:** warm, intuitive, concise and approachable. Say things the way a thoughtful parent would.
+- **Avoid in the interface:**
+  - implementation terms;
+  - repeated methodology or source wording (one concise disclosure per screen, with the full detail one tap away);
+  - checkpoint or project language.
+- **Never trade away:** required attribution, non-endorsement, medical safeguards and honest labelling (for example, “No observation date” rather than an invented date).
+
 ## Direction
 Premium, warm, calm, and adult. Neutral backgrounds, one confident primary color per theme, soft rounded cards, generous spacing, serif display type paired with a clean sans. There are no cartoons or illustrations beyond the app mark. Progress and status will never use red or amber "warning" colors.
 
@@ -128,3 +138,23 @@ History: Fraunces produced undesirable letterforms (J, f) in functional headings
   - the age panel;
   - a one-line “coming soon” note.
 - **Confirmation banner:** the check icon, the effect message and, when progress was affected, a “See Progress” link.
+
+## Human acceptance refinement components (Checkpoint 2a)
+- **Source note (`SourceNote`):**
+  - Content: one muted line, “Milestones are based on CDC's “Learn the Signs. Act Early.” checklists, in gender-neutral wording. Not endorsed by CDC, HHS, or the U.S. Government.”, plus a **Sources** link to About these milestones.
+  - Placement: at the end of Progress and the Library.
+  - The full attribution card now appears only on About these milestones.
+- **Milestone page header:**
+  - the gender-neutral title;
+  - “By 15 months · Language & communication”;
+  - for motor items, a one-line note on the grouping;
+  - applicability;
+  - for adapted items, a collapsed **“Wording adapted to be gender-neutral”** disclosure that shows CDC's original wording;
+  - one source line: “From CDC's [checklist] checklist. Not endorsed by CDC, HHS, or the U.S. Government.”
+- **Notes & Observations card:**
+  - “Date observed” (today by default) and “Note or observation”, with a secondary **Add entry** button.
+  - **Previous entries:** each shows a muted date line (“November 24, 2026 · edited”, or “No observation date · saved October 14, 2026”), the text (pre-wrapped) and quiet **Edit** / **Remove** buttons.
+  - **Editing in place:** date (not for undated notes), “Entry text”, then **Save changes** (primary) and **Cancel** (ghost).
+- **Your personal entries:** a subtle, collapsed accordion at the end of the Library, shown only when entries exist. It contains an explanation and rows labelled “Personal entry · by 12 months [· hidden]”.
+- **Age settings note (Progress):** inside the age card, below the age panel, a muted sentence followed by an outline **Manage age settings** button.
+- **Library view control:** “Up to now (N)”, “Upcoming (N)”, “All (159)”.

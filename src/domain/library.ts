@@ -2,15 +2,17 @@
  * Milestone Library selection (pure). The Library is the place to RECORD milestones.
  *
  * Views (owner-approved):
- * - now      "Up to now": applicable milestones (reference age ≤ milestone age), most recent CDC age first.
- * - upcoming "Upcoming": not yet applicable, nearest CDC age first.
- * - all      "All 159": youngest CDC age first.
- * Within a CDC age: the five app areas in their established order, then CDC's own order.
+ * - now      "Up to now": applicable milestones (reference age ≤ milestone age), most recent age first.
+ * - upcoming "Upcoming": not yet applicable, nearest age first.
+ * - all      "All": youngest age first.
+ * Within an age: the five app areas in their established order, then CDC's own order.
  */
 import { APP_CATEGORIES, MILESTONES, isApplicable, type AppCategory, type MilestoneDef, type MilestoneStatus, type RecordState } from './milestones';
+import { displayTextOf } from './milestoneDisplay';
 
 export type LibraryView = 'now' | 'upcoming' | 'all';
-export type LibraryArea = AppCategory | 'all' | 'personal';
+/** Library area filter. (The former "Your versions" filter was removed with personal-entry creation, R-005.) */
+export type LibraryArea = AppCategory | 'all';
 export interface LibraryFilters { view: LibraryView; query: string; area: LibraryArea; age: number | 'all'; status: MilestoneStatus | 'all'; showHidden: boolean }
 
 export const DEFAULT_FILTERS: LibraryFilters = { view: 'now', query: '', area: 'all', age: 'all', status: 'all', showHidden: false };
@@ -31,7 +33,6 @@ export function sortForView(defs: readonly MilestoneDef[], view: LibraryView): M
 
 /** Sourced milestones matching the filters, in the view's order. */
 export function selectSourced(filters: LibraryFilters, milestoneAgeMonths: number | null, records: ReadonlyMap<string, RecordState>): MilestoneDef[] {
-  if (filters.area === 'personal') return [];
   const q = filters.query.trim().toLowerCase();
   const picked = MILESTONES.filter((d) => {
     const r = records.get(d.id);
@@ -40,7 +41,8 @@ export function selectSourced(filters: LibraryFilters, milestoneAgeMonths: numbe
       (filters.area === 'all' || d.appCategory === filters.area) &&
       (filters.age === 'all' || d.referenceAgeMonths === filters.age) &&
       (filters.status === 'all' || (r?.status ?? 'not-yet') === filters.status) &&
-      (!q || d.text.toLowerCase().includes(q));
+      // Search matches the wording parents see (gender-neutral display wording).
+      (!q || displayTextOf(d).toLowerCase().includes(q));
   });
   return sortForView(picked, filters.view);
 }

@@ -187,12 +187,22 @@ Compiled on 2026-11-26 from the review documents, decisions and earlier entries 
 | 16 | **New-test defects during the refinement** | Testing defect | Two unit tests had wrong expected values (Claude's arithmetic): with one of the 72 applicable milestones hidden, “Up to now” is 71, not the 66 first written; and “cup” matches three applicable milestones, not two. Several end-to-end tests had defects: an ambiguous “Note” selector (section and text box); a no-percentage check that wrongly flagged CDC's “75% or more”; a terminology scan that clicked non-accordion or hidden controls and timed out (twice); and a history count taken before the history had loaded (intermittent). | Each test corrected; the application code was not changed for any of them. |
 | 17 | **Styling slips found by review** | Design refinement (self-found) | A non-existent CSS token (`--text-base`) was used for guide text. Wrapping Progress area rows in links removed their spacing (seen in screenshot review). Full-page screenshots drew the fixed bottom navigation over the content (screenshot tooling only). | Token corrected; spacing rule added; screenshots pin the navigation to the page end. |
 
+| 18 | **Owner found five usability improvements after 387 passing tests (R-004 to R-008)** | Human-discovered usability findings / design preferences | In hands-on review of the Growth UX refinement (`170cc99`), which had passed **all 387 automated tests (252 unit, 135 end-to-end) three consecutive times**, the owner found: inconsistent gendered wording; personal-version creation that didn't belong in the Library; repetitive, robotic CDC terminology; redundant Note and Observations inputs; and no explanation of how to change the age basis. None was a malfunction. | Human acceptance refinements; design principle “parent-first interface, evidence-backed infrastructure” adopted. The third time (with #4 and #12) that human review found what tests could not. |
+| 19 | **Reuse-condition tension surfaced by R-004** | Process safeguard (owner decision pending) | Gender-neutral display wording conflicts with the register's earlier statement that wording is unchanged, and touches CDC's “no substantive changes” condition. | Catalog left verbatim; display layer mechanically validated and disclosed, with CDC's original shown. Flagged for the owner rather than assumed acceptable (Decision #77). |
+| 20 | **Label collision in the new edit form** | Confirmed defect (in new code, found by tests) | The edit text box was labelled “Edit entry”, the same text as the start of the Edit buttons' accessible names (“Edit entry: …”), so assistive technology and tests matched two controls. | Text box relabelled “Entry text”. |
+| 21 | **Entry date stayed on the previous entry's date** | Confirmed defect (in new code, found by a new test) | After adding a back-dated entry, the date field kept that date for the next entry, contrary to “defaulting appropriately”. | The date returns to today after each entry. |
+| 22 | **A failed save could clear the parent's typed text** | AI self-correction (found in code review before testing) | The shared save helper swallowed errors, so the new entry form would have cleared its text even when the date was rejected. | The helper now reports success; text and edits are kept on failure; a test covers a rejected date. |
+| 23 | **New-test mistakes during the acceptance refinements** | Testing defect (AI-generated tests) | Claude-written tests had these mistakes: (a) the upgrade test captured Progress figures with non-waiting reads before records had loaded, giving one intermittent failure; (b) an offline test reloaded before the save finished; (c) one long test exceeded the default timeout; (d) a meaning-preservation check treated the verb “like” as the example word “like”; (e) a guessed 22-month denominator (96); (f) a CDC-mention limit set before the guide's mentions were counted. | Each test corrected (wait for known values or confirmations; timeout raised; “, like” pattern; computed denominator; the guide's movement note trimmed to one CDC mention and the limit documented). No application code changed for (a)–(e). |
+| 24 | **Screenshot capture overlays** | Environmental limitation (screenshot tooling) | Element screenshots drew the sticky top bar and bottom navigation over the Notes & Observations card. The app layout was correct. | The screenshot script hides the fixed bars for element captures. |
+| 25 | **R-003 missing from the backlog table** | Documentation discrepancy (found at workspace recovery) | The owner referred to R-003, but it existed only as a KNOWN_LIMITATIONS note. The handoff's section 8 also still listed the superseded Growth order. | R-003 added to the backlog; handoff corrected. |
+
 **Still unresolved:**
 - The one-time “server not responding” delay on the first iPhone load (cause unknown).
 - R-001, the onboarding name-input overflow (pending investigation).
 - Whether iPhone Safari and the installed app share storage (M13, untested).
 - R-002 is corrected in code but **not yet verified by the owner** (hands-on acceptance pending).
-- The Library's controls fill most of a phone's first screen (recorded for owner review; unchanged).
+- The Library's controls fill most of a phone's first screen (R-003; recorded for owner review; unchanged except one chip removed).
+- R-004 to R-008 are corrected in code but **not yet verified by the owner**. The CDC reuse-condition question for R-004 awaits the owner's decision.
 
 ## Draft entry — Growth UX refinement (drafted by Claude Code; edit before submitting)
 **Date:** 2026-11-26
@@ -238,3 +248,50 @@ Environment: Linux cloud container, Node 22.23.5, headless Chromium (Playwright;
 During development (before the final runs), new tests failed for the reasons listed in challenges #15 and #16. All were corrected before the three final runs.
 
 **Notes / next steps:** My hands-on acceptance testing (checklist H1–H18 and the remaining G-items), then decisions on remote preservation, deployment and Checkpoint 2b.
+
+## Draft entry — Human acceptance refinements (drafted by Claude Code; edit before submitting)
+**Date:** 2026-11-27
+
+**What I asked Claude Code to do:** my hands-on review of the refined Growth screens found five improvements (R-004 to R-008), even though all 387 automated tests had passed three times in a row. I authorized:
+- gender-neutral wording;
+- removing personal-milestone creation;
+- less CDC terminology;
+- one Notes & Observations section;
+- an age-settings explanation on Progress;
+- the design principle “parent-first interface, evidence-backed infrastructure”.
+
+**What it produced:**
+- **Gender-neutral wording:** a validated display layer that proves each of 41 adaptations changes only pronouns and verb agreement, while the CDC catalog stays verbatim.
+- **Personal milestones:** creation controls removed; existing personal entries preserved in a collapsed Library section.
+- **Terminology:** plainer terms and consolidated attribution.
+- **Notes & Observations:** one section, with append-only edits and honest “No observation date” labelling of earlier notes (no schema change).
+- **Age settings:** a “Manage age settings” link to the selected child's age settings.
+- **Also:** an upgrade test from `170cc99`, new tests, 29 screenshots and documentation.
+
+**What I need to decide:**
+- whether the pronoun adaptation is acceptable under CDC's reuse conditions;
+- how to treat legacy personal entries in Checkpoint 2b.
+
+### Workspace recovery and baseline (this conversation, 2026-11-27)
+- **Workspace:** the new workspace held only `aa8c869` on `claude/sharp-franklin-vrbgmd`. The preserved refinement branch `claude/beautiful-allen-1vjobt` was fetched and the session branch was fast-forwarded (no rewrite) to `170cc99`.
+- **Verified:** nine commits; remote `main` `aa8c869`; `checkpoint-2a` `73d9f6f`; clean working tree.
+- **Baseline, matching expectations:** `npm ci` OK, type check passed, **252 unit passed**, build passed, **135 end-to-end passed**.
+- **Discrepancies (documentation only):** R-003 was not in the backlog table; the handoff's section 8 listed the superseded Growth order; the handoff still said the refinement was unpushed.
+
+### Automated results (run by Claude Code in this conversation)
+Environment: Linux cloud container, Node 22, headless Chromium (Playwright; 390×844 phone viewport plus the desktop responsive project). **No Safari, iPhone or Android testing.**
+
+| Check | Baseline (`170cc99`) | Final (3 consecutive complete runs, 2026-11-27) |
+|---|---|---|
+| Type check | Passed | Passed ×3 |
+| Unit tests | 252 passed (10 files) | **281 passed ×3** (11 files; +29 in `acceptanceRefinements.test.ts`) |
+| Production build (catalog, guide and display validation) | Passed (240.6 KB JS, 62.7 KB gzip) | Passed ×3 (255.5 KB JS, 66.0 KB gzip) |
+| End-to-end tests | 135 passed | **155 passed ×3** (2.6–2.7 min each); no failures, no retries, no flaky results |
+
+**End-to-end changes:**
+- **Added:** 19 tests in `acceptance-refinements.spec.ts`, plus one upgrade test from `170cc99` in `update.spec.ts`.
+- **Updated for superseded behavior:** see TESTING_CHECKLIST.
+- **During development:**
+  - The first full run after the changes had 17 expected failures, all from superseded wording or controls; each was reviewed individually before updating.
+  - New-test mistakes are listed in challenge #23.
+  - Two application defects in the new code were found by tests and fixed (#20, #21).

@@ -2,7 +2,7 @@
  * Recording confirmations (pure). Each message describes the ACTUAL effect of the saved action on
  * the resulting record, using the same applicability and progress rules as Progress.
  * Owner rules: distinguish a new achievement from edits to an existing one; future counting is always
- * conditional; never imply erased text is recoverable; personal versions are separate.
+ * conditional; never imply erased text is recoverable; personal entries are separate.
  */
 import { STATUS_LABEL, type MilestoneStatus } from './milestones';
 
@@ -11,16 +11,18 @@ export type SavedAction =
   | { kind: 'date-corrected' }
   | { kind: 'note' }
   | { kind: 'observation-added' }
+  | { kind: 'observation-edited' }
   | { kind: 'observation-removed' }
+  | { kind: 'note-removed' }
   | { kind: 'text-erased' }
   | { kind: 'hidden' }
   | { kind: 'restored' }
   | { kind: 'personal-saved' };
 
 export interface ConfirmationContext {
-  /** Personal versions are never part of CDC progress. */
+  /** Personal entries (from earlier versions of the app) are never part of Progress. */
   personal: boolean;
-  /** Applicable at the child's current milestone age (always false for personal versions). */
+  /** Applicable at the child's current milestone age (always false for personal entries). */
   applicable: boolean;
   /** Hidden AFTER the action. */
   hidden: boolean;
@@ -42,11 +44,13 @@ export function confirmationFor(a: SavedAction, c: ConfirmationContext): Confirm
   const plain = (text: string): Confirmation => ({ text, showProgressLink: false });
   switch (a.kind) {
     case 'note': return plain('Note saved.');
-    case 'observation-added': return plain('Observation added.');
-    case 'observation-removed': return plain('Observation removed from view. Its text stays in this device’s history until you erase it permanently.');
+    case 'observation-added': return plain('Entry added. It doesn’t change the status.');
+    case 'observation-edited': return plain('Entry updated. The earlier wording stays in this device’s history until you erase it permanently.');
+    case 'observation-removed': return plain('Entry removed from view. Its text stays in this device’s history until you erase it permanently.');
+    case 'note-removed': return plain('Note removed from view. Its text stays in this device’s history until you erase it permanently.');
     case 'text-erased': return plain('Text permanently erased.');
     case 'date-corrected': return plain('Achievement date updated. This doesn’t add another achievement; the earlier date stays in the history.');
-    case 'personal-saved': return plain('Your version is saved. Your versions aren’t counted in CDC progress.');
+    case 'personal-saved': return plain('Saved. Personal entries aren’t counted in Progress.');
     case 'hidden':
       if (c.personal) return plain('Hidden. Its status and history are kept.');
       if (c.applicable) return { text: 'Hidden. It’s no longer included in progress. Its status and history are kept.', showProgressLink: true };
@@ -60,7 +64,7 @@ export function confirmationFor(a: SavedAction, c: ConfirmationContext): Confirm
       };
     case 'status': {
       const label = STATUS_LABEL[a.to];
-      if (c.personal) return plain(`Saved as ${label}. Your versions aren’t counted in CDC progress.`);
+      if (c.personal) return plain(`Saved as ${label}. Personal entries aren’t counted in Progress.`);
       if (a.from === 'achieved' && a.to !== 'achieved') {
         return counted(c)
           ? { text: `Saved as ${label}. It no longer counts as achieved in ${c.childName}’s progress. Your earlier entry stays in the history.`, showProgressLink: true }

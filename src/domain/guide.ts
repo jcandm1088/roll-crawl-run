@@ -2,14 +2,16 @@
  * What to Expect at Every Age — the read-only developmental guide (pure; no storage, no UI).
  *
  * Owner-approved Option A: original explanatory text written for this app, derived only from the
- * verified CDC milestones and registered CDC sources (src/content/guide.cdc-2022.json). The CDC
- * milestone descriptions are taken verbatim from the milestone catalog.
+ * verified CDC milestones and registered CDC sources (src/content/guide.cdc-2022.json). The milestone
+ * descriptions come from the milestone catalog; the screen shows them in the gender-neutral display
+ * wording (milestoneDisplay.ts), which never changes the catalog.
  *
  * STRUCTURAL INDEPENDENCE: nothing here accepts child records, statuses, hidden flags or personal
  * versions. The guide for a range is a function of the range alone, so it is identical for every
  * child and can never change a record.
  */
 import guideJson from '../content/guide.cdc-2022.json';
+import { GENDERED_WORDS } from './milestoneDisplay';
 import { INTERVALS, type AgeInterval } from './intervals';
 import {
   APP_CATEGORIES, MILESTONES, PAGE_SOURCES, REFERENCE_SOURCES, getMilestone, intervalOf, isEmptyInterval, milestonesInInterval,
@@ -164,6 +166,9 @@ export function validateGuide(content: GuideContent = GUIDE): string[] {
     const bad = t.match(FORBIDDEN_GUIDE_WORDS);
     if (bad) errors.push(`forbidden wording “${bad[0]}” in: ${t.slice(0, 60)}…`);
     if (/checkpoint/i.test(t)) errors.push(`development terminology in: ${t.slice(0, 60)}…`);
+    // R-004: the guide's own text is gender-neutral (milestone wording comes from the display layer).
+    const gendered = t.match(GENDERED_WORDS);
+    if (gendered) errors.push(`gendered wording “${gendered[0]}” in: ${t.slice(0, 60)}…`);
   }
   return errors;
 }

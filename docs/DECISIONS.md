@@ -123,3 +123,33 @@ Details are in `docs/reviews/CHECKPOINT_1_FINAL.md`.
 72. **No development terms in the app (D-12).** `PlannedTag` now reads “Coming soon”. Home, tab previews, Settings planned rows and Settings → About no longer mention checkpoints. Settings → About now names the CDC milestone source.
 73. **Q-5 alignment.** The unsourced “Children develop at different rates” was replaced by the 75%-basis wording, and the CDC “Concerned” page is described neutrally (“has more information”).
 74. **No schema change and no new dependency.** The JavaScript bundle grew from about 217 KB to about 241 KB (63 KB gzip), mainly the guide content and screens.
+
+## Checkpoint 2a — human acceptance refinements (owner-authorized, 2026-11-27)
+*Owner-discovered usability findings R-004 to R-008. These supersede earlier decisions where they conflict; earlier entries are kept as recorded.*
+
+75. **Design principle: parent-first interface, evidence-backed infrastructure.** It applies to all future checkpoints.
+76. **Gender-neutral display layer (R-004).**
+    - `milestones.display.json` adapts the 41 gendered CDC items.
+    - `validateDisplay` proves each adaptation is CDC's text with only declared pronoun → neutral and verb-agreement replacements.
+    - The catalog, lock and hashes are unchanged (updates #47's “verbatim including pronouns” for **display only**).
+    - Adapted wording is disclosed and CDC's original is shown on the milestone page.
+    - No gender field in onboarding.
+77. **CDC reuse conditions (owner review requested).** #47/SOURCE_REGISTER recorded “wording is unchanged, including pronouns”. That is no longer true of the display. Claude Code considers the change non-substantive and disclosed; the owner must confirm.
+78. **Personal milestone creation removed (R-005); supersedes #56's creation path.** Existing records are untouched and reachable in the collapsed “Your personal entries” Library section. `createPersonalVersion` remains in the repository only as the reference for the record shape. The 2b treatment is to be decided by the owner, with no automatic migration.
+79. **Terminology (R-006).** The superseded labels are replaced by plain terms (“By age” supersedes #70's “By CDC age”; “All (159)” / “All milestones” supersede #68's “All 159”). Attribution is consolidated into:
+    - the `SourceNote` on Progress and the Library;
+    - the per-milestone source line;
+    - the guide's Sources card;
+    - the full About card.
+
+    Non-endorsement, free availability and safeguards are retained.
+80. **Guide content revision (R-006).** `guide.cdc-2022.json` (`guide-2026-11-27`) replaces repeated CDC phrasing: “CDC lists things like” becomes “milestones include things like”, plus the shared paragraphs. The meaning is unchanged and the traceability validation is unchanged; it now also rejects gendered words.
+81. **Notes & Observations (R-007); supersedes the separate note and observations UI of #55.**
+    - New entries are `observation` events.
+    - Edits are a new append-only `observation-edited` event type in the existing store. This is not a schema change: the database stays at version 2 and nothing is migrated.
+    - The legacy `record.note` is shown as an entry with “No observation date”, editable and removable through the existing note functions.
+    - Erase covers every version of an entry, and identical note versions.
+82. **Entry date default.** Today, and reset to today after each added entry.
+83. **Age settings link (R-008).** `#/profiles/<id>/age` (`section: 'age'`) opens the selected child's profile at the Corrected age section and returns to Progress. The form and age engine are unchanged.
+84. **Library search** matches the displayed (gender-neutral) wording.
+85. **No schema change, no new dependency.** The JavaScript bundle grew from about 241 KB to about 255 KB (63 → 66 KB gzip): the display layer, the validator and the Notes & Observations UI.

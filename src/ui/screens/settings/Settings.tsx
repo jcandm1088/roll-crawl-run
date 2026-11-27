@@ -351,7 +351,7 @@ export function AboutInfo() {
       </div>
       <div class="card stack small">
         <h2 class="title-3">Sources</h2>
-        <p>Developmental milestones come word for word from CDC’s “Learn the Signs. Act Early.” checklists. Each one shows its source, and the full list of sources, with dates and links, is in Growth → Milestone Library → About these milestones. No other developmental or medical reference content has been added yet.</p>
+        <p>Developmental milestones come from CDC’s “Learn the Signs. Act Early.” checklists, in gender-neutral wording (CDC’s original wording is shown on each milestone’s page). The full list of sources, with dates and links, is in Growth → Milestone Library → About these milestones. The app is not endorsed by CDC, HHS, or the U.S. Government. No other developmental or medical reference content has been added yet.</p>
       </div>
       <div class="card stack small">
         <h2 class="title-3">Credits</h2>

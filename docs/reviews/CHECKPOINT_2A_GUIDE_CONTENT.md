@@ -258,3 +258,17 @@ Text (original): *CDC doesn't publish a milestone checklist for this range. Its 
 
 ## 6. Phase A self-correction (recorded)
 In the first Phase A draft, five overviews (OV-0, OV-1, OV-2, OV-4, OV-9) omitted fine motor examples even though CDC lists fine-motor milestones at those ages, contrary to the stated coverage objective. Claude found this during its own review before delivering the draft and added one fine-motor example to each. The coverage rule is now enforced by `validateGuide()` (“no example from [area]”). This was an AI self-correction, not an owner finding.
+
+---
+
+## Revision 2026-11-27 (R-004, R-006) — owner usability findings
+- **Overviews:** “By N months, CDC lists things like …” became “By N months, milestones include things like …”. The first overview now reads ““By 2 months” is the first milestone age. Milestones at this age include things like …”. Examples and qualifiers are unchanged.
+- **Shared text:**
+  - “Each CDC age” → “Each milestone age”.
+  - “learning about CDC's milestones” → “learning about milestones”.
+  - The ranges paragraph is simplified; it still says the ranges are the app's, not CDC's.
+  - Motor paragraph: “…This is the app's own grouping, not a separate checklist.”
+  - Overview label: “Written for this app from the milestones below.”
+  - Last age: “By 5 years” is the last milestone age.
+- **Meaning:** unchanged. Source attribution remains in the guide's Sources card and safeguard. The milestone lists beneath each overview use the gender-neutral display wording (`CHECKPOINT_2A_ACCEPTANCE_REFINEMENTS.md`).
+- **Validation:** `validateGuide` still passes all traceability rules and now also rejects gendered words. Content version `guide-2026-11-27`.

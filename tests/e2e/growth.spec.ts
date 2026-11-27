@@ -3,6 +3,7 @@
  * The clock is fixed (Nov 26, 2026, 10:00 local) so ages and dates are exact.
  */
 import { expect, test, type Page } from '@playwright/test';
+import { seedLegacyPersonalEntry } from './helpers';
 import AxeBuilder from '@axe-core/playwright';
 
 const NOW = new Date('2026-11-26T10:00:00');
@@ -90,15 +91,16 @@ test('exact boundary: at exactly 6 months the "By 6 months" milestones are in th
   await expect(page.getByRole('heading', { name: /By 6 months.*upcoming/ })).toHaveCount(0);
 });
 
-test('empty interval shows no invented milestones and links to the neighbouring CDC ages', async ({ page }) => {
+test('empty interval shows no invented milestones and links to the neighbouring milestone ages', async ({ page }) => {
   // Refinement: the guide is read-only — no progress summary, no "everything up to now" link (decision D-1).
   await start(page, { dob: '2025-07-10' });
   await page.goto('./#/growth/expect/6'); // 18–21
-  await expect(page.getByTestId('empty-interval')).toContainText('CDC doesn’t publish a milestone checklist for this range');
-  await expect(page.getByTestId('empty-interval')).toContainText('Its checklists go from 18 months to 2 years');
+  // R-006 wording (was “CDC doesn’t publish a milestone checklist… Its checklists go from…”); the source is still named once.
+  await expect(page.getByTestId('empty-interval')).toContainText('There’s no milestone checklist for this range');
+  await expect(page.getByTestId('empty-interval')).toContainText('CDC’s checklists go from 18 months to 2 years');
   await expect(page.getByTestId('guide-milestone')).toHaveCount(0);
   await expect(page.getByTestId('progress-all')).toHaveCount(0);
-  await expect(page.getByTestId('neighbour-previous')).toContainText('Most recent CDC age: by 18 months');
+  await expect(page.getByTestId('neighbour-previous')).toContainText('Most recent milestone age: by 18 months'); // R-006
   await expect(page.getByTestId('neighbour-previous')).toContainText('Shown in 15–18 months');
   await page.getByTestId('neighbour-previous').getByRole('button', { name: 'Open 15–18 months' }).click();
   await expect(page.getByLabel('Age range')).toHaveValue('5');
@@ -157,26 +159,39 @@ test('future and pre-birth dates are rejected', async ({ page }) => {
   await expect(page.getByRole('alert')).toContainText('before your child was born');
 });
 
-test('observations: add (no status change), remove with marker, erase permanently in two steps', async ({ page }) => {
+// Updated for R-007: the separate Note box and Observations form became one Notes & Observations section.
+test('Notes & Observations: add (no status change), edit, remove with marker, erase permanently in two steps', async ({ page }) => {
   await start(page, { dob: '2025-07-10' });
   await page.goto('./#/growth/milestone/cdc22-m15-lc-02');
-  await page.getByLabel('What you noticed').fill('Fictional: looked at the ball when named');
-  await page.getByRole('button', { name: 'Add observation' }).click();
-  await expect(page.getByTestId('observations')).toContainText('looked at the ball');
+  await expect(page.getByLabel('Date observed')).toHaveValue('2026-11-26'); // defaults to today
+  await page.getByLabel('Note or observation').fill('Fictional: looked at the ball when named');
+  await page.getByRole('button', { name: 'Add entry' }).click();
+  await expect(page.getByTestId('entries')).toContainText('looked at the ball');
+  await expect(page.getByTestId('entry-date')).toHaveText('November 26, 2026');
+  await expect(page.getByLabel('Note or observation')).toHaveValue('');
   await expect(page.locator('.status-badge').first()).toHaveText('Not yet observed');
-  await page.getByRole('button', { name: /Remove observation/ }).click();
+  await page.getByRole('button', { name: /^Edit entry/ }).click();
+  await page.getByLabel('Date observed').nth(1).fill('2026-11-20');
+  await page.getByLabel('Entry text').fill('Fictional: looked at the red ball when named');
+  await page.getByRole('button', { name: 'Save changes' }).click();
+  await expect(page.getByTestId('entry-date')).toHaveText('November 20, 2026 · edited');
+  await expect(page.getByTestId('entry-text')).toHaveText('Fictional: looked at the red ball when named');
+  await expect(page.getByTestId('history')).toContainText('date changed from November 26, 2026 to November 20, 2026');
+  await page.getByRole('button', { name: /^Remove entry/ }).click();
   await page.getByRole('button', { name: 'Remove', exact: true }).click();
-  await expect(page.getByTestId('observations')).toHaveCount(0);
+  await expect(page.getByTestId('entries')).toHaveCount(0);
   await expect(page.getByTestId('history')).toContainText('Removed from view. This text is still stored in this device’s history.');
-  await page.getByRole('button', { name: 'Erase permanently…' }).click();
+  // Erasing one version erases the whole entry, including its earlier wording.
+  await page.getByRole('button', { name: 'Erase permanently…' }).first().click();
   await page.getByRole('button', { name: 'Continue' }).click();
   await page.getByRole('button', { name: 'Yes, erase permanently' }).click();
-  await expect(page.getByTestId('history')).toContainText('Text permanently erased.');
+  await expect(page.getByTestId('history').getByText('Text permanently erased.')).toHaveCount(2);
+  await expect(page.getByRole('button', { name: 'Erase permanently…' })).toHaveCount(0);
   const stored = await page.evaluate(() => new Promise<string>((resolve) => {
     const r = indexedDB.open('roll-crawl-run');
     r.onsuccess = () => { const q = r.result.transaction('milestoneEvents').objectStore('milestoneEvents').getAll(); q.onsuccess = () => { resolve(JSON.stringify(q.result)); r.result.close(); }; };
   }));
-  expect(stored).not.toContain('looked at the ball');
+  expect(stored).not.toContain('looked at the');
 });
 
 test('hidden milestones are excluded from progress and keep their status when restored', async ({ page }) => {
@@ -220,33 +235,41 @@ test('early recordings are saved but not counted until the reference age; nothin
 });
 
 // ---------------------------------------------------------------------------
-// Personal versions
+// Personal entries (R-005: creation removed; existing ones preserved and reachable)
 // ---------------------------------------------------------------------------
 
-test('personal versions are separate, findable, editable, labelled, and not counted', async ({ page }) => {
+// Replaces “personal versions are separate, findable, editable, labelled, and not counted”: creating
+// personal versions was removed (R-005), so that test's creation steps no longer apply. Existing
+// (legacy) entries are seeded directly, then checked for the same properties.
+test('personal entries: no way to create one; existing ones are kept, reachable, editable, labelled, and not counted', async ({ page }) => {
   await start(page, { dob: '2026-09-10' });
   await page.goto('./#/growth/milestone/cdc22-m02-se-04');
-  await page.getByRole('button', { name: 'Make a personal version' }).click();
-  await page.getByLabel('Title').fill('Smiles at the cat (fictional)');
-  await page.getByRole('button', { name: 'Save', exact: true }).click();
-  await expect(page.getByTestId('provenance')).toContainText('based on CDC’s “Smiles when you talk to or smile at her”');
+  await expect(page.getByTestId('milestone-detail')).toBeVisible();
+  await expect(page.getByRole('button', { name: /personal version/i })).toHaveCount(0);
+  await page.goto('./#/growth/library');
+  await expect(page.getByRole('button', { name: 'Your versions' })).toHaveCount(0);
+  await expect(page.getByTestId('personal-entries')).toHaveCount(0); // nothing to show, so no section at all
+  // An entry created with an earlier version of the app
+  await seedLegacyPersonalEntry(page, { title: 'Smiles at the cat (fictional)', derivedFromDefId: 'cdc22-m02-se-04', appCategory: 'social-emotional', referenceAgeMonths: 2 });
+  await page.goto('./#/growth/library');
+  await expect(page.getByTestId('milestone-row').filter({ hasText: 'Smiles at the cat' })).toHaveCount(0); // not mixed into the milestones
+  await page.getByRole('button', { name: /Your personal entries \(1\)/ }).click();
+  await page.getByTestId('personal-entry-row').click();
+  await expect(page.getByTestId('milestone-title')).toHaveText('Smiles at the cat (fictional)');
+  await expect(page.getByTestId('provenance')).toContainText('based on the milestone Smiles when you talk to or smile at them (by 2 months)');
+  await expect(page.getByTestId('provenance')).toContainText('isn’t counted in Progress');
   await mark(page, page.url().split('/').pop()!, 'Achieved', '2026-11-20');
-  await page.getByRole('button', { name: 'Edit your version' }).click();
+  await page.getByRole('button', { name: 'Edit this personal entry' }).click();
   await page.getByLabel('Title').fill('Smiles at the cat');
   await page.getByRole('button', { name: 'Save', exact: true }).click();
   await expect(page.getByTestId('milestone-title')).toHaveText('Smiles at the cat');
-  // Original unchanged
+  // Original milestone unchanged
   await page.goto('./#/growth/milestone/cdc22-m02-se-04');
-  await expect(page.getByTestId('milestone-title')).toHaveText('Smiles when you talk to or smile at her');
   await expect(page.locator('.status-badge').first()).toHaveText('Not yet observed');
-  // Findable in the library
-  await page.goto('./#/growth/library');
-  await page.getByRole('button', { name: 'Your versions' }).click();
-  await expect(page.getByTestId('milestone-row')).toHaveCount(1);
-  await expect(page.getByTestId('milestone-row')).toContainText('Your version');
   // Not counted
   await page.goto('./#/growth/progress');
   await expect(overall(page)).toHaveText('0 of 11 achieved');
+  await expect(page.getByTestId('what-updates')).toContainText('neither are your personal entries');
 });
 
 // ---------------------------------------------------------------------------
@@ -257,7 +280,7 @@ test('library: 159 milestones, search, area, age and status filters', async ({ p
   await start(page, { dob: '2025-07-10' });
   await mark(page, 'cdc22-m12-mp-03', 'Achieved', '2026-07-01');
   await page.goto('./#/growth/library');
-  // Refinement: the Library opens on "Up to now"; the full catalog is the "All 159" view.
+  // Refinement: the Library opens on "Up to now"; the full catalog is the "All (159)" view.
   await expect(page.getByTestId('result-count')).toHaveText('72 milestones');
   await page.getByTestId('view-all').click();
   await expect(page.getByTestId('result-count')).toHaveText('159 milestones');
@@ -267,9 +290,9 @@ test('library: 159 milestones, search, area, age and status filters', async ({ p
   await page.getByRole('button', { name: 'Gross motor' }).click();
   await expect(page.getByTestId('result-count')).toHaveText('20 milestones');
   await page.getByRole('button', { name: 'All areas' }).click();
-  await page.getByLabel('Reference age').selectOption('48');
+  await page.getByLabel('Age', { exact: true }).selectOption('48'); // R-006: the filter was labelled “Reference age”
   await expect(page.getByTestId('result-count')).toHaveText('17 milestones');
-  await page.getByLabel('Reference age').selectOption('all');
+  await page.getByLabel('Age', { exact: true }).selectOption('all');
   await page.getByLabel('Status').selectOption('achieved');
   await expect(page.getByTestId('result-count')).toHaveText('1 milestone');
 });
@@ -371,12 +394,17 @@ test('CDC attribution, free-availability and non-endorsement statements, and saf
   await expect(page.getByTestId('milestone-safeguard')).toContainText('not an assessment of your child’s development');
   await expect(page.getByTestId('milestone-safeguard')).toContainText('an age isn’t a deadline');
   await expect(page.getByTestId('milestone-safeguard')).toContainText('talk with your child’s healthcare provider');
+  // R-006: screens carry one concise source note; the full attribution card is on About these milestones.
+  await expect(page.getByTestId('source-note')).toContainText('Not endorsed by CDC, HHS, or the U.S. Government');
   await page.goto('./#/growth/library');
+  await expect(page.getByTestId('source-note')).toContainText('based on CDC’s “Learn the Signs. Act Early.” checklists');
+  await expect(page.getByTestId('source-note')).toContainText('Not endorsed by CDC, HHS, or the U.S. Government');
+  await page.getByTestId('about-link').click();
   const attr = page.getByTestId('cdc-attribution');
   await expect(attr).toContainText('Source: CDC');
   await expect(attr).toContainText('available free from CDC');
   await expect(attr).toContainText('not endorsed by CDC, the U.S. Department of Health and Human Services (HHS), or the U.S. Government');
-  await page.getByTestId('about-link').click();
+  await expect(attr).toContainText('each milestone’s page shows CDC’s original wording');
   const about = page.getByTestId('about-milestones');
   await expect(about).toContainText('Gross motor and fine motor are this app’s own grouping');
   await expect(about).toContainText('not a clinical classification');

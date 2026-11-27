@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { useApp } from '../../../state/app';
-import { href, navigate } from '../../../router';
+import { href, navigate, type Route } from '../../../router';
 import { ageBetween, formatPreciseAge, validateDob } from '../../../domain/age';
 import { useToday } from '../../../state/today';
 import { formatLongDate, todayLocal } from '../../../domain/dates';
@@ -57,7 +57,11 @@ export function ProfilesList() {
   );
 }
 
-export function ProfileForm({ childId }: { childId: string | null }) {
+/**
+ * focusAgeSettings (R-008, from Progress → "Manage age settings"): brings the corrected-age and
+ * milestone-age settings into view, and Save/Cancel return to Progress. The form itself is unchanged.
+ */
+export function ProfileForm({ childId, focusAgeSettings = false }: { childId: string | null; focusAgeSettings?: boolean }) {
   const app = useApp();
   const existing = childId ? app.children.find((c) => c.id === childId) ?? null : null;
   const existingPhotoUrl = usePhotoUrl(existing?.photoId ?? null);
@@ -73,6 +77,13 @@ export function ProfileForm({ childId }: { childId: string | null }) {
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [formId] = useState(() => existing?.id ?? newId()); // stable across retries → no duplicate profiles
+  const ageRef = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    if (!focusAgeSettings || !ageRef.current) return;
+    ageRef.current.scrollIntoView({ block: 'start' });
+    ageRef.current.focus({ preventScroll: true });
+  }, [focusAgeSettings]);
+  const doneRoute: Route = focusAgeSettings ? { name: 'growthProgress' } : existing ? { name: 'profiles' } : { name: 'home' };
 
   if (childId && !existing) {
     return (
@@ -101,7 +112,7 @@ export function ProfileForm({ childId }: { childId: string | null }) {
       const child = await saveChild(app.db, app.meta.deviceId, formId, { ...r.input, color, theme }, draft.photo);
       if (!existing) await app.setSettings({ activeChildId: child.id });
       await app.refresh();
-      navigate(existing ? { name: 'profiles' } : { name: 'home' });
+      navigate(doneRoute);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'The profile couldn’t be saved.');
       setSaving(false);
@@ -154,8 +165,8 @@ export function ProfileForm({ childId }: { childId: string | null }) {
         <ThemePicker value={theme} onChange={setTheme} />
       </div>
 
-      <div class="card">
-        <h2 class="title-3" style={{ marginBottom: 'var(--space-3)' }}>Corrected age</h2>
+      <div class="card" data-testid="age-settings">
+        <h2 class="title-3" id="age-settings-heading" tabIndex={-1} ref={ageRef} style={{ marginBottom: 'var(--space-3)', scrollMarginTop: '80px' }}>Corrected age</h2>
         <CorrectedAgeFields dob={draft.dob} draft={draft.corrected} onChange={(corrected) => setDraft({ ...draft, corrected })} showErrors={showErrors} />
       </div>
 
@@ -164,7 +175,7 @@ export function ProfileForm({ childId }: { childId: string | null }) {
         <button class="btn btn-primary btn-block" type="submit" disabled={saving}>
           {saving ? 'Saving…' : existing ? 'Save changes' : 'Add child'}
         </button>
-        <a class="btn btn-ghost btn-block" href={href({ name: existing ? 'profiles' : 'home' })}>Cancel</a>
+        <a class="btn btn-ghost btn-block" href={href(doneRoute)}>Cancel</a>
       </div>
 
       {existing && (

@@ -133,6 +133,8 @@ export type MilestoneEventType =
   | 'status'
   | 'achieved-date-corrected'
   | 'observation'
+  /** Notes & Observations (R-007): a later wording/date for an observation; refEventId = the original. */
+  | 'observation-edited'
   | 'observation-removed'
   | 'note'
   | 'hidden'

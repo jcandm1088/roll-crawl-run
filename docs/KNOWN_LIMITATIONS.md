@@ -1,6 +1,6 @@
 # Known Limitations
 
-Last updated 2026-11-26 (Checkpoint 2a handoff consolidation). Earlier sections are kept as dated records; where a later statement supersedes an earlier one, the earlier one is marked. Items marked *(planned)* are scheduled for later checkpoints. Refinements and suspected defects awaiting correction are tracked in `docs/REFINEMENT_BACKLOG.md`.
+Last updated 2026-11-27 (Checkpoint 2a human acceptance refinements). Earlier sections are kept as dated records; where a later statement supersedes an earlier one, the earlier one is marked. Items marked *(planned)* are scheduled for later checkpoints. Refinements and suspected defects awaiting correction are tracked in `docs/REFINEMENT_BACKLOG.md`.
 
 ## Not built yet (placeholders)
 - Goals & Exercises, recurring activities, CDC activities, and charts *(Checkpoint 2b)*
@@ -77,3 +77,21 @@ Last updated 2026-11-26 (Checkpoint 2a handoff consolidation). Earlier sections 
 - **Option B** (verbatim CDC overview excerpts from other CDC pages) is deferred; the guide uses only original text based on the verified milestones.
 - **Still deferred to Checkpoint 2b:** goals and exercises, CDC activities, historical charts, goal and exercise progress.
 - **R-001** (onboarding name-field overflow) remains pending and was not investigated in this refinement.
+
+## Checkpoint 2a human acceptance refinements (R-004 to R-008)
+- **Not yet reviewed by the owner.** Tested only in automated headless Chromium; no Safari, iPhone or Android testing; not deployed.
+- **CDC wording adaptation (R-004):**
+  - The displayed wording of 41 milestones differs from CDC's in pronouns and verb agreement only. The catalog is unchanged.
+  - Whether this fits CDC's “no substantive changes” reuse condition is **awaiting the owner's decision**. It is disclosed, but CDC has not reviewed it.
+  - The meaning review was done by Claude Code. The mechanical validation proves that only pronouns and agreement changed, not that every reading is ideal.
+  - If CDC revises an item, the build fails until its adaptation is redone.
+- **Personal entries (R-005):** existing ones remain, labelled as added with an earlier version. There is no way to create new ones and no delete action. Their future (for example, conversion to goals) is a Checkpoint 2b decision.
+- **Undated notes (R-007):**
+  - Notes saved before this change have no observation date and are shown as “No observation date · saved [date]”. The saved date is the device's recording date (UTC calendar day, as in the history).
+  - Editing one keeps it undated. There is no way to give it a date, by design, to avoid inventing one.
+- **Entry edits are append-only.** Earlier wording stays in this device's history until it is erased permanently.
+- **Erase scope:**
+  - Erasing a note version also erases other versions with identical text.
+  - Different earlier versions of a note are separate history entries and are erased one by one.
+- **Downgrade:** if an older version of the app were reopened after entries were edited, it would show the original wording of edited entries. Edits are separate history entries that older versions don't read. No data is lost.
+- **R-001 and R-003 remain pending;** not changed in this refinement except for the removed “Your versions” chip.

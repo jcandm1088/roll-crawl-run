@@ -31,7 +31,8 @@ export type Route =
   | { name: 'about' }
   | { name: 'profiles' }
   | { name: 'profileNew' }
-  | { name: 'profileEdit'; id: string };
+  /** section 'age': opened from Progress → "Manage age settings"; shows the age settings and returns to Progress. */
+  | { name: 'profileEdit'; id: string; section?: 'age' };
 
 export function parseHash(hash: string): Route {
   const parts = hash.replace(/^#\/?/, '').split('/').filter(Boolean);
@@ -68,7 +69,7 @@ export function parseHash(hash: string): Route {
       return { name: 'settings' };
     case 'profiles':
       if (b === 'new') return { name: 'profileNew' };
-      if (b) return { name: 'profileEdit', id: decodeURIComponent(b) };
+      if (b) return parts[2] === 'age' ? { name: 'profileEdit', id: decodeURIComponent(b), section: 'age' } : { name: 'profileEdit', id: decodeURIComponent(b) };
       return { name: 'profiles' };
     default:
       return { name: 'home' };
@@ -95,7 +96,7 @@ export function href(route: Route): string {
     case 'growthExpect':
       return route.interval === null ? '#/growth/expect' : `#/growth/expect/${route.interval}`;
     case 'profileEdit':
-      return `#/profiles/${encodeURIComponent(route.id)}`;
+      return `#/profiles/${encodeURIComponent(route.id)}${route.section === 'age' ? '/age' : ''}`;
     default:
       return `#/${route.name}`;
   }

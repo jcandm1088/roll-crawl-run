@@ -30,10 +30,20 @@ Every developmental or medical item in the app must trace to a row here. Before 
 - **Records:** full text, traceability and the sentence-by-sentence meaning review are in `docs/reviews/CHECKPOINT_2A_GUIDE_CONTENT.md`.
 - **No new external content was collected.** The only access was a narrow, owner-authorized check of the section headings on four registered CDC milestone pages, which confirmed the display heading “Movement/Physical Development Milestones” (2026-11-26).
 
+**Gender-neutral display layer (R-004, 2026-11-27):**
+- No new content was collected; this is wording derived from the catalog.
+- `validateDisplay` (build time and unit tests) checks each adaptation against the catalog text and its declared replacements.
+- **Full table:** `docs/reviews/CHECKPOINT_2A_ACCEPTANCE_REFINEMENTS.md` §1.
+
 **CDC reuse conditions as implemented:**
-- “Source: CDC” attribution in the Library, on every milestone detail, and on About.
+- Source attribution: the concise source note on Progress and the Library (R-006), the source line on every milestone page, the guide's Sources card, and the full “Source: CDC” card on About.
 - A prominent statement that the app is not endorsed by CDC, HHS, or the U.S. Government.
-- Wording is unchanged, including pronouns.
+- ~~Wording is unchanged, including pronouns.~~ *Superseded 2026-11-27 (R-004):*
+  - The stored catalog wording is unchanged, including pronouns.
+  - The **displayed** wording of 41 items replaces gendered pronouns with gender-neutral ones (plus verb agreement), through the separate, validated display layer `src/content/milestones.display.json`.
+  - Every adapted milestone's page says so and shows CDC's original wording.
+  - Attribution no longer says “without changes” or “word for word”.
+  - **Owner review requested:** CDC's conditions include “no substantive changes”. Claude Code considers this change non-substantive and disclosed, but this is not a CDC determination and CDC has not approved or endorsed it.
 - A statement that the originals are available free at cdc.gov.
 - External links open in a new window.
 - No CDC logo, photos, or videos.

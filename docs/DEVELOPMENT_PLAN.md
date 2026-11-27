@@ -30,6 +30,29 @@
 
 ---
 
+## R12 — Checkpoint 2a human acceptance refinements (implemented; awaiting owner acceptance) — supersedes conflicting R9 and R11 text
+**Why:** the owner's hands-on review of the Growth UX refinement (`170cc99`) found five usability improvements, **R-004 to R-008**. That build had passed all **387 automated tests** (252 unit, 135 end-to-end) in three consecutive runs. The tests verified the specification; the owner judged how it felt to a parent.
+
+**Design principle (permanent; see DESIGN_SYSTEM): parent-first interface, evidence-backed infrastructure.** Rigorous source verification, accurate content, reliable calculations and data safeguards stay underneath. What parents see is warm, intuitive, concise and approachable, without implementation terms, methodological repetition or checkpoint language.
+
+| ID | Change | Details |
+|---|---|---|
+| R-004 | Gender-neutral milestone wording through a separate, validated display layer; the CDC catalog is unchanged | `docs/reviews/CHECKPOINT_2A_ACCEPTANCE_REFINEMENTS.md` §1 |
+| R-005 | “Make a personal version” and the “Your versions” filter removed. Existing personal entries are preserved in a collapsed Library section and not counted | §2 |
+| R-006 | Plain terms (“All milestones”, “By age”, “Age”); attribution consolidated into concise notes plus the full About page | §3 |
+| R-007 | One **Notes & Observations** section (date, text, Add entry, previous entries with Edit/Remove). Existing notes are shown as “No observation date”. Append-only edit events; no schema change | §4 |
+| R-008 | Progress explains how to change the age basis; **Manage age settings** opens the selected child's age settings | §5 |
+
+**Unchanged:**
+- Growth order, subtitles and responsibilities.
+- The read-only guide.
+- Calculations, eligibility and the Progress denominator.
+- Milestone ids and the source catalog.
+- Profile isolation, offline behavior and themes.
+- The database version (2); no dependencies added.
+
+**Not done (out of scope):** R-001, R-003, Checkpoint 2b, and Calendar/Journal/Resources/sharing features.
+
 ## R11 — Checkpoint 2a Growth UX refinement (implemented; awaiting owner acceptance) — supersedes conflicting R4, R9 and §6.4 text
 **Why:** owner hands-on acceptance testing (before 2a was accepted) found the Growth sections repetitive and unclear about which actions update progress (R-002, a human-discovered usability and product-design issue). The original 2a implementation had passed all 339 automated tests.
 

@@ -71,8 +71,8 @@ function renderRoute(route: Route) {
       return <Screen nav={false} current="profileNew" title="Add a child" back={{ name: 'profiles' }}><ProfileForm childId={null} /></Screen>;
     case 'profileEdit':
       return (
-        <Screen nav={false} current="profileEdit" title="Edit profile" back={{ name: 'profiles' }}>
-          <ProfileForm key={route.id} childId={route.id} />
+        <Screen nav={false} current="profileEdit" title="Edit profile" back={route.section === 'age' ? { name: 'growthProgress' } : { name: 'profiles' }}>
+          <ProfileForm key={`${route.id}-${route.section ?? ''}`} childId={route.id} focusAgeSettings={route.section === 'age'} />
         </Screen>
       );
   }

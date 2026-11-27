@@ -1,0 +1,495 @@
+{
+  "format": "rcr-milestone-display",
+  "version": 1,
+  "catalogContentVersion": "cdc-2022-web-reviewed-2026-05-15",
+  "basis": "Parent-facing display wording (owner refinement R-004). CDC uses “he” and “she” in alternating milestones; the app shows gender-neutral wording instead. The CDC catalog (milestones.cdc-2022.json) is unchanged and remains the source of truth. Each adaptation records the exact CDC source text and the ordered whole-word replacements; build-time validation proves that applying exactly these replacements to the source gives the display text, and that only pronouns, articles and the matching verb agreement change.",
+  "adaptations": [
+    {
+      "id": "cdc22-m02-se-03",
+      "source": "Seems happy to see you when you walk up to her",
+      "replacements": [
+        [
+          "her",
+          "them"
+        ]
+      ],
+      "display": "Seems happy to see you when you walk up to them"
+    },
+    {
+      "id": "cdc22-m02-se-04",
+      "source": "Smiles when you talk to or smile at her",
+      "replacements": [
+        [
+          "her",
+          "them"
+        ]
+      ],
+      "display": "Smiles when you talk to or smile at them"
+    },
+    {
+      "id": "cdc22-m04-se-01",
+      "source": "Smiles on his own to get your attention",
+      "replacements": [
+        [
+          "his",
+          "their"
+        ]
+      ],
+      "display": "Smiles on their own to get your attention"
+    },
+    {
+      "id": "cdc22-m04-se-02",
+      "source": "Chuckles (not yet a full laugh) when you try to make him laugh",
+      "replacements": [
+        [
+          "him",
+          "them"
+        ]
+      ],
+      "display": "Chuckles (not yet a full laugh) when you try to make them laugh"
+    },
+    {
+      "id": "cdc22-m04-lc-02",
+      "source": "Makes sounds back when you talk to him",
+      "replacements": [
+        [
+          "him",
+          "them"
+        ]
+      ],
+      "display": "Makes sounds back when you talk to them"
+    },
+    {
+      "id": "cdc22-m04-cg-01",
+      "source": "If hungry, opens mouth when he sees breast or bottle",
+      "replacements": [
+        [
+          "he",
+          "they"
+        ],
+        [
+          "sees",
+          "see"
+        ]
+      ],
+      "display": "If hungry, opens mouth when they see breast or bottle"
+    },
+    {
+      "id": "cdc22-m04-cg-02",
+      "source": "Looks at her hands with interest",
+      "replacements": [
+        [
+          "her",
+          "their"
+        ]
+      ],
+      "display": "Looks at their hands with interest"
+    },
+    {
+      "id": "cdc22-m04-mp-01",
+      "source": "Holds head steady without support when you are holding him",
+      "replacements": [
+        [
+          "him",
+          "them"
+        ]
+      ],
+      "display": "Holds head steady without support when you are holding them"
+    },
+    {
+      "id": "cdc22-m04-mp-02",
+      "source": "Holds a toy when you put it in his hand",
+      "replacements": [
+        [
+          "his",
+          "their"
+        ]
+      ],
+      "display": "Holds a toy when you put it in their hand"
+    },
+    {
+      "id": "cdc22-m04-mp-03",
+      "source": "Uses his arm to swing at toys",
+      "replacements": [
+        [
+          "his",
+          "their"
+        ]
+      ],
+      "display": "Uses their arm to swing at toys"
+    },
+    {
+      "id": "cdc22-m06-cg-01",
+      "source": "Puts things in her mouth to explore them",
+      "replacements": [
+        [
+          "her",
+          "their"
+        ]
+      ],
+      "display": "Puts things in their mouth to explore them"
+    },
+    {
+      "id": "cdc22-m06-cg-02",
+      "source": "Reaches to grab a toy she wants",
+      "replacements": [
+        [
+          "she",
+          "they"
+        ],
+        [
+          "wants",
+          "want"
+        ]
+      ],
+      "display": "Reaches to grab a toy they want"
+    },
+    {
+      "id": "cdc22-m06-cg-03",
+      "source": "Closes lips to show she doesn’t want more food",
+      "replacements": [
+        [
+          "she",
+          "they"
+        ],
+        [
+          "doesn’t",
+          "don’t"
+        ]
+      ],
+      "display": "Closes lips to show they don’t want more food"
+    },
+    {
+      "id": "cdc22-m06-mp-03",
+      "source": "Leans on hands to support herself when sitting",
+      "replacements": [
+        [
+          "herself",
+          "themselves"
+        ]
+      ],
+      "display": "Leans on hands to support themselves when sitting"
+    },
+    {
+      "id": "cdc22-m09-se-03",
+      "source": "Looks when you call her name",
+      "replacements": [
+        [
+          "her",
+          "their"
+        ]
+      ],
+      "display": "Looks when you call their name"
+    },
+    {
+      "id": "cdc22-m09-cg-01",
+      "source": "Looks for objects when dropped out of sight (like his spoon or toy)",
+      "replacements": [
+        [
+          "his",
+          "a"
+        ]
+      ],
+      "display": "Looks for objects when dropped out of sight (like a spoon or toy)"
+    },
+    {
+      "id": "cdc22-m09-mp-01",
+      "source": "Gets to a sitting position by herself",
+      "replacements": [
+        [
+          "herself",
+          "themselves"
+        ]
+      ],
+      "display": "Gets to a sitting position by themselves"
+    },
+    {
+      "id": "cdc22-m09-mp-02",
+      "source": "Moves things from one hand to her other hand",
+      "replacements": [
+        [
+          "her",
+          "the"
+        ]
+      ],
+      "display": "Moves things from one hand to the other hand"
+    },
+    {
+      "id": "cdc22-m09-mp-03",
+      "source": "Uses fingers to “rake” food towards himself",
+      "replacements": [
+        [
+          "himself",
+          "themselves"
+        ]
+      ],
+      "display": "Uses fingers to “rake” food towards themselves"
+    },
+    {
+      "id": "cdc22-m12-cg-02",
+      "source": "Looks for things he sees you hide, like a toy under a blanket",
+      "replacements": [
+        [
+          "he",
+          "they"
+        ],
+        [
+          "sees",
+          "see"
+        ]
+      ],
+      "display": "Looks for things they see you hide, like a toy under a blanket"
+    },
+    {
+      "id": "cdc22-m15-se-02",
+      "source": "Shows you an object she likes",
+      "replacements": [
+        [
+          "she",
+          "they"
+        ],
+        [
+          "likes",
+          "like"
+        ]
+      ],
+      "display": "Shows you an object they like"
+    },
+    {
+      "id": "cdc22-m15-lc-03",
+      "source": "Follows directions given with both a gesture and words. For example, he gives you a toy when you hold out your hand and say, “Give me the toy.”",
+      "replacements": [
+        [
+          "he",
+          "they"
+        ],
+        [
+          "gives",
+          "give"
+        ]
+      ],
+      "display": "Follows directions given with both a gesture and words. For example, they give you a toy when you hold out your hand and say, “Give me the toy.”"
+    },
+    {
+      "id": "cdc22-m15-mp-01",
+      "source": "Takes a few steps on his own",
+      "replacements": [
+        [
+          "his",
+          "their"
+        ]
+      ],
+      "display": "Takes a few steps on their own"
+    },
+    {
+      "id": "cdc22-m15-mp-02",
+      "source": "Uses fingers to feed herself some food",
+      "replacements": [
+        [
+          "herself",
+          "themselves"
+        ]
+      ],
+      "display": "Uses fingers to feed themselves some food"
+    },
+    {
+      "id": "cdc22-m18-se-05",
+      "source": "Helps you dress him by pushing arm through sleeve or lifting up foot",
+      "replacements": [
+        [
+          "him",
+          "them"
+        ]
+      ],
+      "display": "Helps you dress them by pushing arm through sleeve or lifting up foot"
+    },
+    {
+      "id": "cdc22-m18-mp-04",
+      "source": "Feeds himself with his fingers",
+      "replacements": [
+        [
+          "himself",
+          "themselves"
+        ],
+        [
+          "his",
+          "their"
+        ]
+      ],
+      "display": "Feeds themselves with their fingers"
+    },
+    {
+      "id": "cdc22-m24-lc-03",
+      "source": "Points to at least two body parts when you ask him to show you",
+      "replacements": [
+        [
+          "him",
+          "them"
+        ]
+      ],
+      "display": "Points to at least two body parts when you ask them to show you"
+    },
+    {
+      "id": "cdc22-m30-se-02",
+      "source": "Shows you what she can do by saying, “Look at me!”",
+      "replacements": [
+        [
+          "she",
+          "they"
+        ]
+      ],
+      "display": "Shows you what they can do by saying, “Look at me!”"
+    },
+    {
+      "id": "cdc22-m30-cg-04",
+      "source": "Shows he knows at least one color, like pointing to a red crayon when you ask, “Which one is red?”",
+      "replacements": [
+        [
+          "he",
+          "they"
+        ],
+        [
+          "knows",
+          "know"
+        ]
+      ],
+      "display": "Shows they know at least one color, like pointing to a red crayon when you ask, “Which one is red?”"
+    },
+    {
+      "id": "cdc22-m30-mp-02",
+      "source": "Takes some clothes off by himself, like loose pants or an open jacket",
+      "replacements": [
+        [
+          "himself",
+          "themselves"
+        ]
+      ],
+      "display": "Takes some clothes off by themselves, like loose pants or an open jacket"
+    },
+    {
+      "id": "cdc22-m30-mp-04",
+      "source": "Turns book pages, one at a time, when you read to her",
+      "replacements": [
+        [
+          "her",
+          "them"
+        ]
+      ],
+      "display": "Turns book pages, one at a time, when you read to them"
+    },
+    {
+      "id": "cdc22-m36-se-01",
+      "source": "Calms down within 10 minutes after you leave her, like at a childcare drop off",
+      "replacements": [
+        [
+          "her",
+          "them"
+        ]
+      ],
+      "display": "Calms down within 10 minutes after you leave them, like at a childcare drop off"
+    },
+    {
+      "id": "cdc22-m36-cg-01",
+      "source": "Draws a circle, when you show him how",
+      "replacements": [
+        [
+          "him",
+          "them"
+        ]
+      ],
+      "display": "Draws a circle, when you show them how"
+    },
+    {
+      "id": "cdc22-m36-cg-02",
+      "source": "Avoids touching hot objects, like a stove, when you warn her",
+      "replacements": [
+        [
+          "her",
+          "them"
+        ]
+      ],
+      "display": "Avoids touching hot objects, like a stove, when you warn them"
+    },
+    {
+      "id": "cdc22-m36-mp-02",
+      "source": "Puts on some clothes by himself, like loose pants or a jacket",
+      "replacements": [
+        [
+          "himself",
+          "themselves"
+        ]
+      ],
+      "display": "Puts on some clothes by themselves, like loose pants or a jacket"
+    },
+    {
+      "id": "cdc22-m48-se-06",
+      "source": "Changes behavior based on where she is (place of worship, library, playground)",
+      "replacements": [
+        [
+          "she",
+          "they"
+        ],
+        [
+          "is",
+          "are"
+        ]
+      ],
+      "display": "Changes behavior based on where they are (place of worship, library, playground)"
+    },
+    {
+      "id": "cdc22-m48-lc-03",
+      "source": "Talks about at least one thing that happened during her day, like “I played soccer.”",
+      "replacements": [
+        [
+          "her",
+          "their"
+        ]
+      ],
+      "display": "Talks about at least one thing that happened during their day, like “I played soccer.”"
+    },
+    {
+      "id": "cdc22-m48-mp-02",
+      "source": "Serves herself food or pours water, with adult supervision",
+      "replacements": [
+        [
+          "herself",
+          "themselves"
+        ]
+      ],
+      "display": "Serves themselves food or pours water, with adult supervision"
+    },
+    {
+      "id": "cdc22-m60-lc-01",
+      "source": "Tells a story she heard or made up with at least two events. For example, a cat was stuck in a tree and a firefighter saved it",
+      "replacements": [
+        [
+          "she",
+          "they"
+        ]
+      ],
+      "display": "Tells a story they heard or made up with at least two events. For example, a cat was stuck in a tree and a firefighter saved it"
+    },
+    {
+      "id": "cdc22-m60-lc-02",
+      "source": "Answers simple questions about a book or story after you read or tell it to him",
+      "replacements": [
+        [
+          "him",
+          "them"
+        ]
+      ],
+      "display": "Answers simple questions about a book or story after you read or tell it to them"
+    },
+    {
+      "id": "cdc22-m60-cg-05",
+      "source": "Writes some letters in her name",
+      "replacements": [
+        [
+          "her",
+          "their"
+        ]
+      ],
+      "display": "Writes some letters in their name"
+    }
+  ]
+}

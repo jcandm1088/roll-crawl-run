@@ -9,6 +9,7 @@ import { PlaceholderCard } from '../../components/Placeholder';
 import { href } from '../../../router';
 import { useChildMilestones } from '../../../state/milestones';
 import { currentProgress, getMilestone } from '../../../domain/milestones';
+import { displayTextOf } from '../../../domain/milestoneDisplay';
 import { recentProgressEvents } from '../../../domain/milestoneHistory';
 import { CategoryProgressList, MilestoneSafeguard, StatusBadge } from '../growth/parts';
 import type { Child } from '../../../types';
@@ -117,8 +118,8 @@ function HomeMilestoneCards() {
   const p = currentProgress(m.age.months, m.sourcedStates);
   const recent = recentProgressEvents(m.data.events, 3);
   const labelFor = (key: string) => {
-    if (key.startsWith('def:')) return getMilestone(key.slice(4))?.text ?? 'Milestone';
-    return m.data!.personal.find((x) => `custom:${x.id}` === key)?.title ?? 'Your version';
+    if (key.startsWith('def:')) { const d = getMilestone(key.slice(4)); return d ? displayTextOf(d) : 'Milestone'; }
+    return m.data!.personal.find((x) => `custom:${x.id}` === key)?.title ?? 'Personal entry';
   };
   const keyFor = (key: string) => (key.startsWith('def:') ? key.slice(4) : `p-${key.slice(7)}`);
   return (
@@ -133,7 +134,7 @@ function HomeMilestoneCards() {
             <CategoryProgressList categories={p.categories} />
           ) : (
             <p class="small muted" data-testid="home-progress-empty">
-              {m.age.months === null ? 'Milestones start counting at the due date (corrected age).' : p.overall.state === 'all-hidden' ? 'All milestones for this age are hidden.' : 'Nothing to track yet at this age. The first CDC milestones are listed “by 2 months.”'}
+              {m.age.months === null ? 'Milestones start counting at the due date (corrected age).' : p.overall.state === 'all-hidden' ? 'All milestones for this age are hidden.' : 'Nothing to track yet at this age. The first milestones are listed “by 2 months.”'}
             </p>
           )}
           <MilestoneSafeguard compact />

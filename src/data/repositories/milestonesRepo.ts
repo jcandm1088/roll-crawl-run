@@ -179,25 +179,69 @@ export async function removeObservation(db: RcrDB, ctx: WriteContext, t: Milesto
 }
 
 /**
- * PERMANENT erase of the personal text in one history entry (an observation or a note).
- * This is the one deliberate exception to append-only history: the text is overwritten
- * with null so it no longer exists in the app's storage. A marker records that an erase happened.
+ * Notes & Observations (R-007): changes the wording and/or date of an observation. Append-only: the
+ * original entry is kept and an `observation-edited` entry records the new text and date, so the earlier
+ * wording stays in this device's history until it is permanently erased. Never changes the status.
+ */
+export async function editObservation(db: RcrDB, ctx: WriteContext, t: MilestoneTarget, observationId: string, date: LocalDate, text: string): Promise<void> {
+  checkDate(ctx, date, 'observation date');
+  const clean = text.trim();
+  if (!clean) throw new MilestoneInputError('Please write what you noticed.');
+  await runAtomic(db, STORES, async (tx) => {
+    const current = await findRecord(tx, ctx.childId, t);
+    const evStore = tx.objectStore('milestoneEvents');
+    const obs = (await evStore.get(observationId)) as unknown as MilestoneEvent | undefined;
+    if (!current || !obs || obs.recordId !== current.id || obs.type !== 'observation' || obs.erasedAt) throw new MilestoneInputError('Entry not found.');
+    const all = (await evStore.index('byChild').getAll(IDBKeyRange.only(ctx.childId))) as unknown as MilestoneEvent[];
+    if (all.some((e) => e.type === 'observation-removed' && e.refEventId === observationId)) throw new MilestoneInputError('Entry not found.');
+    const latest = all
+      .filter((e) => e.type === 'observation-edited' && e.refEventId === observationId)
+      .sort((a, b) => a.recordedAt.localeCompare(b.recordedAt))
+      .pop() ?? obs;
+    if (latest.text === clean && latest.eventDate === date) return;
+    const next = touch(current, ctx.deviceId);
+    await write(tx, next, event(ctx, next, t, 'observation-edited', { eventDate: date, text: clean, refEventId: observationId, fromDate: latest.eventDate }));
+  });
+}
+
+/**
+ * PERMANENT erase of personal text in history (an observation, one of its edits, or a note).
+ * This is the one deliberate exception to append-only history: the text is overwritten with null
+ * so it no longer exists in the app's storage. A marker records that an erase happened.
+ *
+ * So that erased text can't be recovered from elsewhere in the history:
+ * - an observation is erased together with every edit of it (erasing an edit erases the whole entry);
+ * - a note version is erased together with any other saved version that has exactly the same text.
  */
 export async function eraseEntryText(db: RcrDB, ctx: WriteContext, t: MilestoneTarget, entryId: string): Promise<void> {
   await runAtomic(db, STORES, async (tx) => {
     const current = await findRecord(tx, ctx.childId, t);
     const evStore = tx.objectStore('milestoneEvents');
     const entry = (await evStore.get(entryId)) as unknown as MilestoneEvent | undefined;
-    if (!current || !entry || entry.recordId !== current.id || (entry.type !== 'observation' && entry.type !== 'note')) throw new MilestoneInputError('Entry not found.');
-    await evStore.put(touch({ ...entry, text: null, erasedAt: nowIso() }, ctx.deviceId) as never);
-    // If the erased entry is the current note, clear the current note too.
+    if (!current || !entry || entry.recordId !== current.id || (entry.type !== 'observation' && entry.type !== 'observation-edited' && entry.type !== 'note')) throw new MilestoneInputError('Entry not found.');
+    const mine = ((await evStore.index('byChild').getAll(IDBKeyRange.only(ctx.childId))) as unknown as MilestoneEvent[]).filter((e) => e.recordId === current.id);
+    let targets: MilestoneEvent[];
+    let rootId = entryId;
+    if (entry.type === 'note') {
+      targets = entry.text ? mine.filter((e) => e.type === 'note' && e.text === entry.text) : [entry];
+    } else {
+      rootId = entry.type === 'observation-edited' ? entry.refEventId! : entry.id;
+      targets = mine.filter((e) => e.id === rootId || (e.type === 'observation-edited' && e.refEventId === rootId));
+    }
+    const at = nowIso();
+    for (const e of targets) if (!e.erasedAt || e.text !== null) await evStore.put(touch({ ...e, text: null, erasedAt: e.erasedAt ?? at }, ctx.deviceId) as never);
+    // If the erased text is the current note, clear the current note too.
     const isCurrentNote = entry.type === 'note' && current.note !== '' && current.note === entry.text;
     const next = touch({ ...current, note: isCurrentNote ? '' : current.note }, ctx.deviceId);
-    await write(tx, next, event(ctx, next, t, 'entry-erased', { refEventId: entryId }));
+    await write(tx, next, event(ctx, next, t, 'entry-erased', { refEventId: rootId }));
   });
 }
 
-/** Saves the milestone's note. Each change is kept in history. */
+/**
+ * Saves the milestone's undated note. Each change is kept in history.
+ * Since R-007, new entries are always dated observations (Notes & Observations); this remains so a
+ * parent can edit or clear a note saved by an earlier version of the app, which has no observation date.
+ */
 export async function setNote(db: RcrDB, ctx: WriteContext, t: MilestoneTarget, note: string): Promise<void> {
   const clean = note.trim();
   await runAtomic(db, STORES, async (tx) => {
@@ -218,7 +262,12 @@ export async function setHidden(db: RcrDB, ctx: WriteContext, t: MilestoneTarget
   });
 }
 
-/** Creates a personal version: a separate custom record. The sourced milestone is never modified. */
+/**
+ * Creates a personal version: a separate custom record. The sourced milestone is never modified.
+ * Since R-005 no screen calls this: parents can no longer create personal versions (personal goals and
+ * activities belong in Goals & Exercises, Checkpoint 2b). It is kept, unchanged, as the reference for
+ * the shape of existing records, which the app still reads, updates and preserves.
+ */
 export async function createPersonalVersion(
   db: RcrDB,
   ctx: WriteContext,

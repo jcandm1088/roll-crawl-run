@@ -201,7 +201,7 @@ describe('recording confirmations describe the actual effect', () => {
   });
 
   it('edits to an existing achievement never claim a new achievement', () => {
-    for (const a of [{ kind: 'date-corrected' }, { kind: 'note' }, { kind: 'observation-added' }] as const) {
+    for (const a of [{ kind: 'date-corrected' }, { kind: 'note' }, { kind: 'observation-added' }, { kind: 'observation-edited' }, { kind: 'note-removed' }] as const) {
       const t = msg(a);
       expect(t).not.toMatch(/now counts|Saved as Achieved/);
     }
@@ -227,7 +227,8 @@ describe('recording confirmations describe the actual effect', () => {
     expect(msg({ kind: 'restored' })).toBe('Restored. It counts as achieved in progress again.');
     expect(msg({ kind: 'restored' }, { status: 'emerging' })).toBe('Restored. It’s included in progress again, as emerging.');
     expect(msg({ kind: 'restored' }, { applicable: false })).toMatch(/will be included in progress once Sam’s chronological age reaches 2 years/);
-    expect(msg({ kind: 'status', from: 'not-yet', to: 'achieved' }, { personal: true, applicable: false })).toMatch(/Your versions aren’t counted in CDC progress/);
+    // Updated for R-005/R-006: personal entries are no longer called "your versions", and "CDC progress" is now "Progress".
+    expect(msg({ kind: 'status', from: 'not-yet', to: 'achieved' }, { personal: true, applicable: false })).toMatch(/Personal entries aren’t counted in Progress/);
     const erased = msg({ kind: 'text-erased' });
     expect(erased).toBe('Text permanently erased.');
     expect(msg({ kind: 'observation-removed' })).toMatch(/until you erase it permanently/);

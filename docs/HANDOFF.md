@@ -2,14 +2,14 @@
 
 **This is the single authoritative, current-state handoff.** It replaces the earlier handoff notes. The original end-of-Checkpoint-1 handoff is kept unchanged as a historical record in `docs/reviews/CHECKPOINT_1_HANDOFF.md`; statements there describe the project as it was at commit `aa8c869` and are no longer current.
 
-*Last updated: 2026-11-26 (Checkpoint 2a Growth UX refinement, local commit).*
+*Last updated: 2026-11-27 (Checkpoint 2a human acceptance refinements, local commit).*
 
 ## 1. Status at a glance
 
 | Area | Status |
 |---|---|
 | **Checkpoint 1** — Design & Foundation | ✅ **Completed, accepted and deployed** |
-| **Checkpoint 2a** — Verified Milestone Tracking, **plus the Growth UX refinement** (R-002, plan R11) | 🟡 **Implemented, not yet accepted.** The owner's first hands-on testing led to the refinement; acceptance testing resumes on the refined build. Not merged into `main`, not deployed |
+| **Checkpoint 2a** — Verified Milestone Tracking, the Growth UX refinement (R-002, plan R11) **and the human acceptance refinements** (R-004 to R-008, plan R12) | 🟡 **Implemented, not yet accepted.** Two rounds of owner hands-on review led to the refinements; acceptance testing resumes on this build. Not merged into `main`, not deployed |
 | **Checkpoint 2b** — Goals & Exercises (CDC activities, recurrence, completions, charts) | ⏳ **Planned, not started.** Needs the owner's explicit authorization |
 | **Checkpoints 3–6** — Calendar, Journal & Resources, Backups/Sharing/Reports, Device polish | ⏳ **Planned, not started.** Checkpoints 3 and 5 have pending decisions (section 5) |
 | **Deferred** | Project license; GitHub Actions version upgrades; live multi-device sync and other 🔮 Future items in the plan |
@@ -23,11 +23,26 @@
 | **Deployed version** | `e40287f` (Checkpoint 1: Publication Compliance and Documentation) |
 | **Remote `main`** | `aa8c869352cdd734eafb0ed8b7219069d4457241` (Checkpoint 1: Deployment Acceptance and Handoff; documentation only, so no redeploy was needed) |
 | **Remote `checkpoint-2a`** | `73d9f6fc356b3f792a9f71cc8f38ff421e13581d` (Checkpoint 2a: Verified Milestone Tracking), a direct child of `aa8c869`. This is the **recovered original commit** (section 6) |
-| Session branch `claude/beautiful-allen-1vjobt` | Remote: `9ca6149` (handoff consolidation, preserved with the owner's authorization). Local: one further commit, “Checkpoint 2a: Growth UX Refinement”, **not pushed** (see BUILD_LOG for its hash). Pushes only with the owner's authorization |
+| Branch `claude/beautiful-allen-1vjobt` (remote) | `170cc99` “Checkpoint 2a: Growth UX Refinement”, preserved with the owner's authorization |
+| Session branch `claude/sharp-franklin-vrbgmd` | Fast-forwarded to `170cc99`; then one local commit, “Checkpoint 2a: Human Acceptance Refinements”, **not pushed**. Pushes only with the owner's authorization |
 
-**History:** `a4e12b5` → `ade3171` → `820bb0e` → `873ed1c` → `e40287f` → `aa8c869` → `73d9f6f` → `9ca6149` → Growth UX refinement (local).
+**History:** `a4e12b5` → `ade3171` → `820bb0e` → `873ed1c` → `e40287f` → `aa8c869` → `73d9f6f` → `9ca6149` → `170cc99` → Human Acceptance Refinements (local, ten commits).
 
 `main` is not to receive Checkpoint 2a until the owner accepts it and authorizes the merge. Pushing never deploys: deployment is a separate manual workflow (section 7).
+
+## 3b. Human acceptance refinements (implemented, not yet accepted)
+- **Why:** R-004 to R-008. These are owner-discovered usability findings on `170cc99`, which had passed all 387 automated tests three times.
+- **What changed:**
+  - gender-neutral milestone wording (validated display layer; catalog verbatim);
+  - no personal-version creation (existing entries kept under “Your personal entries”);
+  - plainer terms and consolidated attribution;
+  - one Notes & Observations section (earlier notes shown as “No observation date”);
+  - “Manage age settings” on Progress;
+  - design principle “parent-first interface, evidence-backed infrastructure”.
+- **Details:** plan R12, Decisions #75–#85, `docs/reviews/CHECKPOINT_2A_ACCEPTANCE_REFINEMENTS.md`.
+- **Unchanged:** database version 2, dependencies, ids, calculations and the Progress denominator, the read-only guide, isolation, offline behavior and themes.
+- **Results:** 281 unit + 155 end-to-end tests, ×3 (BUILD_LOG).
+- **Owner decisions needed:** the CDC reuse-condition question (Decision #77); legacy personal entries in 2b.
 
 ## 3a. Growth UX refinement (implemented, not yet accepted)
 - **Why:** R-002. The owner's first hands-on acceptance testing found the Growth sections repetitive and unclear about what updates progress, even though all 339 automated tests passed.
@@ -62,7 +77,7 @@ Details: `docs/BUILD_LOG.md` → “Recovery and baseline verification”.
 Automated tests run in headless Chromium only. **No Safari or physical-iPhone testing of Checkpoint 2a has occurred.**
 
 ## 4. Checkpoint 2a acceptance requirements
-Use the **updated hands-on acceptance checklist** (H1–H18, plus the still-applicable G3–G8, G12–G17, G19) in `docs/TESTING_CHECKLIST.md`. G1, G2, G9–G11 are superseded by the refinement. Record only actual results. H1–H15 are local (Mac); H16–H17 need the app on an iPhone; H18 needs a deployment.
+Use the **hands-on checklist for the acceptance refinements (HA1–HA17)**, plus the still-applicable H- and G-items it lists, in `docs/TESTING_CHECKLIST.md`. Earlier version: the H1–H18 checklist plus G3–G8, G12–G17, G19. G1, G2, G9–G11 are superseded by the refinement. Record only actual results. H1–H15 are local (Mac); H16–H17 need the app on an iPhone; H18 needs a deployment.
 - **Testable locally** (production build on the Mac, Safari): G1–G14, G16, G19; G15 and G17 can be approximated on a Mac but are defined for iPhone.
 - **Need the app on a physical iPhone:** G15 (airplane mode), G17 (readability and touch comfort). Testing these on an iPhone requires either a deployment or a local-network test the owner sets up.
 - **Deployment-dependent:** G18 (update from the deployed Checkpoint 1 on the iPhone) requires an owner-authorized deployment of Checkpoint 2a.
@@ -72,7 +87,10 @@ Acceptance is complete only when the owner says so. Defects found during accepta
 ## 5. Outstanding decisions
 | Decision | Needed before | Notes |
 |---|---|---|
-| Owner acceptance of Checkpoint 2a (with the refinement) | Merging into `main`, deployment, Checkpoint 2b | Section 4 |
+| Owner acceptance of Checkpoint 2a (with both refinements) | Merging into `main`, deployment, Checkpoint 2b | Section 4 |
+| Gender-neutral display wording vs CDC's “no substantive changes” condition | Acceptance | Decision #77 |
+| Treatment of legacy personal entries | Checkpoint 2b | Keep / offer conversion to goals / offer delete; no automatic migration |
+| Remote preservation of the acceptance-refinement commit | Avoiding loss in a conversation transfer | Push only with authorization naming the branch |
 | Remote preservation of the refinement commit | Avoiding loss in a conversation transfer | Push to the session branch only with authorization |
 | Option B educational excerpts | Optional | Deferred (D-10) |
 | Authorization to begin Checkpoint 2b | Checkpoint 2b | Supporting activities to come from verified CDC tips |
@@ -106,7 +124,9 @@ It never merges into `main` and never deploys. Claude Code must respect any sess
 ## 8. Approved decisions to carry forward
 **Platform and data:** Vite + TypeScript + Preact; IndexedDB (`idb`), local-first; no accounts, servers, analytics or AI; strict content security policy; offline-first service worker; atomic multi-record writes.
 
-**Navigation and screens:** five tabs (Home, Growth, Calendar, Journal, Resources); Profiles and Settings from the top-right control; the child selector is a downward popover. **Growth order:** Progress → Goals & Exercises → What to Expect at Every Age → Milestone Library. **Calendar** (Checkpoint 3) opens straight to the current month with today highlighted, month navigation, an agenda view and upcoming events. **Settings:** Profiles and Appearance open; Your Data, Calendar & Reminders, This Device and About collapsed.
+**Navigation and screens:** five tabs (Home, Growth, Calendar, Journal, Resources); Profiles and Settings from the top-right control; the child selector is a downward popover. **Growth order (Decision #65; corrected here 2026-11-27, this line previously showed the superseded R4 order):** Progress → Milestone Library → Goals & Exercises → What to Expect at Every Age.
+
+**Design principle:** parent-first interface, evidence-backed infrastructure (DESIGN_SYSTEM). **Calendar** (Checkpoint 3) opens straight to the current month with today highlighted, month navigation, an agenda view and upcoming events. **Settings:** Profiles and Appearance open; Your Data, Calendar & Reminders, This Device and About collapsed.
 
 **Appearance:** themes Earth (default), Sky, Blush (baby pink), Lavender, Sage, chosen per child and stored per device. Typography Option B (Inter for all functional text, Fraunces only for the wordmark; shared heading tokens and `PageHeader`). Logo Concept 5, “Growing Together”.
 
@@ -116,7 +136,7 @@ It never merges into `main` and never deploys. Claude Code must respect any sess
 
 ## 9. Known limitations and refinement backlog
 - **Limitations:** `docs/KNOWN_LIMITATIONS.md`. Key items: no backup or export yet (Checkpoint 5), so data lives only on the device; automated testing in Chromium only; Checkpoint 2a untested in Safari and on iPhone; Android untested; the one-time initial iPhone “server not responding” delay remains unexplained; iOS may keep an old Home Screen icon.
-- **Refinement backlog:** `docs/REFINEMENT_BACKLOG.md`. **R-001**, onboarding child-name input overflow on mobile: pending investigation, not corrected. **R-002**, Growth usability: corrected, awaiting the owner's verification.
+- **Refinement backlog:** `docs/REFINEMENT_BACKLOG.md`. **R-001**, onboarding child-name input overflow on mobile: pending investigation, not corrected. **R-002**, Growth usability: corrected, awaiting the owner's verification. **R-003**, Library control density: pending owner review. **R-004 to R-008**: corrected, awaiting the owner's verification.
 
 ## 10. Where things are
 `README.md` (overview, running locally) · `docs/DEVELOPMENT_PLAN.md` (R-sections take precedence over the original plan; newest first) · `docs/DECISIONS.md` · `docs/BUILD_LOG.md` · `docs/TESTING_CHECKLIST.md` · `docs/KNOWN_LIMITATIONS.md` · `docs/REFINEMENT_BACKLOG.md` · `docs/SOURCE_REGISTER.md` · `docs/MILESTONE_INVENTORY.md` · `docs/DESIGN_SYSTEM.md` · `docs/reviews/`.

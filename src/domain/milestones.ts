@@ -3,7 +3,8 @@
  *
  * Content: the 159 CDC "Learn the Signs. Act Early." milestones (2022 revision,
  * CDC web pages content-reviewed May 15, 2026), copied verbatim — wording and
- * pronouns unchanged. See docs/SOURCE_REGISTER.md.
+ * pronouns unchanged. See docs/SOURCE_REGISTER.md. This catalog is the source of truth and is never
+ * reworded: parent-facing gender-neutral wording is a separate display layer (milestoneDisplay.ts, R-004).
  */
 import catalogJson from '../content/milestones.cdc-2022.json';
 import sourcesJson from '../content/sources.json';
@@ -181,7 +182,7 @@ function byCategory(defs: readonly MilestoneDef[], records: ReadonlyMap<string, 
  * CURRENT (cumulative) progress for the child's actual milestone age.
  * Formula: achieved ÷ applicable, counting only visible, sourced milestones whose reference age
  * has been reached. Emerging gets no partial credit; hidden and future milestones are excluded.
- * Personal versions (custom milestones) are never included.
+ * Personal entries (custom milestones from earlier versions of the app) are never included.
  */
 export function currentProgress(milestoneAgeMonths: number | null, records: ReadonlyMap<string, RecordState>) {
   return byCategory(MILESTONES.filter((m) => isApplicable(m, milestoneAgeMonths)), records);

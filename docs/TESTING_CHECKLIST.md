@@ -210,3 +210,67 @@ Not reported, and therefore untested: M9, M11, M13–M17 and F6 (see `docs/revie
 | H18 | Update from the deployed Checkpoint 1 keeps profile, photo and theme (G18) | Deploy | | | Deployment not authorized yet |
 
 Still applicable from the original list: **G3–G8, G12–G17, G19** (G18 = H18).
+
+## Checkpoint 2a human acceptance refinements — automated (headless Chromium; results in BUILD_LOG)
+| Area | Test file |
+|---|---|
+| Display layer validates against the catalog; 41 adaptations; catalog verbatim (texts, lock, hashes, 41 gendered originals) | tests/unit/acceptanceRefinements.test.ts |
+| No gendered word in any displayed milestone; unadapted items identical to CDC | acceptanceRefinements.test.ts |
+| Meaning preserved: numbers, quoted speech, parentheticals, qualifiers, word counts; ages/categories/ids only from the catalog | acceptanceRefinements.test.ts |
+| Validator rejects: changed qualifier, added word, non-pronoun replacement, gendered result, stale source, unknown id, duplicate, missing coverage, no pronoun, wrong catalog version | acceptanceRefinements.test.ts |
+| Guide validation rejects gendered text; Library search uses displayed wording | acceptanceRefinements.test.ts |
+| Notes & Observations storage: ordering, no status change, append-only edits, validation, chain erase (from original or edit), undated legacy note, identical-version erase, removal keeps history, child isolation, database version 2 | acceptanceRefinements.test.ts |
+| Legacy personal entries never change Progress | acceptanceRefinements.test.ts |
+| Age-settings route round-trip | acceptanceRefinements.test.ts |
+| Every visible milestone gender-neutral: guide (20 ranges), Library (159 rows), Home, Growth, Progress, About, Settings → About | tests/e2e/acceptance-refinements.spec.ts |
+| Adapted wording disclosed with CDC's original; unadapted items have no notice; Home recent uses the displayed wording; search | acceptance-refinements.spec.ts |
+| No personal-version controls on milestone pages; hidden legacy entries reachable, labelled and restorable | acceptance-refinements.spec.ts; growth.spec.ts |
+| Superseded terms absent; CDC mentions limited; source note, non-endorsement, source links, safeguards and full attribution present | acceptance-refinements.spec.ts; growth.spec.ts |
+| Notes & Observations: one text field, separate from status; dates and order; date resets; rejected date keeps text; edit; remove; erase all versions; undated note shown honestly, edited without inventing a date, removed and erased; per-child isolation; offline | acceptance-refinements.spec.ts; growth.spec.ts; growth-refinement.spec.ts |
+| Manage age settings: wording with and without corrected age and before the due date; opens the selected child; heading focused and visible; Back/Cancel/Save return to Progress; Progress unchanged unless the setting changes | acceptance-refinements.spec.ts |
+| Upgrade from `170cc99` with representative data (two children, statuses, date correction, hidden, early, two note versions, kept/removed/erased observations, personal version with status, note and observation): every store byte-identical, database version 2; entries, history, progress (overall and by area), personal entry, editing and isolation after the update | tests/e2e/update.spec.ts |
+| Upgrade from the original 2a (`73d9f6f`): updated to check Notes & Observations and the personal-entries section | update.spec.ts |
+| Accessibility (axe, WCAG 2.1 AA): detail with entries, editing, wording disclosure, Progress, Library personal entries, profile age settings | acceptance-refinements.spec.ts |
+| 320px: no horizontal scrolling and no control past the edge on the refined screens; all five themes | acceptance-refinements.spec.ts |
+
+**Tests updated for superseded behavior (each marked in the test):**
+- **`growth-refinement.spec.ts`:**
+  - “All 159” → “All (159)”;
+  - catalog label;
+  - “No CDC milestones apply yet”;
+  - note/observation confirmations → entry add/edit;
+  - guide overview label, verbatim pronoun check → gender-neutral wording, area-empty note, last-age line, range-includes line, pre-due note, over-five note, offline overview phrase;
+  - the seed now uses Notes & Observations and seeds a legacy personal entry.
+- **`growth.spec.ts`:**
+  - empty-range wording and neighbour label;
+  - observations test → Notes & Observations (adds edit and all-version erase);
+  - personal-versions test → personal-entries test (no creation; legacy entry seeded);
+  - “Reference age” → “Age” filter;
+  - attribution moved from the Library card to the source note plus the About card.
+- **`update.spec.ts`:** original-2a post-update checks.
+- **`guide.test.ts`:** personal confirmation wording; two new actions added to the no-new-achievement check.
+
+## Checkpoint 2a — hands-on acceptance checklist for the human acceptance refinements (owner)
+*Local* = the local production build on the Mac (Safari). *iPhone* and *Deploy* as above. Record only actual results.
+
+| # | Check | Where | Date | Result | Notes |
+|---|---|---|---|---|---|
+| HA1 | Milestones read naturally with “they/them/their”; nothing says “he” or “she” (Library All, several guide ranges, Home recent) | Local | | | |
+| HA2 | On an adapted milestone (e.g. “Takes a few steps on their own”), “Wording adapted to be gender-neutral” shows CDC's original, and the meaning is the same | Local | | | |
+| HA3 | Spot-check five adapted items against the table in `docs/reviews/CHECKPOINT_2A_ACCEPTANCE_REFINEMENTS.md` | Local | | | |
+| HA4 | No milestone page offers to make a personal version; the Library has no “Your versions” chip | Local | | | |
+| HA5 | (If you have personal versions from earlier testing) they appear under “Your personal entries” at the end of the Library, open, and aren't counted in Progress | Local | | | |
+| HA6 | The language feels like a parenting app: “All milestones”, “By age”, “Age”; CDC is mentioned where it matters, not repeatedly | Local | | | |
+| HA7 | Source, non-endorsement and “talk with your child's healthcare provider” are still easy to find (Progress, Library, milestone page, guide, About) | Local | | | |
+| HA8 | One obvious Notes & Observations place: add an entry (date defaults to today), add an older one, see them newest first | Local | | | |
+| HA9 | Edit an entry's text and date; remove one; erase permanently from the history; the status never changes | Local | | | |
+| HA10 | An earlier note (from previous testing) shows “No observation date · saved …”, can be edited and removed, and no date is invented | Local | | | |
+| HA11 | Status and achievement-date controls are clearly separate from Notes & Observations | Local | | | |
+| HA12 | Progress, end of page: the age explanation reads well; Manage age settings opens the right child's age settings; Back or Save returns to Progress | Local | | | |
+| HA13 | With a corrected-age child, the explanation mentions chronological or corrected age; with another child, it suggests turning on corrected age | Local | | | |
+| HA14 | Progress figures are the same as before updating | Local | | | |
+| HA15 | All five themes: Notes & Observations, Progress and Library read well | Local | | | |
+| HA16 | iPhone: Notes & Observations and the age link are comfortable to use | iPhone | | | |
+| HA17 | iPhone, airplane mode: add and edit an entry | iPhone | | | |
+
+Still applicable: **H1–H5, H7–H9, H11, H13–H18** from the previous checklist. **H6** now reads “correct a date and add an entry”. In **H10**, hide a milestone and add an entry; personal versions can no longer be made. In **H12**, “your versions” → “Your personal entries”.

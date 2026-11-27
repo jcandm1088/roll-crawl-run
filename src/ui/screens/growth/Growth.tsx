@@ -11,7 +11,8 @@ import { Icon, type IconName } from '../../components/Icon';
 import { PlannedTag } from '../../components/Placeholder';
 import { Accordion } from '../../components/Accordion';
 import { childNameInline } from '../../components/Avatar';
-import { AgeBasisPanel, CDC_CONCERNED_URL, CDC_MILESTONES_URL, CategoryProgressList, ExternalLink, ForChild, MilestoneSafeguard, OlderThanFiveNote, ProgressLine } from './parts';
+import { AgeBasisPanel, CDC_CONCERNED_URL, CDC_MILESTONES_URL, CategoryProgressList, ExternalLink, ForChild, MilestoneSafeguard, OlderThanFiveNote, ProgressLine, SourceNote } from './parts';
+import { displayTextOf } from '../../../domain/milestoneDisplay';
 import { PAGE_SOURCES } from '../../../domain/milestones';
 import type { Child } from '../../../types';
 
@@ -48,7 +49,7 @@ export function GrowthHome() {
   const overall = currentProgress(m.age.months, m.sourcedStates).overall;
   const counts = viewCounts(m.age.months, m.sourcedStates);
   const progressLive = overall.state === 'ok' ? `${overall.achieved} of ${overall.applicable} recorded as achieved` : overall.state === 'all-hidden' ? 'All current milestones are hidden' : 'Nothing to track yet at this age';
-  const libraryLive = counts.now === 0 ? 'No CDC milestones apply yet' : `${counts.now} milestone${counts.now === 1 ? '' : 's'} apply now`;
+  const libraryLive = counts.now === 0 ? 'No milestones apply yet' : `${counts.now} milestone${counts.now === 1 ? '' : 's'} apply now`;
   const goals = GROWTH_SECTIONS[2];
   return (
     <div>
@@ -85,6 +86,7 @@ export function ProgressScreen() {
   const p = currentProgress(m.age.months, m.sourcedStates);
   const byAge = progressByReferenceAge(m.age.months, m.sourcedStates);
   const libraryFor = (area: AppCategory | null) => href({ name: 'growthLibrary', preset: { view: 'now', area } });
+  const hasPersonal = (m.data?.personal.length ?? 0) > 0;
   return (
     <div>
       <ForChild child={activeChild} />
@@ -93,12 +95,12 @@ export function ProgressScreen() {
         <h2 class="title-2" id="progress-headline">Milestones recorded as achieved</h2>
         <p class="small muted" style={{ margin: '4px 0 var(--space-4)' }} data-testid="progress-scope">
           {m.age.months === null
-            ? `${name}’s due date hasn’t arrived yet, so no CDC milestones are counted using corrected age.`
-            : `CDC milestones for ${m.age.months} month${m.age.months === 1 ? '' : 's'} and younger, as you’ve recorded them.`}
+            ? `${name}’s due date hasn’t arrived yet, so no milestones are counted using corrected age.`
+            : `Milestones for ${m.age.months} month${m.age.months === 1 ? '' : 's'} and younger, as you’ve recorded them.`}
         </p>
         <ProgressLine p={p.overall} label="All areas" />
         {p.overall.state === 'none-applicable' && m.age.months !== null && (
-          <p class="small muted" style={{ marginTop: 'var(--space-2)' }}>The first CDC milestones are listed “by 2 months.”</p>
+          <p class="small muted" style={{ marginTop: 'var(--space-2)' }}>The first milestones are listed “by 2 months.”</p>
         )}
       </section>
 
@@ -107,7 +109,7 @@ export function ProgressScreen() {
         <ul class="plain-list small">
           <li><Icon name="check" size={16} /> <span>Marking a milestone <strong>Achieved</strong> in the Milestone Library, if it applies to {name} now and isn’t hidden.</span></li>
           <li><Icon name="info" size={16} /> <span>Emerging milestones are shown separately and don’t count as achieved.</span></li>
-          <li><Icon name="info" size={16} /> <span>Upcoming milestones count once {name} reaches their CDC age. Hidden milestones and your personal versions aren’t counted.</span></li>
+          <li><Icon name="info" size={16} /> <span>Upcoming milestones count once {name} reaches their age. Hidden milestones aren’t counted{hasPersonal ? ', and neither are your personal entries' : ''}.</span></li>
           <li><Icon name="info" size={16} /> <span>Reading What to Expect doesn’t change Progress.</span></li>
         </ul>
         <a class="btn btn-secondary btn-block" href={libraryFor(null)} data-testid="record-in-library">Record in the Milestone Library</a>
@@ -117,16 +119,15 @@ export function ProgressScreen() {
         <h2 class="title-3" id="by-area">By area</h2>
         <p class="xsmall muted" style={{ margin: '4px 0 var(--space-3)' }}>Tap an area to see its milestones in the Milestone Library.</p>
         <CategoryProgressList categories={p.categories} linkFor={(c) => libraryFor(c)} />
-        <p class="xsmall muted">Your personal versions aren’t included here.</p>
       </section>
 
       <div class="section"><MilestoneSafeguard /></div>
 
-      <Accordion title="By CDC age" testId="acc-by-age">
+      <Accordion title="By age" testId="acc-by-age">
         <div class="panel-pad stack small" data-testid="by-age">
-          <p class="muted">Only CDC ages that apply to {name} now are shown.</p>
+          <p class="muted">Only ages that apply to {name} now are shown.</p>
           {byAge.length === 0 ? (
-            <p>No CDC ages apply yet.</p>
+            <p>No ages apply yet.</p>
           ) : (
             <ul class="plain-list">
               {[...byAge].reverse().map((a) => (
@@ -141,16 +142,40 @@ export function ProgressScreen() {
       </Accordion>
       <Accordion title="How is this calculated?" testId="acc-how">
         <div class="panel-pad stack small">
-          <p>For each area, we count the CDC milestones that apply to {name}’s milestone age — those listed for that age or younger — and show how many you’ve marked <strong>Achieved</strong>.</p>
-          <p><strong>Achieved ÷ milestones that apply.</strong> Emerging milestones are shown separately and don’t count as achieved. Milestones for older ages aren’t counted until {name} reaches them, even if you record them early. Hidden milestones and your personal versions aren’t counted.</p>
+          <p>For each area, we count the milestones that apply to {name}’s milestone age — those listed for that age or younger — and show how many you’ve marked <strong>Achieved</strong>.</p>
+          <p><strong>Achieved ÷ milestones that apply.</strong> Emerging milestones are shown separately and don’t count as achieved. Milestones for older ages aren’t counted until {name} reaches them, even if you record them early. Hidden milestones aren’t counted{hasPersonal ? ', and neither are your personal entries' : ''}.</p>
           <p>When nothing applies yet, or everything that applies is hidden, we show that instead of a percentage.</p>
           <p>This reflects only what you’ve recorded. It isn’t a measure of development or health, and it isn’t a screening.</p>
         </div>
       </Accordion>
-      <div class="card section"><AgeBasisPanel child={activeChild} age={m.age} corrected={m.corrected} today={m.today} /></div>
+      <div class="card section stack" data-testid="age-basis-card">
+        <AgeBasisPanel child={activeChild} age={m.age} corrected={m.corrected} today={m.today} />
+        <AgeSettingsNote child={activeChild} />
+      </div>
+      <SourceNote />
       <p class="small muted" style={{ margin: 'var(--space-4) var(--space-1)' }} data-testid="coming-soon-note">
         Charts of your records over time, and progress on your own goals and activities, are coming soon.
       </p>
+    </div>
+  );
+}
+
+/**
+ * R-008: how to change the age used for milestones, with a direct link to this child's profile
+ * settings. Navigation only — nothing about age calculation or preferences changes here.
+ */
+function AgeSettingsNote({ child }: { child: Child }) {
+  const name = childNameInline(child);
+  return (
+    <div class="stack small" data-testid="age-settings-note">
+      <p class="muted">
+        {child.correctedAge.enabled
+          ? `You can change whether milestones are based on chronological or corrected age in ${name}’s profile settings.`
+          : `Milestones are based on chronological age. If ${name} was born early, you can turn on corrected age in ${name}’s profile settings.`}
+      </p>
+      <a class="btn btn-outline btn-sm" style={{ alignSelf: 'flex-start' }} href={href({ name: 'profileEdit', id: child.id, section: 'age' })} data-testid="manage-age-settings">
+        Manage age settings
+      </a>
     </div>
   );
 }
@@ -168,7 +193,7 @@ function GuideAgeLine({ child, months, today }: { child: Child; months: number |
     return (
       <div class="guide-age" data-testid="milestone-age-line">
         <p class="small">Age used for milestones: <strong>Before due date</strong></p>
-        <p class="xsmall muted" data-testid="pre-due-note">{name}’s due date hasn’t arrived yet. No CDC milestones are counted as applicable using corrected age at this time. You can still explore the developmental guide.</p>
+        <p class="xsmall muted" data-testid="pre-due-note">{name}’s due date hasn’t arrived yet. No milestones are counted as applicable using corrected age at this time. You can still explore the developmental guide.</p>
       </div>
     );
   }
@@ -183,7 +208,7 @@ function GuideAgeLine({ child, months, today }: { child: Child; months: number |
         </p>
       )}
       {months > 60 && (
-        <p class="xsmall muted" data-testid="over-five-note">CDC’s milestone checklists end at age 5, so there are no milestones after “by 5 years.” The guide opens at 57–60 months, the last range.</p>
+        <p class="xsmall muted" data-testid="over-five-note">The milestone checklists end at age 5, so there are no milestones after “by 5 years.” The guide opens at 57–60 months, the last range.</p>
       )}
     </div>
   );
@@ -193,7 +218,7 @@ function NeighbourCard({ kind, n }: { kind: 'previous' | 'next'; n: NeighbourAge
   return (
     <div class="card neighbour-card" data-testid={`neighbour-${kind}`}>
       <span class="grow">
-        <span class="small" style={{ display: 'block', fontWeight: 600 }}>{kind === 'previous' ? 'Most recent CDC age' : 'Next CDC age'}: {inlineAge(n.referenceAgeMonths)}</span>
+        <span class="small" style={{ display: 'block', fontWeight: 600 }}>{kind === 'previous' ? 'Most recent milestone age' : 'Next milestone age'}: {inlineAge(n.referenceAgeMonths)}</span>
         <span class="xsmall muted">Shown in {n.interval.label}</span>
       </span>
       <button type="button" class="btn btn-outline btn-sm" onClick={() => navigate({ name: 'growthExpect', interval: n.interval.index })} aria-label={`Open ${n.interval.label}`}>
@@ -211,8 +236,8 @@ function GuideBody({ g }: { g: GuideRange }) {
       {g.kind === 'empty' ? (
         <section class="stack" data-testid="empty-interval">
           <p class="guide-text">
-            CDC doesn’t publish a milestone checklist for this range. Its checklists go from {bareAge(g.previous.referenceAgeMonths)} to {bareAge(g.next.referenceAgeMonths)}, so
-            the app doesn’t add any milestones here. For a child in this range, CDC’s most recent milestones are the ones listed “{inlineAge(g.previous.referenceAgeMonths)}.”
+            There’s no milestone checklist for this range: CDC’s checklists go from {bareAge(g.previous.referenceAgeMonths)} to {bareAge(g.next.referenceAgeMonths)}, so
+            the app doesn’t add any milestones here. For a child in this range, the most recent milestones are the ones listed “{inlineAge(g.previous.referenceAgeMonths)}.”
           </p>
           <NeighbourCard kind="previous" n={g.previous} />
           <NeighbourCard kind="next" n={g.next} />
@@ -220,7 +245,7 @@ function GuideBody({ g }: { g: GuideRange }) {
       ) : (
         <>
           <p class="small muted" data-testid="range-includes">
-            This range includes CDC’s {g.referenceAges.map((a, i) => <span key={a}>{i > 0 && ' and '}“{inlineAge(a)}”</span>)} milestones.
+            This range includes the {g.referenceAges.map((a, i) => <span key={a}>{i > 0 && ' and '}“{inlineAge(a)}”</span>)} milestones.
           </p>
           <section class="guide-overview" aria-labelledby="overview-title" data-testid="guide-overview">
             <h3 class="title-3" id="overview-title">Overview</h3>
@@ -236,10 +261,10 @@ function GuideBody({ g }: { g: GuideRange }) {
                   {a.explanation && <p class="small muted guide-area-explain">{a.explanation}</p>}
                   {a.milestones.length > 0 ? (
                     <ul class="guide-milestones">
-                      {a.milestones.map((d) => <li key={d.id} data-testid="guide-milestone" data-id={d.id}>{d.text}</li>)}
+                      {a.milestones.map((d) => <li key={d.id} data-testid="guide-milestone" data-id={d.id}>{displayTextOf(d)}</li>)}
                     </ul>
                   ) : (
-                    <p class="xsmall muted" data-testid="area-empty-note">No milestones from CDC’s “{inlineAge(grp.referenceAgeMonths)}” checklist are assigned to this category in our app.</p>
+                    <p class="xsmall muted" data-testid="area-empty-note">No “{inlineAge(grp.referenceAgeMonths)}” milestones are in this area.</p>
                   )}
                 </div>
               ))}
@@ -271,7 +296,7 @@ function GuideSources({ g }: { g: GuideRange }) {
       {g.kind === 'populated' ? (
         <p>
           Milestones are from the Centers for Disease Control and Prevention (CDC), “Learn the Signs. Act Early.” (
-          {pages.map((p, i) => <span key={p.id}>{i > 0 && '; '}<ExternalLink url={p.url}>{p.title}</ExternalLink></span>)}), shown word for word. The overviews and
+          {pages.map((p, i) => <span key={p.id}>{i > 0 && '; '}<ExternalLink url={p.url}>{p.title}</ExternalLink></span>)}), with gender-neutral wording in place of “he” and “she.” The overviews and
           explanations are written for this app from those milestones. CDC’s milestone checklists are available free at <ExternalLink url={CDC_MILESTONES_URL}>cdc.gov</ExternalLink>.
           This app is not endorsed by CDC, HHS, or the U.S. Government.
         </p>

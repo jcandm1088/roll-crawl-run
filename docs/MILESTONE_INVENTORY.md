@@ -1,5 +1,8 @@
 # Milestone Inventory (generated from `src/content/milestones.cdc-2022.json`)
 
+> **Note (2026-11-27, R-004):** the text below is CDC's exact wording as stored in the catalog. In the app, 41 of these items are **displayed** in gender-neutral wording (pronouns and verb agreement only); see `docs/reviews/CHECKPOINT_2A_ACCEPTANCE_REFINEMENTS.md`.
+
+
 159 CDC “Learn the Signs. Act Early.” milestones (2022 revision; CDC web pages content-reviewed May 15, 2026; retrieved Nov 26, 2026). Wording and pronouns are exactly as CDC publishes them. “CDC area” is CDC’s category; “App area” is the app’s organizational grouping (only Movement/Physical is split into gross/fine motor — not a CDC or clinical classification). ⚑ = borderline gross/fine assignment approved by the owner.
 
 ## Counts
