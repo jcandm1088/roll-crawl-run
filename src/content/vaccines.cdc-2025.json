@@ -1,5 +1,5 @@
 {
-  "contentVersion": "cdc-child-schedule-2025-07-02.app-1",
+  "contentVersion": "cdc-child-schedule-2025-07-02.app-2",
   "schedule": {
     "organization": "CDC",
     "title": "Recommended Immunizations for Birth Through 6 Years Old, United States, 2025",
@@ -54,7 +54,8 @@
       "ageLabel": "Birth",
       "cdcCell": "Dose 1",
       "cdcColumns": ["Birth"],
-      "qualification": "CDC’s notes for health care providers describe different timing for babies who weigh less than 2,000 grams at birth, and different care when the mother has, or may have, hepatitis B. The birth hospital and your child’s provider decide this."
+      "qualification": "CDC’s notes for health care providers describe different timing for babies who weigh less than 2,000 grams at birth, and different care when the mother has, or may have, hepatitis B. The birth hospital and your child’s provider decide this.",
+      "parentNote": "Timing can be different for babies who weigh less than 2,000 grams at birth, and care is different when the mother has, or may have, hepatitis B. The birth hospital and your child’s provider decide this."
     },
     {
       "id": "cdc25-hepb-2",
@@ -73,7 +74,8 @@
       "ageLabel": "6–18 months",
       "cdcCell": "Dose 3",
       "cdcColumns": ["6 Months", "7 Months", "8 Months", "12 Months", "15 Months", "18 Months"],
-      "qualification": "CDC’s notes for health care providers say a fourth dose is permitted when a combination vaccine is used after the birth dose."
+      "qualification": "CDC’s notes for health care providers say a fourth dose is permitted when a combination vaccine is used after the birth dose.",
+      "parentNote": "A fourth dose is permitted when a combination vaccine is used after the birth dose."
     },
     {
       "id": "cdc25-rv-1",
@@ -83,7 +85,8 @@
       "ageLabel": "2 months",
       "cdcCell": "Dose 1",
       "cdcColumns": ["2 Months"],
-      "qualification": "CDC’s notes for health care providers say this series should not be started at or after age 15 weeks, 0 days."
+      "qualification": "CDC’s notes for health care providers say this series should not be started at or after age 15 weeks, 0 days.",
+      "parentNote": "This series should not be started at or after age 15 weeks, 0 days."
     },
     {
       "id": "cdc25-rv-2",
@@ -93,7 +96,8 @@
       "ageLabel": "4 months",
       "cdcCell": "Dose 2",
       "cdcColumns": ["4 Months"],
-      "qualification": "The series has two or three doses, depending on the vaccine used. CDC’s notes for health care providers say the maximum age for the final dose is 8 months, 0 days."
+      "qualification": "The series has two or three doses, depending on the vaccine used. CDC’s notes for health care providers say the maximum age for the final dose is 8 months, 0 days.",
+      "parentNote": "The series has two or three doses, depending on the vaccine used. The maximum age for the final dose is 8 months, 0 days."
     },
     {
       "id": "cdc25-dtap-1",
@@ -166,7 +170,8 @@
       "ageLabel": "12–15 months",
       "cdcCell": "Dose 4",
       "cdcColumns": ["12 Months", "15 Months"],
-      "qualification": "CDC’s schedule for parents labels this “Dose 4”. Its schedule for health care providers says “3rd or 4th dose”, because the number of doses depends on the vaccine used."
+      "qualification": "CDC’s schedule for parents labels this “Dose 4”. Its schedule for health care providers says “3rd or 4th dose”, because the number of doses depends on the vaccine used.",
+      "parentNote": "This is the third or fourth dose, depending on the vaccine used."
     },
     {
       "id": "cdc25-pcv-1",
@@ -239,7 +244,8 @@
       "ageLabel": "4–6 years",
       "cdcCell": "Dose 4",
       "cdcColumns": ["4-6 Years"],
-      "qualification": "CDC’s notes for health care providers say the final dose is given on or after age 4 years and at least 6 months after the previous dose."
+      "qualification": "CDC’s notes for health care providers say the final dose is given on or after age 4 years and at least 6 months after the previous dose.",
+      "parentNote": "The final dose is given on or after age 4 years and at least 6 months after the previous dose."
     },
     {
       "id": "cdc25-mmr-1",
@@ -285,7 +291,8 @@
       "ageLabel": "12–23 months",
       "cdcCell": "2 doses separated by 6 months",
       "cdcColumns": ["12 Months", "15 Months", "18 Months", "19 Months", "20–23 Months"],
-      "qualification": "CDC’s schedule says: “2 doses separated by 6 months”. The app does not work out a date for either dose."
+      "qualification": "CDC’s schedule says: “2 doses separated by 6 months”. The app does not work out a date for either dose.",
+      "parentNote": "2 doses separated by 6 months. The app does not work out a date for either dose."
     }
   ],
   "discussion": [
@@ -295,7 +302,10 @@
       "ageLabel": "Birth through 7 months",
       "cdcText": "Depends on mother’s RSV vaccine status",
       "cdcKey": "ALL children should be immunized at this age",
-      "appNote": "CDC’s notes for health care providers also tie the timing to the RSV season and the month of birth."
+      "appNote": "CDC’s notes for health care providers also tie the timing to the RSV season and the month of birth.",
+      "parentText": "Depends on mother’s RSV vaccine status",
+      "parentTextVerbatim": true,
+      "parentNote": "Timing also depends on the RSV season and the month your child was born."
     },
     {
       "id": "cdc25-talk-rsv-older",
@@ -303,7 +313,10 @@
       "ageLabel": "8 through 19 months",
       "cdcText": "Depends on child’s health status",
       "cdcKey": "SOME children should get this dose of vaccine or preventive antibody at this age",
-      "appNote": null
+      "appNote": null,
+      "parentText": "Depends on child’s health status",
+      "parentTextVerbatim": true,
+      "parentNote": null
     },
     {
       "id": "cdc25-talk-rv-3",
@@ -311,7 +324,10 @@
       "ageLabel": "6 months",
       "cdcText": "Dose 3",
       "cdcKey": "SOME children should get this dose of vaccine or preventive antibody at this age",
-      "appNote": "Whether a third dose is part of the series depends on the vaccine used."
+      "appNote": "Whether a third dose is part of the series depends on the vaccine used.",
+      "parentText": "Some children get a third dose at this age. It depends on the vaccine used.",
+      "parentTextVerbatim": false,
+      "parentNote": null
     },
     {
       "id": "cdc25-talk-hib-3",
@@ -319,7 +335,10 @@
       "ageLabel": "6 months",
       "cdcText": "Dose 3",
       "cdcKey": "SOME children should get this dose of vaccine or preventive antibody at this age",
-      "appNote": "Whether a dose is given at 6 months depends on the vaccine used."
+      "appNote": "Whether a dose is given at 6 months depends on the vaccine used.",
+      "parentText": "Some children get a dose at this age. It depends on the vaccine used.",
+      "parentTextVerbatim": false,
+      "parentNote": null
     },
     {
       "id": "cdc25-talk-flu",
@@ -327,7 +346,10 @@
       "ageLabel": "6 months and older",
       "cdcText": "Every year. Two doses for some children",
       "cdcKey": "ALL children should be immunized at this age",
-      "appNote": "The app does not place a yearly date on the calendar."
+      "appNote": "The app does not place a yearly date on the calendar.",
+      "parentText": "Every year. Two doses for some children",
+      "parentTextVerbatim": true,
+      "parentNote": null
     },
     {
       "id": "cdc25-talk-covid",
@@ -335,7 +357,10 @@
       "ageLabel": "6 months and older",
       "cdcText": "Parents/caregivers should talk to their health care provider to decide if this vaccine is right for their child",
       "cdcKey": "Parents/caregivers should talk to their health care provider to decide if this vaccine is right for their child",
-      "appNote": null
+      "appNote": null,
+      "parentText": "Parents/caregivers should talk to their health care provider to decide if this vaccine is right for their child",
+      "parentTextVerbatim": true,
+      "parentNote": null
     }
   ],
   "moreGuidance": {

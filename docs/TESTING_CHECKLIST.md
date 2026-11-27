@@ -390,68 +390,105 @@ Reported by the owner for the local build of `64202e2` in Mac Safari (port 4179)
 - **Not covered by automation:** Safari, iPhone, Android; native date and time pickers; the on-screen keyboard with the bottom sheet; an installed-app update on a device.
 
 ## Checkpoint 3 — human acceptance checklist (owner; record actual results)
-**Mac** = local production build of the Checkpoint 3 commit in Safari. Use fictional data. **iPhone** items are deferred to Checkpoint 6 unless you choose to test over the local network. Leave Result blank until tested.
+**Mac** = local production build of the Checkpoint 3 commit in Safari. Use fictional data. **iPhone** items are deferred to Checkpoint 6 unless you choose to test over the local network. *Results below were reported by the owner on 2026-11-27; Claude Code did not observe these tests.*
 
 ### A. Update and existing data
 | # | Check | Where | Result | Date | Notes |
 |---|---|---|---|---|---|
-| CAL1 | Update from your 2b-R build: profiles, themes, milestones, goals, exercises, sessions and history are unchanged | Mac | | | |
-| CAL2 | The Calendar tab opens (no “Preview only”); Journal and Resources are still placeholders | Mac | | | |
+| CAL1 | Update from your 2b-R build: profiles, themes, milestones, goals, exercises, sessions and history are unchanged | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL2 | The Calendar tab opens (no “Preview only”); Journal and Resources are still placeholders | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
 
 ### B. Month view
 | # | Check | Where | Result | Date | Notes |
 |---|---|---|---|---|---|
-| CAL3 | The current month opens with today clearly marked and selected; the weekday columns are right for this month | Mac | | | |
-| CAL4 | Previous and next move one month at a time, across December/January; “Go to today” returns | Mac | | | |
-| CAL5 | Tapping a day selects it and shows that day below; today and the selected day are easy to tell apart | Mac | | | |
+| CAL3 | The current month opens with today clearly marked and selected; the weekday columns are right for this month | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL4 | Previous and next move one month at a time, across December/January; “Go to today” returns | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL5 | Tapping a day selects it and shows that day below; today and the selected day are easy to tell apart | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
 
 ### C. Events
 | # | Check | Where | Result | Date | Notes |
 |---|---|---|---|---|---|
-| CAL6 | Add a medical appointment with only a title and date: it appears on its day, in Upcoming, and as a circle on the grid | Mac | | | |
-| CAL7 | Add a personal event with a time, location and notes: it appears with a square; opening it shows every detail | Mac | | | |
-| CAL8 | Add a therapy session as a medical appointment: the wording makes sense | Mac | | | |
-| CAL9 | Edit an event (title, type, date, time, location, notes): the calendar follows it to the new date | Mac | | | |
-| CAL10 | Delete an event: a confirmation appears; Cancel keeps it; Delete removes it everywhere | Mac | | | |
-| CAL11 | Try to save with no title, then with no date: a clear message appears and what you typed stays | Mac | | | |
-| CAL12 | Upcoming shows today and later in order, not past events; “Show all” appears with more than five | Mac | | | |
-| CAL13 | Safari's date and time pickers work as you expect in the form | Mac | | | |
+| CAL6 | Add a medical appointment with only a title and date: it appears on its day, in Upcoming, and as a circle on the grid | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL7 | Add a personal event with a time, location and notes: it appears with a square; opening it shows every detail | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL8 | Add a therapy session as a medical appointment: the wording makes sense | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL9 | Edit an event (title, type, date, time, location, notes): the calendar follows it to the new date | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL10 | Delete an event: a confirmation appears; Cancel keeps it; Delete removes it everywhere | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL11 | Try to save with no title, then with no date: a clear message appears and what you typed stays | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL12 | Upcoming shows today and later in order, not past events; “Show all” appears with more than five | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL13 | Safari's date and time pickers work as you expect in the form | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
 
 ### D. Show on the calendar
 | # | Check | Where | Result | Date | Notes |
 |---|---|---|---|---|---|
-| CAL14 | The vaccine schedule is off at first; Medical appointments and Personal are on | Mac | | | |
-| CAL15 | Hide Medical appointments: only those disappear; a note says events are hidden; showing them again brings them back unchanged | Mac | | | |
-| CAL16 | Each of the three can be switched without affecting the others; the choice is still there after closing and reopening the app | Mac | | | |
+| CAL14 | The vaccine schedule is off at first; Medical appointments and Personal are on | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL15 | Hide Medical appointments: only those disappear; a note says events are hidden; showing them again brings them back unchanged | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL16 | Each of the three can be switched without affecting the others; the choice is still there after closing and reopening the app | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
 
 ### E. Recommended vaccine schedule
 | # | Check | Where | Result | Date | Notes |
 |---|---|---|---|---|---|
-| CAL17 | Turn it on for a 4-month-old (born July 20, 2026, viewed in November 2026): one diamond on November 20, not a month of labels | Mac | | | |
-| CAL18 | Select that day: “CDC schedule reference · not an appointment”, “Reference age reached on this day: 4 months”, five vaccines; it does not look like an appointment | Mac | | | |
-| CAL19 | “Next on the CDC vaccine schedule: age 6 months” shows January 20, 2027 and takes you there; hepatitis B dose 3 shows “6–18 months” with “January 20, 2027 through February 19, 2028” | Mac | | | |
-| CAL20 | A day in the middle of a range (e.g. March 15, 2027) has no diamond, but shows the ranges that include it | Mac | | | |
-| CAL21 | The date of birth (July 20, 2026) shows the hepatitis B birth dose with its birth-weight and maternal-status note | Mac | | | |
-| CAL22 | “Ask your child's provider about” lists RSV antibody (two entries), rotavirus dose 3, Hib dose 3, influenza and COVID-19, with CDC's words and no dates | Mac | | | |
-| CAL23 | The provider statement is clear: your child's healthcare provider determines the schedule; the app doesn't track vaccines | Mac | | | |
-| CAL24 | “Source and how this is shown”: CDC, schedule title and July 2, 2025, retrieval date, non-endorsement, free at cdc.gov; the link opens CDC in a new window | Mac | | | |
-| CAL25 | A child using corrected age shows the same vaccine dates as their date of birth gives | Mac | | | |
-| CAL26 | Overall: the vaccine information reads as reference, is not alarming, and doesn't crowd the calendar | Mac | | | |
+| CAL17 | Turn it on for a 4-month-old (born July 20, 2026, viewed in November 2026): one diamond on November 20, not a month of labels | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL18 | Select that day: “CDC schedule reference · not an appointment”, “Reference age reached on this day: 4 months”, five vaccines; it does not look like an appointment | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL19 | “Next on the CDC vaccine schedule: age 6 months” shows January 20, 2027 and takes you there; hepatitis B dose 3 shows “6–18 months” with “January 20, 2027 through February 19, 2028” | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL20 | A day in the middle of a range (e.g. March 15, 2027) has no diamond, but shows the ranges that include it | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL21 | The date of birth (July 20, 2026) shows the hepatitis B birth dose with its birth-weight and maternal-status note | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL22 | “Ask your child's provider about” lists RSV antibody (two entries), rotavirus dose 3, Hib dose 3, influenza and COVID-19, with CDC's words and no dates | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL23 | The provider statement is clear: your child's healthcare provider determines the schedule; the app doesn't track vaccines | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL24 | “Source and how this is shown”: CDC, schedule title and July 2, 2025, retrieval date, non-endorsement, free at cdc.gov; the link opens CDC in a new window | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL25 | A child using corrected age shows the same vaccine dates as their date of birth gives | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL26 | Overall: the vaccine information reads as reference, is not alarming, and doesn't crowd the calendar | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
 
 ### F. Profiles and data safety
 | # | Check | Where | Result | Date | Notes |
 |---|---|---|---|---|---|
-| CAL27 | Two children: each calendar shows only that child's events | Mac | | | |
-| CAL28 | Open Add event, type something, tap outside to close, switch child: nothing was saved for either child | Mac | | | |
-| CAL29 | (Optional, fictional data only) Delete a test profile: its events are gone; the other child's remain | Mac | | | |
+| CAL27 | Two children: each calendar shows only that child's events | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL28 | Open Add event, type something, tap outside to close, switch child: nothing was saved for either child | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL29 | (Optional, fictional data only) Delete a test profile: its events are gone; the other child's remain | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
 
 ### G. Related screens, themes and layout
 | # | Check | Where | Result | Date | Notes |
 |---|---|---|---|---|---|
-| CAL30 | Home: “New event” opens the add form; “Coming up” lists the next events; do you want these Home changes kept? | Mac | | | |
-| CAL31 | Settings → Calendar describes the Calendar as it is (no reminders, no phone-calendar export) | Mac | | | |
-| CAL32 | All five themes: the grid, today, the selected day, the three markers and the vaccine panels read well | Mac | | | |
-| CAL33 | A narrow window (about 320–390 px wide): nothing is cut off; days are easy to tap | Mac | | | |
-| CAL34 | Keyboard: arrow keys move between days; Add event, the form and Delete work without a mouse | Mac | | | |
-| CAL35 | With Wi-Fi off after loading once: the Calendar opens and events can be added, edited and deleted | Mac | | | |
+| CAL30 | Home: “New event” opens the add form; “Coming up” lists the next events; do you want these Home changes kept? | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL31 | Settings → Calendar describes the Calendar as it is (no reminders, no phone-calendar export) | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL32 | All five themes: the grid, today, the selected day, the three markers and the vaccine panels read well | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL33 | A narrow window (about 320–390 px wide): nothing is cut off; days are easy to tap | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `c5017da` |
+| CAL34 | Keyboard: arrow keys move between days; Add event, the form and Delete work without a mouse | Mac | N/A | 2026-11-27 | Not human-tested by the owner (automated coverage only) |
+| CAL35 | With Wi-Fi off after loading once: the Calendar opens and events can be added, edited and deleted | Mac | N/A | 2026-11-27 | Not human-tested by the owner (automated coverage only) |
 | CAL36 | iPhone: the month grid, the form with the on-screen keyboard, the date and time pickers and the vaccine panels are comfortable; nothing overflows | iPhone | Deferred | — | Checkpoint 6 consolidated final acceptance |
+
+## Checkpoint 3 — human acceptance (owner report, Mac Safari, 2026-11-27)
+**Human results (reported by the owner; implementation commit `c5017da6ea9525adc6681efdee2c59b3e7cb3099`).** Recorded separately from automated results; Claude Code did not observe these tests.
+
+| Group | Checks | Result |
+|---|---|---|
+| Update and existing data; month view; events; overlays; vaccine schedule; profiles and data safety; Home, Settings, themes, narrow layout | CAL1–CAL33 | PASS |
+| Keyboard operation | CAL34 | N/A — not human-tested |
+| Offline editing | CAL35 | N/A — not human-tested |
+| iPhone | CAL36 | Deferred to Checkpoint 6 |
+
+**33 passed, 0 failed, 2 not applicable, 1 deferred.** The Calendar's functionality, existing-data preservation, profile isolation, event management, overlay behavior and general usability are accepted on Mac.
+
+- **Approved by the owner:** the existing Home functionality (live “New event” action and the upcoming-events card, Decision #136); the editor's dismissal behavior (tapping outside discards what was typed); and the narrow Calendar layout for submission, subject to final physical-device review.
+- **Keyboard operation and offline editing** have automated coverage only (headless Chromium); they were not confirmed by a person.
+- **Formal closeout pending:** the presentation refinements R-019 to R-022 (below) and the owner's focused visual acceptance of them.
+
+## Checkpoint 3-R — automated (headless Chromium; results in BUILD_LOG)
+- **Reduced cadence, authorized by the owner for this presentation-only round:** targeted tests, then **one** complete clean cycle (not three).
+- **Unit (+1):** parent-facing vaccine wording keeps every precise figure, drops source-prefacing language, leaves the source record untouched, and marks which provider-discussion lines are CDC's exact words; validation rejects violations.
+- **End-to-end (+3, and updated wording):** the Settings Calendar section's inner spacing at 320, 390 and 1280 px (same padding as the other sections; text and link clear of the edges). Updated in `calendar.spec.ts`: marker shapes (cross, heart, diamond; theme colors; size and no overlap; used in the controls, grid, lists and details), the simplified vaccine wording, the single visible disclaimer, the source line and non-endorsement visible without expanding, no “CDC” outside the Source section, the “Upcoming Appointments” heading.
+- **Unchanged and still passing:** every vaccine age, date-arithmetic, overlay, event, isolation, persistence and upgrade test.
+
+## Checkpoint 3-R — focused visual acceptance (owner; record actual results)
+**Mac** = local production build of the refinement commit in Safari. Leave Result blank until tested.
+
+| # | Check | Where | Result | Date | Notes |
+|---|---|---|---|---|---|
+| CR1 | Vaccine schedule on: selecting a marked day shows “Recommended vaccinations: 4 months” with no “CDC schedule reference · not an appointment” label and no “CDC's notes…” wording | Mac | | | |
+| CR2 | “Next recommended vaccinations: 6 months” with the date; tapping it still goes to that day | Mac | | | |
+| CR3 | One statement only: “Your child's healthcare provider determines their individual vaccination schedule. The dates shown are general recommendations, not scheduled appointments or confirmation of eligibility.” | Mac | | | |
+| CR4 | “Source” is visible without expanding: “Based on the CDC childhood immunization schedule, July 2, 2025. This app is not endorsed by CDC, HHS or the U.S. Government and has not been clinically reviewed.” “Source details” opens the full record and the CDC link | Mac | | | |
+| CR5 | “Ask your child's provider about” reads naturally and still gives each age and condition (RSV antibody, rotavirus dose 3, Hib dose 3, influenza, COVID-19) | Mac | | | |
+| CR6 | Symbols: an upright cross for medical appointments, a heart for personal events, the diamond for vaccinations; the same in the controls, the month grid, the lists and Home; clear in all five themes | Mac | | | |
+| CR7 | A narrow window: three symbols under one day stay readable and don't overlap or enlarge the calendar | Mac | | | |
+| CR8 | Home: the card is headed “Upcoming Appointments” and still lists medical and personal events | Mac | | | |
+| CR9 | Settings → Calendar: the text and the Open Calendar link are comfortably inset, like the other sections, in a wide and a narrow window | Mac | | | |

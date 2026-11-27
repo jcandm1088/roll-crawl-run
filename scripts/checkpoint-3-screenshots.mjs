@@ -1,10 +1,12 @@
 // Checkpoint 3 screenshots (FICTIONAL data only): the Simplified Calendar at desktop and narrow-mobile widths.
+// Since the acceptance refinements (R-019 to R-022) the default output folder is checkpoint-3-r, which also
+// includes Home (Upcoming Appointments) and Settings (Calendar section). SHOT_DIR overrides the folder.
 // Usage: npm run build && (npx vite preview --port 4180 &) && node scripts/checkpoint-3-screenshots.mjs
 import { chromium } from 'playwright';
 import { mkdirSync } from 'node:fs';
 
 const BASE = process.env.BASE_URL ?? 'http://localhost:4180/';
-const OUT = new URL('../docs/screenshots/checkpoint-3/', import.meta.url);
+const OUT = new URL(`../docs/screenshots/${process.env.SHOT_DIR ?? 'checkpoint-3-r'}/`, import.meta.url);
 mkdirSync(OUT, { recursive: true });
 const NOW = new Date('2026-11-26T10:00:00');
 const browser = await chromium.launch();
@@ -74,8 +76,9 @@ async function populated(width, height, theme) {
   await s.page.getByTestId('overlay-vaccines').click();
   await s.page.locator('[data-date="2026-11-20"]').click(); // the 4-month reference age
   await s.page.getByTestId('vax-discuss').locator('summary').click();
-  await s.page.getByTestId('vax-source').locator('summary').click();
   await s.shot('02-calendar-vaccine-overlay-390');
+  await s.page.getByTestId('vax-source-details').locator('summary').click();
+  await s.shot('02b-vaccine-details-expanded-390');
   await s.page.locator('[data-date="2026-11-30"]').click();
   await s.page.getByTestId('day-events').getByTestId('event-row').first().click();
   await s.shot('03-event-details-390', false);
@@ -90,6 +93,17 @@ async function populated(width, height, theme) {
   await s.shot('05-calendar-vaccine-overlay-320-sage');
   await s.page.getByTestId('add-event').click();
   await s.shot('06-add-event-320-sage', false);
+  await s.context.close();
+}
+// Home (Upcoming Appointments) and Settings (Calendar section) at 390 px and 1280 px
+for (const [w, h] of [[390, 844], [1280, 900]]) {
+  const s = await populated(w, h);
+  await s.page.goto(`${BASE}#/home`);
+  await s.page.getByTestId('home-coming-up').waitFor();
+  await s.shot(`08-home-upcoming-appointments-${w}`);
+  await s.page.goto(`${BASE}#/settings`);
+  await s.page.getByRole('button', { name: /^Calendar/ }).click();
+  await s.shot(`09-settings-calendar-${w}`);
   await s.context.close();
 }
 // 7: desktop (1280 px), Lavender theme

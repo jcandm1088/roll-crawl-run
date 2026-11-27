@@ -6,8 +6,11 @@
  * - Exactly three overlays, switched independently and remembered on this device: Recommended vaccine
  *   schedule (off by default; the only prepopulated one), Medical appointments and Personal. Hiding an
  *   overlay only filters what is shown; no record is changed.
- * - Markers differ by shape as well as color: circle (medical), square (personal), hollow diamond
- *   (vaccine schedule reference).
+ * - Markers differ by shape as well as color (R-020): an upright cross (medical), a heart (personal)
+ *   and a hollow diamond (recommended vaccinations).
+ * - Vaccine wording is parent-first (R-019): one visible statement about the provider's role, one
+ *   visible source line with the non-endorsement, and the full source record in an expandable section.
+ *   Source attribution is not repeated beside each recommendation.
  * - Vaccine references mark one day each (an age anniversary, or the first day of an age range); a range
  *   is never repeated across its days. They are reference information, not appointments.
  * - All state is per child: the inner screen is keyed by the child's id, so switching profiles closes any
@@ -37,6 +40,11 @@ import { ErrorText } from '../../components/ChildFields';
 import { childDisplayName } from '../../components/Avatar';
 import { SavedBanner } from '../personal/parts';
 
+/** The single parent-facing statement about what the vaccine dates are (owner's wording, R-019). */
+export const VACCINE_DISCLAIMER = 'Your child’s healthcare provider determines their individual vaccination schedule. The dates shown are general recommendations, not scheduled appointments or confirmation of eligibility.';
+/** Visible source attribution and non-endorsement (owner's wording, R-019). The date comes from the content file. */
+export const VACCINE_SOURCE_SUMMARY = `Based on the CDC childhood immunization schedule, ${formatLongDate(VACCINE_CONTENT.schedule.scheduleDate)}. This app is not endorsed by CDC, HHS or the U.S. Government and has not been clinically reviewed.`;
+
 type OverlayId = keyof OverlayVisibility;
 const OVERLAYS: Array<{ id: OverlayId; label: string }> = [
   { id: 'medical', label: 'Medical appointments' },
@@ -52,7 +60,23 @@ export const overlaysOf = (layers: { medical?: boolean; personal?: boolean; vacc
 
 /** Shape marker (decorative: every use has a text equivalent). */
 export function Mark({ kind }: { kind: OverlayId }) {
-  return <span class={`cal-mark cal-mark-${kind}`} aria-hidden="true" />;
+  // Medical: a plain upright cross with a short crossbar above the middle (like a lowercase t), in the
+  // theme's own color. It is deliberately not the equal-armed red cross emblem.
+  if (kind === 'medical') {
+    return (
+      <svg class="cal-mark cal-mark-medical" data-shape="cross" viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+        <rect x="5" y="0.5" width="2" height="11" rx="0.4" /><rect x="2" y="3" width="8" height="2" rx="0.4" />
+      </svg>
+    );
+  }
+  if (kind === 'personal') {
+    return (
+      <svg class="cal-mark cal-mark-personal" data-shape="heart" viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+        <path d="M6 11 1.3 6.4a2.9 2.9 0 0 1 0-4.1 2.8 2.8 0 0 1 4 0L6 3l.7-.7a2.8 2.8 0 0 1 4 0 2.9 2.9 0 0 1 0 4.1Z" />
+      </svg>
+    );
+  }
+  return <span class="cal-mark cal-mark-vaccines" data-shape="diamond" aria-hidden="true" />;
 }
 
 export function CalendarScreen({ openAdd = false }: { openAdd?: boolean }) {
@@ -196,7 +220,7 @@ function CalendarInner({ child, openAdd }: { child: Child; openAdd: boolean }) {
                     isToday ? 'today' : '',
                     counts?.medical ? `${counts.medical} medical appointment${counts.medical === 1 ? '' : 's'}` : '',
                     counts?.personal ? `${counts.personal} personal event${counts.personal === 1 ? '' : 's'}` : '',
-                    vax ? 'vaccine schedule reference' : '',
+                    vax ? 'recommended vaccinations' : '',
                   ].filter(Boolean).join(', ');
                   return (
                     <td key={di}>
@@ -259,9 +283,8 @@ function CalendarInner({ child, openAdd }: { child: Child; openAdd: boolean }) {
         )}
         {overlays.vaccines && (startingToday.length > 0 || covering.length > 0) && (
           <div class="vax-ref" data-testid="vax-on-day">
-            <p class="eyebrow"><Mark kind="vaccines" /> CDC schedule reference · not an appointment</p>
-            {startingToday.length > 0 && <ReferenceGroup items={startingToday} heading={`Reference age reached on this day: ${startAgeLabel(startingToday[0]!.ref.age)}`} />}
-            {covering.length > 0 && <ReferenceGroup items={covering} heading="Recommended age ranges that include this day" />}
+            {startingToday.length > 0 && <ReferenceGroup marked items={startingToday} heading={`Recommended vaccinations: ${startAgeLabel(startingToday[0]!.ref.age)}`} />}
+            {covering.length > 0 && <ReferenceGroup marked={startingToday.length === 0} items={covering} heading="Recommended age ranges that include this day" />}
           </div>
         )}
       </section>
@@ -282,14 +305,14 @@ function CalendarInner({ child, openAdd }: { child: Child; openAdd: boolean }) {
           <button type="button" class="vax-next" data-testid="vax-next" onClick={() => select(nextRef.date)}>
             <Mark kind="vaccines" />
             <span>
-              <span class="small" style={{ display: 'block', fontWeight: 600 }}>Next on the CDC vaccine schedule: age {startAgeLabel(nextRef.items[0]!.ref.age)}</span>
-              <span class="xsmall muted">{formatLongDate(nextRef.date)} · a reference age, not an appointment</span>
+              <span class="small" style={{ display: 'block', fontWeight: 600 }}>Next recommended vaccinations: {startAgeLabel(nextRef.items[0]!.ref.age)}</span>
+              <span class="xsmall muted">{formatLongDate(nextRef.date)}</span>
             </span>
           </button>
         )}
       </section>
 
-      {overlays.vaccines && <VaccineInfo child={child} monthRanges={monthRanges} month={formatMonthYear(ym)} />}
+      {overlays.vaccines && <VaccineInfo monthRanges={monthRanges} month={formatMonthYear(ym)} />}
 
       {sheet?.mode === 'new' && <EventEditor ctx={ctx} date={sheet.date} onClose={() => setSheet(null)} onSaved={(e) => afterSave(e, `Event saved for ${formatLongDate(e.date)}.`)} />}
       {sheet?.mode === 'view' && current && (
@@ -333,16 +356,16 @@ export function EventList({ events, today, showDate, onOpen, testId }: { events:
   );
 }
 
-function ReferenceGroup({ items, heading }: { items: DatedReference[]; heading: string }) {
+function ReferenceGroup({ items, heading, marked = false }: { items: DatedReference[]; heading: string; marked?: boolean }) {
   return (
     <div class="vax-group">
-      <p class="small" style={{ fontWeight: 600 }}>{heading}</p>
+      <p class="small" style={{ fontWeight: 600 }}>{marked && <Mark kind="vaccines" />}{heading}</p>
       <ul class="vax-list">
         {items.map((d) => (
           <li key={d.ref.id} data-testid="vax-item">
             <span class="small">{d.vaccineLabel} — {d.ref.dose.toLowerCase()} · {d.ref.ageLabel.toLowerCase()}</span>
             {d.shape === 'range' && <span class="xsmall muted" style={{ display: 'block' }}>By date of birth: {formatLongDate(d.start)} through {formatLongDate(d.end)}</span>}
-            {d.ref.qualification && <span class="xsmall muted" style={{ display: 'block' }}>{d.ref.qualification}</span>}
+            {d.ref.parentNote && <span class="xsmall muted" style={{ display: 'block' }}>{d.ref.parentNote}</span>}
           </li>
         ))}
       </ul>
@@ -350,55 +373,57 @@ function ReferenceGroup({ items, heading }: { items: DatedReference[]; heading: 
   );
 }
 
-function VaccineInfo({ child, monthRanges, month }: { child: Child; monthRanges: DatedReference[]; month: string }) {
+function VaccineInfo({ monthRanges, month }: { monthRanges: DatedReference[]; month: string }) {
   const s = VACCINE_CONTENT.schedule;
   return (
     <section class="section" aria-labelledby="vax-h" data-testid="vaccine-info">
       <h2 id="vax-h" class="title-2 section-title">Recommended vaccine schedule</h2>
       <div class="card stack">
-        <p class="small" data-testid="vax-intro">
-          <Mark kind="vaccines" /> marks ages on CDC’s recommended schedule for all children, placed on this calendar from {childDisplayName(child) === 'Your child' ? 'your child’s' : `${childDisplayName(child)}’s`} date of birth.
-          They are general reference ages, <strong>not appointments or due dates</strong>.
-        </p>
-        <p class="info-note" data-testid="vax-provider"><Icon name="info" size={18} /><span>Your child’s healthcare provider determines your child’s vaccination schedule. This app doesn’t track vaccines given, check eligibility or work out catch-up timing.</span></p>
+        {/* The one visible statement about what these dates are (R-019). */}
+        <p class="info-note" data-testid="vax-provider"><Icon name="info" size={18} /><span>{VACCINE_DISCLAIMER}</span></p>
 
         <details class="more-details" data-testid="vax-month">
           <summary class="small text-link">Recommended age ranges that include {month} ({monthRanges.length})</summary>
           {monthRanges.length === 0 ? (
-            <p class="small muted" style={{ marginTop: 'var(--space-2)' }}>No recommended age range on the schedule includes this month.</p>
+            <p class="small muted" style={{ marginTop: 'var(--space-2)' }}>No recommended age range includes this month.</p>
           ) : (
-            <ReferenceGroup items={monthRanges} heading="From CDC’s schedule, by date of birth" />
+            <ReferenceGroup items={monthRanges} heading="By date of birth" />
           )}
         </details>
 
         <details class="more-details" data-testid="vax-discuss">
           <summary class="small text-link">Ask your child’s provider about ({VACCINE_DISCUSSION.length})</summary>
-          <p class="xsmall muted" style={{ marginTop: 'var(--space-2)' }}>CDC’s schedule lists these with conditions, so the app doesn’t put them on a date.</p>
+          <p class="xsmall muted" style={{ marginTop: 'var(--space-2)' }}>These depend on your child’s situation, so they aren’t placed on a date.</p>
           <ul class="vax-list">
             {VACCINE_DISCUSSION.map((d) => (
               <li key={d.id} data-testid="vax-discuss-item">
                 <span class="small" style={{ fontWeight: 600 }}>{d.label} · {d.ageLabel}</span>
-                <span class="small" style={{ display: 'block' }}>CDC: “{d.cdcText}”</span>
-                {d.appNote && <span class="xsmall muted" style={{ display: 'block' }}>{d.appNote}</span>}
+                <span class="small" style={{ display: 'block' }}>{d.parentText}</span>
+                {d.parentNote && <span class="xsmall muted" style={{ display: 'block' }}>{d.parentNote}</span>}
               </li>
             ))}
           </ul>
-          <p class="small" style={{ marginTop: 'var(--space-3)', fontWeight: 600 }}>CDC: “{VACCINE_CONTENT.moreGuidance.cdcIntro}”</p>
+          <p class="small" style={{ marginTop: 'var(--space-3)', fontWeight: 600 }}>{VACCINE_CONTENT.moreGuidance.cdcIntro}</p>
           <ul class="vax-list">{VACCINE_CONTENT.moreGuidance.cdcItems.map((t) => <li key={t} class="small">{t}</li>)}</ul>
         </details>
 
-        <details class="more-details" data-testid="vax-source">
-          <summary class="small text-link">Source and how this is shown</summary>
-          <div class="stack attribution" style={{ marginTop: 'var(--space-2)' }}>
-            <p>
-              <strong>Source: CDC.</strong> “{s.title}” ({formatLongDate(s.scheduleDate)}), checked against CDC’s schedule, notes and addendum for health care providers. Retrieved {formatLongDate(s.retrieved)}.{' '}
-              <a href={VACCINE_DISPLAY_SOURCE.url} target="_blank" rel="noopener noreferrer" data-testid="vax-source-link">View the schedule at cdc.gov<span class="visually-hidden"> (opens in a new window)</span> <Icon name="externalLink" size={14} /></a>
-            </p>
-            <p>CDC’s materials are available free of charge at cdc.gov. CDC’s website identified this schedule as its current schedule when it was checked on {formatLongDate(s.currencyChecked)}. Schedules change, and this copy does not update itself.</p>
-            <p data-testid="vax-nonendorsement">Using CDC’s material does not mean that CDC, the U.S. Department of Health and Human Services or the U.S. Government endorses this app. The app has not been reviewed by CDC or by a clinician.</p>
-            <p>The vaccine names, dose labels and ages are CDC’s. The calendar dates are worked out by this app from the date of birth (not a corrected age): a single age is marked on the day your child reaches it, and an age range runs from the day your child reaches its first age through the last day of its last age. These dates are a way of showing the schedule, not deadlines.</p>
-          </div>
-        </details>
+        <div class="vax-source" data-testid="vax-source">
+          <h3 class="title-3">Source</h3>
+          {/* Attribution and non-endorsement: always visible, said once (R-019). */}
+          <p class="small" data-testid="vax-source-summary">{VACCINE_SOURCE_SUMMARY}</p>
+          <details class="more-details" data-testid="vax-source-details">
+            <summary class="small text-link">Source details</summary>
+            <div class="stack attribution" style={{ marginTop: 'var(--space-2)' }}>
+              <p>
+                CDC, “{s.title}” ({formatLongDate(s.scheduleDate)}), checked against CDC’s schedule, notes and addendum for health care providers. Retrieved {formatLongDate(s.retrieved)}.{' '}
+                <a href={VACCINE_DISPLAY_SOURCE.url} target="_blank" rel="noopener noreferrer" data-testid="vax-source-link">View the schedule at cdc.gov<span class="visually-hidden"> (opens in a new window)</span> <Icon name="externalLink" size={14} /></a>
+              </p>
+              <p>CDC’s materials are available free of charge at cdc.gov. CDC’s website identified this schedule as its current schedule when it was checked on {formatLongDate(s.currencyChecked)}. Schedules change, and this copy does not update itself.</p>
+              <p>The vaccine names, dose labels and ages are CDC’s. Short notes beside them are written for this app from CDC’s schedule and notes; some are CDC’s own words and some are reworded, and the complete wording is at cdc.gov.</p>
+              <p>The calendar dates are worked out by this app from the date of birth (not a corrected age): a single age is marked on the day your child reaches it, and an age range runs from the day your child reaches its first age through the last day of its last age.</p>
+            </div>
+          </details>
+        </div>
       </div>
     </section>
   );

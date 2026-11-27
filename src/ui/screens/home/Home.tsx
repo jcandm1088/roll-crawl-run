@@ -127,7 +127,7 @@ function HomeComingUp() {
   const next = homeUpcoming(events, overlaysOf(settings.layers), today);
   return (
     <div class="section" data-testid="home-coming-up">
-      <h2 class="title-2 section-title">Coming up</h2>
+      <h2 class="title-2 section-title">Upcoming Appointments</h2>
       {next.length === 0 ? (
         <div class="card"><p class="small muted">No upcoming events.</p></div>
       ) : (

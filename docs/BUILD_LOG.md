@@ -505,3 +505,48 @@ Environment: Linux cloud container, Node 22.23.5, headless Chromium (Playwright;
 - **Targeted runs before the cycles:** the four tests using the corrected R-014 helpers, 60 of 60 in parallel; the calendar suite, 84 of 84 over three repeats; the corrected 2a test, 8 of 8.
 - **Bundle:** 529.04 → 562.19 kB (122.74 → 132.00 kB gzip).
 - **Screenshots:** `docs/screenshots/checkpoint-3/` (seven; 390 px, 320 px and 1280 px; Earth, Sage and Lavender), produced by `scripts/checkpoint-3-screenshots.mjs` with fictional data.
+
+## Draft entry — Checkpoint 3 human acceptance and refinements R-019 to R-022 (drafted by Claude Code; edit before submitting)
+**Date:** 2026-11-27
+**What I asked Claude Code to do:**
+- Record my Mac Safari acceptance of Checkpoint 3 and make four presentation refinements, without reopening the Calendar's requirements: simpler vaccine language with centralized attribution, new calendar symbols, a new Home heading, and corrected spacing in Settings.
+
+**What it produced:**
+- **R-019:** one visible provider statement; a visible **Source** line with the non-endorsement and an expandable “Source details”; plain-language notes through a display layer beside the unchanged source record; “Recommended vaccinations: 4 months” and “Next recommended vaccinations: 6 months”.
+- **R-020:** an upright cross (medical), a heart (personal) and the existing diamond (vaccinations), used everywhere the old markers were.
+- **R-021:** “Upcoming Appointments” on Home. **R-022:** the Settings Calendar section uses the shared panel padding.
+- One new unit test and three new end-to-end tests, updated wording and marker expectations, screenshots (`docs/screenshots/checkpoint-3-r/`), and a report (`docs/reviews/CHECKPOINT_3_R_REFINEMENT_REPORT.md`).
+
+**What I corrected or redirected:** (to be completed by the owner) — the vaccine overlay named CDC and explained itself too often, which read as institutional and cluttered; I asked for the source to be stated once and the disclaimer consolidated into one sentence in my own wording. This is the third time I have asked for less institutional source wording (R-006, R-011, R-019).
+
+### My acceptance of Checkpoint 3 (reported, Mac Safari, against `c5017da`)
+CAL1–CAL33 PASS · CAL34 (keyboard) N/A, not human-tested · CAL35 (offline editing) N/A, not human-tested · CAL36 (iPhone) deferred to Checkpoint 6. **33 passed, 0 failed, 2 N/A, 1 deferred.** I approved the Home changes, the editor's dismissal behavior and the narrow layout for submission, subject to physical-device review.
+
+### Development challenges and lessons learned (continued from #63)
+| # | Challenge | Class | What happened | Outcome |
+|---|---|---|---|---|
+| 64 | **Institutional source wording, again** | Previously approved wording that proved too heavy in human testing | Checkpoint 3 labelled every reference “CDC schedule reference · not an appointment”, prefixed notes with “CDC's notes for health care providers say…”, and explained the same limits in four places. It was written defensively, to make the source and the limits impossible to miss, and it passed every automated check. In use it read as cluttered and institutional. The same finding had been made at 2a (R-006) and 2b-R (R-011). | R-019. **Lesson:** apply “parent-first interface, evidence-backed infrastructure” when content is first written: state the source once per screen, keep qualifications in plain words, keep the traceable record in the content file. |
+| 65 | **Simplifying wording without touching the source record** | Proactively identified risk | Rewriting the stored qualifications would have lost the record of where each one came from, and a careless rewording could drop a figure such as “15 weeks, 0 days”. A first attempt to add the display fields with a JSON rewriter also reformatted the whole file, producing a 364-line diff for a 39-line change. | Display fields were added beside the unchanged source fields by line insertion; a script check confirmed the source data is identical; validation now fails the build if a parent-facing note drops an exact quantity, names the source, or misquotes text marked as CDC's. |
+| 66 | **A medical cross that is not the Red Cross emblem** | Proactively identified risk | The requested medical symbol could have been drawn as an equal-armed cross, which in red on white is a protected emblem. | Drawn with unequal arms and a short crossbar above the middle, in the theme's own color; a test checks the proportions and that the color is the theme's. At small sizes it can also read as a religious cross; noted for my visual check. |
+| 67 | **Settings section without the shared padding** | Visual defect (implementation, Checkpoint 3) | The reworded Calendar section in Settings was added as plain content instead of inside the `panel-pad` wrapper the other sections use, so it sat against the card's edges. The automated suite checked its wording but not its spacing. | R-022: the wrapper is used; a geometry test at 320, 390 and 1280 px compares the inset with “This Device”. |
+| 68 | **Defects in the updated tests** | Test defects | Two: the expected order of two all-day events on one day (they sort by title), and a no-“CDC” check tripped by CDC's own verbatim sentence “Visit CDC Travelers' Health for more information.” | Corrected before the full run; the verbatim sentence is kept and explicitly allowed. No application change. |
+
+### Automated results (run by Claude Code in this conversation)
+Environment: Linux cloud container, Node 22.23.5, headless Chromium, no retries. **No Safari, Mac, iPhone or Android testing was performed by Claude Code.**
+
+**Reduced cadence, authorized by me for this presentation-only round:** targeted tests, then one complete clean cycle (the accepted implementation had passed three consecutive cycles of 674).
+
+| Check | Result |
+|---|---|
+| Targeted: `calendar.spec.ts` (31 tests, including five themes with axe, 320 and 390 px, Settings spacing at three widths) | First run 29 of 31 (two test defects, #68); after correction **31 of 31** |
+| Type check | Passed |
+| Production build with content validation (JS 564.02 kB, 132.33 kB gzip) | Passed |
+| Unit tests (21 files) | **427 passed** |
+| End-to-end tests | **251 passed** |
+| **Total, one complete cycle** | **678 passed, 0 failed** |
+
+- **New:** 1 unit test and 3 end-to-end tests. **Updated:** wording and marker expectations in `calendar.spec.ts` and two unit assertions; substantive assertions kept; none removed.
+- **Unchanged and passing:** all vaccine age, date-arithmetic, overlay, event, isolation, persistence, offline and upgrade tests.
+- **Bundle:** 562.19 → 564.02 kB (132.00 → 132.33 kB gzip).
+- **Screenshots:** `docs/screenshots/checkpoint-3-r/` (13). The Checkpoint 3 set in `docs/screenshots/checkpoint-3/` is kept as the record of what was accepted.
+

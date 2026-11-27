@@ -2,7 +2,7 @@
 
 **This is the single authoritative, current-state handoff.** It replaces the earlier handoff notes. The original end-of-Checkpoint-1 handoff is kept unchanged as a historical record in `docs/reviews/CHECKPOINT_1_HANDOFF.md`; statements there describe the project as it was at commit `aa8c869` and are no longer current.
 
-*Last updated: 2026-11-27 (Checkpoint 3, Simplified Calendar: implemented in a local commit on `claude/great-dijkstra-wwi9g1`; awaiting the owner's acceptance; not pushed). Earlier: Checkpoint 2b-R human acceptance closeout and submission scope revision (documentation-only commit `3da76c7` on `claude/vigilant-keller-w6ss5f`, pushed with the owner's authorization). Earlier: Checkpoint 2b-R implementation `b45af43` (pushed); Checkpoint 2b `64202e2` on `claude/upbeat-thompson-skpm8j`; Checkpoint 2a closeout on `claude/sharp-franklin-vrbgmd`.*
+*Last updated: 2026-11-27 (Checkpoint 3 accepted on Mac; refinements R-019 to R-022 implemented in a second local commit on `claude/great-dijkstra-wwi9g1`, awaiting the owner's visual acceptance; not pushed). Earlier the same day: Checkpoint 3 implemented in local commit `c5017da`. Earlier: Checkpoint 2b-R human acceptance closeout and submission scope revision (documentation-only commit `3da76c7` on `claude/vigilant-keller-w6ss5f`, pushed with the owner's authorization). Earlier: Checkpoint 2b-R implementation `b45af43` (pushed); Checkpoint 2b `64202e2` on `claude/upbeat-thompson-skpm8j`; Checkpoint 2a closeout on `claude/sharp-franklin-vrbgmd`.*
 
 ## 1. Status at a glance
 
@@ -12,7 +12,8 @@
 | **Checkpoint 2a** — Verified Milestone Tracking, the Growth UX refinement (R-002, plan R11) and the human acceptance refinements (R-004 to R-008, plan R12) | ✅ **Accepted by the owner for Mac usability (2026-11-27;** local build of `bf790b5`, macOS, Node.js 26, Safari). **Pending:** physical iPhone acceptance, offline editing on a device, manual legacy-data upgrade verification. Not merged into `main`, not deployed |
 | **Checkpoint 2b** — Goals, Exercises & Historical Progress | ✅ **Initial owner acceptance in Mac Safari: 64 of 65 applicable checks passed** (2026-11-27; Phase G not applicable). Preserved on remote `claude/upbeat-thompson-skpm8j` at `64202e2`. Not merged or deployed. Database version 3. iPhone pending |
 | **Checkpoint 2b-R** — Human Acceptance Refinements R-010 to R-017 | ✅ **Accepted for continued development** (owner, Mac Safari, 2026-11-27): **all 15 applicable Mac checks (GR1–GR15) passed** against `b45af43`. GR16 (iPhone) deferred to Checkpoint 6. Preserved on remote `claude/vigilant-keller-w6ss5f`. Not merged or deployed. Database version 3 |
-| **Checkpoint 3** — Simplified Calendar (plan R16) | 🟡 **Implemented; awaiting the owner's acceptance.** Local commit “Checkpoint 3: Simplified Calendar” on `claude/great-dijkstra-wwi9g1` (16 commits), on top of `3da76c7`. **Not pushed, merged or deployed.** Database version 3 unchanged. Automated results in BUILD_LOG; no Safari or iPhone testing |
+| **Checkpoint 3** — Simplified Calendar (plan R16) | ✅ **Accepted by the owner in Mac Safari** (2026-11-27, against `c5017da6ea9525adc6681efdee2c59b3e7cb3099`): CAL1–CAL33 passed; CAL34 (keyboard) and CAL35 (offline editing) not human-tested; CAL36 (iPhone) deferred to Checkpoint 6. Home changes approved. **Formal closeout pending R-019 to R-022.** Local only; not pushed, merged or deployed. Database version 3 |
+| **Checkpoint 3-R** — acceptance refinements R-019 to R-022 (plan R17) | 🟡 **Implemented; awaiting the owner's visual acceptance** (CR1–CR9). Local commit “Checkpoint 3-R: Human Acceptance Refinements” on top of `c5017da` (17 commits). Presentation only. One complete regression cycle (reduced cadence authorized). **Not pushed, merged or deployed** |
 | **Checkpoint 4** — Journal (Resources tab removed from the submission version) | ⏳ Planned, not started |
 | **Checkpoint 6** — Final testing, deployment and consolidated physical iPhone acceptance | ⏳ Planned, not started |
 | **Checkpoint 5** — Backups, export/restore, partner sharing, provider reports; and **Resources** | ⏸ **Deferred until after submission** (not abandoned) |
@@ -29,7 +30,7 @@
 | **Remote `checkpoint-2a`** | `73d9f6fc356b3f792a9f71cc8f38ff421e13581d` (Checkpoint 2a: Verified Milestone Tracking), a direct child of `aa8c869`. This is the **recovered original commit** (section 6) |
 | Branch `claude/beautiful-allen-1vjobt` (remote) | `170cc99` “Checkpoint 2a: Growth UX Refinement”, preserved with the owner's authorization |
 | Branch `claude/upbeat-thompson-skpm8j` (remote) | `64202e22f3183e81d572a4115f03bb5f080b18f6` “Checkpoint 2b: Personal Goals, Exercises and Historical Progress” on top of `53d6212` (13 commits). Preserved remotely by the previous conversation |
-| Session branch `claude/great-dijkstra-wwi9g1` (**local only**) | Fast-forwarded from `aa8c869` to the exact authoritative `3da76c71f1c71a7818594bacc33167f67d638f81` (15 commits, no history rewritten), then the local commit “Checkpoint 3: Simplified Calendar” (16). **Not pushed:** it exists only in this conversation's workspace until the owner authorizes a preservation push to this branch. The environment's stop hook asks for a push after every turn; it has been declined each time because pushes need the owner's authorization |
+| Session branch `claude/great-dijkstra-wwi9g1` (**local only**) | Fast-forwarded from `aa8c869` to the exact authoritative `3da76c71f1c71a7818594bacc33167f67d638f81` (15 commits, no history rewritten), then the local commits “Checkpoint 3: Simplified Calendar” (`c5017da`, 16) and “Checkpoint 3-R: Human Acceptance Refinements” (17). **Not pushed:** it exists only in this conversation's workspace until the owner authorizes a preservation push to this branch. The environment's stop hook asks for a push after every turn; it has been declined each time because pushes need the owner's authorization |
 | Session branch `claude/vigilant-keller-w6ss5f` (remote) | Fast-forwarded to `64202e2` (13 commits, no history rewritten), then `b45af4326085b822a2b932ef21c4ee96b3954f84` “Checkpoint 2b-R: Human Acceptance Refinements” (14; pushed with the owner's authorization, normal push) and the documentation-only “Checkpoint 2b-R: Human Acceptance Closeout and Submission Scope Revision” (15). Not merged; no deployment |
 | Session branch `claude/sharp-franklin-vrbgmd` (remote) | Fast-forwarded to `170cc99`, then “Checkpoint 2a: Human Acceptance Refinements” (`8843a2506b0e284b365ec048406d9b6b92d0503b`) and “Checkpoint 2a: Final Review and Erasure Regression Coverage”. Preserved on this remote branch with the owner's explicit authorization (2026-11-27) after a publication safety review. Normal push, no force; not merged; no deployment |
 
@@ -37,7 +38,15 @@
 
 `main` is not to receive Checkpoint 2a until the owner accepts it and authorizes the merge. Pushing never deploys: deployment is a separate manual workflow (section 7).
 
-## 3g. Checkpoint 3 — Simplified Calendar (implemented; awaiting owner acceptance)
+## 3h. Checkpoint 3-R — acceptance refinements R-019 to R-022 (implemented; awaiting the owner's visual acceptance)
+- **Human acceptance of Checkpoint 3 (owner, Mac Safari, against `c5017da`):** CAL1–CAL33 PASS; CAL34 and CAL35 N/A (not human-tested); CAL36 deferred to Checkpoint 6. 33 passed, 0 failed, 2 N/A, 1 deferred. The Home changes, the editor's dismissal behavior and the narrow layout are approved for submission, subject to physical-device review.
+- **What changed (presentation only):** R-019 parent-friendly vaccine language (one visible provider statement; a visible **Source** line with the non-endorsement; details expandable; no “CDC” beside individual recommendations); R-020 symbols (upright cross, heart, diamond); R-021 “Upcoming Appointments” on Home; R-022 Settings Calendar spacing. Plan R17, Decisions #138–#144, `docs/reviews/CHECKPOINT_3_R_REFINEMENT_REPORT.md`.
+- **Unchanged:** database version 3, event records, the vaccine source version and ages, date arithmetic, overlays, profile isolation, Growth. The content file gained display fields only (`contentVersion … .app-2`); the source record is byte-for-byte the same.
+- **Results:** BUILD_LOG (targeted tests, then one complete clean cycle; reduced cadence authorized by the owner for this round only).
+- **Next, each needing separate owner authorization:** the owner's visual acceptance (CR1–CR9); formal Checkpoint 3 closeout; a preservation push of both local commits; Checkpoint 4; merging into `main`; deployment.
+- **Both commits are local only.** They are lost if this conversation's workspace is reclaimed before a preservation push. The updated ZIP in the conversation is the only other copy.
+
+## 3g. Checkpoint 3 — Simplified Calendar (accepted on Mac 2026-11-27; refined by 3-R)
 - **Recovery:** this conversation started at `aa8c869` and fast-forwarded its session branch to the exact authoritative `3da76c7` (15 commits, parent `b45af43`, clean tree, `main` untouched). The baseline run was 379 unit and 218 of 219 end-to-end: one intermittent failure in the R-014 layout test, later shown to be a test-timing defect.
 - **What:** plan R16, Decisions #125–#137, `docs/reviews/CHECKPOINT_3_IMPLEMENTATION_REPORT.md` (requirements, data, vaccine source verification, R-014, limitations).
 - **Data:** database version 3 unchanged; events in the existing `events` store; overlay choices in `Settings.layers` (`medical` added, on by default; `vaccines` off by default). Upgrade from the accepted 2b-R build (`b45af43`) is covered by an automated test: every existing record byte-identical.
@@ -160,8 +169,10 @@ Acceptance is complete only when the owner says so. Defects found during accepta
 | ~~Owner acceptance of Checkpoint 2b~~ | — | **Initial Mac acceptance done** (64/65); refinements → 2b-R |
 | ~~Owner acceptance of Checkpoint 2b-R~~ | — | **Accepted for continued development** (GR1–GR15 pass) |
 | ~~Authorization to begin Checkpoint 3~~ | — | **Given 2026-11-27**; implemented |
-| Preservation push of the Checkpoint 3 commit to `claude/great-dijkstra-wwi9g1` | Before this conversation's workspace is lost | **Needs the owner's authorization.** Until then the commit exists only locally (see section 6 for why that matters) |
-| Owner acceptance of Checkpoint 3 (CAL1–CAL35); the Home changes (Decision #136) | Checkpoint 4 | Mac Safari; iPhone at Checkpoint 6 |
+| Preservation push of the two Checkpoint 3 commits to `claude/great-dijkstra-wwi9g1` | Before this conversation's workspace is lost | **Needs the owner's authorization.** Until then the commits exist only locally (see section 6 for why that matters) |
+| ~~Owner acceptance of Checkpoint 3; the Home changes~~ | — | **Accepted on Mac 2026-11-27** (CAL1–CAL33; Decisions #138, #139) |
+| Owner's visual acceptance of R-019 to R-022 (CR1–CR9); formal Checkpoint 3 closeout | Checkpoint 4 | Mac Safari |
+| Keyboard operation and offline editing confirmed by a person | Checkpoint 6 (suggested) | CAL34 and CAL35 were not human-tested |
 | Authorization to begin Checkpoint 4; merge into `main`; deployment | Submission | Each needs separate authorization |
 | ~~Vaccine schedule source and its content-use permissions~~ | — | **Done at Checkpoint 3:** CDC's July 2, 2025 schedule under CDC's reuse terms (Decisions #125–#128; SOURCE_REGISTER) |
 | Vaccine schedule currency recheck | Checkpoint 6 | Required (Decision #125): the applicable schedule rests on a preliminary court order and may change |

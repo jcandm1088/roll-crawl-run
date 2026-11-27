@@ -644,19 +644,24 @@ input[type='checkbox'] { width: 20px; height: 20px; accent-color: var(--primary)
 .cal-day.is-selected.is-today { border-color: var(--primary); }
 .cal-day.is-selected .cal-num { font-weight: 700; }
 .cal-day:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
-.cal-marks { display: flex; align-items: center; justify-content: center; gap: 3px; height: 8px; }
-/* Overlay markers: circle (medical), square (personal), hollow diamond (vaccine schedule reference). */
-.cal-mark { display: inline-block; width: 8px; height: 8px; flex: none; box-sizing: border-box; }
-.cal-mark-medical { border-radius: 50%; background: var(--primary); }
-.cal-mark-personal { border-radius: 1px; background: var(--text); }
-.cal-mark-vaccines { width: 7px; height: 7px; border: 1.5px solid var(--text); background: transparent; transform: rotate(45deg); margin: 0 1px; }
-.chip .cal-mark, .list-item .cal-mark, .eyebrow .cal-mark, .vax-next .cal-mark, p > .cal-mark { width: 10px; height: 10px; }
-.chip .cal-mark-vaccines, .eyebrow .cal-mark-vaccines, .vax-next .cal-mark-vaccines, p > .cal-mark-vaccines { width: 9px; height: 9px; }
-.eyebrow .cal-mark, p > .cal-mark { margin-right: 6px; vertical-align: baseline; }
+.cal-marks { display: flex; align-items: center; justify-content: center; gap: 2px; height: 10px; }
+/* Overlay markers (R-020): upright cross (medical), heart (personal), hollow diamond (recommended vaccinations). */
+.cal-mark { display: inline-block; width: 10px; height: 10px; flex: none; box-sizing: border-box; }
+svg.cal-mark { overflow: visible; }
+.cal-mark-medical { fill: var(--primary); }
+.cal-mark-personal { fill: var(--text); }
+.cal-mark-vaccines { width: 7px; height: 7px; border: 1.5px solid var(--text); background: transparent; transform: rotate(45deg); margin: 0 1.5px; }
+.chip .cal-mark, .list-item .cal-mark, .vax-next .cal-mark, p > .cal-mark { width: 12px; height: 12px; }
+.chip .cal-mark-vaccines, .vax-next .cal-mark-vaccines, p > .cal-mark-vaccines { width: 9px; height: 9px; }
+p > .cal-mark { margin-right: 6px; vertical-align: -1px; }
+p > .cal-mark-vaccines { margin-right: 8px; vertical-align: 0; }
+.vax-source { padding-top: var(--space-3); border-top: 1px solid var(--border); }
+.vax-source > .title-3 { margin: 0 0 var(--space-2); }
+.vax-source > p { margin: 0; line-height: 1.5; }
 .cal-event { min-height: var(--touch); }
 .cal-event-title { display: block; font-weight: 600; overflow-wrap: anywhere; }
 .vax-ref { margin-top: var(--space-3); padding: var(--space-4); border-radius: var(--radius-md); border: 1.5px dashed var(--border-strong); background: transparent; }
-.vax-group + .vax-group, .vax-ref .eyebrow + .vax-group { margin-top: var(--space-3); }
+.vax-group + .vax-group { margin-top: var(--space-3); }
 .vax-group > p { margin: 0 0 var(--space-2); }
 .vax-list { list-style: none; margin: var(--space-2) 0 0; padding: 0; display: grid; gap: var(--space-3); }
 .vax-list li { padding-left: var(--space-3); border-left: 2px solid var(--border-strong); overflow-wrap: anywhere; }
@@ -666,3 +671,4 @@ input[type='checkbox'] { width: 20px; height: 20px; accent-color: var(--primary)
   background: transparent; color: var(--text); font: inherit; text-align: left; cursor: pointer;
 }
 .vax-next:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+@media (max-width: 359px) { .cal-marks { gap: 1px; } .cal-grid .cal-mark { width: 9px; height: 9px; } .cal-grid .cal-mark-vaccines { width: 6.5px; height: 6.5px; } }

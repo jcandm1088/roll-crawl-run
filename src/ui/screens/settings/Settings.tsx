@@ -94,7 +94,7 @@ export function Settings() {
         </Accordion>
 
         <Accordion title="Calendar" summary="What the Calendar shows" testId="acc-calendar">
-          <div class="stack small" data-testid="settings-calendar">
+          <div class="panel-pad stack small" data-testid="settings-calendar">
             <p>The Calendar keeps the medical appointments and personal events you enter for each child. It can also show ages from CDC’s recommended vaccine schedule for reference; that is off until you turn it on.</p>
             <p class="muted">Choose what is shown under “Show on the calendar” on the Calendar tab. That choice is remembered on this device. Events are saved on this device only; the app doesn’t send reminders or add events to your phone’s calendar.</p>
             <p><a class="text-link" href={href({ name: 'calendar' })}>Open Calendar</a></p>

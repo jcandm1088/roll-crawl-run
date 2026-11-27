@@ -1,6 +1,6 @@
 # Known Limitations
 
-Last updated 2026-11-27 (Checkpoint 3, Simplified Calendar; implemented, awaiting the owner's acceptance). Earlier sections are kept as dated records; where a later statement supersedes an earlier one, the earlier one is marked. Items marked *(planned)* are scheduled for later checkpoints. Refinements and suspected defects awaiting correction are tracked in `docs/REFINEMENT_BACKLOG.md`.
+Last updated 2026-11-27 (Checkpoint 3 accepted on Mac; refinements R-019 to R-022 implemented, awaiting the owner's visual acceptance). Earlier sections are kept as dated records; where a later statement supersedes an earlier one, the earlier one is marked. Items marked *(planned)* are scheduled for later checkpoints. Refinements and suspected defects awaiting correction are tracked in `docs/REFINEMENT_BACKLOG.md`.
 
 ## Not built yet (placeholders)
 - ~~Goals & Exercises, recurring activities, CDC activities, and charts *(Checkpoint 2b)*~~ Built at Checkpoint 2b (awaiting the owner's acceptance).
@@ -128,7 +128,9 @@ Last updated 2026-11-27 (Checkpoint 3, Simplified Calendar; implemented, awaitin
 - **Physical-device acceptance is consolidated in Checkpoint 6:** until then, iPhone behaviour of Checkpoints 2a, 2b and 2b-R (layout, installed-app upgrade, offline editing) is unverified.
 
 ## Checkpoint 3 (Simplified Calendar)
-- **Not yet reviewed by the owner.** Tested only in automated headless Chromium on Linux. Not tested in Safari, on a Mac, an iPhone or Android; not pushed, merged or deployed.
+- ~~**Not yet reviewed by the owner.** Tested only in automated headless Chromium on Linux.~~ *Superseded 2026-11-27:* accepted by the owner in Mac Safari (CAL1–CAL33). **Keyboard operation and offline editing were not human-tested** (automated coverage only). Not tested on an iPhone or Android (Checkpoint 6); not pushed, merged or deployed.
+- **Refinements R-019 to R-022** (wording, symbols, Home heading, Settings spacing) are tested only in automated headless Chromium and await the owner's visual acceptance. They had one complete regression cycle, not three (reduced cadence authorized for this presentation-only round).
+- **Parent-facing vaccine notes are the app's paraphrase** of CDC's qualifications where reworded (the exact quantities are kept and checked automatically; the original wording is in the content file and at cdc.gov). They have had no clinical review.
 - **Vaccine schedule reference:**
   - It is a fixed copy of CDC's July 2, 2025 schedule, retrieved November 27, 2026. It does not update itself. CDC's pages said this was its current schedule because of a preliminary court order (March 16, 2026); that can change. **Recheck at Checkpoint 6.**
   - It is general reference information, not medical advice. It has had no clinical review, and CDC has not reviewed or endorsed the app.
@@ -145,4 +147,4 @@ Last updated 2026-11-27 (Checkpoint 3, Simplified Calendar; implemented, awaitin
 - **Layout:** at 320 px the day cells are about 37 px wide (48 px tall), below the 44 px touch guideline in width; at 390 px they are about 47 px wide.
 - **Browser controls:** the date and time fields use the browser's own pickers, which look and behave differently in Safari and on iPhone; this has not been checked there.
 - **Bundle size:** about 562 KB (132 KB gzip), up from 529 KB (123 KB), for the Calendar and the schedule content.
-- **Home** now has a live “New event” action and a “Coming up” card (Decision #136, for the owner's confirmation). “Journal entry” and “Daily encouragement” remain placeholders.
+- **Home** has a live “New event” action and an “Upcoming Appointments” card (approved by the owner, Decision #139). “Journal entry” and “Daily encouragement” remain placeholders.

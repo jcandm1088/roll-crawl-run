@@ -236,10 +236,51 @@ describe('vaccine schedule reference: bundled snapshot', () => {
     expect(q('cdc25-ipv-4')).toMatch(/on or after age 4 years and at least 6 months after the previous dose/);
   });
 
+  it('R-019: parent-facing wording drops the source-prefacing language and keeps every precise figure', () => {
+    const p = (id: string) => VACCINE_REFERENCES.find((r) => r.id === id)!.parentNote ?? '';
+    // The source record is untouched and still says where each qualification comes from.
+    expect(VACCINE_REFERENCES.find((r) => r.id === 'cdc25-hepb-3')!.qualification).toBe('CDC’s notes for health care providers say a fourth dose is permitted when a combination vaccine is used after the birth dose.');
+    expect(p('cdc25-hepb-3')).toBe('A fourth dose is permitted when a combination vaccine is used after the birth dose.');
+    expect(p('cdc25-hepb-1')).toMatch(/less than 2,000 grams at birth/);
+    expect(p('cdc25-hepb-1')).toMatch(/mother has, or may have, hepatitis B/);
+    expect(p('cdc25-hepb-1')).toMatch(/birth hospital and your child’s provider decide/);
+    expect(p('cdc25-rv-1')).toBe('This series should not be started at or after age 15 weeks, 0 days.');
+    expect(p('cdc25-rv-2')).toBe('The series has two or three doses, depending on the vaccine used. The maximum age for the final dose is 8 months, 0 days.');
+    expect(p('cdc25-hib-booster')).toBe('This is the third or fourth dose, depending on the vaccine used.');
+    expect(p('cdc25-ipv-4')).toBe('The final dose is given on or after age 4 years and at least 6 months after the previous dose.');
+    expect(p('cdc25-hepa-series')).toBe('2 doses separated by 6 months. The app does not work out a date for either dose.');
+    const withNotes = VACCINE_REFERENCES.filter((r) => r.parentNote !== undefined);
+    expect(withNotes.map((r) => r.id)).toEqual(VACCINE_REFERENCES.filter((r) => r.qualification !== undefined).map((r) => r.id));
+    expect(withNotes).toHaveLength(7);
+    for (const r of withNotes) {
+      expect(r.parentNote, r.id).not.toMatch(/CDC|health care providers/);
+      for (const figure of r.qualification!.match(/\d[\d,]* (?:grams|weeks|days|months|years)/g) ?? []) expect(r.parentNote, `${r.id}: ${figure}`).toContain(figure);
+    }
+    // Provider-discussion items: CDC's wording is kept word for word where it is presented as such.
+    for (const d of VACCINE_DISCUSSION) {
+      if (d.parentTextVerbatim) expect(d.parentText, d.id).toBe(d.cdcText);
+      expect(`${d.parentText} ${d.parentNote ?? ''}`, d.id).not.toMatch(/CDC|notes for health care/);
+    }
+    expect(VACCINE_DISCUSSION.filter((d) => !d.parentTextVerbatim).map((d) => d.id)).toEqual(['cdc25-talk-rv-3', 'cdc25-talk-hib-3']);
+    expect(VACCINE_DISCUSSION.find((d) => d.id === 'cdc25-talk-rv-3')!.parentText).toBe('Some children get a third dose at this age. It depends on the vaccine used.');
+    expect(VACCINE_DISCUSSION.find((d) => d.id === 'cdc25-talk-rsv-infant')!.parentNote).toBe('Timing also depends on the RSV season and the month your child was born.');
+    // Validation enforces the same rules.
+    const clone = (): VaccineContent => JSON.parse(JSON.stringify(VACCINE_CONTENT)) as VaccineContent;
+    const a = clone(); a.references.find((r) => r.id === 'cdc25-rv-1')!.parentNote = 'CDC’s notes for health care providers say not to start late.';
+    expect(validateVaccines(a).join()).toMatch(/source-prefacing language/);
+    const b = clone(); b.references.find((r) => r.id === 'cdc25-rv-1')!.parentNote = 'This series should not be started late.';
+    expect(validateVaccines(b).join()).toMatch(/lost “15 weeks”/);
+    const c = clone(); delete c.references.find((r) => r.id === 'cdc25-hepb-1')!.parentNote;
+    expect(validateVaccines(c).join()).toMatch(/both be present or both absent/);
+    const d = clone(); d.discussion[0]!.parentText = 'Depends on the mother’s vaccine status';
+    expect(validateVaccines(d).join()).toMatch(/must match it exactly/);
+    expect(VACCINE_CONTENT.contentVersion).toBe('cdc-child-schedule-2025-07-02.app-2');
+  });
+
   it('conditional, seasonal and individually decided recommendations are listed without any date', () => {
     expect(VACCINE_DISCUSSION.map((d) => d.id)).toEqual(['cdc25-talk-rsv-infant', 'cdc25-talk-rsv-older', 'cdc25-talk-rv-3', 'cdc25-talk-hib-3', 'cdc25-talk-flu', 'cdc25-talk-covid']);
     for (const d of VACCINE_DISCUSSION) {
-      expect(Object.keys(d).sort()).toEqual(['ageLabel', 'appNote', 'cdcKey', 'cdcText', 'id', 'label']); // no age or date fields to compute from
+      expect(Object.keys(d).sort()).toEqual(['ageLabel', 'appNote', 'cdcKey', 'cdcText', 'id', 'label', 'parentNote', 'parentText', 'parentTextVerbatim']); // no age or date fields to compute from
     }
     const by = (id: string) => VACCINE_DISCUSSION.find((d) => d.id === id)!;
     expect(by('cdc25-talk-rsv-infant').cdcText).toBe('Depends on mother’s RSV vaccine status');

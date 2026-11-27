@@ -141,3 +141,19 @@ A living list of refinements and suspected defects that are recorded but not yet
 - **R-014 test timing (not a product refinement):** the intermittent failure of the R-014 layout test found at initialization was a measurement taken during a sheet's entrance animation. Corrected in the test helper only (BUILD_LOG #53). No application change; R-014 itself stays closed as human-accepted.
 - **R-001, R-003, R-009 and R-018 remain deferred** and were not changed.
 - **For the owner's review at acceptance (not yet backlog items):** tapping outside the event form discards what was typed (same as the app's other sheets); the Home “Coming up” card and live “New event” action (Decision #136).
+
+---
+
+## R-019 to R-022 — Checkpoint 3 human acceptance refinements (owner's Mac Safari acceptance of `c5017da`)
+*CAL1–CAL33 passed; CAL34 and CAL35 not human-tested; CAL36 deferred to Checkpoint 6. These four are presentation refinements; no data, schema, calculation or behavior change.*
+
+| # | Finding (owner) | Classification | Correction | Status |
+|---|---|---|---|---|
+| **R-019** | The vaccine overlay repeated “CDC” and its own explanations: a “CDC SCHEDULE REFERENCE · NOT AN APPOINTMENT” label on every reference, “Next on the CDC vaccine schedule”, “a reference age, not an appointment”, an introductory paragraph, a sentence about what the app doesn't track, and “CDC's notes for health care providers say…” before individual notes. Excessive, institutional and cluttered. | Usability (wording); approved Checkpoint 3 wording that proved too heavy in human testing | Attribution and non-endorsement are stated once, visibly, under **Source**; the full record is in “Source details”. One visible statement about the provider's role. Individual notes use plain wording through a separate display layer (`parentNote`, `parentText`); the source record (`qualification`, `cdcText`) is unchanged and validation keeps every precise figure. Headings read “Recommended vaccinations: 4 months” and “Next recommended vaccinations: 6 months”. | Corrected (awaiting the owner's visual acceptance) |
+| **R-020** | Replace the circle and square markers | Design preference | Medical appointments: an upright cross (a short crossbar above the middle, like a lowercase t; theme color; not the equal-armed red cross emblem). Personal: a heart. Recommended vaccinations: the hollow diamond, unchanged. Used in the controls, the month grid, the lists, the event details and Home. | Corrected (awaiting the owner's visual acceptance) |
+| **R-021** | Home's “Coming up” heading | Wording | Now “Upcoming Appointments”. Behavior unchanged (medical and personal events; the overlay choices apply). | Corrected (awaiting the owner's visual acceptance) |
+| **R-022** | In Settings → Calendar, the text and the Open Calendar link sat too close to the edges | Visual defect (implementation): the section's content was not wrapped in the shared `panel-pad` used by the other sections | Wrapped in `panel-pad`; a geometry test at 320, 390 and 1280 px compares it with “This Device”. Wording and link unchanged. | Corrected (awaiting the owner's visual acceptance) |
+
+**Recurring owner observation (third time: R-006 at 2a, R-011 at 2b-R, R-019 here):** repeated institutional source terminology detracts from the parent-facing experience. The standing rule is *parent-first interface, evidence-backed infrastructure*: say the source once, in one place per screen; keep qualifications in plain words; keep the traceable source record in the content files and documentation. New content should start from this rule rather than be corrected after acceptance.
+
+**Unchanged:** R-001, R-003, R-009 and R-018 remain deferred.

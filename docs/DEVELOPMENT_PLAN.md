@@ -1,6 +1,6 @@
 # Development Plan — Roll, Crawl, RUN: Tracking Growth Together (Revision 2)
 
-> **Current status (2026-11-27, Checkpoint 3):** Checkpoint 3 (Simplified Calendar, R16) is implemented in a local commit on `claude/great-dijkstra-wwi9g1` and awaits the owner's acceptance; not pushed, merged or deployed. Checkpoints 1–2b-R are as described below. Next, each needing authorization: acceptance of Checkpoint 3, then Checkpoint 4 (Journal; Resources removed from navigation) and Checkpoint 6. The current-state handoff is `docs/HANDOFF.md`.
+> **Current status (2026-11-27, Checkpoint 3-R):** Checkpoint 3 (Simplified Calendar, R16) was accepted by the owner in Mac Safari (CAL1–CAL33 passed; keyboard and offline editing not human-tested; iPhone deferred to Checkpoint 6). The resulting presentation refinements R-019 to R-022 (R17) are implemented in a second local commit on `claude/great-dijkstra-wwi9g1` and await the owner's visual acceptance before formal closeout; nothing is pushed, merged or deployed. Checkpoints 1–2b-R are as described below. Next, each needing authorization: acceptance of Checkpoint 3, then Checkpoint 4 (Journal; Resources removed from navigation) and Checkpoint 6. The current-state handoff is `docs/HANDOFF.md`.
 >
 > *Previous status line (2026-11-27, after the 2b-R closeout, kept as recorded):* **Current status (2026-11-27, after the 2b-R closeout):** Checkpoint 1 is completed, accepted and deployed (`e40287f`). Checkpoints 2a, 2b and 2b-R are accepted by the owner in Mac Safari (2b-R: GR1–GR15 passed against `b45af43`); all physical-iPhone checks are deferred to Checkpoint 6. Nothing after Checkpoint 1 is merged or deployed. **Submission scope (R15):** Checkpoint 3 (Simplified Calendar) is next, then Checkpoint 4 (Journal; Resources removed from navigation) and Checkpoint 6 (final testing, deployment, iPhone acceptance). Checkpoint 5 and Resources are deferred until after submission. The current-state handoff is `docs/HANDOFF.md`.
 >
@@ -38,7 +38,18 @@
 
 ---
 
-## R16 — Checkpoint 3: Simplified Calendar (implemented; awaiting owner acceptance) — supersedes conflicting §6.8–6.11, R3 Q1–Q3/Q5/Q11 and R4 Calendar text
+## R17 — Checkpoint 3 human acceptance refinements R-019 to R-022 (implemented; awaiting the owner's visual acceptance) — supersedes conflicting R16 wording
+**Authorization:** owner, 2026-11-27, after Mac Safari acceptance of `c5017da` (CAL1–CAL33 passed; CAL34–CAL35 not human-tested; CAL36 deferred). Decisions #138–#144; report `docs/reviews/CHECKPOINT_3_R_REFINEMENT_REPORT.md`.
+
+**Built (presentation only):** R-019 parent-friendly vaccine language with one visible disclaimer and a visible **Source** line (details expandable); R-020 cross, heart and diamond symbols; R-021 “Upcoming Appointments” on Home; R-022 Settings Calendar spacing.
+
+**Unchanged:** database version 3 and all records; the vaccine source version, ages, qualifications and date arithmetic; overlays; event management; profile isolation; Growth.
+
+**Still required:** the Checkpoint 6 schedule currency recheck; physical-iPhone acceptance.
+
+---
+
+## R16 — Checkpoint 3: Simplified Calendar (implemented; accepted on Mac 2026-11-27, see R17) — supersedes conflicting §6.8–6.11, R3 Q1–Q3/Q5/Q11 and R4 Calendar text
 **Authorization:** owner, 2026-11-27, after the initialization and preparation reports (Decisions #125–#137). Report: `docs/reviews/CHECKPOINT_3_IMPLEMENTATION_REPORT.md`.
 
 **Built:**

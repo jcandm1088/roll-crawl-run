@@ -385,22 +385,58 @@ test('the three overlays switch independently, hiding never deletes, and the cho
   expect((await storedEvents(page)).filter((e) => stored.some((s) => s.id === e.id))).toEqual(stored); // unchanged throughout
 });
 
-test('markers differ by shape, not only color', async ({ page }) => {
+test('markers differ by shape, not only color: cross, heart and diamond, used consistently', async ({ page }) => {
   await start(page);
   await page.getByTestId('overlay-vaccines').click();
   await addEvent(page, { title: 'Fictional checkup', date: '2026-11-20' });
   await addEvent(page, { title: 'Fictional visit', date: '2026-11-20', kind: 'personal' });
   const cell = day(page, '2026-11-20');
   await expect(cell.locator('.cal-mark')).toHaveCount(3);
+  // R-020: an upright cross (medical), a heart (personal), a hollow diamond (recommended vaccinations).
   const shapes = await cell.locator('.cal-mark').evaluateAll((els) => els.map((el) => {
-    const s = getComputedStyle(el);
-    return { cls: el.className, radius: s.borderTopLeftRadius, filled: s.backgroundColor !== 'rgba(0, 0, 0, 0)', rotated: s.transform !== 'none', outlined: parseFloat(s.borderTopWidth) > 0 };
+    const cs = getComputedStyle(el);
+    const b = el.getBoundingClientRect();
+    const rects = [...el.querySelectorAll('rect')].map((r) => ({ w: Number(r.getAttribute('width')), h: Number(r.getAttribute('height')), y: Number(r.getAttribute('y')) }));
+    return { shape: el.getAttribute('data-shape'), tag: el.tagName.toLowerCase(), hidden: el.getAttribute('aria-hidden'), fill: cs.fill, bg: cs.backgroundColor, rotated: cs.transform !== 'none', outlined: parseFloat(cs.borderTopWidth) > 0, w: b.width, h: b.height, rects, paths: el.querySelectorAll('path').length };
   }));
-  expect(shapes[0]).toMatchObject({ radius: '50%', filled: true, rotated: false }); // medical: filled circle
-  expect(shapes[1]).toMatchObject({ filled: true, rotated: false }); // personal: filled square
-  expect(shapes[1]!.radius).not.toBe('50%');
-  expect(shapes[2]).toMatchObject({ filled: false, rotated: true, outlined: true }); // vaccine reference: hollow diamond
-  await expect(cell).toHaveAttribute('aria-label', 'Friday, November 20, 2026, 1 medical appointment, 1 personal event, vaccine schedule reference');
+  expect(shapes.map((x) => x.shape)).toEqual(['cross', 'heart', 'diamond']);
+  expect(shapes.every((x) => x.hidden === 'true')).toBe(true); // decorative: the day's name carries the meaning
+  // Cross: one tall upright and one shorter crossbar above the middle (a lowercase-t shape, not an equal-armed cross).
+  const [upright, bar] = shapes[0]!.rects;
+  expect(shapes[0]!.rects).toHaveLength(2);
+  expect(upright!.h).toBeGreaterThan(upright!.w * 4);
+  expect(bar!.w).toBeGreaterThan(bar!.h * 3);
+  expect(bar!.w).toBeLessThan(upright!.h); // arms shorter than the upright
+  expect(bar!.y + bar!.h / 2).toBeLessThan(6); // crossbar above the centre of the 12-unit box
+  expect(shapes[1]).toMatchObject({ tag: 'svg', paths: 1 }); // heart: a single filled path
+  expect(shapes[2]).toMatchObject({ tag: 'span', bg: 'rgba(0, 0, 0, 0)', rotated: true, outlined: true }); // hollow diamond, unchanged
+  // Theme colors only, and not red on white.
+  const colors = await page.evaluate(() => { const cs = getComputedStyle(document.documentElement); const probe = document.createElement('span'); document.body.append(probe); const read = (v: string) => { probe.style.color = `var(${v})`; return getComputedStyle(probe).color; }; const out = { primary: read('--primary'), text: read('--text') }; probe.remove(); void cs; return out; });
+  expect(shapes[0]!.fill).toBe(colors.primary);
+  expect(shapes[1]!.fill).toBe(colors.text);
+  // Readable and compact: each mark is 8–12 px, and the three sit side by side inside the day without overlap.
+  const boxes = await cell.locator('.cal-mark').evaluateAll((els) => els.map((el) => { const b = el.getBoundingClientRect(); return { l: b.left, r: b.right, t: b.top, b: b.bottom }; }));
+  const cellBox = await cell.evaluate((el) => { const b = el.getBoundingClientRect(); return { l: b.left, r: b.right, t: b.top, b: b.bottom }; });
+  for (const [n, b] of boxes.entries()) {
+    expect(b.r - b.l).toBeGreaterThanOrEqual(8);
+    expect(b.r - b.l).toBeLessThanOrEqual(13);
+    expect(b.l).toBeGreaterThanOrEqual(cellBox.l);
+    expect(b.r).toBeLessThanOrEqual(cellBox.r);
+    expect(b.b).toBeLessThanOrEqual(cellBox.b);
+    if (n > 0) expect(b.l).toBeGreaterThanOrEqual(boxes[n - 1]!.r - 0.5);
+  }
+  // The same symbols lead the overlay controls and the event rows.
+  await expect(page.getByTestId('overlay-medical').locator('[data-shape="cross"]')).toHaveCount(1);
+  await expect(page.getByTestId('overlay-personal').locator('[data-shape="heart"]')).toHaveCount(1);
+  await expect(page.getByTestId('overlay-vaccines').locator('[data-shape="diamond"]')).toHaveCount(1);
+  await cell.click();
+  await expect(page.getByTestId('day-events').getByTestId('event-row').nth(0).locator('[data-shape="cross"]')).toHaveCount(1); // Fictional checkup
+  await expect(page.getByTestId('day-events').getByTestId('event-row').nth(1).locator('[data-shape="heart"]')).toHaveCount(1); // Fictional visit
+  await expect(page.getByTestId('vax-on-day').locator('[data-shape="diamond"]')).toHaveCount(1);
+  await page.getByTestId('day-events').getByTestId('event-row').nth(0).click();
+  await expect(page.getByTestId('event-view').locator('[data-shape="cross"]')).toHaveCount(1);
+  await page.keyboard.press('Escape');
+  await expect(cell).toHaveAttribute('aria-label', 'Friday, November 20, 2026, 1 medical appointment, 1 personal event, recommended vaccinations');
 });
 
 // ---------------------------------------------------------------------------
@@ -412,12 +448,13 @@ test('vaccine overlay: single ages mark one day, ranges are never repeated acros
   await page.getByTestId('overlay-vaccines').click();
   // November 2026 for a child born July 20, 2026: exactly one marked day (4 months), not a month of labels.
   await expect(page.locator('.cal-grid .cal-mark-vaccines')).toHaveCount(1);
-  await expect(day(page, '2026-11-20')).toHaveAttribute('aria-label', 'Friday, November 20, 2026, vaccine schedule reference');
+  await expect(day(page, '2026-11-20')).toHaveAttribute('aria-label', 'Friday, November 20, 2026, recommended vaccinations');
   await expect(page.getByTestId('vax-on-day')).toHaveCount(0); // nothing for today (Nov 26)
   await day(page, '2026-11-20').click();
   const ref = page.getByTestId('vax-on-day');
-  await expect(ref).toContainText('CDC schedule reference · not an appointment');
-  await expect(ref).toContainText('Reference age reached on this day: 4 months');
+  await expect(ref).toContainText('Recommended vaccinations: 4 months');
+  await expect(ref).not.toContainText('CDC'); // R-019: attribution lives in the Source section, not beside each recommendation
+  await expect(ref).not.toContainText('not an appointment');
   await expect(ref.getByTestId('vax-item')).toHaveCount(5);
   await expect(ref.getByTestId('vax-item')).toContainText(['Rotavirus — dose 2 · 4 months', 'DTaP — dose 2 · 4 months', 'Hib — dose 2 · 4 months', 'Pneumococcal — dose 2 · 4 months', 'Polio — dose 2 · 4 months']);
   await expect(ref).toContainText('two or three doses, depending on the vaccine used');
@@ -430,8 +467,7 @@ test('vaccine overlay: single ages mark one day, ranges are never repeated acros
   await expect(page.getByTestId('vax-on-day')).toHaveCount(0);
 
   // Next reference age: 6 months on January 20, 2027.
-  await expect(page.getByTestId('vax-next')).toContainText('Next on the CDC vaccine schedule: age 6 months');
-  await expect(page.getByTestId('vax-next')).toContainText('January 20, 2027 · a reference age, not an appointment');
+  await expect(page.getByTestId('vax-next')).toHaveText(/^Next recommended vaccinations: 6 months\s*January 20, 2027$/);
   await page.getByTestId('vax-next').click();
   await expect(page.getByTestId('cal-month')).toHaveText('January 2027');
   await expect(page.locator('.cal-grid .cal-mark-vaccines')).toHaveCount(1);
@@ -449,7 +485,7 @@ test('vaccine overlay: single ages mark one day, ranges are never repeated acros
   await day(page, '2027-03-15').click();
   const mid = page.getByTestId('vax-on-day');
   await expect(mid).toContainText('Recommended age ranges that include this day');
-  await expect(mid).not.toContainText('Reference age reached on this day');
+  await expect(mid).not.toContainText('Recommended vaccinations:');
   await expect(mid.getByTestId('vax-item')).toHaveCount(2);
   await expect(page.getByTestId('vax-month').locator('summary')).toHaveText('Recommended age ranges that include March 2027 (2)');
 
@@ -460,14 +496,14 @@ test('vaccine overlay: single ages mark one day, ranges are never repeated acros
   await expect(page.getByTestId('selected-date')).toHaveText('Tuesday, July 20, 2027'); // 12 months
   const twelve = page.getByTestId('vax-on-day');
   await expect(twelve).toContainText('Hib — dose 3 or 4 · 12–15 months');
-  await expect(twelve).toContainText('“3rd or 4th dose”, because the number of doses depends on the vaccine used');
+  await expect(twelve).toContainText('This is the third or fourth dose, depending on the vaccine used.');
   await expect(twelve).toContainText('Hepatitis A — 2 doses · 12–23 months');
   await expect(twelve).toContainText('By date of birth: July 20, 2027 through July 19, 2028');
   await expect(twelve).toContainText('The app does not work out a date for either dose.');
   for (let i = 0; i < 36; i++) await page.getByTestId('cal-next').click();
   await expect(page.getByTestId('cal-month')).toHaveText('July 2030');
   await day(page, '2030-07-20').click();
-  await expect(page.getByTestId('vax-on-day')).toContainText('Reference age reached on this day: 4 years');
+  await expect(page.getByTestId('vax-on-day')).toContainText('Recommended vaccinations: 4 years');
   await expect(page.getByTestId('vax-on-day')).toContainText('DTaP — dose 5 · 4–6 years');
   await expect(page.getByTestId('vax-on-day')).toContainText('By date of birth: July 20, 2030 through July 19, 2033');
   await expect(page.getByTestId('vax-next')).toHaveCount(1);
@@ -483,9 +519,10 @@ test('the birth-dose reference keeps its qualifications and is shown on the date
   await expect(page.locator('.cal-grid .cal-mark-vaccines')).toHaveCount(1);
   await day(page, '2026-07-20').click();
   const ref = page.getByTestId('vax-on-day');
-  await expect(ref).toContainText('Reference age reached on this day: birth');
+  await expect(ref).toContainText('Recommended vaccinations: birth');
   await expect(ref).toContainText('Hepatitis B — dose 1 · birth');
   await expect(ref).toContainText('weigh less than 2,000 grams at birth');
+  await expect(ref).not.toContainText('notes for health care providers');
   await expect(ref).toContainText('when the mother has, or may have, hepatitis B');
   await expect(ref).toContainText('The birth hospital and your child’s provider decide this.');
 });
@@ -494,48 +531,73 @@ test('conditional recommendations are listed for a provider conversation with no
   await start(page);
   await page.getByTestId('overlay-vaccines').click();
   const info = page.getByTestId('vaccine-info');
-  await expect(info.getByTestId('vax-intro')).toContainText('not appointments or due dates');
-  await expect(info.getByTestId('vax-intro')).toContainText('Sample Child A’s date of birth');
-  await expect(info.getByTestId('vax-provider')).toContainText('Your child’s healthcare provider determines your child’s vaccination schedule.');
-  await expect(info.getByTestId('vax-provider')).toContainText('doesn’t track vaccines given, check eligibility or work out catch-up timing');
-
+  // R-019: one visible statement, in the owner's wording, and no separate introduction or tracking sentence.
+  await expect(info.getByTestId('vax-provider')).toHaveText('Your child’s healthcare provider determines their individual vaccination schedule. The dates shown are general recommendations, not scheduled appointments or confirmation of eligibility.');
+  await expect(info.getByTestId('vax-intro')).toHaveCount(0);
+  await expect(info).not.toContainText('doesn’t track vaccines given');
+  await expect(info).not.toContainText('marks ages on CDC’s recommended schedule');
+  // Attribution and non-endorsement are visible without expanding anything.
+  await expect(info.getByRole('heading', { name: 'Source', exact: true })).toBeVisible();
+  const summary = info.getByTestId('vax-source-summary');
+  await expect(summary).toBeVisible();
+  await expect(summary).toHaveText('Based on the CDC childhood immunization schedule, July 2, 2025. This app is not endorsed by CDC, HHS or the U.S. Government and has not been clinically reviewed.');
+  await expect(info.getByTestId('vax-source-details')).not.toHaveAttribute('open', '');
+  await expect(info.getByTestId('vax-source-link')).toBeHidden(); // the detailed record stays collapsed until asked for
   await info.getByTestId('vax-discuss').locator('summary').click();
   const items = info.getByTestId('vax-discuss-item');
   await expect(items).toHaveCount(6);
   await expect(items).toContainText([
     'RSV antibody · Birth through 7 months', 'RSV antibody · 8 through 19 months', 'Rotavirus, dose 3 · 6 months', 'Hib, dose 3 · 6 months', 'Influenza (flu) · 6 months and older', 'COVID-19 · 6 months and older',
   ]);
-  await expect(items.nth(0)).toContainText('CDC: “Depends on mother’s RSV vaccine status”');
-  await expect(items.nth(0)).toContainText('RSV season and the month of birth');
-  await expect(items.nth(1)).toContainText('CDC: “Depends on child’s health status”');
+  await expect(items.nth(0)).toContainText('Depends on mother’s RSV vaccine status');
+  await expect(items.nth(0)).toContainText('Timing also depends on the RSV season and the month your child was born.');
+  await expect(items.nth(1)).toContainText('Depends on child’s health status');
   await expect(items.nth(2)).toContainText('depends on the vaccine used');
-  await expect(items.nth(4)).toContainText('CDC: “Every year. Two doses for some children”');
+  await expect(items.nth(3)).toContainText('depends on the vaccine used');
+  await expect(items.nth(4)).toContainText('Every year. Two doses for some children');
   await expect(items.nth(5)).toContainText('talk to their health care provider to decide if this vaccine is right for their child');
   const discussText = await info.getByTestId('vax-discuss').innerText();
   expect(discussText).not.toMatch(/\b20\d\d\b/); // no year, so no date, anywhere in this section
   expect(discussText).not.toMatch(/January|February|March|April|June|July|August|September|October|November|December/);
   expect(discussText).not.toMatch(/Moderna|Pfizer|Novavax/);
+  // No institutional framing here (R-019). The one remaining mention is the name of a resource in CDC's own
+  // sentence (“Visit CDC Travelers’ Health…”), kept word for word.
+  expect(discussText).toContain('Visit CDC Travelers’ Health for more information.');
+  expect(discussText.replace('CDC Travelers’ Health', '')).not.toMatch(/\bCDC\b|notes for health care providers/);
+  expect(discussText).toMatch(/Talk to your child’s health care provider for more guidance if:/);
   expect(discussText).toMatch(/higher risk for infection/);
   expect(discussText).toMatch(/traveling outside the United States/);
   // None of these reaches the calendar grid, in any month of the first seven years.
   const labels = new Set<string>();
   for (let i = 0; i < 3; i++) {
-    for (const l of await page.locator('.cal-day[aria-label*="vaccine schedule reference"]').evaluateAll((els) => els.map((e) => e.getAttribute('data-date')!))) labels.add(l);
+    for (const l of await page.locator('.cal-day[aria-label*="recommended vaccinations"]').evaluateAll((els) => els.map((e) => e.getAttribute('data-date')!))) labels.add(l);
     await page.getByTestId('cal-next').click();
   }
   expect([...labels]).toEqual(['2026-11-20', '2027-01-20']);
 
-  await info.getByTestId('vax-source').locator('summary').click();
+  // Outside the Source section the overlay never names CDC, whatever is expanded or selected.
+  await page.getByTestId('cal-today').click();
+  await day(page, '2026-11-20').click();
+  await info.getByTestId('vax-month').locator('summary').click();
+  const outside = await page.evaluate(() => {
+    const clone = document.querySelector('[data-testid="calendar"]')!.cloneNode(true) as HTMLElement;
+    clone.querySelector('[data-testid="vax-source"]')!.remove();
+    return (clone.textContent ?? '').replace('CDC Travelers’ Health', ''); // a resource named in a verbatim sentence
+  });
+  expect(outside).not.toMatch(/\bCDC\b/);
+  expect(outside).not.toMatch(/not an appointment|reference age/i);
+
+  // The complete record is in the expandable details.
+  await info.getByTestId('vax-source-details').locator('summary').click();
   const src = info.getByTestId('vax-source');
-  await expect(src).toContainText('Source: CDC.');
   await expect(src).toContainText('“Recommended Immunizations for Birth Through 6 Years Old, United States, 2025” (July 2, 2025)');
+  await expect(src).toContainText('checked against CDC’s schedule, notes and addendum for health care providers');
   await expect(src).toContainText('Retrieved November 27, 2026.');
   await expect(src).toContainText('available free of charge at cdc.gov');
   await expect(src).toContainText('this copy does not update itself');
-  await expect(src.getByTestId('vax-nonendorsement')).toContainText('does not mean that CDC, the U.S. Department of Health and Human Services or the U.S. Government endorses this app');
-  await expect(src.getByTestId('vax-nonendorsement')).toContainText('has not been reviewed by CDC or by a clinician');
+  await expect(src).toContainText('some are CDC’s own words and some are reworded');
   await expect(src).toContainText('from the date of birth (not a corrected age)');
-  await expect(src).toContainText('not deadlines');
+  await expect(src).toContainText('through the last day of its last age');
   const link = src.getByTestId('vax-source-link');
   await expect(link).toHaveAttribute('href', 'https://www.cdc.gov/vaccines/imz-schedules/child-easyread.html');
   await expect(link).toHaveAttribute('target', '_blank');
@@ -568,8 +630,8 @@ test('vaccine reference dates use the date of birth even when corrected age is i
   await expect(page.getByText(/corrected/i).first()).toBeVisible(); // corrected age really is in use on Home
   await page.goto('./#/calendar');
   await page.getByTestId('overlay-vaccines').click();
-  await expect(page.locator('.cal-day[aria-label*="vaccine schedule reference"]')).toHaveAttribute('data-date', '2026-11-20'); // 4 months from the date of birth
-  await expect(page.getByTestId('vax-next')).toContainText('age 6 months');
+  await expect(page.locator('.cal-day[aria-label*="recommended vaccinations"]')).toHaveAttribute('data-date', '2026-11-20'); // 4 months from the date of birth
+  await expect(page.getByTestId('vax-next')).toContainText('Next recommended vaccinations: 6 months');
   await expect(page.getByTestId('vax-next')).toContainText('January 20, 2027');
 });
 
@@ -581,8 +643,8 @@ test('month-end and leap-day birthdays place references on real calendar dates',
   await page.getByTestId('cal-prev').click();
   await expect(page.getByTestId('cal-month')).toHaveText('February 2024');
   // 2 months after December 31 is February 29 in a leap year (the month's last day).
-  await expect(page.locator('.cal-day[aria-label*="vaccine schedule reference"]')).toHaveAttribute('data-date', '2024-02-29');
-  await expect(page.getByTestId('vax-next')).toContainText('age 4 months');
+  await expect(page.locator('.cal-day[aria-label*="recommended vaccinations"]')).toHaveAttribute('data-date', '2024-02-29');
+  await expect(page.getByTestId('vax-next')).toContainText('Next recommended vaccinations: 4 months');
   await expect(page.getByTestId('vax-next')).toContainText('April 30, 2024');
 });
 
@@ -729,9 +791,11 @@ test('works offline: the calendar opens, and events can be added, edited and del
 // Home and Settings
 // ---------------------------------------------------------------------------
 
-test('Home’s New event opens the add form, Coming up lists the next events, and Settings describes the Calendar as it is', async ({ page }) => {
+test('Home’s New event opens the add form, Upcoming Appointments lists the next events, and Settings describes the Calendar as it is', async ({ page }) => {
   await start(page);
   await page.goto('./#/home');
+  await expect(page.getByTestId('home-coming-up').getByRole('heading', { level: 2 })).toHaveText('Upcoming Appointments'); // R-021
+  await expect(page.getByText('Coming up', { exact: true })).toHaveCount(0);
   await expect(page.getByTestId('home-coming-up')).toContainText('No upcoming events.');
   await page.getByTestId('qa-new-event').click();
   await expect(page.getByRole('dialog', { name: 'Add event' })).toBeVisible();
@@ -742,7 +806,9 @@ test('Home’s New event opens the add form, Coming up lists the next events, an
   for (const e of [{ title: 'Fictional visit', date: '2026-11-27', kind: 'personal' as const }, { title: 'Fictional therapy', date: '2026-12-02' }, { title: 'Fictional later event', date: '2026-12-20' }, { title: 'Fictional past event', date: '2026-11-01' }]) await addEvent(page, e);
   await page.goto('./#/home');
   const coming = page.getByTestId('home-coming-up');
-  await expect(coming.locator('.cal-event-title')).toHaveText(['Fictional visit', 'Fictional checkup', 'Fictional therapy']); // the next three
+  await expect(coming.locator('.cal-event-title')).toHaveText(['Fictional visit', 'Fictional checkup', 'Fictional therapy']); // the next three: medical and personal together
+  await expect(coming.getByTestId('event-row').nth(0).locator('[data-shape="heart"]')).toHaveCount(1);
+  await expect(coming.getByTestId('event-row').nth(1).locator('[data-shape="cross"]')).toHaveCount(1);
   await expect(coming).not.toContainText('vaccine');
   await coming.getByTestId('home-open-calendar').click();
   await expect(page.getByTestId('calendar')).toBeVisible();
@@ -761,6 +827,7 @@ test('Home’s New event opens the add form, Coming up lists the next events, an
   await expect(panel).toContainText('doesn’t send reminders or add events to your phone’s calendar');
   await expect(page.getByTestId('acc-calendar')).not.toContainText('Coming soon');
   await expect(page.getByText('Calendar & Reminders')).toHaveCount(0);
+  await expect(panel.getByRole('link', { name: 'Open Calendar' })).toHaveAttribute('href', '#/calendar');
 });
 
 // ---------------------------------------------------------------------------
@@ -833,7 +900,7 @@ for (const theme of ['earth', 'sky', 'blush', 'lavender', 'sage']) {
     await addEvent(page, { title: 'Fictional visit', date: '2026-11-26', kind: 'personal' });
     await page.getByTestId('overlay-vaccines').click();
     await day(page, '2026-11-20').click();
-    for (const id of ['vax-month', 'vax-discuss', 'vax-source']) await page.getByTestId(id).locator('summary').click();
+    for (const id of ['vax-month', 'vax-discuss', 'vax-source-details']) await page.getByTestId(id).locator('summary').click();
     await settle(page);
     const tags = ['wcag2a', 'wcag2aa', 'wcag21aa'];
     expect((await new AxeBuilder({ page: page as never }).withTags(tags).analyze()).violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target).join(' | ')}`)).toEqual([]);
@@ -863,7 +930,7 @@ for (const width of [320, 390]) {
     await addEvent(page, { title: 'Fictional visit', date: '2026-11-30', kind: 'personal' });
     await page.getByTestId('overlay-vaccines').click();
     await day(page, '2026-11-20').click();
-    for (const id of ['vax-month', 'vax-discuss', 'vax-source']) await page.getByTestId(id).locator('summary').click();
+    for (const id of ['vax-month', 'vax-discuss', 'vax-source-details']) await page.getByTestId(id).locator('summary').click();
     await noOverflow(page, 'calendar with the vaccine overlay');
     // All geometry is read together, after entrance animations.
     await settle(page);
@@ -908,7 +975,7 @@ for (const width of [320, 390]) {
 test('the Calendar uses the shared page heading and no development wording', async ({ page }) => {
   await start(page);
   await page.getByTestId('overlay-vaccines').click();
-  for (const id of ['vax-month', 'vax-discuss', 'vax-source']) await page.getByTestId(id).locator('summary').click();
+  for (const id of ['vax-month', 'vax-discuss', 'vax-source-details']) await page.getByTestId(id).locator('summary').click();
   await expect(page.getByTestId('page-title')).toHaveText('Calendar');
   const text = await page.locator('body').innerText();
   expect(text).not.toMatch(/checkpoint|overlay|IndexedDB|coming soon|preview only/i);
@@ -916,3 +983,40 @@ test('the Calendar uses the shared page heading and no development wording', asy
   // Nothing in the app claims tracking, reminders or clinical review.
   expect(text).not.toMatch(/up to date|overdue|due on|reminder set/i);
 });
+
+// R-022: the Calendar section in Settings uses the same inner spacing as the other Settings sections.
+for (const vp of [{ width: 320, height: 760 }, { width: 390, height: 844 }, { width: 1280, height: 900 }]) {
+  test(`Settings → Calendar: text and link are inset like the other sections (${vp.width}px)`, async ({ page }) => {
+    await page.setViewportSize(vp);
+    await start(page);
+    await page.goto('./#/settings');
+    await page.getByRole('button', { name: /^Calendar/ }).click();
+    await page.getByRole('button', { name: /^This Device/ }).click();
+    await settle(page);
+    const g = await page.evaluate(() => {
+      const r = (e: Element) => { const b = e.getBoundingClientRect(); return { l: b.left, r: b.right, t: b.top, b: b.bottom }; };
+      const pad = (sel: string) => { const e = document.querySelector(`[data-testid="${sel}"] .panel-pad`)!; const cs = getComputedStyle(e); return [cs.paddingTop, cs.paddingRight, cs.paddingBottom, cs.paddingLeft].join(' '); };
+      const cal = document.querySelector('[data-testid="acc-calendar"]')!;
+      const panel = document.querySelector('[data-testid="settings-calendar"]')!;
+      return {
+        card: r(cal), panel: r(panel), paras: [...panel.querySelectorAll('p')].map(r), link: r(panel.querySelector('a')!),
+        title: r(cal.querySelector('.accordion-title')!), calPad: pad('acc-calendar'), devicePad: pad('acc-device'),
+        deviceField: r(document.querySelector('[data-testid="acc-device"] .field')!), deviceCard: r(document.querySelector('[data-testid="acc-device"]')!),
+      };
+    });
+    expect(g.calPad).toBe(g.devicePad); // the shared Settings panel padding, not a one-off value
+    for (const p of g.paras) {
+      expect(p.l - g.card.l).toBeGreaterThanOrEqual(16); // clear of the card's edges
+      expect(g.card.r - p.r).toBeGreaterThanOrEqual(16);
+    }
+    expect(Math.abs((g.paras[0]!.l - g.card.l) - (g.deviceField.l - g.deviceCard.l))).toBeLessThan(1); // same inset as “This Device”
+    expect(Math.abs(g.paras[0]!.l - g.title.l)).toBeLessThan(1); // text lines up under the section title
+    expect(g.link.l - g.card.l).toBeGreaterThanOrEqual(16);
+    expect(g.card.b - g.link.b).toBeGreaterThanOrEqual(16); // the link is clear of the bottom edge
+    expect(g.paras[0]!.t - g.panel.t).toBeGreaterThanOrEqual(12);
+    await noOverflow(page, 'settings calendar section');
+    await expect(page.getByTestId('settings-calendar')).toContainText('The Calendar keeps the medical appointments and personal events you enter for each child.');
+    await page.getByTestId('settings-calendar').getByRole('link', { name: 'Open Calendar' }).click();
+    await expect(page.getByTestId('calendar')).toBeVisible();
+  });
+}

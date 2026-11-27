@@ -33,8 +33,13 @@ export interface VaccineReference {
   /** The words in CDC's parent schedule cell, and the age columns that cell spans. */
   cdcCell: string;
   cdcColumns: string[];
-  /** A qualification from CDC's schedule or its notes for health care providers, kept with the reference. */
+  /** A qualification from CDC's schedule or its notes for health care providers, kept with the reference (source record). */
   qualification?: string;
+  /**
+   * The same qualification in plain parent-facing words, without source-prefacing language (R-019).
+   * This is what the Calendar shows; `qualification` stays as the traceable record.
+   */
+  parentNote?: string;
 }
 
 export interface DiscussionItem {
@@ -44,6 +49,12 @@ export interface DiscussionItem {
   cdcText: string;
   cdcKey: string;
   appNote: string | null;
+  /** What the Calendar shows (R-019). Either CDC's cell wording exactly, or an app-written plain statement. */
+  parentText: string;
+  /** True when `parentText` is CDC's wording word for word (it must then equal `cdcText`). */
+  parentTextVerbatim: boolean;
+  /** An optional short app-written note shown with it. */
+  parentNote: string | null;
 }
 
 export interface VaccineSource {
@@ -142,6 +153,10 @@ export function nextReferenceGroup(dated: DatedReference[], today: LocalDate): {
 }
 
 const ID_RE = /^cdc25-[a-z0-9-]+$/;
+/** Institutional framing that belongs in the Source section, not beside each recommendation (R-019). */
+const SOURCE_PREFACE = /\bCDC\b|health care providers say|notes for health care/i;
+/** Exact quantities a parent-facing rewording must keep (weights, ages, intervals). */
+const PRECISE_FIGURE = /\d[\d,]* (?:grams|weeks|days|months|years)/g;
 const DATE_WORDS = /\b(?:19|20)\d{2}-\d{2}-\d{2}\b|\b(?:january|february|march|april|may|june|july|august|september|october|november|december) \d{1,2}\b/i;
 
 /** Build-time and unit-test validation of the bundled snapshot. Returns human-readable errors. */
@@ -174,6 +189,14 @@ export function validateVaccines(content: VaccineContent = VACCINE_CONTENT): str
     } else if (a.kind !== 'birth') errors.push(`${r.id}: unknown age kind`);
     if (r.ageLabel !== ageLabelOf(a)) errors.push(`${r.id}: age label “${r.ageLabel}” does not match its age (${ageLabelOf(a)})`);
     if (r.qualification !== undefined && !r.qualification.trim()) errors.push(`${r.id}: empty qualification`);
+    // Display layer (R-019): every qualification has a parent-facing form, and only qualifications do.
+    if ((r.qualification === undefined) !== (r.parentNote === undefined)) errors.push(`${r.id}: a qualification and its parent-facing note must both be present or both absent`);
+    if (r.parentNote !== undefined) {
+      if (!r.parentNote.trim()) errors.push(`${r.id}: empty parent-facing note`);
+      if (SOURCE_PREFACE.test(r.parentNote)) errors.push(`${r.id}: the parent-facing note must not repeat source-prefacing language`);
+      // The precise figures in the source record must survive in the parent-facing wording.
+      for (const figure of r.qualification?.match(PRECISE_FIGURE) ?? []) if (!r.parentNote.includes(figure)) errors.push(`${r.id}: the parent-facing note lost “${figure}”`);
+    }
   }
   for (const v of vaccineIds) if (!content.references.some((r) => r.vaccine === v)) errors.push(`${v}: vaccine has no reference`);
   for (const d of content.discussion) {
@@ -181,7 +204,10 @@ export function validateVaccines(content: VaccineContent = VACCINE_CONTENT): str
     seen.add(d.id);
     if (!d.label.trim() || !d.ageLabel.trim() || !d.cdcText.trim() || !d.cdcKey.trim()) errors.push(`${d.id}: label, age, CDC text and CDC key are required`);
     // Undated by design: no calendar date may appear in a provider-discussion item.
-    if ('age' in d || DATE_WORDS.test(`${d.ageLabel} ${d.cdcText} ${d.appNote ?? ''}`)) errors.push(`${d.id}: provider-discussion items must not carry a date`);
+    if ('age' in d || DATE_WORDS.test(`${d.ageLabel} ${d.cdcText} ${d.appNote ?? ''} ${d.parentText} ${d.parentNote ?? ''}`)) errors.push(`${d.id}: provider-discussion items must not carry a date`);
+    if (!d.parentText?.trim()) errors.push(`${d.id}: parent-facing text is required`);
+    if (d.parentTextVerbatim && d.parentText !== d.cdcText) errors.push(`${d.id}: text marked as CDC’s wording must match it exactly`);
+    if (SOURCE_PREFACE.test(`${d.parentText} ${d.parentNote ?? ''}`)) errors.push(`${d.id}: parent-facing text must not repeat source-prefacing language`);
   }
   if (!content.moreGuidance.cdcIntro.trim() || content.moreGuidance.cdcItems.length === 0) errors.push('moreGuidance is required');
   // No stale seasonal product instructions (for example "2024–25 Moderna") anywhere in the snapshot.
