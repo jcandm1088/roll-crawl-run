@@ -7,14 +7,15 @@ A living list of refinements and suspected defects that are recorded but not yet
 
 | ID | Title | Area | Recorded | Status |
 |---|---|---|---|---|
-| R-001 | Onboarding child-name input overflow | Onboarding · layout | 2026-11-26 (owner observation; date observed not recorded) | Pending investigation |
-| R-002 | Growth sections repetitive; unclear what updates progress | Growth · product design | 2026-11-26 (owner acceptance testing) | Corrected (awaiting verification) |
-| R-003 | Library controls fill most of a phone's first screen (potential control-density refinement) | Growth · Library layout | 2026-11-26 (recorded in the refinement's review; see KNOWN_LIMITATIONS) | Pending (owner review) |
-| R-004 | Use gender-neutral language consistently | Content · Growth | 2026-11-27 (owner usability review) | Corrected (awaiting verification) |
-| R-005 | Remove personal milestone creation | Growth · Library | 2026-11-27 (owner usability review) | Corrected (awaiting verification) |
-| R-006 | Reduce excessive CDC terminology | Content · all Growth screens | 2026-11-27 (owner usability review) | Corrected (awaiting verification) |
-| R-007 | Consolidate Note and Observations into Notes & Observations | Milestone page | 2026-11-27 (owner usability review) | Corrected (awaiting verification) |
-| R-008 | Explain how to change the age basis on Progress | Progress | 2026-11-27 (owner usability review) | Corrected (awaiting verification) |
+| R-001 | Onboarding child-name input overflow | Onboarding · layout | 2026-11-26 (owner observation; date observed not recorded) | Deferred (pending investigation) |
+| R-002 | Growth sections repetitive; unclear what updates progress | Growth · product design | 2026-11-26 (owner acceptance testing) | Accepted for Mac usability (2026-11-27); iPhone pending |
+| R-003 | Library controls fill most of a phone's first screen (potential control-density refinement) | Growth · Library layout | 2026-11-26 (recorded in the refinement's review; see KNOWN_LIMITATIONS) | Deferred |
+| R-004 | Use gender-neutral language consistently | Content · Growth | 2026-11-27 (owner usability review) | Accepted for Mac usability (2026-11-27); iPhone pending |
+| R-005 | Remove personal milestone creation | Growth · Library | 2026-11-27 (owner usability review) | Accepted for Mac usability (2026-11-27); iPhone pending |
+| R-006 | Reduce excessive CDC terminology | Content · all Growth screens | 2026-11-27 (owner usability review) | Accepted for Mac usability (2026-11-27); iPhone pending |
+| R-007 | Consolidate Note and Observations into Notes & Observations | Milestone page | 2026-11-27 (owner usability review) | Accepted for Mac usability (2026-11-27); iPhone pending |
+| R-008 | Explain how to change the age basis on Progress | Progress | 2026-11-27 (owner usability review) | Accepted for Mac usability (2026-11-27); iPhone pending |
+| R-009 | Simplify deleted-entry presentation | Milestone page · Notes & Observations | 2026-11-27 (owner, Mac acceptance) | Deferred (low priority) |
 
 ---
 
@@ -60,3 +61,20 @@ A living list of refinements and suspected defects that are recorded but not yet
 
 - **Details:** `docs/reviews/CHECKPOINT_2A_ACCEPTANCE_REFINEMENTS.md`.
 - **Status:** Corrected (awaiting verification). Covered by automated tests in headless Chromium. Each becomes **Verified** only after the owner's hands-on acceptance.
+
+---
+
+## R-009 — Simplify deleted-entry presentation
+- **Source:** the owner's hands-on Mac acceptance of the final Checkpoint 2a build (`bf790b5`), 2026-11-27.
+- **Observation (as reported):**
+  - a deleted Notes & Observations entry leaves a visible placeholder saying the text was deleted;
+  - the deletion also appears as a separate timeline entry;
+  - the owner finds this unnecessarily repetitive, but not consequential enough to justify another revision cycle.
+- **Classification:** human-discovered usability finding / design preference, **not** a defect. Current behavior follows the approved safeguards for removal and erasure.
+- **Priority:** Low. **Target:** a future usability refinement, or Checkpoint 6.
+- **Suggested future approach:**
+  - hide deleted-entry placeholders from the ordinary Notes & Observations and history view;
+  - keep the deletion metadata that's needed, the permanent-erasure safeguards (erased text must never be recoverable) and future sharing and merge integrity (markers and stable ids).
+- **Status:** Deferred. **Do not implement until authorized.**
+
+**Also deferred:** R-001 (onboarding name-field overflow) and R-003 (Library control density), both unchanged. R-002 and R-004 to R-008: accepted as part of Checkpoint 2a's Mac usability acceptance. Physical iPhone verification is still pending.

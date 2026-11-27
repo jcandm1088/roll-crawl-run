@@ -275,3 +275,15 @@ Still applicable from the original list: **G3–G8, G12–G17, G19** (G18 = H18)
 | HA17 | iPhone, airplane mode: add and edit an entry | iPhone | | | |
 
 Still applicable: **H1–H5, H7–H9, H11, H13–H18** from the previous checklist. **H6** now reads “correct a date and add an entry”. In **H10**, hide a milestone and add an entry; personal versions can no longer be made. In **H12**, “your versions” → “Your personal entries”.
+
+## Checkpoint 2a — human acceptance closeout (owner report, 2026-11-27)
+- **Reported by the owner:**
+  - installed dependencies, built and launched the final Checkpoint 2a application (`bf790b5`) locally on macOS, using Node.js 26 and Safari;
+  - **accepts Checkpoint 2a for Mac usability.**
+- **Finding:** one low-priority usability refinement, R-009 (simplify deleted-entry presentation), deferred. See REFINEMENT_BACKLOG.
+- **Not recorded as passed:** the owner did not report results for individual checklist items. The HA1–HA17, H1–H18 and G rows above are left blank rather than marked passed.
+- **Still pending:**
+  - physical iPhone acceptance (HA16, HA17, H16, H17 and the related G-items);
+  - offline editing on a device;
+  - manual verification of an upgrade with legacy data;
+  - the update from the deployed version (H18; needs an authorized deployment).

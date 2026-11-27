@@ -2,14 +2,14 @@
 
 **This is the single authoritative, current-state handoff.** It replaces the earlier handoff notes. The original end-of-Checkpoint-1 handoff is kept unchanged as a historical record in `docs/reviews/CHECKPOINT_1_HANDOFF.md`; statements there describe the project as it was at commit `aa8c869` and are no longer current.
 
-*Last updated: 2026-11-27 (Checkpoint 2a final review and erasure regression coverage; preserved on `claude/sharp-franklin-vrbgmd`).*
+*Last updated: 2026-11-27 (Checkpoint 2a human acceptance closeout; preserved on `claude/sharp-franklin-vrbgmd`).*
 
 ## 1. Status at a glance
 
 | Area | Status |
 |---|---|
 | **Checkpoint 1** — Design & Foundation | ✅ **Completed, accepted and deployed** |
-| **Checkpoint 2a** — Verified Milestone Tracking, the Growth UX refinement (R-002, plan R11) **and the human acceptance refinements** (R-004 to R-008, plan R12) | 🟡 **Implemented, not yet accepted.** Two rounds of owner hands-on review led to the refinements; acceptance testing resumes on this build. Not merged into `main`, not deployed |
+| **Checkpoint 2a** — Verified Milestone Tracking, the Growth UX refinement (R-002, plan R11) and the human acceptance refinements (R-004 to R-008, plan R12) | ✅ **Accepted by the owner for Mac usability (2026-11-27;** local build of `bf790b5`, macOS, Node.js 26, Safari). **Pending:** physical iPhone acceptance, offline editing on a device, manual legacy-data upgrade verification. Not merged into `main`, not deployed |
 | **Checkpoint 2b** — Goals & Exercises (CDC activities, recurrence, completions, charts) | ⏳ **Planned, not started.** Needs the owner's explicit authorization |
 | **Checkpoints 3–6** — Calendar, Journal & Resources, Backups/Sharing/Reports, Device polish | ⏳ **Planned, not started.** Checkpoints 3 and 5 have pending decisions (section 5) |
 | **Deferred** | Project license; GitHub Actions version upgrades; live multi-device sync and other 🔮 Future items in the plan |
@@ -30,7 +30,22 @@
 
 `main` is not to receive Checkpoint 2a until the owner accepts it and authorizes the merge. Pushing never deploys: deployment is a separate manual workflow (section 7).
 
-## 3b. Human acceptance refinements (implemented, not yet accepted)
+## 3c. Human acceptance closeout (2026-11-27)
+- **Accepted for Mac usability.** The owner installed, built and ran the final build locally (macOS, Node.js 26, Safari) and accepts Checkpoint 2a for Mac usability.
+- **No checklist items recorded as passed.** The owner did not report individual results, so none is marked passed.
+- **New finding:** **R-009** (simplify deleted-entry presentation). Low priority, deferred to a future refinement or Checkpoint 6.
+- **Still deferred:** R-001 and R-003.
+- **Still pending:**
+  - physical iPhone acceptance (HA16, HA17, H16, H17 and related G-items);
+  - offline editing on a device;
+  - manual legacy-data upgrade verification;
+  - H18, which needs a deployment.
+- **Next, each needing separate owner authorization:**
+  - merging into `main`;
+  - deployment (needed for iPhone testing unless tested over the local network);
+  - beginning Checkpoint 2b.
+
+## 3b. Human acceptance refinements (accepted for Mac usability, 2026-11-27)
 - **Why:** R-004 to R-008. These are owner-discovered usability findings on `170cc99`, which had passed all 387 automated tests three times.
 - **What changed:**
   - gender-neutral milestone wording (validated display layer; catalog verbatim);
@@ -90,7 +105,9 @@ Acceptance is complete only when the owner says so. Defects found during accepta
 ## 5. Outstanding decisions
 | Decision | Needed before | Notes |
 |---|---|---|
-| Owner acceptance of Checkpoint 2a (with both refinements) | Merging into `main`, deployment, Checkpoint 2b | Section 4 |
+| ~~Owner acceptance of Checkpoint 2a for Mac usability~~ | — | **Done** (2026-11-27, section 3c) |
+| Physical iPhone acceptance, offline editing on a device, manual legacy-data upgrade verification | Full acceptance on iPhone | Needs a deployment or a local-network test the owner sets up |
+| Merge Checkpoint 2a into `main`, and deploy | iPhone testing, Checkpoint 2b | Separate owner authorization |
 | ~~Gender-neutral display wording vs CDC's condition 3~~ | — | **Resolved:** owner determination, Decision #86 |
 | Legacy personal entries: optional conversion to goals, permanent deletion | Checkpoint 2b | Current preservation approach retained until then; no automatic migration |
 | ~~Remote preservation of the acceptance-refinement work~~ | — | **Done:** `claude/sharp-franklin-vrbgmd` (owner-authorized) |
@@ -139,7 +156,7 @@ It never merges into `main` and never deploys. Claude Code must respect any sess
 
 ## 9. Known limitations and refinement backlog
 - **Limitations:** `docs/KNOWN_LIMITATIONS.md`. Key items: no backup or export yet (Checkpoint 5), so data lives only on the device; automated testing in Chromium only; Checkpoint 2a untested in Safari and on iPhone; Android untested; the one-time initial iPhone “server not responding” delay remains unexplained; iOS may keep an old Home Screen icon.
-- **Refinement backlog:** `docs/REFINEMENT_BACKLOG.md`. **R-001**, onboarding child-name input overflow on mobile: pending investigation, not corrected. **R-002**, Growth usability: corrected, awaiting the owner's verification. **R-003**, Library control density: pending owner review. **R-004 to R-008**: corrected, awaiting the owner's verification.
+- **Refinement backlog:** `docs/REFINEMENT_BACKLOG.md`. **R-001**, onboarding child-name input overflow on mobile: pending investigation, not corrected. **R-002**, Growth usability: accepted for Mac usability (2026-11-27). **R-003**, Library control density: deferred. **R-004 to R-008**: accepted for Mac usability (2026-11-27). **R-009**, deleted-entry presentation: low priority, deferred. R-001 and R-003 remain deferred.
 
 ## 10. Where things are
 `README.md` (overview, running locally) · `docs/DEVELOPMENT_PLAN.md` (R-sections take precedence over the original plan; newest first) · `docs/DECISIONS.md` · `docs/BUILD_LOG.md` · `docs/TESTING_CHECKLIST.md` · `docs/KNOWN_LIMITATIONS.md` · `docs/REFINEMENT_BACKLOG.md` · `docs/SOURCE_REGISTER.md` · `docs/MILESTONE_INVENTORY.md` · `docs/DESIGN_SYSTEM.md` · `docs/reviews/`.

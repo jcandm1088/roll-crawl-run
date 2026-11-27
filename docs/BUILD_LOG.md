@@ -198,6 +198,8 @@ Compiled on 2026-11-26 from the review documents, decisions and earlier entries 
 
 | 26 | **Erasure-isolation coverage gap (secondary review)** | Testing gap (no application defect) | Asked to confirm the scope of “erasing a note version also erases other saved versions with identical text”, Claude Code inspected `eraseEntryText`. The scope is one child, one record and one lineage. The committed tests did not directly prove that identical text elsewhere survives. A temporary test outside the repository passed. | With the owner's authorization, it became a permanent regression test. It passed; **no application defect was found and no application code changed**. The review document's wording was clarified. |
 
+| 27 | **Deleted entries shown twice (R-009)** | Human-discovered usability finding (design preference; deferred) | In Mac acceptance, the owner found that a deleted entry's placeholder and its separate timeline entry were repetitive. | Recorded as R-009 (low priority, deferred). Checkpoint 2a accepted for Mac usability regardless. |
+
 **Still unresolved:**
 - The one-time “server not responding” delay on the first iPhone load (cause unknown).
 - R-001, the onboarding name-input overflow (pending investigation).
@@ -318,3 +320,20 @@ Environment: Linux cloud container, Node 22, headless Chromium (Playwright; 390�
 | Unit tests | **282 passed** (11 files; +1, the erasure-isolation test) |
 | Production build | Passed. The bundle is byte-identical to `8843a25` (same content hash, `index-VSweNDhW.js`, 255.5 KB), confirming no application change |
 | End-to-end tests | **155 passed** (2.6 min); no failures, no retries |
+
+## Draft entry — Checkpoint 2a human acceptance closeout (drafted by Claude Code; edit before submitting)
+**Date:** 2026-11-27
+
+**What I did:**
+- On my Mac (macOS, Node.js 26, Safari), I installed the dependencies, built and launched the final Checkpoint 2a application (`bf790b5`).
+- **I accept Checkpoint 2a for Mac usability.**
+
+**What I found:**
+- **R-009:** deleted Notes & Observations entries leave a “text deleted” placeholder plus a separate timeline entry. That's repetitive, but minor. Recorded as low priority and deferred to a future refinement or Checkpoint 6.
+- **R-001 and R-003:** still deferred.
+
+**Still pending:** physical iPhone acceptance, offline editing on a device, and manual verification of a legacy-data upgrade. Individual checklist items were not reported, so none is marked as passed.
+
+**Note:** the README states Node.js 22, which is the version used for automated testing. My successful local build used Node.js 26. This is recorded only as an observation; no change was made.
+
+**Automated tests:** none run for this documentation-only closeout (not required). The last full results are in the entry above.
