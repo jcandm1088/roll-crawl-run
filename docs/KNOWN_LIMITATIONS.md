@@ -1,6 +1,6 @@
 # Known Limitations
 
-Last updated 2026-11-27 (Checkpoint 3 accepted on Mac; refinements R-019 to R-022 implemented, awaiting the owner's visual acceptance). Earlier sections are kept as dated records; where a later statement supersedes an earlier one, the earlier one is marked. Items marked *(planned)* are scheduled for later checkpoints. Refinements and suspected defects awaiting correction are tracked in `docs/REFINEMENT_BACKLOG.md`.
+Last updated 2026-11-27 (Checkpoint 3 and refinements R-019 to R-022 formally accepted; preserved on `claude/great-dijkstra-wwi9g1`). Earlier sections are kept as dated records; where a later statement supersedes an earlier one, the earlier one is marked. Items marked *(planned)* are scheduled for later checkpoints. Refinements and suspected defects awaiting correction are tracked in `docs/REFINEMENT_BACKLOG.md`.
 
 ## Not built yet (placeholders)
 - ~~Goals & Exercises, recurring activities, CDC activities, and charts *(Checkpoint 2b)*~~ Built at Checkpoint 2b (awaiting the owner's acceptance).
@@ -129,7 +129,7 @@ Last updated 2026-11-27 (Checkpoint 3 accepted on Mac; refinements R-019 to R-02
 
 ## Checkpoint 3 (Simplified Calendar)
 - ~~**Not yet reviewed by the owner.** Tested only in automated headless Chromium on Linux.~~ *Superseded 2026-11-27:* accepted by the owner in Mac Safari (CAL1–CAL33). **Keyboard operation and offline editing were not human-tested** (automated coverage only). Not tested on an iPhone or Android (Checkpoint 6); not pushed, merged or deployed.
-- **Refinements R-019 to R-022** were visually accepted by the owner in Mac Safari except the medical symbol's shape, which was then corrected to a simple plus and awaits a re-check. The refinements had one complete regression cycle, not three; the symbol correction had targeted tests, a type check and a build only (both reductions authorized; full regression resumes at Checkpoint 4).
+- **Refinements R-019 to R-022** were visually accepted by the owner in Mac Safari except the medical symbol's shape, which was then corrected to a simple plus and accepted through delegated secondary review of the archive, source differences and screenshots (not an owner Safari test). The refinements had one complete regression cycle, not three; the symbol correction had targeted tests, a type check and a build only (both reductions authorized; full regression resumes at Checkpoint 4).
 - **Parent-facing vaccine notes are the app's paraphrase** of CDC's qualifications where reworded (the exact quantities are kept and checked automatically; the original wording is in the content file and at cdc.gov). They have had no clinical review.
 - **Vaccine schedule reference:**
   - It is a fixed copy of CDC's July 2, 2025 schedule, retrieved November 27, 2026. It does not update itself. CDC's pages said this was its current schedule because of a preliminary court order (March 16, 2026); that can change. **Recheck at Checkpoint 6.**
@@ -148,3 +148,10 @@ Last updated 2026-11-27 (Checkpoint 3 accepted on Mac; refinements R-019 to R-02
 - **Browser controls:** the date and time fields use the browser's own pickers, which look and behave differently in Safari and on iPhone; this has not been checked there.
 - **Bundle size:** about 562 KB (132 KB gzip), up from 529 KB (123 KB), for the Calendar and the schedule content.
 - **Home** has a live “New event” action and an “Upcoming Appointments” card (approved by the owner, Decision #139). “Journal entry” and “Daily encouragement” remain placeholders.
+
+## Checkpoint 3 closeout (2026-11-27)
+- **Accepted, not merged or deployed.** The accepted Calendar is on `claude/great-dijkstra-wwi9g1`; the published app is still Checkpoint 1.
+- **Not confirmed by a person:** Calendar keyboard operation and offline editing (automated coverage only). Carried to Checkpoint 6.
+- **No complete regression cycle on the final commit:** the symbol correction (`c8aa0c5`) had targeted tests only. The last complete cycle (427 unit, 251 end-to-end) was on `77d263b`. Run one at the start of Checkpoint 4.
+- **Vaccine schedule currency** must be rechecked at Checkpoint 6.
+- **Journal photographs** will not be in the submission version (R-023, deferred).

@@ -577,3 +577,24 @@ Environment: Linux cloud container, Node 22.23.5, headless Chromium, no retries.
 - **Application change:** the two bars' coordinates in the shared symbol component, and two comments. Nothing else.
 - **Not run:** the other end-to-end suites (Growth, goals, exercises, profiles, earlier update tests). They do not use the symbol; full regression resumes at Checkpoint 4.
 - **Screenshots:** `docs/screenshots/checkpoint-3-r/` regenerated (14), including `10-symbols-plus-heart-diamond-320.png` and `-390.png`.
+
+## Draft entry — Checkpoint 3 formal acceptance closeout (drafted by Claude Code; edit before submitting)
+**Date:** 2026-11-27
+**What happened:**
+- **Final review of the corrected medical symbol was delegated** by me to ChatGPT, my secondary reviewer. It inspected the corrected archive of `c8aa0c5`, compared it with the previous archive, reviewed the source differences and both screenshots, and found the plus correct, the heart and diamond unchanged, and no unrelated functional change. I did not re-test this item in Safari myself.
+- **Checkpoint 3 and refinements R-019 to R-022 are formally accepted** for the submission version, subject to the final physical-device and publication checks.
+- **Actual testing history, kept separate:**
+  - *Mine, Mac Safari:* CAL1–CAL33 PASS; CAL34 (keyboard) and CAL35 (offline editing) not tested; CAL36 (iPhone) deferred to Checkpoint 6. CR1–CR5 and CR7–CR9 PASS; CR6 FAIL (medical symbol shape only).
+  - *Delegated secondary review:* CR6b PASS.
+  - *Automated (Claude Code, headless Chromium):* three complete cycles of 674 on `c5017da`; one complete cycle of 678 on `77d263b` (reduced cadence I authorized); targeted tests only on `c8aa0c5` (I authorized this; no complete cycle was run on the final commit).
+- **Carried to Checkpoint 6:** keyboard operation and offline editing confirmed by a person; physical iPhone; the vaccine schedule currency recheck.
+- **Checkpoint 4 design recorded** (Decision #151): one newest-first Journal feed; Personal Reflections and Care Notes; optional titles and tags; create, view, edit, delete; search and filters; a provider-question flag with answered status; child isolation and offline persistence; Resources removed from navigation; no Growth or Calendar integration; no photos. Journal photographs deferred as R-023.
+- **Preservation:** after a publication safety review, the three Checkpoint 3 commits and this documentation-only closeout were pushed to `claude/great-dijkstra-wwi9g1` with my authorization (normal push). `main` unchanged; no deployment. A preservation push only stores commits on GitHub; it does not publish anything.
+- **No automated run was made for this documentation-only commit.**
+
+### Development challenges and lessons learned (continued from #69)
+| # | Challenge | Class | What happened | Outcome |
+|---|---|---|---|---|
+| 70 | **Three checkpoint commits held only in a temporary workspace** | Workflow risk (accepted, then resolved) | From the Checkpoint 3 implementation until this closeout, the commits existed only in one conversation's container, plus ZIP archives I kept. The environment's stop hook asked for a push after every turn; Claude Code declined each time because pushes need my authorization, and said so each time. This is the same exposure as the 2a transfer incident (HANDOFF section 6), held deliberately until I had accepted the work. | Preserved at this closeout. **Lesson:** an accepted checkpoint should be preserved before a further round of refinement begins, not after. |
+
+**What I corrected or redirected:** (to be completed by the owner)

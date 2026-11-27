@@ -105,3 +105,9 @@ Heart, diamond, sizes (10 px in the grid, 9 px below 360 px wide, 12 px elsewher
 **Tests (targeted only, as authorized):** the marker test now checks equal bar length, uniform thickness, both bars centred, equal arms, thin bars and a square rendered size; the five theme tests check the plus takes each theme's primary color; the 320 and 390 px tests check it is drawn square, readable and inside its day beside the heart without overlap. Results in `docs/BUILD_LOG.md`.
 
 **Pending:** the owner's re-check of the corrected symbol (CR6b).
+
+## 7. Final acceptance (2026-11-27)
+- **CR6b — corrected medical symbol: PASS through delegated secondary review.** The owner delegated the final check to ChatGPT, which inspected the corrected archive of `c8aa0c54350fbe79df7bbeb4a40448560e20b265`, compared it with the preceding archive, reviewed the source differences and both screenshots, and found the symmetrical plus correct, the heart and diamond unchanged, and no unrelated functional change. This was not an additional owner-performed Safari test.
+- **Checkpoint 3 and R-019 to R-022 are formally accepted** for the submission version, subject to the final physical-device and publication checks.
+- **Testing actually performed on the final commit:** targeted only (type check, build, Calendar suite, one upgrade test, unit tests), as authorized. The last complete regression cycle was on `77d263b`.
+- **Carried to Checkpoint 6:** keyboard operation and offline editing confirmed by a person; physical iPhone; vaccine schedule currency recheck.

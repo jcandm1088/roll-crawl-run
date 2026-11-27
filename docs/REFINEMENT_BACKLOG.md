@@ -150,10 +150,24 @@ A living list of refinements and suspected defects that are recorded but not yet
 | # | Finding (owner) | Classification | Correction | Status |
 |---|---|---|---|---|
 | **R-019** | The vaccine overlay repeated “CDC” and its own explanations: a “CDC SCHEDULE REFERENCE · NOT AN APPOINTMENT” label on every reference, “Next on the CDC vaccine schedule”, “a reference age, not an appointment”, an introductory paragraph, a sentence about what the app doesn't track, and “CDC's notes for health care providers say…” before individual notes. Excessive, institutional and cluttered. | Usability (wording); approved Checkpoint 3 wording that proved too heavy in human testing | Attribution and non-endorsement are stated once, visibly, under **Source**; the full record is in “Source details”. One visible statement about the provider's role. Individual notes use plain wording through a separate display layer (`parentNote`, `parentText`); the source record (`qualification`, `cdcText`) is unchanged and validation keeps every precise figure. Headings read “Recommended vaccinations: 4 months” and “Next recommended vaccinations: 6 months”. | **Accepted** (owner, Mac Safari, CR1–CR5, 2026-11-27) |
-| **R-020** | Replace the circle and square markers | Design preference | Medical appointments: **a simple plus** (two bars of equal length and thickness crossing at their midpoints; four equal arms; thin; theme color; not the Red Cross emblem). Personal: a heart. Recommended vaccinations: the hollow diamond, unchanged. Used in the controls, the month grid, the lists, the event details and Home. *First attempt (`77d263b`): an upright cross with a short crossbar above the middle, from a misreading of “resembling a lowercase t”; the owner failed it at CR6 as religious-looking and clarified the shape.* | Heart and diamond: accepted (CR6–CR7). Plus: corrected, awaiting the owner's re-check (CR6b) |
+| **R-020** | Replace the circle and square markers | Design preference | Medical appointments: **a simple plus** (two bars of equal length and thickness crossing at their midpoints; four equal arms; thin; theme color; not the Red Cross emblem). Personal: a heart. Recommended vaccinations: the hollow diamond, unchanged. Used in the controls, the month grid, the lists, the event details and Home. *First attempt (`77d263b`): an upright cross with a short crossbar above the middle, from a misreading of “resembling a lowercase t”; the owner failed it at CR6 as religious-looking and clarified the shape.* | **Accepted.** Heart and diamond: owner, Mac Safari. Plus: delegated secondary review (CR6b), not an owner Safari test |
 | **R-021** | Home's “Coming up” heading | Wording | Now “Upcoming Appointments”. Behavior unchanged (medical and personal events; the overlay choices apply). | **Accepted** (CR8) |
 | **R-022** | In Settings → Calendar, the text and the Open Calendar link sat too close to the edges | Visual defect (implementation): the section's content was not wrapped in the shared `panel-pad` used by the other sections | Wrapped in `panel-pad`; a geometry test at 320, 390 and 1280 px compares it with “This Device”. Wording and link unchanged. | **Accepted** (CR9) |
 
 **Recurring owner observation (third time: R-006 at 2a, R-011 at 2b-R, R-019 here):** repeated institutional source terminology detracts from the parent-facing experience. The standing rule is *parent-first interface, evidence-backed infrastructure*: say the source once, in one place per screen; keep qualifications in plain words; keep the traceable source record in the content files and documentation. New content should start from this rule rather than be corrected after acceptance.
 
 **Unchanged:** R-001, R-003, R-009 and R-018 remain deferred.
+
+---
+
+## Checkpoint 3 closeout (2026-11-27)
+- **R-019 to R-022: closed as accepted.** R-019, R-021, R-022, the heart and the diamond by the owner in Mac Safari; the corrected medical plus (R-020) through delegated secondary review by ChatGPT.
+- **Deferred, unchanged:** R-001, R-003, R-009, R-018.
+
+## R-023 — Journal photographs (deferred enhancement)
+- **Source:** the owner, when approving the Checkpoint 4 Journal design (2026-11-27).
+- **What:** attaching photographs to Journal entries.
+- **Classification:** desirable future enhancement; **not** part of the submission version. Not a defect.
+- **Why deferred:** deliberately left out by the owner. Photos would exist only in this device's storage, and the submission version has no backup or restoration.
+- **Plan:** reconsider alongside or after backup and restoration (Checkpoint 5).
+- **Status:** Deferred. **Do not implement until authorized.** Checkpoint 4 should not add storage or interface for Journal photos.

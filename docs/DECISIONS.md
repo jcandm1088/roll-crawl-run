@@ -251,3 +251,21 @@ Details are in `docs/reviews/CHECKPOINT_1_FINAL.md`.
 145. **Visual acceptance of the refinements** (owner, Mac Safari, against `77d263b`): CR1–CR5 and CR7–CR9 passed; CR6 failed on the medical symbol's shape only. R-019, R-021 and R-022 are accepted, as are the heart and the diamond.
 146. **R-020 medical symbol, corrected (supersedes the medical part of #142).** A simple plus: horizontal and vertical bars of equal length and uniform thickness, crossing at the exact midpoint of both, four equal arms; in the theme's `--primary`; thin bars (one sixth of its width), so it is not the Red Cross emblem. Sizes, spacing and accessible names are unchanged. The earlier upright cross with a raised crossbar came from a misreading of the request and is withdrawn.
 147. **Testing for the symbol correction:** targeted tests, type check and production build only (authorized; an isolated visual change). Full regression resumes at Checkpoint 4.
+
+## Checkpoint 3 formal acceptance and Checkpoint 4 design decisions (owner, 2026-11-27)
+148. **Checkpoint 3 formally accepted** for the submission version, with all four refinements R-019 to R-022, subject to the final physical-device and publication checks. CR6b (the corrected plus) was accepted through **delegated secondary review** by ChatGPT (archive, source-difference and screenshot review of `c8aa0c5`); it was not an additional owner-performed Safari test. The symbol correction had targeted testing only, as authorized. Accepted commits: `c5017da6ea9525adc6681efdee2c59b3e7cb3099` (implementation), `77d263b6243edd99ea7a8e0d2ce159fab303010f` (refinements), `c8aa0c54350fbe79df7bbeb4a40448560e20b265` (symbol correction).
+149. **Carried to Checkpoint 6:** keyboard operation and offline editing confirmed by a person; physical-iPhone acceptance; the vaccine schedule currency recheck.
+150. **Preservation.** The accepted commits and the documentation-only closeout are preserved by a normal push to `claude/great-dijkstra-wwi9g1` after a publication safety review. No force push, merge into `main`, workflow run or deployment.
+151. **Checkpoint 4 — Journal: owner-approved design decisions** (to be implemented in a fresh conversation; nothing built yet):
+    - One combined chronological Journal feed, newest entries first.
+    - Two entry types, Personal Reflections and Care Notes, visually distinguishable.
+    - Each entry: optional title, free-form text, a date, and optional parent-created tags.
+    - Create, view, edit and delete entries.
+    - Search and filtering by type, date, tags and text.
+    - Care Notes can be flagged as a question for the provider, with an answered status and an accessible filter for unanswered questions.
+    - Child-specific isolation and offline persistence.
+    - Resources is removed from the primary navigation; necessary source attribution is preserved elsewhere.
+    - No integration with Growth or the Calendar.
+    - No photo attachments in the submission version.
+152. **Journal photographs are deferred** (R-023): a desirable future enhancement, deliberately left out by the owner, to be reconsidered alongside or after backup and restoration (Checkpoint 5), since photos stored only on the device can't be recovered without it.
+153. **Remaining sequence (unchanged):** Checkpoint 4 next; Checkpoint 5 deferred until after submission; Checkpoint 6 final acceptance and publication.

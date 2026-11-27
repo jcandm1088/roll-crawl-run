@@ -492,6 +492,25 @@ Reported by the owner for the local build of `64202e2` in Mac Safari (port 4179)
 | CR7 | A narrow window: three symbols under one day stay readable and don't overlap or enlarge the calendar | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `77d263b` |
 | CR8 | Home: the card is headed “Upcoming Appointments” and still lists medical and personal events | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `77d263b` |
 | CR9 | Settings → Calendar: the text and the Open Calendar link are comfortably inset, like the other sections, in a wide and a narrow window | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `77d263b` |
-| CR6b | Medical appointments now show a simple plus: four equal arms, crossing in the middle, the same thickness throughout, in the theme's color; the same in the control, the month grid, the lists, the event details and Home. Heart and diamond unchanged | Mac | | | Re-check of CR6 against the symbol-correction commit |
+| CR6b | Medical appointments now show a simple plus: four equal arms, crossing in the middle, the same thickness throughout, in the theme's color; the same in the control, the month grid, the lists, the event details and Home. Heart and diamond unchanged | Secondary review | PASS | 2026-11-27 | **Delegated review, not an owner Safari test.** ChatGPT (secondary reviewer, delegated by the owner) inspected the corrected archive of `c8aa0c5`, compared it with the preceding archive, reviewed the source differences and both the 320 px and 390 px screenshots. The owner did not re-test this item in Safari |
 
 **Owner's visual acceptance of `77d263b` (reported 2026-11-27):** CR1–CR5 PASS · CR6 FAIL (medical cross shape only) · CR7–CR9 PASS. **8 passed, 1 failed.** All other refinements are accepted. The failed item was a misunderstanding of the requested shape, corrected in a follow-up commit under targeted testing only (authorized). Final acceptance of the corrected symbol (CR6b) is pending.
+
+## Checkpoint 3 — formal acceptance closeout (2026-11-27)
+**Checkpoint 3 and refinements R-019 to R-022 are formally accepted for the submission version**, subject to the final physical-device and publication checks at Checkpoint 6. Three kinds of evidence are recorded separately and must not be merged:
+
+| Evidence | By whom | What | Result |
+|---|---|---|---|
+| Human acceptance | Owner, Mac Safari, against `c5017da` | CAL1–CAL33 | PASS |
+| — | — | CAL34 (keyboard operation), CAL35 (offline editing) | N/A — not human-tested |
+| — | — | CAL36 (iPhone) | Deferred to Checkpoint 6 |
+| Human visual acceptance | Owner, Mac Safari, against `77d263b` | CR1–CR5, CR7–CR9 | PASS |
+| — | — | CR6 | FAIL — medical symbol shape only |
+| Delegated secondary review | ChatGPT, delegated by the owner; archive, source-difference and screenshot review of `c8aa0c5` | CR6b (corrected plus symbol) | PASS. Not an owner-performed Safari test |
+| Automated | Claude Code, headless Chromium on Linux | `c5017da`: three consecutive complete cycles of 426 unit + 248 end-to-end. `77d263b`: one complete cycle of 427 + 251 (reduced cadence authorized). `c8aa0c5`: targeted only — type check, build, Calendar suite 31, one upgrade test, 427 unit (authorized; **no complete cycle on this commit**) | As recorded in BUILD_LOG |
+
+**Carried to Checkpoint 6 (not completed):**
+- keyboard operation and offline editing of the Calendar confirmed by a person (CAL34, CAL35);
+- physical-iPhone acceptance (CAL36, with the earlier deferred iPhone, installed-app upgrade and device offline-editing checks from 2a, 2b and 2b-R);
+- the vaccine schedule currency recheck (Decision #125);
+- a complete regression cycle covering `c8aa0c5` (resumes at the start of Checkpoint 4).
