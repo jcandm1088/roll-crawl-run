@@ -2,7 +2,7 @@
 
 **This is the single authoritative, current-state handoff.** It replaces the earlier handoff notes. The original end-of-Checkpoint-1 handoff is kept unchanged as a historical record in `docs/reviews/CHECKPOINT_1_HANDOFF.md`; statements there describe the project as it was at commit `aa8c869` and are no longer current.
 
-*Last updated: 2026-11-27 (Checkpoint 2b implemented; local commit on `claude/upbeat-thompson-skpm8j`, not pushed). Earlier: Checkpoint 2a human acceptance closeout, preserved on `claude/sharp-franklin-vrbgmd`.*
+*Last updated: 2026-11-27 (Checkpoint 2b-R human acceptance refinements: local commit on `claude/vigilant-keller-w6ss5f`, not pushed). Earlier: Checkpoint 2b, preserved on `claude/upbeat-thompson-skpm8j` (`64202e2`); Checkpoint 2a closeout, preserved on `claude/sharp-franklin-vrbgmd`.*
 
 ## 1. Status at a glance
 
@@ -10,9 +10,10 @@
 |---|---|
 | **Checkpoint 1** — Design & Foundation | ✅ **Completed, accepted and deployed** |
 | **Checkpoint 2a** — Verified Milestone Tracking, the Growth UX refinement (R-002, plan R11) and the human acceptance refinements (R-004 to R-008, plan R12) | ✅ **Accepted by the owner for Mac usability (2026-11-27;** local build of `bf790b5`, macOS, Node.js 26, Safari). **Pending:** physical iPhone acceptance, offline editing on a device, manual legacy-data upgrade verification. Not merged into `main`, not deployed |
-| **Checkpoint 2b** — Goals, Exercises & Historical Progress | 🧪 **Implemented, awaiting the owner's acceptance** (authorized 2026-11-27). One local commit on `claude/upbeat-thompson-skpm8j` on top of `53d6212`. **Not pushed, merged or deployed.** Tested only in automated headless Chromium. Database version 3 |
+| **Checkpoint 2b** — Goals, Exercises & Historical Progress | ✅ **Initial owner acceptance in Mac Safari: 64 of 65 applicable checks passed** (2026-11-27; Phase G not applicable). Preserved on remote `claude/upbeat-thompson-skpm8j` at `64202e2`. Not merged or deployed. Database version 3. iPhone pending |
+| **Checkpoint 2b-R** — Human Acceptance Refinements R-010 to R-017 | 🧪 **Implemented, awaiting the owner's acceptance.** One local commit on `claude/vigilant-keller-w6ss5f` on top of `64202e2`. **Not pushed, merged or deployed.** Tested only in headless Chromium. Database version 3 unchanged |
 | **Checkpoints 3–6** — Calendar, Journal & Resources, Backups/Sharing/Reports, Device polish | ⏳ **Planned, not started.** Checkpoints 3 and 5 have pending decisions (section 5) |
-| **Deferred** | Project license; GitHub Actions version upgrades; live multi-device sync and other 🔮 Future items in the plan |
+| **Deferred** | R-018 (shading), R-001, R-003, R-009; project license; GitHub Actions version upgrades; live multi-device sync and other 🔮 Future items in the plan |
 
 ## 2. Repository, branches and deployment
 
@@ -24,19 +25,28 @@
 | **Remote `main`** | `aa8c869352cdd734eafb0ed8b7219069d4457241` (Checkpoint 1: Deployment Acceptance and Handoff; documentation only, so no redeploy was needed) |
 | **Remote `checkpoint-2a`** | `73d9f6fc356b3f792a9f71cc8f38ff421e13581d` (Checkpoint 2a: Verified Milestone Tracking), a direct child of `aa8c869`. This is the **recovered original commit** (section 6) |
 | Branch `claude/beautiful-allen-1vjobt` (remote) | `170cc99` “Checkpoint 2a: Growth UX Refinement”, preserved with the owner's authorization |
-| Session branch `claude/upbeat-thompson-skpm8j` (local) | Fast-forwarded to `53d6212` (the accepted 2a baseline, 12 commits), then the local commit “Checkpoint 2b: Personal Goals, Exercises and Historical Progress”. **Not pushed** (the owner's authorization excludes pushing); the commit hash is in the implementation report |
+| Branch `claude/upbeat-thompson-skpm8j` (remote) | `64202e22f3183e81d572a4115f03bb5f080b18f6` “Checkpoint 2b: Personal Goals, Exercises and Historical Progress” on top of `53d6212` (13 commits). Preserved remotely by the previous conversation |
+| Session branch `claude/vigilant-keller-w6ss5f` | Fast-forwarded to `64202e2` (13 commits, no history rewritten), then the local commit “Checkpoint 2b-R: Human Acceptance Refinements”. **Not pushed** (the authorization excludes pushing); the hash is in the 2b-R report and the final message |
 | Session branch `claude/sharp-franklin-vrbgmd` (remote) | Fast-forwarded to `170cc99`, then “Checkpoint 2a: Human Acceptance Refinements” (`8843a2506b0e284b365ec048406d9b6b92d0503b`) and “Checkpoint 2a: Final Review and Erasure Regression Coverage”. Preserved on this remote branch with the owner's explicit authorization (2026-11-27) after a publication safety review. Normal push, no force; not merged; no deployment |
 
-**History:** `a4e12b5` → `ade3171` → `820bb0e` → `873ed1c` → `e40287f` → `aa8c869` → `73d9f6f` → `9ca6149` → `170cc99` → `8843a25` (Human Acceptance Refinements) → Final Review and Erasure Regression Coverage (eleven commits).
+**History:** `a4e12b5` → `ade3171` → `820bb0e` → `873ed1c` → `e40287f` → `aa8c869` → `73d9f6f` → `9ca6149` → `170cc99` → `8843a25` (Human Acceptance Refinements) → `bf790b5` Final Review and Erasure Regression Coverage (eleven commits) → `53d6212` (2a closeout, 12) → `64202e2` (Checkpoint 2b, 13) → “Checkpoint 2b-R: Human Acceptance Refinements” (local, 14).
 
 `main` is not to receive Checkpoint 2a until the owner accepts it and authorizes the merge. Pushing never deploys: deployment is a separate manual workflow (section 7).
 
-## 3d. Checkpoint 2b — Goals, Exercises & Historical Progress (implemented, awaiting acceptance)
+## 3e. Checkpoint 2b-R — Human Acceptance Refinements (implemented, awaiting acceptance)
+- **Why:** the owner's Mac Safari acceptance of 2b (64/65; TESTING_CHECKLIST) found R-010 to R-017. R-018 recorded and deferred.
+- **What:** R-010 age-responsive goal ideas; R-011 centralized attribution; R-012–R-014 form and duration alignment; R-015 session deletion without placeholders; R-016 recovery notice; R-017 full reporting periods. Plan R14, Decisions #107–#117, `docs/reviews/CHECKPOINT_2B_R_REFINEMENT_REPORT.md`, `docs/reviews/CHECKPOINT_2B_R_GOAL_IDEAS.md`.
+- **Data:** database version 3 unchanged; deleted sessions are content-free tombstones. Upgrade tests from Checkpoint 1, 2a and `53d6212` still pass.
+- **Results:** 379 unit + 219 end-to-end, three consecutive cycles (BUILD_LOG).
+- **Human retest:** GR1–GR16 in TESTING_CHECKLIST.
+- **Next, each needing separate owner authorization:** acceptance of 2b-R; preserving the commit remotely (this session may push only to `claude/vigilant-keller-w6ss5f`); merging into `main`; deployment (needed for iPhone testing unless a local-network test is set up); Checkpoint 3.
+
+## 3d. Checkpoint 2b — Goals, Exercises & Historical Progress (initial Mac acceptance 64/65; refined by 2b-R)
 - **What:** plan R13, Decisions #89–#106, `docs/reviews/CHECKPOINT_2B_IMPLEMENTATION_REPORT.md` (requirement-by-requirement report), `docs/reviews/CHECKPOINT_2B_ACTIVITY_INVENTORY.md`, `docs/reviews/CHECKPOINT_2B_IMPLEMENTATION_PLAN.md` (approved plan, preserved).
 - **Data:** database version 3 (additive; two new stores; new session index). Upgrade from a real build of the accepted 2a (`53d6212`) is covered by an automated test: every existing store byte-identical, milestone Progress and Home unchanged.
 - **Content:** 153 recommended activities from 162 CDC tips (12 registered pages), gender-neutral display with CDC's original viewable, safety sentences kept at the point of use.
 - **Results:** see BUILD_LOG (three consecutive full runs).
-- **Human acceptance:** checklist GE1–GE24 in TESTING_CHECKLIST. Nothing has been tested in Safari, on a Mac or on an iPhone.
+- **Human acceptance:** the owner's phased Mac Safari test: 64 of 65 applicable checks passed (2026-11-27; TESTING_CHECKLIST). *(Earlier note “nothing tested in Safari” superseded.)* iPhone not yet tested.
 - **Next, each needing separate owner authorization:** owner acceptance; preserving the commit on a remote branch (this session may push only to `claude/upbeat-thompson-skpm8j`); merging into `main`; deployment; Checkpoint 3.
 
 ## 3c. Human acceptance closeout (2026-11-27)
@@ -123,7 +133,8 @@ Acceptance is complete only when the owner says so. Defects found during accepta
 | Remote preservation of the refinement commit | Avoiding loss in a conversation transfer | Push to the session branch only with authorization |
 | Option B educational excerpts | Optional | Deferred (D-10) |
 | ~~Authorization to begin Checkpoint 2b~~ | — | **Given 2026-11-27**; implemented |
-| Owner acceptance of Checkpoint 2b; remote preservation; merge; deployment | Checkpoint 3 | Each needs separate authorization |
+| ~~Owner acceptance of Checkpoint 2b~~ | — | **Initial Mac acceptance done** (64/65); refinements → 2b-R |
+| Owner acceptance of Checkpoint 2b-R; remote preservation; merge; deployment; iPhone acceptance | Checkpoint 3 | Each needs separate authorization |
 | Pathways.org terms review | Any collection or analysis of Pathways.org content | Domain is reachable but its content must not be collected until terms are reviewed and approved |
 | Alternative well-child visit and vaccine reference sources | Checkpoint 3 | AAP/Bright Futures and the AAP immunization schedule are blocked by the AAP exclusion. CDC/ACIP not yet retrieved |
 | Partner-sharing theme behavior (plan R5) | Checkpoint 5 | The proposed rule needs the owner's confirmation |
@@ -166,7 +177,7 @@ It never merges into `main` and never deploys. Claude Code must respect any sess
 
 ## 9. Known limitations and refinement backlog
 - **Limitations:** `docs/KNOWN_LIMITATIONS.md`. Key items: no backup or export yet (Checkpoint 5), so data lives only on the device; automated testing in Chromium only; Checkpoint 2a untested in Safari and on iPhone; Android untested; the one-time initial iPhone “server not responding” delay remains unexplained; iOS may keep an old Home Screen icon.
-- **Refinement backlog:** `docs/REFINEMENT_BACKLOG.md`. **R-001**, onboarding child-name input overflow on mobile: pending investigation, not corrected. **R-002**, Growth usability: accepted for Mac usability (2026-11-27). **R-003**, Library control density: deferred. **R-004 to R-008**: accepted for Mac usability (2026-11-27). **R-009**, deleted-entry presentation: low priority, deferred. R-001 and R-003 remain deferred.
+- **Refinement backlog:** `docs/REFINEMENT_BACKLOG.md`. **R-001**, onboarding child-name input overflow on mobile: pending investigation, not corrected. **R-002**, Growth usability: accepted for Mac usability (2026-11-27). **R-003**, Library control density: deferred. **R-004 to R-008**: accepted for Mac usability (2026-11-27). **R-009**, deleted-entry presentation: low priority, deferred. **R-010 to R-017**: corrected at 2b-R, awaiting verification. **R-018**, shading distinction: deferred. R-001, R-003 and R-009 remain deferred. The suspected legacy-entry concern was a misunderstanding (no change).
 
 ## 10. Where things are
 `README.md` (overview, running locally) · `docs/DEVELOPMENT_PLAN.md` (R-sections take precedence over the original plan; newest first) · `docs/DECISIONS.md` · `docs/BUILD_LOG.md` · `docs/TESTING_CHECKLIST.md` · `docs/KNOWN_LIMITATIONS.md` · `docs/REFINEMENT_BACKLOG.md` · `docs/SOURCE_REGISTER.md` · `docs/MILESTONE_INVENTORY.md` · `docs/DESIGN_SYSTEM.md` · `docs/reviews/`.

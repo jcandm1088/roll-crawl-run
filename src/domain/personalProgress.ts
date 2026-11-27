@@ -9,6 +9,10 @@
  *   scheduled and additional alike, from exercises that still exist (archived included).
  * - Charts count CURRENT records by their current dates: corrections move an entry to its new month;
  *   reversals, reopenings and deletions remove it. Hidden milestones are excluded (with a count).
+ * - R-017 (owner refinement, Checkpoint 2b-R): a period always shows exactly 6 or 12 calendar months
+ *   ending with the current month. Months before the birth month are “before birth” (not applicable,
+ *   never a zero). For exercises, months before tracking began are “not tracked”, but a month with a
+ *   recorded session is always counted, even when the session was backdated before the exercise existed.
  * Personal goals and exercises never contribute to milestone progress (separate data, separate code).
  */
 import type { Achievement, Exercise, ExerciseSession, MilestoneRecord, PersonalGoal } from '../types';
@@ -64,9 +68,13 @@ export interface MonthBucket {
   count: number;
   /** True for the current month (counted so far). */
   current: boolean;
-  /** Information isn't available for this month (e.g. before exercises were tracked); not the same as 0. */
+  /** Information isn't available for this month (before birth or not tracked yet); not the same as 0. */
   unavailable: boolean;
+  /** Why a month is unavailable: 'before-birth' (not applicable) or 'not-tracked'; 'counted' otherwise. */
+  status: MonthStatus;
 }
+
+export type MonthStatus = 'counted' | 'before-birth' | 'not-tracked';
 
 export interface ChartResult {
   buckets: MonthBucket[];
@@ -79,26 +87,30 @@ export interface ChartResult {
 const SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const LONG = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-/** The last `period` calendar months ending with today's month, never before the birth month. */
-export function chartMonths(today: LocalDate, dob: LocalDate, period: ChartPeriod): string[] {
+/** Exactly `period` calendar months ending with today's month (R-017: months before birth included, marked by the caller). */
+export function chartMonths(today: LocalDate, period: ChartPeriod): string[] {
   const t = parseLocalDate(today)!;
-  const b = parseLocalDate(dob)!;
   const out: string[] = [];
   for (let i = period - 1; i >= 0; i--) {
     const z = t.year * 12 + (t.month - 1) - i;
-    if (z < b.year * 12 + (b.month - 1)) continue;
     out.push(`${Math.floor(z / 12)}-${String((z % 12) + 1).padStart(2, '0')}`);
   }
   return out;
 }
 
-function bucketsFor(months: string[], dates: string[], today: LocalDate, unavailableBefore: string | null): MonthBucket[] {
+/**
+ * Buckets for the period. Before the birth month: 'before-birth'. Before `trackedFrom` (exercises only)
+ * and with nothing recorded: 'not-tracked'. A month with recorded entries is always counted.
+ */
+function bucketsFor(months: string[], dates: string[], today: LocalDate, dob: LocalDate, trackedFrom: string | null): MonthBucket[] {
   const counts = new Map<string, number>();
   for (const d of dates) counts.set(monthOf(d), (counts.get(monthOf(d)) ?? 0) + 1);
+  const birthMonth = monthOf(dob);
   return months.map((m) => {
     const [y, mo] = m.split('-').map(Number) as [number, number];
-    const unavailable = unavailableBefore !== null && m < unavailableBefore;
-    return { month: m, label: SHORT[mo - 1]!, longLabel: `${LONG[mo - 1]} ${y}`, count: unavailable ? 0 : counts.get(m) ?? 0, current: m === monthOf(today), unavailable };
+    const n = counts.get(m) ?? 0;
+    const status: MonthStatus = m < birthMonth ? 'before-birth' : n === 0 && trackedFrom !== null && m < trackedFrom ? 'not-tracked' : 'counted';
+    return { month: m, label: SHORT[mo - 1]!, longLabel: `${LONG[mo - 1]} ${y}`, count: status === 'counted' ? n : 0, current: m === monthOf(today), unavailable: status !== 'counted', status };
   });
 }
 
@@ -116,13 +128,13 @@ function split(dates: Array<string | null>, today: LocalDate) {
 
 /** CDC milestones whose CURRENT record is Achieved, by achievement date. Hidden ones are excluded and counted. */
 export function milestoneChart(records: readonly MilestoneRecord[], today: LocalDate, dob: LocalDate, period: ChartPeriod): ChartResult {
-  const months = chartMonths(today, dob, period);
+  const months = chartMonths(today, period);
   const achieved = records.filter((r) => r.deletedAt === null && r.milestoneDefId && getMilestone(r.milestoneDefId) && r.status === 'achieved');
   const visible = achieved.filter((r) => !r.hidden);
   const s = split(visible.map((r) => r.achievedDate), today);
   const inRange = new Set(months);
   return {
-    buckets: bucketsFor(months, s.ok, today, null),
+    buckets: bucketsFor(months, s.ok, today, dob, null),
     excludedHidden: achieved.filter((r) => r.hidden && r.achievedDate && inRange.has(monthOf(r.achievedDate))).length,
     undated: s.undated,
     laterDated: s.laterDated,
@@ -130,21 +142,21 @@ export function milestoneChart(records: readonly MilestoneRecord[], today: Local
 }
 
 export function goalsChart(goals: readonly PersonalGoal[], achievements: readonly Achievement[], today: LocalDate, dob: LocalDate, period: ChartPeriod): ChartResult {
-  const months = chartMonths(today, dob, period);
+  const months = chartMonths(today, period);
   const s = split(accomplishmentsOf(goals, achievements).map((a) => a.date), today);
-  return { buckets: bucketsFor(months, s.ok, today, null), excludedHidden: 0, undated: s.undated, laterDated: s.laterDated };
+  return { buckets: bucketsFor(months, s.ok, today, dob, null), excludedHidden: 0, undated: s.undated, laterDated: s.laterDated };
 }
 
 /**
- * Recorded sessions by month. Months before the first exercise was added on this device are marked
- * unavailable, unless sessions were recorded (backdated) for them.
+ * Recorded sessions by month. Months before tracking began (the first exercise added on this device, or
+ * an earlier backdated session) are “not tracked”, but any month with a recorded session is counted.
  */
 export function exercisesChart(sessions: readonly ExerciseSession[], exercises: readonly Exercise[], today: LocalDate, dob: LocalDate, period: ChartPeriod): ChartResult {
-  const months = chartMonths(today, dob, period);
+  const months = chartMonths(today, period);
   const live = countingSessions(sessions, exercises);
   const s = split(live.map((x) => x.occurrenceDate), today);
   const firstCreated = exercises.map((e) => e.createdAt.slice(0, 7)).sort()[0] ?? null;
   const firstSession = s.ok.map(monthOf).sort()[0] ?? null;
   const tracked = [firstCreated, firstSession].filter((x): x is string => !!x).sort()[0] ?? monthOf(today);
-  return { buckets: bucketsFor(months, s.ok, today, tracked), excludedHidden: 0, undated: s.undated, laterDated: s.laterDated };
+  return { buckets: bucketsFor(months, s.ok, today, dob, tracked), excludedHidden: 0, undated: s.undated, laterDated: s.laterDated };
 }

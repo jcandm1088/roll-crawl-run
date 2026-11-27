@@ -92,7 +92,8 @@ test('a standalone achievement has no goal or start date and is counted once', a
 
 test('inspiration: starting from a milestone links it without changing the milestone', async ({ page }) => {
   await page.goto('./#/growth/goals/ideas');
-  await expect(page.getByTestId('original-ideas')).toContainText('aren’t recommendations');
+  // R-010: the generic examples became age-responsive ideas; the disclaimer is kept (reworded).
+  await expect(page.getByTestId('idea-disclaimer')).toContainText('aren’t CDC milestones, recommendations from CDC or any medical organization');
   await page.getByLabel('Search milestones').fill('Walks');
   await page.getByTestId('idea-milestones').locator('a').first().click();
   await expect(page.getByLabel('Goal name')).not.toHaveValue('');
@@ -198,11 +199,20 @@ test('repetition counter: never negative, persists, target prompts without savin
   await page.getByTestId('routine-start').click();
   await expect(page.getByTestId('rep-minus')).toBeDisabled();
   for (let i = 0; i < 3; i++) await page.getByTestId('rep-plus').click();
-  await expect(page.getByTestId('counter')).toContainText('3');
+  await expect(page.getByTestId('counter')).toContainText('Count: 3 /');
   await expect(page.getByTestId('counter-sub')).toContainText('Target reached');
+  // Test defect fixed at 2b-R (BUILD_LOG #52): wait until the third tap is stored before reloading, and
+  // check the exact count (the target “/ 3” alone used to satisfy toContainText('3')).
+  await expect.poll(() => page.evaluate(() => new Promise<number>((resolve) => {
+    const r = indexedDB.open('roll-crawl-run');
+    r.onsuccess = () => {
+      const q = r.result.transaction('trackerState', 'readonly').objectStore('trackerState').getAll();
+      q.onsuccess = () => { r.result.close(); resolve((q.result as Array<{ count: number }>)[0]?.count ?? -1); };
+    };
+  }))).toBe(3);
   await page.reload();
   await page.getByTestId('routine-start').click();
-  await expect(page.getByTestId('counter')).toContainText('3');
+  await expect(page.getByTestId('counter')).toContainText('Count: 3 /');
   await page.getByTestId('rep-minus').click();
   await page.getByTestId('save-session').click();
   await expect(page.getByTestId('undo-banner')).toContainText('2 repetitions');

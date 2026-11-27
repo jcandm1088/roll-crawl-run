@@ -68,7 +68,7 @@ function renderRoute(route: Route) {
     case 'goalEdit':
       return <Screen nav current="goalEdit" navCurrent="growth" title="Edit" back={{ name: 'goalItem', id: route.id }}><GoalEditScreen key={route.id} id={route.id} /></Screen>;
     case 'goalIdeas':
-      return <Screen nav current="goalIdeas" navCurrent="growth" title="Looking for inspiration?" back={{ name: 'myGoals' }}><GoalIdeasScreen /></Screen>;
+      return <Screen nav current="goalIdeas" navCurrent="growth" title="Looking for inspiration?" back={{ name: 'myGoals' }}><GoalIdeasScreen range={route.range} /></Screen>;
     case 'exercises':
     case 'exerciseNew':
     case 'exerciseBrowse':

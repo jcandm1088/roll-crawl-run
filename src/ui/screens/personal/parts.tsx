@@ -159,6 +159,7 @@ function describeEvent(e: ItemEvent): string {
     case 'schedule-changed': return e.toStatus === 'paused' ? 'Paused' : e.toStatus === 'resumed' ? 'Resumed' : 'Schedule changed';
     case 'session-recorded': return e.text === 'restored' ? 'Session restored' : 'Session recorded';
     case 'session-reversed': return 'Session removed';
+    case 'session-deleted': return 'Session deleted';
     case 'session-edited': return e.fromDate && e.toDate ? `Session moved from ${formatLongDate(e.fromDate)} to ${formatLongDate(e.toDate)}` : 'Session corrected';
     case 'observation': return 'Entry added';
     case 'observation-edited': return 'Entry edited';
@@ -171,10 +172,14 @@ function describeEvent(e: ItemEvent): string {
   }
 }
 
-/** Collapsed item history with permanent erase of text entries (same safeguards as milestones). */
-export function ItemHistory({ db, ctx, itemId, events, onSaved, onError }: { db: RcrDB; ctx: PersonalContext; itemId: string; events: ItemEvent[]; onSaved: (t: string) => void; onError: (t: string) => void }) {
+/**
+ * Collapsed item history with permanent erase of text entries (same safeguards as milestones).
+ * `sessionIds` (exercises): the sessions that still exist. Entries about deleted sessions, and the
+ * deletion itself, aren't shown (R-015: a deleted session leaves no visible placeholder).
+ */
+export function ItemHistory({ db, ctx, itemId, events, sessionIds, onSaved, onError }: { db: RcrDB; ctx: PersonalContext; itemId: string; events: ItemEvent[]; sessionIds?: ReadonlySet<string>; onSaved: (t: string) => void; onError: (t: string) => void }) {
   const [erase, setErase] = useState<null | { id: string; step: 1 | 2 }>(null);
-  const mine = itemHistory(events, itemId);
+  const mine = itemHistory(events, itemId).filter((e) => e.type !== 'session-deleted' && !(sessionIds && e.sessionId && !sessionIds.has(e.sessionId)));
   const removedIds = new Set(itemObservations(events, itemId).filter((o) => o.removed).map((o) => o.id));
   return (
     <details class="card stack history-card" data-testid="item-history">
@@ -220,3 +225,35 @@ export function ItemHistory({ db, ctx, itemId, events, onSaved, onError }: { db:
 }
 
 export const durationText = (s: number | null) => (s === null ? '' : describeDuration(s));
+
+/**
+ * Shared duration entry (R-013, R-014): Hours/Minutes/Seconds (or Minutes/Seconds) in one equal-width
+ * grid, labels above each field, same field height, no overflow at 320 px. Used for the stopwatch target,
+ * manual entry and session correction so the layout can't drift apart again. Values stay strings; the
+ * caller keeps its own validation (parseManualDuration).
+ */
+export function DurationFields({ idPrefix, legend, hint, hours = true, value, onChange, testId }: {
+  idPrefix: string;
+  legend: string;
+  hint?: string;
+  hours?: boolean;
+  value: { h?: string; m: string; s: string };
+  onChange: (patch: Partial<{ h: string; m: string; s: string }>) => void;
+  testId?: string;
+}) {
+  const fields: Array<['h' | 'm' | 's', string]> = [...(hours ? [['h', 'Hours'] as ['h', string]] : []), ['m', 'Minutes'], ['s', 'Seconds']];
+  return (
+    <fieldset class="choice-group duration-fields" data-testid={testId} aria-describedby={hint ? `${idPrefix}-hint` : undefined}>
+      <legend class="label">{legend}</legend>
+      <div class="duration-grid" style={{ gridTemplateColumns: `repeat(${fields.length}, minmax(0, 1fr))` }}>
+        {fields.map(([k, label]) => (
+          <div key={k} class="duration-field">
+            <label class="duration-label" for={`${idPrefix}-${k}`}>{label}</label>
+            <input id={`${idPrefix}-${k}`} class="input" inputMode="numeric" autoComplete="off" value={value[k] ?? ''} onInput={(e) => onChange({ [k]: (e.target as HTMLInputElement).value })} />
+          </div>
+        ))}
+      </div>
+      {hint && <p id={`${idPrefix}-hint`} class="xsmall muted" style={{ marginTop: 'var(--space-2)' }}>{hint}</p>}
+    </fieldset>
+  );
+}

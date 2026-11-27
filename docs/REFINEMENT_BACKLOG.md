@@ -16,6 +16,15 @@ A living list of refinements and suspected defects that are recorded but not yet
 | R-007 | Consolidate Note and Observations into Notes & Observations | Milestone page | 2026-11-27 (owner usability review) | Accepted for Mac usability (2026-11-27); iPhone pending |
 | R-008 | Explain how to change the age basis on Progress | Progress | 2026-11-27 (owner usability review) | Accepted for Mac usability (2026-11-27); iPhone pending |
 | R-009 | Simplify deleted-entry presentation | Milestone page · Notes & Observations | 2026-11-27 (owner, Mac acceptance) | Deferred (low priority) |
+| R-010 | Age-responsive goal inspiration | My Goals · inspiration | 2026-11-27 (owner, 2b Mac acceptance) | Corrected (awaiting verification) |
+| R-011 | Reduce repetitive CDC attribution on activity pages | Exercises · activity pages | 2026-11-27 (owner, 2b Mac acceptance) | Corrected (awaiting verification) |
+| R-012 | Exercise form heading alignment | Exercises · Add/Edit exercise | 2026-11-27 (owner, 2b Mac acceptance) | Corrected (awaiting verification) |
+| R-013 | Stopwatch target duration input alignment | Exercises · Add/Edit exercise | 2026-11-27 (owner, 2b Mac acceptance) | Corrected (awaiting verification) |
+| R-014 | Session correction duration input alignment | Exercises · session correction | 2026-11-27 (owner, 2b Mac acceptance) | Corrected (awaiting verification) |
+| R-015 | Remove deleted exercise sessions from visible history | Exercises · sessions | 2026-11-27 (owner, 2b Mac acceptance) | Corrected (awaiting verification) |
+| R-016 | Stopwatch recovery interface | Stopwatch | 2026-11-27 (owner, 2b Mac acceptance) | Corrected (awaiting verification) |
+| R-017 | Full historical reporting periods | Progress over time | 2026-11-27 (owner, 2b Mac acceptance) | Corrected (awaiting verification) |
+| R-018 | Greater shading distinction between backgrounds, cards and elements | Visual design · all screens | 2026-11-27 (owner suggestion, 2b Mac acceptance) | Deferred (low priority; reassess after iPhone use) |
 
 ---
 
@@ -84,3 +93,37 @@ A living list of refinements and suspected defects that are recorded but not yet
 ## Checkpoint 2b note (2026-11-27)
 - **No new backlog items** were recorded during the 2b implementation; the owner has not yet reviewed 2b.
 - **R-001, R-003 and R-009 remain deferred and were not changed.** The new Notes & Observations and session lists follow the accepted 2a presentation of removed entries, so R-009 would apply to them too if it is taken up later.
+
+---
+
+## R-010 to R-017 — Checkpoint 2b human acceptance refinements (owner's Mac Safari acceptance of `64202e2`)
+- **Source:** the owner's initial human acceptance testing of Checkpoint 2b in Mac Safari (local build on port 4179), 2026-11-27. **64 of 65 applicable functional checks passed**; Phase G (legacy entries) was not applicable to the owner's data and is recorded as neither passed nor failed. The build had passed 360 unit and 201 end-to-end tests three times.
+- **Authorization:** Checkpoint 2b-R (owner, 2026-11-27). Implemented in the commit “Checkpoint 2b-R: Human Acceptance Refinements”. Details: `docs/reviews/CHECKPOINT_2B_R_REFINEMENT_REPORT.md`.
+
+| ID | Finding (as reported) | Correction | Classification |
+|---|---|---|---|
+| R-010 | The eight generic inspiration examples suited much older children than the owner's 4-month-old test profile | Six age ranges with 70 app-written ideas traced to verified milestones and activities; default from the milestone age; nothing before the due date; any range can be browsed | **Previously approved design (D8) that proved less useful in human testing**, not a programming defect |
+| R-011 | Activity pages repeated “CDC” in the reference age, the safety text and the source | Neutral “Reference age: …”; agency name removed from badge, safety and tracker lines; one Source section keeps attribution, non-endorsement, original wording and links | Usability / tone (design refinement) |
+| R-012 | “How do you want to track it?” and “How often?” misaligned with their options | Headings were fieldset legends drawn on the card's top edge; now floated inside the card padding (shared `choice-group`) | **Visual defect** |
+| R-013 | Minutes and Seconds target fields misaligned | `.field + .field` stacking margin applied to side-by-side fields; shared `DurationFields` grid and a guard rule | **Visual defect** |
+| R-014 | Hours/Minutes/Seconds in session correction misaligned | Same cause and fix as R-013 (also manual entry in the stopwatch and the “Record a session” sheet) | **Visual defect** |
+| R-015 | Removed sessions stayed visible as “Removed” placeholders | “Delete session” with confirmation; content-free tombstone; no placeholder; slot freed; totals recalculated | Product-design preference (the 2b behaviour followed the approved reversal design) |
+| R-016 | Recovery notice and its three options had inconsistent colours, spacing and alignment | Notice laid out as a column with full-width actions: Keep running (primary), Pause, Enter duration manually | **Visual defect** (a row-flex banner used for a stacked layout) |
+| R-017 | 6 months and 1 year showed the same five months for a young child | Exactly 6 or 12 month positions; before birth “not applicable”, zero shown as 0, not tracked shown separately | **Previously approved, tested requirement (D7) that proved less useful in human testing** |
+
+- **Status:** Corrected (awaiting verification). Covered by automated tests in headless Chromium only. Each becomes **Verified** only after the owner's hands-on acceptance on Mac and, where relevant, iPhone.
+
+---
+
+## R-018 — Greater shading distinction between backgrounds, cards and elements
+- **Source:** the owner's suggestion during Checkpoint 2b Mac acceptance (2026-11-27).
+- **Observation:** more contrast in shading between the page background, cards and other interface elements might help. The current visual consistency is acceptable for now.
+- **Classification:** design preference; **not a defect**. Low priority.
+- **Plan:** reassess after physical iPhone use (different screen, brightness and viewing conditions).
+- **Status:** Deferred. **Do not implement until authorized.**
+
+---
+
+## Checkpoint 2b-R note (2026-11-27)
+- **Legacy-entry concern resolved:** an earlier suspected legacy-entry problem was resolved during human acceptance as a misunderstanding. No legacy-entry interface change was made or authorized.
+- **R-001, R-003 and R-009 remain deferred** and were not changed. R-015 removes placeholders for deleted *exercise sessions* only; Notes & Observations placeholders (R-009) are unchanged.

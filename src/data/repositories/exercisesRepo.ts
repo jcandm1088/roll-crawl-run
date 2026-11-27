@@ -5,12 +5,15 @@
  *   index, so one scheduled slot can never be filled twice — not even from two open copies of the app.
  * - A session is recorded only by an explicit parent action. Reaching a target never records anything.
  * - Reversal sets `reversedAt` (tombstoned state, plan R3 #3); recording the same slot again revives
- *   the same record, so its logical identity is stable.
+ *   the same record, so its logical identity is stable. Moving a session to another date reverses the
+ *   original and records a linked session (`correctsSessionId`).
+ * - Deletion (R-015, the parent's “Delete session”) replaces the session, and the reversed earlier
+ *   versions it was moved from, with content-free tombstones (`deletedAt`). The slot is free again.
  * - Tracker state (stopwatch/counter in progress) is device-local and revision-checked: a write based on
  *   an older revision is refused instead of silently overwriting newer state from another copy.
  * Nothing here changes a goal or a milestone.
  */
-import type { Exercise, ExerciseOrigin, ExerciseSession, ExerciseSource, PersonalCategory, ScheduleRule, ScheduleVersion, TrackerState, Tracking } from '../../types';
+import type { Exercise, ExerciseOrigin, ExerciseSession, ExerciseSource, PersonalCategory, ScheduleRule, ScheduleVersion, SessionTombstone, TrackerState, Tracking } from '../../types';
 import type { RcrDB } from '../db';
 import { newEnvelope, newId, nowIso, touch } from '../envelope';
 import { runAtomic, type RcrTx } from '../transactions';
@@ -210,9 +213,11 @@ export async function recordSession(db: RcrDB, ctx: PersonalContext, exerciseId:
     const ex = await getLiveItem(tx, ctx, exerciseId, 'exercise');
     checkValues(ex, input);
     const store = tx.objectStore('completions');
+    let reuseId = !!input.sessionId;
     if (input.sessionId) {
       const existing = (await store.get(input.sessionId)) as unknown as ExerciseSession | undefined;
-      if (existing && existing.reversedAt === null) return existing; // saved already (double tap, retry or another copy)
+      if (existing && existing.deletedAt === null && existing.reversedAt === null) return existing; // saved already (double tap, retry or another copy)
+      if (existing && existing.deletedAt !== null) reuseId = false; // a deleted session's id is never brought back
     }
     const mine = await sessionsOf(tx, ctx, exerciseId);
     let slotKey: string;
@@ -241,7 +246,7 @@ export async function recordSession(db: RcrDB, ctx: PersonalContext, exerciseId:
       // The slot was recorded before and then reversed: revive the same record (stable logical key).
       session = touch({ ...occupant, ...fields }, ctx.deviceId);
     } else {
-      session = { ...newEnvelope(ctx.deviceId), ...(input.sessionId ? { id: input.sessionId } : {}), childId: ctx.childId, customItemId: exerciseId, occurrenceDate: input.date, slotKey, ...fields };
+      session = { ...newEnvelope(ctx.deviceId), ...(reuseId && input.sessionId ? { id: input.sessionId } : {}), childId: ctx.childId, customItemId: exerciseId, occurrenceDate: input.date, slotKey, ...fields };
     }
     await store.put(session as never);
     await tx.objectStore('itemEvents').add(itemEvent(ctx, ex, 'session-recorded', { eventDate: input.date, sessionId: session.id }) as never);
@@ -260,6 +265,54 @@ export async function reverseSession(db: RcrDB, ctx: PersonalContext, sessionId:
     const ex = await getLiveItem(tx, ctx, s.customItemId, 'exercise');
     await store.put(touch({ ...s, reversedAt: nowIso() }, ctx.deviceId) as never);
     await tx.objectStore('itemEvents').add(itemEvent(ctx, ex, 'session-reversed', { eventDate: s.occurrenceDate, sessionId }) as never);
+  });
+}
+
+/** The content-free remainder of a deleted session (see SessionTombstone). */
+export function sessionTombstone(s: ExerciseSession, now: string, deviceId: string): SessionTombstone {
+  return {
+    id: s.id,
+    createdAt: s.createdAt,
+    originDeviceId: s.originDeviceId,
+    updatedAt: now,
+    deletedAt: now,
+    rev: s.rev + 1,
+    lastModifiedBy: deviceId,
+    childId: s.childId,
+    customItemId: s.customItemId,
+    occurrenceDate: s.occurrenceDate,
+    slotKey: `deleted:${s.id}`,
+    deletedSlotKey: s.slotKey,
+    reversedAt: s.reversedAt ?? now,
+    ...(s.correctsSessionId ? { correctsSessionId: s.correctsSessionId } : {}),
+  };
+}
+
+/**
+ * Deletes a session (R-015). It no longer appears anywhere or counts in any total, and its scheduled
+ * slot can be recorded again. The note and values are not kept: the session and the reversed earlier
+ * versions it was moved or corrected from become tombstones. A live session is never touched, so a
+ * valid replacement can't be erased by deleting something else. Deleting twice does nothing.
+ */
+export async function deleteSession(db: RcrDB, ctx: PersonalContext, sessionId: string): Promise<void> {
+  await runAtomic(db, ITEM_STORES, async (tx) => {
+    const store = tx.objectStore('completions');
+    const s = (await store.get(sessionId)) as unknown as ExerciseSession | undefined;
+    if (!s || s.childId !== ctx.childId) throw new PersonalInputError('Session not found.');
+    if (s.deletedAt !== null) return;
+    const ex = await getLiveItem(tx, ctx, s.customItemId, 'exercise');
+    const now = nowIso();
+    const chain: ExerciseSession[] = [s];
+    const seen = new Set([s.id]);
+    for (let prev = s.correctsSessionId; prev && !seen.has(prev);) {
+      seen.add(prev);
+      const p = (await store.get(prev)) as unknown as ExerciseSession | undefined;
+      if (!p || p.childId !== ctx.childId || p.customItemId !== s.customItemId || p.deletedAt !== null || p.reversedAt === null) break;
+      chain.push(p);
+      prev = p.correctsSessionId;
+    }
+    for (const x of chain) await store.put(sessionTombstone(x, now, ctx.deviceId) as never);
+    await tx.objectStore('itemEvents').add(itemEvent(ctx, ex, 'session-deleted', { eventDate: s.occurrenceDate, sessionId: s.id }) as never);
   });
 }
 

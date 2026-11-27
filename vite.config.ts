@@ -62,6 +62,10 @@ function milestoneContentPlugin(): Plugin {
       const activityLock = JSON.parse(readFileSync(new URL('./src/content/activity-ids.lock.json', import.meta.url), 'utf8')) as Record<string, string>;
       const activityErrors = validateActivities(undefined, activityLock, (s) => createHash('sha256').update(s).digest('hex').slice(0, 16));
       if (activityErrors.length) this.error(`Activity content validation failed:\n${activityErrors.join('\n')}`);
+      // Age-responsive goal ideas (R-010): app-written, traced to verified milestones and activities.
+      const { validateGoalIdeas } = await import('./src/domain/goalIdeas');
+      const ideaErrors = validateGoalIdeas();
+      if (ideaErrors.length) this.error(`Goal idea validation failed:\n${ideaErrors.join('\n')}`);
     },
   };
 }

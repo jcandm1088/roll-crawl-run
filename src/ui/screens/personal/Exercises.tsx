@@ -19,7 +19,7 @@ import { activeGoalsOf } from '../../../domain/personalProgress';
 import { newId } from '../../../data/envelope';
 import type { Exercise, ExerciseOrigin, ExerciseSession, PersonalCategory, ScheduleRule, TrackerState, Tracking, Weekday } from '../../../types';
 import {
-  createExercise, discardTracker, editSession, listTrackers, moveSession, recordSession, restoreSession, reverseSession, setPaused, updateExercise, MAX_REPS, SlotTakenError,
+  createExercise, deleteSession, discardTracker, editSession, listTrackers, moveSession, recordSession, setPaused, updateExercise, MAX_REPS, SlotTakenError,
   type ExerciseInput, type ScheduleInput,
 } from '../../../data/repositories/exercisesRepo';
 import { deleteItemPermanently, setArchived, type PersonalContext } from '../../../data/repositories/personalRepo';
@@ -28,7 +28,7 @@ import { Icon } from '../../components/Icon';
 import { Sheet } from '../../components/Sheet';
 import { ErrorText } from '../../components/ChildFields';
 import { ForChild } from '../growth/parts';
-import { CategorySelect, ItemHistory, ItemNotes, MoreDetails, SavedBanner, TwoStepDelete, categoryLabel } from './parts';
+import { CategorySelect, DurationFields, ItemHistory, ItemNotes, MoreDetails, SavedBanner, TwoStepDelete, categoryLabel } from './parts';
 import { DailyBar, TrackerSheet, type TrackerTarget } from './Tracker';
 import { ActivityBody, ActivityInstructions, ActivitySafety } from './Browse';
 
@@ -170,7 +170,7 @@ export function ExercisesScreen({ focus }: { focus?: 'today' }) {
         <p class="banner" role="status" data-testid="undo-banner">
           <Icon name="check" size={18} />
           <span class="grow">{undo.text}</span>
-          <button type="button" class="btn btn-quiet btn-sm" data-testid="undo" onClick={async () => { const u = undo; setUndo(null); try { await reverseSession(app.db, ctx, u.sessionId); notifyPersonalChanged(); setSaved('Undone. That session was removed.'); } catch (e) { setError(e instanceof Error ? e.message : 'That couldn’t be undone.'); } }}>Undo</button>
+          <button type="button" class="btn btn-quiet btn-sm" data-testid="undo" onClick={async () => { const u = undo; setUndo(null); try { await deleteSession(app.db, ctx, u.sessionId); notifyPersonalChanged(); setSaved('Undone. That session was removed.'); } catch (e) { setError(e instanceof Error ? e.message : 'That couldn’t be undone.'); } }}>Undo</button>
         </p>
       )}
       <div class="stack">
@@ -325,7 +325,7 @@ function ExerciseForm({ existing, adopt, goals }: { existing?: Exercise; adopt?:
         </div>
         <CategorySelect id="ex-area" value={area} onChange={setArea} />
         {!fromCdc && !existing && (
-          <fieldset class="stack" style={{ border: 0, padding: 0, margin: 0 }} data-testid="ex-origin">
+          <fieldset class="choice-group" data-testid="ex-origin">
             <legend class="label">Where is it from?</legend>
             {radio('origin', 'parent', 'My own activity', origin === 'parent', () => setOrigin('parent'))}
             {radio('origin', 'provider', 'From a doctor or specialist', origin === 'provider', () => setOrigin('provider'), 'origin-provider')}
@@ -341,23 +341,26 @@ function ExerciseForm({ existing, adopt, goals }: { existing?: Exercise; adopt?:
         <div class="field">
           <label class="label" for="ex-instr">Instructions (optional)</label>
           <textarea id="ex-instr" class="textarea" maxLength={2000} value={instructions} onInput={(e) => setInstructions((e.target as HTMLTextAreaElement).value)} />
-          {fromCdc && <p class="xsmall muted">These are CDC’s words. If you change them, they become your own instructions; CDC’s original stays available on the exercise’s page.</p>}
+          {fromCdc && <p class="xsmall muted">These are CDC’s words. If you change them, they become your own instructions; the original stays available on the exercise’s page.</p>}
         </div>
       </div>
 
-      <fieldset class="card stack" style={{ margin: 0 }} data-testid="ex-tracking">
-        <legend class="title-3" style={{ padding: 0 }}>How do you want to track it?</legend>
+      <div class="card"><fieldset class="choice-group stack" data-testid="ex-tracking">
+        <legend class="title-3">How do you want to track it?</legend>
         {radio('method', 'simple', 'Simple — one tap when done', method === 'simple', () => setMethod('simple'), 'method-simple')}
         {radio('method', 'stopwatch', 'Stopwatch — time each session', method === 'stopwatch', () => setMethod('stopwatch'), 'method-stopwatch')}
         {radio('method', 'reps', 'Repetitions — count each session', method === 'reps', () => setMethod('reps'), 'method-reps')}
         {method === 'stopwatch' && (
-          <div class="stack" data-testid="target-time">
-            <span class="label">Target time (optional)</span>
-            <div class="input-row">
-              <div class="field"><label class="label" for="t-min">Minutes</label><input id="t-min" class="input" inputMode="numeric" value={tMin} onInput={(e) => setTMin((e.target as HTMLInputElement).value)} /></div>
-              <div class="field"><label class="label" for="t-sec">Seconds</label><input id="t-sec" class="input" inputMode="numeric" value={tSec} onInput={(e) => setTSec((e.target as HTMLInputElement).value)} /></div>
-            </div>
-            <p class="xsmall muted">The stopwatch always counts up. A target only shows a gentle reminder; it never stops or saves a session.</p>
+          <div class="target-block">
+            <DurationFields
+              idPrefix="t"
+              legend="Target time (optional)"
+              hours={false}
+              value={{ m: tMin, s: tSec }}
+              onChange={(p) => { if (p.m !== undefined) setTMin(p.m); if (p.s !== undefined) setTSec(p.s); }}
+              hint="The stopwatch always counts up. A target only shows a gentle reminder; it never stops or saves a session."
+              testId="target-time"
+            />
           </div>
         )}
         {method === 'reps' && (
@@ -367,10 +370,10 @@ function ExerciseForm({ existing, adopt, goals }: { existing?: Exercise; adopt?:
           </div>
         )}
         {existing && existing.tracking.method !== method && <p class="xsmall muted">Sessions already recorded keep how they were tracked.</p>}
-      </fieldset>
+      </fieldset></div>
 
-      <fieldset class="card stack" style={{ margin: 0 }} data-testid="ex-schedule">
-        <legend class="title-3" style={{ padding: 0 }}>How often?</legend>
+      <div class="card"><fieldset class="choice-group stack" data-testid="ex-schedule">
+        <legend class="title-3">How often?</legend>
         {radio('rule', 'asNeeded', 'As needed — no schedule', rule === 'asNeeded', () => setRule('asNeeded'), 'rule-asNeeded')}
         {radio('rule', 'daily', 'Every day', rule === 'daily', () => setRule('daily'), 'rule-daily')}
         {radio('rule', 'weekdays', 'Selected days', rule === 'weekdays', () => setRule('weekdays'), 'rule-weekdays')}
@@ -399,7 +402,7 @@ function ExerciseForm({ existing, adopt, goals }: { existing?: Exercise; adopt?:
             </div>
           </>
         )}
-      </fieldset>
+      </fieldset></div>
 
       <MoreDetails testId="ex-more" defaultOpen={goalIds.length > 0}>
         {goals.length > 0 && (
@@ -457,7 +460,7 @@ export function ExerciseDetailScreen({ id }: { id: string }) {
   const [saved, setSaved] = useState<string | null>(flash);
   const [error, setError] = useState<string | null>(null);
   const [tracker, setTracker] = useState<TrackerTarget | null>(null);
-  const [sheet, setSheet] = useState<null | 'record' | 'delete' | { edit: ExerciseSession }>(null);
+  const [sheet, setSheet] = useState<null | 'record' | 'delete' | { edit: ExerciseSession } | { remove: ExerciseSession }>(null);
   const trackers = useTrackers(app.db, child?.id ?? null, [p.data, tracker]);
   if (!child || !p.ctx) return null;
   if (!p.data) return <p class="muted small">Loading…</p>;
@@ -478,8 +481,10 @@ export function ExerciseDetailScreen({ id }: { id: string }) {
     }
   };
   const v = currentOrNextVersion(ex.schedule, p.today);
-  const sessions = p.data.sessions.filter((s) => s.customItemId === ex.id).sort((a, b) => b.occurrenceDate.localeCompare(a.occurrenceDate) || b.createdAt.localeCompare(a.createdAt));
-  const counting = sessions.filter((s) => !s.reversedAt);
+  // R-015: only sessions that count are listed. Reversed records (the original of a moved session, or
+  // one removed by an earlier version of the app) and deleted sessions leave no placeholder.
+  const counting = p.data.sessions.filter((s) => s.customItemId === ex.id && !s.reversedAt).sort((a, b) => b.occurrenceDate.localeCompare(a.occurrenceDate) || b.createdAt.localeCompare(a.createdAt));
+  const sessionIds = new Set(p.data.sessions.filter((s) => s.customItemId === ex.id).map((s) => s.id));
   const goals = p.data.goals.filter((g) => ex.goalIds.includes(g.id));
   const act = ex.source ? getActivity(ex.source.activityId) : undefined;
   const rec = ex.source ? getActivityRecord(ex.source.sourceRecordId) : undefined;
@@ -503,10 +508,10 @@ export function ExerciseDetailScreen({ id }: { id: string }) {
         <p class="small" data-testid="exercise-schedule">{describeRule(v)}{v?.paused ? ' · Paused' : ''}{v && compareDates(v.effectiveFrom, p.today) > 0 ? ` · starts ${formatLongDate(v.effectiveFrom)}` : ''}</p>
         {ex.origin === 'provider' && <p class="xsmall muted" data-testid="provider-note">Follow the instructions you were given. This app doesn’t check or change them.</p>}
         {ex.instructions && (ex.origin === 'recommended' && !ex.source?.instructionsEdited && rec ? (
-          <div class="stack" style={{ gap: '4px' }}><span class="label">How to do it (CDC)</span><ActivityInstructions record={rec} /></div>
+          <div class="stack" style={{ gap: '4px' }}><span class="label">How to do it</span><ActivityInstructions record={rec} /></div>
         ) : (
           <div class="stack" style={{ gap: '4px' }}>
-            <span class="label">{ex.origin === 'recommended' ? 'Your instructions (adapted from a CDC activity)' : 'Instructions'}</span>
+            <span class="label">{ex.origin === 'recommended' ? 'Your instructions' : 'Instructions'}</span>
             <p class="small activity-text" data-testid="exercise-instructions">{ex.instructions}</p>
           </div>
         ))}
@@ -532,7 +537,7 @@ export function ExerciseDetailScreen({ id }: { id: string }) {
           <ActivitySafety activityId={ex.source.activityId} recordId={ex.source.sourceRecordId} />
           {act && rec && (
             <details class="card stack" data-testid="cdc-original">
-              <summary class="small text-link" style={{ cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center' }}>CDC’s original activity</summary>
+              <summary class="small text-link" style={{ cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center' }}>Original activity and source</summary>
               <div class="stack" style={{ marginTop: 'var(--space-3)' }}><ActivityBody activity={act} record={rec} showSafety={false} /></div>
             </details>
           )}
@@ -544,21 +549,15 @@ export function ExerciseDetailScreen({ id }: { id: string }) {
 
       <section class="card stack" aria-labelledby="sessions-title" data-testid="sessions">
         <h2 class="title-3" id="sessions-title">Sessions ({counting.length})</h2>
-        {sessions.length === 0 ? <p class="small muted">No sessions recorded yet.</p> : (
+        {counting.length === 0 ? <p class="small muted">No sessions recorded yet.</p> : (
           <ul class="list">
-            {sessions.slice(0, 30).map((s) => (
-              <li key={s.id} class="entry" data-testid="session-row" data-reversed={s.reversedAt ? 'true' : 'false'}>
+            {counting.slice(0, 30).map((s) => (
+              <li key={s.id} class="entry" data-testid="session-row">
                 <span class="history-date">{formatLongDate(s.occurrenceDate)}{isExtraSlot(s.slotKey) ? ' · additional' : ''}{s.entry === 'manual' ? ' · entered manually' : ''}</span>
-                <p class={`small${s.reversedAt ? ' removed-text' : ''}`}>{s.reversedAt ? `Removed (${sessionValue(s)})` : sessionValue(s)}{s.note && !s.reversedAt ? ` — ${s.note}` : ''}</p>
+                <p class="small">{sessionValue(s)}{s.note ? ` — ${s.note}` : ''}</p>
                 <div class="row" style={{ gap: 'var(--space-2)' }}>
-                  {s.reversedAt ? (
-                    <button type="button" class="btn btn-quiet btn-sm" onClick={() => run(() => restoreSession(app.db, ctx, s.id), 'Session restored.')}>Restore</button>
-                  ) : (
-                    <>
-                      <button type="button" class="btn btn-quiet btn-sm" aria-label={`Correct session of ${formatLongDate(s.occurrenceDate)}`} onClick={() => setSheet({ edit: s })}>Correct</button>
-                      <button type="button" class="btn btn-quiet btn-sm" aria-label={`Remove session of ${formatLongDate(s.occurrenceDate)}`} onClick={() => run(() => reverseSession(app.db, ctx, s.id), 'Session removed. It no longer counts.')} data-testid="remove-session">Remove</button>
-                    </>
-                  )}
+                  <button type="button" class="btn btn-quiet btn-sm" aria-label={`Correct session of ${formatLongDate(s.occurrenceDate)}`} onClick={() => setSheet({ edit: s })}>Correct</button>
+                  <button type="button" class="btn btn-quiet btn-sm" aria-label={`Delete session of ${formatLongDate(s.occurrenceDate)}`} onClick={() => setSheet({ remove: s })} data-testid="delete-session">Delete</button>
                 </div>
               </li>
             ))}
@@ -568,7 +567,7 @@ export function ExerciseDetailScreen({ id }: { id: string }) {
       </section>
 
       <ItemNotes db={app.db} ctx={ctx} itemId={ex.id} events={p.data.events} dob={child.dob} today={p.today} onSaved={(t) => { setError(null); setSaved(t); }} onError={(t) => { setSaved(null); setError(t); }} />
-      <ItemHistory db={app.db} ctx={ctx} itemId={ex.id} events={p.data.events} onSaved={(t) => { setError(null); setSaved(t); }} onError={(t) => { setSaved(null); setError(t); }} />
+      <ItemHistory db={app.db} ctx={ctx} itemId={ex.id} events={p.data.events} sessionIds={sessionIds} onSaved={(t) => { setError(null); setSaved(t); }} onError={(t) => { setSaved(null); setError(t); }} />
 
       <details class="card stack" data-testid="manage-exercise">
         <summary class="small text-link" style={{ cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center' }}>Manage this exercise</summary>
@@ -587,7 +586,22 @@ export function ExerciseDetailScreen({ id }: { id: string }) {
       </details>
 
       {sheet === 'record' && <ManualSessionSheet db={app.db} ctx={ctx} ex={ex} sessions={p.data.sessions} dob={child.dob} onClose={() => setSheet(null)} onSaved={(t) => { setSheet(null); setError(null); setSaved(t); }} />}
-      {sheet && typeof sheet === 'object' && <EditSessionSheet db={app.db} ctx={ctx} session={sheet.edit} dob={child.dob} onClose={() => setSheet(null)} onSaved={(t) => { setSheet(null); setError(null); setSaved(t); }} />}
+      {sheet && typeof sheet === 'object' && 'remove' in sheet && (
+        <Sheet title="Delete this session?" onClose={() => setSheet(null)}>
+          <div data-testid="delete-session-sheet">
+            <p class="small">This session will be removed from your exercise history and progress totals.</p>
+            <div class="stack" style={{ marginTop: 'var(--space-5)' }}>
+              <button type="button" class="btn btn-primary btn-block" onClick={() => setSheet(null)} data-testid="cancel-delete-session">Cancel</button>
+              <button type="button" class="btn btn-outline btn-block" data-testid="confirm-delete-session" onClick={async () => {
+                const id = sheet.remove.id;
+                setSheet(null);
+                await run(() => deleteSession(app.db, ctx, id), 'Session deleted.');
+              }}>Delete session</button>
+            </div>
+          </div>
+        </Sheet>
+      )}
+      {sheet && typeof sheet === 'object' && 'edit' in sheet && <EditSessionSheet db={app.db} ctx={ctx} session={sheet.edit} dob={child.dob} onClose={() => setSheet(null)} onSaved={(t) => { setSheet(null); setError(null); setSaved(t); }} />}
       {sheet === 'delete' && (
         <TwoStepDelete
           title="Delete this exercise permanently?"
@@ -612,15 +626,7 @@ export function ExerciseDetailScreen({ id }: { id: string }) {
 }
 
 function ValueFields({ method, h, m, s, reps, set }: { method: Tracking['method']; h: string; m: string; s: string; reps: string; set: (patch: Partial<{ h: string; m: string; s: string; reps: string }>) => void }) {
-  if (method === 'stopwatch') {
-    return (
-      <div class="input-row">
-        <div class="field"><label class="label" for="v-h">Hours</label><input id="v-h" class="input" inputMode="numeric" value={h} onInput={(e) => set({ h: (e.target as HTMLInputElement).value })} /></div>
-        <div class="field"><label class="label" for="v-m">Minutes</label><input id="v-m" class="input" inputMode="numeric" value={m} onInput={(e) => set({ m: (e.target as HTMLInputElement).value })} /></div>
-        <div class="field"><label class="label" for="v-s">Seconds</label><input id="v-s" class="input" inputMode="numeric" value={s} onInput={(e) => set({ s: (e.target as HTMLInputElement).value })} /></div>
-      </div>
-    );
-  }
+  if (method === 'stopwatch') return <DurationFields idPrefix="v" legend="Duration" value={{ h, m, s }} onChange={set} testId="duration-fields" />;
   if (method === 'reps') return <div class="field"><label class="label" for="v-reps">Repetitions</label><input id="v-reps" class="input" inputMode="numeric" value={reps} onInput={(e) => set({ reps: (e.target as HTMLInputElement).value })} /></div>;
   return null;
 }

@@ -49,14 +49,14 @@ export function BrowseScreen({ age }: { age: number | 'all' | null }) {
         </div>
         <p class="xsmall muted" data-testid="age-context">
           {name}’s age used for milestones: {m.age.months === null ? 'before due date' : `${m.age.months} month${m.age.months === 1 ? '' : 's'} (${usingCorrected ? 'corrected' : 'chronological'} age)`}.{' '}
-          {selected === 'all' ? 'Showing activities for every CDC age.' : selected !== null ? `Showing CDC’s tips for ${ageOlds(selected)}. A reference age gives context; it doesn’t mean an activity is right for every child of that age.` : ''}
+          {selected === 'all' ? 'Showing activities for every reference age.' : selected !== null ? `Showing activities for ${ageOlds(selected)}. A reference age gives context; it doesn’t mean an activity is right for every child of that age.` : ''}
         </p>
-        {def.kind === 'age' && def.olderThanFive && selected === 60 && age === null && <p class="xsmall muted" data-testid="over-five-browse">CDC’s tips go up to age 5, so these are the 5-year activities.</p>}
+        {def.kind === 'age' && def.olderThanFive && selected === 60 && age === null && <p class="xsmall muted" data-testid="over-five-browse">The activities go up to age 5, so these are the 5-year activities.</p>}
       </div>
 
       {selected === null ? (
         <div class="card stack" data-testid="too-young">
-          <p class="small">{def.kind === 'too-young' && def.beforeDueDate ? `${name}’s due date hasn’t arrived yet.` : `${name} is younger than 2 months.`} The earliest age CDC gives activity tips for is 2 months.</p>
+          <p class="small">{def.kind === 'too-young' && def.beforeDueDate ? `${name}’s due date hasn’t arrived yet.` : `${name} is younger than 2 months.`} The activities start at 2 months.</p>
           <p class="small muted">You can still look at them, or choose another age.</p>
           <button type="button" class="btn btn-secondary btn-block" onClick={() => go(2)} data-testid="browse-two-months">Browse activities for 2-month-olds</button>
         </div>
@@ -68,7 +68,7 @@ export function BrowseScreen({ age }: { age: number | 'all' | null }) {
               <Accordion key={c.id} title={`${c.label} (${list.length})`} testId={`area-${c.id}`}>
                 <div class="panel-pad">
                   {list.length === 0 ? (
-                    <p class="small muted" data-testid="area-empty">CDC’s tips for {selected === 'all' ? 'these ages' : ageOlds(selected)} don’t include a {c.label.toLowerCase()} activity. Try another age, or create your own.</p>
+                    <p class="small muted" data-testid="area-empty">The activities for {selected === 'all' ? 'these ages' : ageOlds(selected)} don’t include a {c.label.toLowerCase()} activity. Try another age, or create your own.</p>
                   ) : (
                     <ul class="ms-list">
                       {list.map((a) => (
@@ -123,7 +123,7 @@ export function ActivitySafety({ activityId, compact = false, withSentences = tr
     return (
       <div class="info-note" data-testid="tracker-safety">
         <Icon name="shield" size={18} />
-        <span class="small">{sentences.length ? sentences.join(' ') : g?.display.split('. ').slice(1, 2).join('') + '.'} <span class="xsmall muted">(CDC)</span></span>
+        <span class="small">{sentences.length ? sentences.join(' ') : g?.display.split('. ').slice(1, 2).join('') + '.'}</span>
       </div>
     );
   }
@@ -132,7 +132,7 @@ export function ActivitySafety({ activityId, compact = false, withSentences = tr
       <h2 class="title-3" id={`safety-${a.id}`}><Icon name="shield" size={18} /> Safety</h2>
       {withSentences && sentences.length > 0 && <ul class="plain-list small stack">{sentences.map((s) => <li key={s}>{s}</li>)}</ul>}
       {g && <p class="small muted" data-testid="page-guidance">{g.display}</p>}
-      <p class="xsmall muted">From CDC. This app doesn’t review whether an activity suits a particular child.</p>
+      <p class="xsmall muted">This app doesn’t review whether an activity suits a particular child.</p>
     </section>
   );
 }
@@ -142,7 +142,8 @@ function SourceCard({ record, adapted }: { record: ActivityRecord; adapted: bool
   const g = guidanceFor(record);
   const corrected = !!record.corrections?.length;
   return (
-    <section class="card stack small" data-testid="activity-source">
+    <section class="card stack small" aria-labelledby={`source-${record.id}`} data-testid="activity-source">
+      <h2 class="title-3" id={`source-${record.id}`}>Source</h2>
       <p>From CDC’s {page ? <ExternalLink url={page.url}>{page.title}</ExternalLink> : 'milestone pages'} (“What you can do for your {ageOld(record.referenceAgeMonths)}”, content reviewed May 15, 2026). Not endorsed by CDC, HHS, or the U.S. Government. Available free at cdc.gov.</p>
       <p class="xsmall muted">The title and area are this app’s own organization, not CDC’s.</p>
       {(adapted || (g && g.display !== g.source)) && (
@@ -200,12 +201,12 @@ export function ActivityDetailScreen({ id }: { id: string }) {
   return (
     <div class="stack-lg" data-testid="activity-detail">
       <section class="card stack">
-        <span class="badge" style={{ alignSelf: 'flex-start' }}>From CDC’s activity tips</span>
+        <span class="badge" style={{ alignSelf: 'flex-start' }}>Recommended activity</span>
         <h2 class="title-2" data-testid="activity-title">{a.title}</h2>
-        <p class="small muted" data-testid="activity-meta">{APP_CATEGORIES.find((c) => c.id === a.appCategory)!.label} · CDC lists this for {ages.map(ageOlds).join(', ')}</p>
+        <p class="small muted" data-testid="activity-meta">{APP_CATEGORIES.find((c) => c.id === a.appCategory)!.label} · Reference age{ages.length > 1 ? 's' : ''}: {ages.map(ageName).join(', ')}</p>
         {!forChildAge && <p class="xsmall muted" data-testid="age-differs">This is listed for a different age than the age {childNameInline(activeChild)}’s milestones use. You know {childNameInline(activeChild)} best.</p>}
         {ages.length > 1 && (
-          <div class="segmented" role="group" aria-label="CDC age">
+          <div class="segmented" role="group" aria-label="Reference age">
             {ages.map((x) => <button key={x} type="button" aria-pressed={record.referenceAgeMonths === x} onClick={() => setAgeSel(x)}>{ageName(x)}</button>)}
           </div>
         )}

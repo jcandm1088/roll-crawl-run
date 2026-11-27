@@ -307,6 +307,23 @@ export interface ExerciseSession extends RecordEnvelope {
   correctsSessionId?: string;
 }
 
+/**
+ * What remains of a deleted exercise session (R-015): identity, child, exercise, date and lineage only.
+ * No note, duration, count, target or entry method is kept. `slotKey` is rewritten to `deleted:<id>` so
+ * the scheduled slot is free again (the logical key stays unique); the original slot is kept in
+ * `deletedSlotKey` so a future merge can recognise a stale copy by its id or by its logical key.
+ */
+export interface SessionTombstone extends RecordEnvelope {
+  childId: string;
+  customItemId: string;
+  occurrenceDate: string;
+  slotKey: string;
+  deletedSlotKey: string;
+  deletedAt: string;
+  reversedAt: string;
+  correctsSessionId?: string;
+}
+
 export type ItemEventType =
   | 'created'
   | 'edited'
@@ -317,6 +334,8 @@ export type ItemEventType =
   | 'schedule-changed'
   | 'session-recorded'
   | 'session-reversed'
+  /** R-015: a session was deleted (content-free; never shown in the visible history). */
+  | 'session-deleted'
   | 'session-edited'
   | 'observation'
   | 'observation-edited'

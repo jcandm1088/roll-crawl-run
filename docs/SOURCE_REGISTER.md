@@ -60,6 +60,13 @@ Every developmental or medical item in the app must trace to a row here. Before 
 - **Attribution as implemented:** a source note on Browse; on every activity page the CDC page link (new window), review date, non-endorsement, free availability and the original wording; adopted exercises keep “From CDC's activity tips” only while the instructions are unedited (“Adapted by you from a CDC activity” afterwards, with CDC's original and safety still available).
 - **Goal inspiration ideas** are eight app-written examples, labelled as not CDC recommendations (no source claimed).
 
+**Goal ideas (R-010, Checkpoint 2b-R, 2026-11-27):**
+- **No new source and no retrieval.** The 70 goal ideas (`src/content/goal-ideas.app-2026.json`) are original app wording, each traced to registered CDC milestones (`cdc-ltsae-*`) and the recommended activities already registered for Checkpoint 2b.
+- Labelled in the app as written for this app, not CDC milestones and not recommendations from CDC or any medical organization. Safety sentences shown with ideas are the existing CDC activity sentences (validated display wording).
+- Mapping and validation: `docs/reviews/CHECKPOINT_2B_R_GOAL_IDEAS.md`, `validateGoalIdeas` (build time).
+
+**Attribution presentation (R-011):** CDC attribution for activities is centralized in each activity page's Source section (CDC page link, review date, non-endorsement, free availability, original wording) and in the Browse Exercises source note. No attribution or non-endorsement statement was removed; only repeated agency names in the badge, reference-age line and safety text were.
+
 ## Pending verification
 | Planned source | For | Status |
 |---|---|---|

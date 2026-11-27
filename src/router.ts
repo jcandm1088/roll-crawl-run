@@ -24,12 +24,13 @@ export type Route =
   // Checkpoint 2b — Goals & Exercises and Progress over time
   | { name: 'goals' }
   | { name: 'myGoals' }
-  /** Prefill from inspiration: a milestone to start from, or an idea number. */
-  | { name: 'goalNew'; milestone?: string; idea?: number }
+  /** Prefill from inspiration: a milestone to start from, or a goal idea id (R-010). */
+  | { name: 'goalNew'; milestone?: string; idea?: string }
   | { name: 'achievementNew' }
   | { name: 'goalItem'; id: string }
   | { name: 'goalEdit'; id: string }
-  | { name: 'goalIdeas' }
+  /** range: a goal idea range id (R-010), or none for the child's default. */
+  | { name: 'goalIdeas'; range?: string }
   /** focus 'today': open with Today's routine in view (Home shortcut). */
   | { name: 'exercises'; focus?: 'today' }
   /** activity: adopting a recommended activity. */
@@ -106,10 +107,10 @@ function parseGoals(p: string[]): Route {
   const [c, d, e] = p;
   if (c === undefined) return { name: 'goals' };
   if (c === 'my') return { name: 'myGoals' };
-  if (c === 'ideas') return { name: 'goalIdeas' };
+  if (c === 'ideas') return d && /^r\d+-\d+$/.test(d) ? { name: 'goalIdeas', range: d } : { name: 'goalIdeas' };
   if (c === 'new') {
     if (d === 'milestone' && e) return { name: 'goalNew', milestone: dec(e) };
-    if (d === 'idea' && e && /^\d+$/.test(e)) return { name: 'goalNew', idea: Number(e) };
+    if (d === 'idea' && e && /^gi-[a-z0-9-]+$/.test(e)) return { name: 'goalNew', idea: e };
     return { name: 'goalNew' };
   }
   if (c === 'achievement' && d === 'new') return { name: 'achievementNew' };
@@ -139,7 +140,7 @@ export function href(route: Route): string {
     case 'myGoals':
       return '#/growth/goals/my';
     case 'goalNew':
-      return route.milestone ? `#/growth/goals/new/milestone/${encodeURIComponent(route.milestone)}` : route.idea !== undefined ? `#/growth/goals/new/idea/${route.idea}` : '#/growth/goals/new';
+      return route.milestone ? `#/growth/goals/new/milestone/${encodeURIComponent(route.milestone)}` : route.idea !== undefined ? `#/growth/goals/new/idea/${encodeURIComponent(route.idea)}` : '#/growth/goals/new';
     case 'achievementNew':
       return '#/growth/goals/achievement/new';
     case 'goalItem':
@@ -147,7 +148,7 @@ export function href(route: Route): string {
     case 'goalEdit':
       return `#/growth/goals/item/${encodeURIComponent(route.id)}/edit`;
     case 'goalIdeas':
-      return '#/growth/goals/ideas';
+      return route.range ? `#/growth/goals/ideas/${route.range}` : '#/growth/goals/ideas';
     case 'exercises':
       return route.focus === 'today' ? '#/growth/exercises/today' : '#/growth/exercises';
     case 'exerciseNew':

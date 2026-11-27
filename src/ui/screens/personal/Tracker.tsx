@@ -21,6 +21,7 @@ import { Icon } from '../../components/Icon';
 import { ErrorText } from '../../components/ChildFields';
 import { notifyPersonalChanged } from '../../../state/personal';
 import { ActivitySafety } from './Browse';
+import { DurationFields } from './parts';
 
 /** Trackers started or resumed in THIS page session (others found running were recovered after a reload). */
 const startedHere = new Map<string, MonotonicAnchor>();
@@ -206,12 +207,12 @@ export function TrackerSheet({ db, ctx, target, onClose, onSaved }: { db: RcrDB;
         <p class="small muted" data-testid="tracker-label">{target.label}{oldDay ? ` · ${formatLongDate(draft.occurrenceDate)}` : ''}</p>
         {oldDay && <p class="banner neutral" data-testid="old-day">Started on {formatLongDate(draft.occurrenceDate)}. Saving records it for that day.</p>}
         {recoveredNotice && (
-          <div class="banner neutral stack" role="status" data-testid="recovery-notice">
-            <span>The stopwatch kept running while the app was closed or in the background.</span>
-            <div class="row" style={{ gap: 'var(--space-2)', flexWrap: 'wrap' }}>
-              <button type="button" class="btn btn-secondary btn-sm" onClick={() => setRecoveredNotice(false)}>Keep running</button>
-              <button type="button" class="btn btn-outline btn-sm" onClick={() => { setRecoveredNotice(false); void pauseNow(); }}>Pause</button>
-              <button type="button" class="btn btn-quiet btn-sm" onClick={() => { setRecoveredNotice(false); void pauseNow(); setManual({ h: '', m: '', s: '', reps: '' }); }}>Enter duration manually</button>
+          <div class="notice-panel" role="status" data-testid="recovery-notice">
+            <p>The stopwatch kept running while the app was closed or in the background.</p>
+            <div class="notice-actions">
+              <button type="button" class="btn btn-primary" onClick={() => setRecoveredNotice(false)} data-testid="recovery-keep">Keep running</button>
+              <button type="button" class="btn btn-outline" onClick={() => { setRecoveredNotice(false); void pauseNow(); }} data-testid="recovery-pause">Pause</button>
+              <button type="button" class="btn btn-ghost" onClick={() => { setRecoveredNotice(false); void pauseNow(); setManual({ h: '', m: '', s: '', reps: '' }); }} data-testid="recovery-manual">Enter duration manually</button>
             </div>
           </div>
         )}
@@ -225,7 +226,7 @@ export function TrackerSheet({ db, ctx, target, onClose, onSaved }: { db: RcrDB;
             <p class="small muted center" data-testid="stopwatch-sub">
               {targetSeconds !== null ? (reached ? 'Target reached — you can save this session or keep going.' : `Target ${describeDuration(targetSeconds)} (optional)`) : 'Elapsed time'}
             </p>
-            {elapsed.anomaly && <p class="banner neutral" data-testid="anomaly">{anomalyText[elapsed.anomaly]} You’ll be asked to check the time before it’s saved.</p>}
+            {elapsed.anomaly && <p class="notice-panel small" data-testid="anomaly">{anomalyText[elapsed.anomaly]} You’ll be asked to check the time before it’s saved.</p>}
             <div class="tracker-controls">
               <button type="button" class="btn btn-outline" onClick={() => (idle ? undefined : elapsed.ms > 5000 ? setConfirmReset(true) : reset())} disabled={idle} data-testid="sw-reset"><Icon name="rotate" size={18} /> Reset</button>
               {draft.running ? (
@@ -250,22 +251,22 @@ export function TrackerSheet({ db, ctx, target, onClose, onSaved }: { db: RcrDB;
         )}
 
         {confirmReset && (
-          <div class="banner neutral stack" data-testid="confirm-reset">
-            <span>{method === 'stopwatch' ? 'Reset the stopwatch to zero?' : 'Reset the count to zero?'} Nothing has been saved yet.</span>
-            <div class="row" style={{ gap: 'var(--space-2)' }}>
-              <button type="button" class="btn btn-primary btn-sm" onClick={() => setConfirmReset(false)}>Keep it</button>
-              <button type="button" class="btn btn-quiet btn-sm" onClick={reset} data-testid="confirm-reset-yes">Reset</button>
+          <div class="notice-panel" data-testid="confirm-reset">
+            <p>{method === 'stopwatch' ? 'Reset the stopwatch to zero?' : 'Reset the count to zero?'} Nothing has been saved yet.</p>
+            <div class="notice-actions">
+              <button type="button" class="btn btn-primary" onClick={() => setConfirmReset(false)}>Keep it</button>
+              <button type="button" class="btn btn-outline" onClick={reset} data-testid="confirm-reset-yes">Reset</button>
             </div>
           </div>
         )}
 
         {review && (
-          <div class="card stack" data-testid="duration-review">
-            <p class="small">{anomalyText[review.anomaly]} Please check the time before saving.</p>
-            <p class="small">Measured: <strong>{describeDuration(review.seconds)}</strong></p>
-            <div class="row" style={{ gap: 'var(--space-2)', flexWrap: 'wrap' }}>
-              <button type="button" class="btn btn-primary btn-sm" onClick={() => { const s = review.seconds; setReview(null); void doSave({ durationSeconds: s }, 'live'); }} data-testid="review-keep">Save this time</button>
-              <button type="button" class="btn btn-outline btn-sm" onClick={() => { setReview(null); setManual({ h: '', m: '', s: '', reps: '' }); }}>Enter the time instead</button>
+          <div class="notice-panel" data-testid="duration-review">
+            <p>{anomalyText[review.anomaly]} Please check the time before saving.</p>
+            <p>Measured: <strong>{describeDuration(review.seconds)}</strong></p>
+            <div class="notice-actions">
+              <button type="button" class="btn btn-primary" onClick={() => { const s = review.seconds; setReview(null); void doSave({ durationSeconds: s }, 'live'); }} data-testid="review-keep">Save this time</button>
+              <button type="button" class="btn btn-outline" onClick={() => { setReview(null); setManual({ h: '', m: '', s: '', reps: '' }); }}>Enter the time instead</button>
             </div>
           </div>
         )}
@@ -275,11 +276,7 @@ export function TrackerSheet({ db, ctx, target, onClose, onSaved }: { db: RcrDB;
           {manual && (
             <div class="stack" style={{ marginTop: 'var(--space-2)' }} data-testid="manual-entry">
               {method === 'stopwatch' ? (
-                <div class="input-row">
-                  <div class="field"><label class="label" for="m-h">Hours</label><input id="m-h" class="input" inputMode="numeric" value={manual.h} onInput={(e) => setManual({ ...manual, h: (e.target as HTMLInputElement).value })} /></div>
-                  <div class="field"><label class="label" for="m-m">Minutes</label><input id="m-m" class="input" inputMode="numeric" value={manual.m} onInput={(e) => setManual({ ...manual, m: (e.target as HTMLInputElement).value })} /></div>
-                  <div class="field"><label class="label" for="m-s">Seconds</label><input id="m-s" class="input" inputMode="numeric" value={manual.s} onInput={(e) => setManual({ ...manual, s: (e.target as HTMLInputElement).value })} /></div>
-                </div>
+                <DurationFields idPrefix="m" legend="Duration" value={manual} onChange={(p) => setManual({ ...manual, ...p })} testId="duration-fields" />
               ) : (
                 <div class="field"><label class="label" for="m-reps">Repetitions</label><input id="m-reps" class="input" inputMode="numeric" value={manual.reps} onInput={(e) => setManual({ ...manual, reps: (e.target as HTMLInputElement).value })} /></div>
               )}

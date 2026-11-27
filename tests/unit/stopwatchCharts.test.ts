@@ -67,10 +67,28 @@ const rec = (id: string, defId: string, status: MilestoneRecord['status'], achie
 
 describe('Progress over time', () => {
   const TODAY = '2026-06-15';
-  it('covers the last 6 or 12 calendar months, never before the birth month', () => {
-    expect(chartMonths(TODAY, '2020-01-01', 6)).toEqual(['2026-01', '2026-02', '2026-03', '2026-04', '2026-05', '2026-06']);
-    expect(chartMonths(TODAY, '2020-01-01', 12)[0]).toBe('2025-07');
-    expect(chartMonths(TODAY, '2026-04-20', 6)).toEqual(['2026-04', '2026-05', '2026-06']);
+  // R-017 (Checkpoint 2b-R): requirement changed. A period now always shows exactly 6 or 12 calendar
+  // months; months before the birth month are shown as “before birth”, not left out (was: truncated).
+  it('covers exactly the last 6 or 12 calendar months, including the current month', () => {
+    expect(chartMonths(TODAY, 6)).toEqual(['2026-01', '2026-02', '2026-03', '2026-04', '2026-05', '2026-06']);
+    expect(chartMonths(TODAY, 12)).toHaveLength(12);
+    expect(chartMonths(TODAY, 12)[0]).toBe('2025-07');
+    expect(chartMonths(TODAY, 12).at(-1)).toBe('2026-06');
+    expect(chartMonths('2026-01-31', 6)).toEqual(['2025-08', '2025-09', '2025-10', '2025-11', '2025-12', '2026-01']); // across a year boundary
+  });
+
+  it('months before the birth month are “before birth”, never zero; applicable empty months are zero', () => {
+    const born = '2026-04-20';
+    for (const period of [6, 12] as const) {
+      for (const r of [milestoneChart([], TODAY, born, period), goalsChart([], [], TODAY, born, period), exercisesChart([], [], TODAY, born, period)]) {
+        expect(r.buckets).toHaveLength(period);
+        const before = r.buckets.filter((b) => b.month < '2026-04');
+        expect(before.every((b) => b.status === 'before-birth' && b.unavailable && b.count === 0)).toBe(true);
+        expect(before).toHaveLength(period - 3);
+      }
+      const g = goalsChart([], [], TODAY, born, period).buckets.filter((b) => b.month >= '2026-04');
+      expect(g.map((b) => [b.status, b.count])).toEqual([['counted', 0], ['counted', 0], ['counted', 0]]); // the birth month itself applies
+    }
   });
 
   it('milestones: current achieved records by achievement date; hidden excluded with a count; emerging and reversed not counted', () => {
@@ -96,15 +114,23 @@ describe('Progress over time', () => {
     expect(r.buckets.map((b) => b.count)).toEqual([0, 0, 0, 0, 2, 1]);
   });
 
-  it('exercises: non-reversed sessions by date; deleted exercises dropped; months before tracking are “unavailable”, not zero', () => {
+  it('exercises: non-reversed sessions by date; deleted exercises dropped; months before tracking are “not tracked”, not zero', () => {
     const ex = { ...env, createdAt: '2026-04-20T10:00:00Z', id: 'e', childId: 'c', kind: 'exercise', deletedAt: null } as unknown as Exercise;
     const s = (id: string, date: string, reversedAt: string | null = null, customItemId = 'e'): ExerciseSession => ({ ...env, id, childId: 'c', customItemId, occurrenceDate: date, slotKey: `${date}#1`, method: 'simple', durationSeconds: null, reps: null, targetSnapshot: null, note: '', entry: 'manual', reversedAt });
     const r = exercisesChart([s('1', '2026-05-02'), s('2', '2026-05-03'), s('3', '2026-06-01', '2026-06-02'), s('4', '2026-06-03', null, 'deleted-exercise')], [ex], TODAY, '2025-01-01', 6);
-    expect(r.buckets.map((b) => [b.month, b.count, b.unavailable])).toEqual([
-      ['2026-01', 0, true], ['2026-02', 0, true], ['2026-03', 0, true], ['2026-04', 0, false], ['2026-05', 2, false], ['2026-06', 0, false],
+    expect(r.buckets.map((b) => [b.month, b.count, b.unavailable, b.status])).toEqual([
+      ['2026-01', 0, true, 'not-tracked'], ['2026-02', 0, true, 'not-tracked'], ['2026-03', 0, true, 'not-tracked'], ['2026-04', 0, false, 'counted'], ['2026-05', 2, false, 'counted'], ['2026-06', 0, false, 'counted'],
     ]);
-    // A backdated session before the exercise was created makes that month available.
+    // A backdated session before the exercise was created is counted in its month (never suppressed).
     const r2 = exercisesChart([s('5', '2026-02-10')], [ex], TODAY, '2025-01-01', 6);
-    expect(r2.buckets.find((b) => b.month === '2026-02')).toMatchObject({ count: 1, unavailable: false });
+    expect(r2.buckets.find((b) => b.month === '2026-02')).toMatchObject({ count: 1, unavailable: false, status: 'counted' });
+    expect(r2.buckets.find((b) => b.month === '2026-01')).toMatchObject({ status: 'not-tracked' });
+    expect(r2.buckets.find((b) => b.month === '2026-03')).toMatchObject({ status: 'counted', count: 0 }); // tracked from February
+    // Before birth wins over “not tracked”; with a 1-year period every month has a position.
+    const r3 = exercisesChart([s('6', '2026-05-10')], [ex], TODAY, '2025-10-05', 12);
+    expect(r3.buckets).toHaveLength(12);
+    expect(r3.buckets.filter((b) => b.status === 'before-birth').map((b) => b.month)).toEqual(['2025-07', '2025-08', '2025-09']);
+    expect(r3.buckets.filter((b) => b.status === 'not-tracked')[0]!.month).toBe('2025-10');
   });
+
 });

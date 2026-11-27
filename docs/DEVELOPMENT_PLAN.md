@@ -1,6 +1,8 @@
 # Development Plan — Roll, Crawl, RUN: Tracking Growth Together (Revision 2)
 
-> **Current status (2026-11-27):** Checkpoint 1 is completed, accepted and deployed (`e40287f`). Checkpoint 2a is accepted for Mac usability (physical iPhone acceptance pending); not merged, not deployed. Checkpoint 2b (R13) is implemented locally and awaiting the owner's acceptance; not pushed, merged or deployed. Checkpoints 3–6 are planned and not started. The current-state handoff is `docs/HANDOFF.md`.
+> **Current status (2026-11-27, Checkpoint 2b-R):** Checkpoint 1 is completed, accepted and deployed (`e40287f`). Checkpoint 2a is accepted for Mac usability (physical iPhone acceptance pending); not merged, not deployed. Checkpoint 2b (R13) passed the owner's initial Mac Safari acceptance (64 of 65 applicable checks; preserved on `claude/upbeat-thompson-skpm8j` at `64202e2`). The resulting refinements R-010 to R-017 (R14, Checkpoint 2b-R) are implemented in a local commit and await the owner's acceptance; not pushed, merged or deployed. Physical iPhone acceptance of 2a and 2b is pending. Checkpoints 3–6 are planned and not started. The current-state handoff is `docs/HANDOFF.md`.
+>
+> *Previous status line (2026-11-27, before 2b-R, kept as recorded):* **Current status (2026-11-27):** Checkpoint 1 is completed, accepted and deployed (`e40287f`). Checkpoint 2a is accepted for Mac usability (physical iPhone acceptance pending); not merged, not deployed. Checkpoint 2b (R13) is implemented locally and awaiting the owner's acceptance; not pushed, merged or deployed. Checkpoints 3–6 are planned and not started. The current-state handoff is `docs/HANDOFF.md`.
 >
 > *Previous status line (2026-11-26, kept as recorded):* Checkpoint 2a, including the Growth UX refinement (R11), was implemented and awaiting the owner's acceptance testing.
 >
@@ -32,7 +34,22 @@
 
 ---
 
-## R13 — Checkpoint 2b: Goals, Exercises & Historical Progress (implemented; awaiting owner acceptance) — supersedes conflicting §4.3, §6.5–6.7, R9 and R11 text
+## R14 — Checkpoint 2b-R: Human Acceptance Refinements (implemented; awaiting owner acceptance) — supersedes conflicting R13 text (D7 chart periods, D8 inspiration examples, session removal)
+**Authorization:** owner, 2026-11-27, after the initial Mac Safari acceptance of Checkpoint 2b (`64202e2`): Phase A 7/7, B 12/12, C–D 16/16, E 14/14, F 15/16 (reporting period), G not applicable, H positive. Decisions #107–#117; report `docs/reviews/CHECKPOINT_2B_R_REFINEMENT_REPORT.md`.
+
+**Built:**
+- **R-010** age-responsive goal ideas: six ranges (birth–<6, 6–<12, 12–<24, 24–<36, 36–<48, 48–60 months), 70 app-written ideas traced to the verified milestone and activity inventories (`goal-ideas.app-2026.json`, validated at build time, mapping in `docs/reviews/CHECKPOINT_2B_R_GOAL_IDEAS.md`). Default from the milestone age; none before the due date; last range over 60 months; any range browsable. Start from a milestone kept.
+- **R-011** attribution centralized in one Source section per activity page; neutral reference-age wording; all safety text kept.
+- **R-012–R-014** exercise form headings inside their groups; one shared duration-entry component for target, manual entry and correction.
+- **R-015** sessions are deleted (with confirmation) rather than removed-with-placeholder; content-free tombstones; slot freed; totals recalculated; database version 3 unchanged.
+- **R-016** stopwatch recovery notice and related in-sheet notices in one column with the themed button hierarchy.
+- **R-017** exactly 6 or 12 month positions; before birth “not applicable”, zero shown, not tracked shown, backdated sessions counted.
+
+**Deferred:** R-018 (shading distinction; reassess after iPhone use), R-001, R-003, R-009. **Not started:** Checkpoint 3.
+
+---
+
+## R13 — Checkpoint 2b: Goals, Exercises & Historical Progress (implemented; initial owner Mac acceptance 64/65 on 2026-11-27, refined by R14) — supersedes conflicting §4.3, §6.5–6.7, R9 and R11 text
 **Authorization:** owner implementation authorization of 2026-11-27 (D1–D16 with modifications). Plan: `docs/reviews/CHECKPOINT_2B_IMPLEMENTATION_PLAN.md`. Decisions #89–#106.
 
 **Built (one implementation phase):**

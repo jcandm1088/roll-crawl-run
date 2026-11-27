@@ -8,7 +8,7 @@ import { useApp } from '../../../state/app';
 import { useChildMilestones } from '../../../state/milestones';
 import { useChildPersonal } from '../../../state/personal';
 import { href } from '../../../router';
-import { exercisesChart, goalsChart, milestoneChart, personalSummary, type ChartPeriod, type ChartResult, type ChartView } from '../../../domain/personalProgress';
+import { exercisesChart, goalsChart, milestoneChart, personalSummary, type ChartPeriod, type ChartResult, type ChartView, type MonthBucket } from '../../../domain/personalProgress';
 import { ForChild } from '../growth/parts';
 import { childNameInline } from '../../components/Avatar';
 import { Icon } from '../../components/Icon';
@@ -19,6 +19,13 @@ const VIEWS: Array<{ id: ChartView; label: string; title: string }> = [
   { id: 'exercises', label: 'Exercises', title: 'Exercise sessions recorded' },
 ];
 
+const statusText = (x: MonthBucket) => (x.status === 'before-birth' ? 'Before birth (not applicable)' : x.status === 'not-tracked' ? 'Not tracked yet' : String(x.count));
+
+/**
+ * Monthly bar chart (R-017). Every month of the period has a position. Months are told apart by marks
+ * and text, not by colour alone: a number above every counted month (including 0), “–” for months
+ * before birth, and a dotted baseline for months that weren't tracked yet. A legend explains them.
+ */
 export function BarChart({ result, title }: { result: ChartResult; title: string }) {
   const b = result.buckets;
   const max = Math.max(1, ...b.map((x) => x.count));
@@ -26,31 +33,40 @@ export function BarChart({ result, title }: { result: ChartResult; title: string
   const H = 150;
   const top = 18;
   const bottom = 22;
-  const gap = 6;
+  const gap = b.length > 6 ? 4 : 6;
   const bw = (W - gap * (b.length - 1)) / Math.max(1, b.length);
-  const total = b.reduce((t, x) => t + x.count, 0);
-  const summary = `${title}: ${total} in the ${b.length} month${b.length === 1 ? '' : 's'} shown. ${b.filter((x) => !x.unavailable).map((x) => `${x.longLabel}${x.current ? ' (so far)' : ''}: ${x.count}`).join('; ')}.`;
+  const counted = b.filter((x) => x.status === 'counted');
+  const total = counted.reduce((t, x) => t + x.count, 0);
+  const summary = `${title}: ${total} in the ${b.length} months shown. ${b.map((x) => `${x.longLabel}${x.current ? ' (so far)' : ''}: ${statusText(x)}`).join('; ')}.`;
+  const hasBirth = b.some((x) => x.status === 'before-birth');
+  const hasNotTracked = b.some((x) => x.status === 'not-tracked');
   return (
-    <figure class="chart" data-testid="chart">
+    <figure class="chart" data-testid="chart" data-months={b.length}>
       <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={summary} width="100%" preserveAspectRatio="xMidYMid meet">
         <line x1="0" x2={W} y1={H - bottom} y2={H - bottom} class="chart-axis" />
         {b.map((x, i) => {
-          const h = x.unavailable ? 0 : ((H - top - bottom) * x.count) / max;
+          const h = x.status === 'counted' ? ((H - top - bottom) * x.count) / max : 0;
           const bx = i * (bw + gap);
+          const cx = bx + bw / 2;
           return (
-            <g key={x.month} data-testid="chart-bar" data-month={x.month} data-count={x.count} data-unavailable={x.unavailable ? 'true' : 'false'}>
-              {x.unavailable ? (
-                <rect x={bx} y={H - bottom - 4} width={bw} height={4} class="chart-unavailable" />
-              ) : (
-                <rect x={bx} y={H - bottom - h} width={bw} height={Math.max(0, h)} rx={4} class={`chart-bar${x.current ? ' current' : ''}`} />
-              )}
-              {!x.unavailable && x.count > 0 && <text x={bx + bw / 2} y={H - bottom - h - 4} text-anchor="middle" class="chart-value">{x.count}</text>}
-              <text x={bx + bw / 2} y={H - 6} text-anchor="middle" class="chart-label">{x.label}{x.current ? '*' : ''}</text>
+            <g key={x.month} data-testid="chart-bar" data-month={x.month} data-count={x.count} data-status={x.status} data-unavailable={x.unavailable ? 'true' : 'false'}>
+              {x.status === 'counted' && x.count > 0 && <rect x={bx} y={H - bottom - h} width={bw} height={Math.max(0, h)} rx={Math.min(4, bw / 4)} class={`chart-bar${x.current ? ' current' : ''}`} />}
+              {x.status === 'counted' && <text x={cx} y={H - bottom - h - 4} text-anchor="middle" class={x.count > 0 ? 'chart-value' : 'chart-zero'}>{x.count}</text>}
+              {x.status === 'not-tracked' && <line x1={bx + 1} x2={bx + bw - 1} y1={H - bottom - 3} y2={H - bottom - 3} class="chart-nottracked" />}
+              {x.status === 'before-birth' && <text x={cx} y={H - bottom - 5} text-anchor="middle" class="chart-na">–</text>}
+              <text x={cx} y={H - 6} text-anchor="middle" class={`chart-label${x.status === 'before-birth' ? ' na' : ''}`}>{x.label}{x.current ? '*' : ''}</text>
             </g>
           );
         })}
       </svg>
-      <figcaption class="xsmall muted">* This month so far. A month with no bar has nothing recorded — it doesn’t mean nothing happened.{b.some((x) => x.unavailable) ? ' A flat grey line means exercises weren’t tracked yet then.' : ''}</figcaption>
+      <figcaption class="xsmall muted">
+        <ul class="chart-legend" data-testid="chart-legend">
+          <li>* This month so far</li>
+          {b.some((x) => x.status === 'counted' && x.count === 0) && <li data-testid="legend-zero">0 = nothing recorded (it doesn’t mean nothing happened)</li>}
+          {hasBirth && <li data-testid="legend-birth">– = before birth</li>}
+          {hasNotTracked && <li data-testid="legend-not-tracked">Dotted line = exercises not tracked yet</li>}
+        </ul>
+      </figcaption>
     </figure>
   );
 }
@@ -96,7 +112,7 @@ export function ProgressHistoryScreen({ view }: { view: ChartView }) {
             <thead><tr><th scope="col">Month</th><th scope="col">Count</th></tr></thead>
             <tbody>
               {result.buckets.map((b) => (
-                <tr key={b.month}><th scope="row">{b.longLabel}{b.current ? ' (so far)' : ''}</th><td>{b.unavailable ? 'Not tracked yet' : b.count}</td></tr>
+                <tr key={b.month} data-testid="chart-row" data-status={b.status}><th scope="row">{b.longLabel}{b.current ? ' (so far)' : ''}</th><td>{statusText(b)}</td></tr>
               ))}
             </tbody>
           </table>

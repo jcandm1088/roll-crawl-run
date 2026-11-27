@@ -1,0 +1,847 @@
+{
+ "format": "rcr-goal-ideas",
+ "version": 1,
+ "written": "2026-11-27",
+ "basis": "Optional goal ideas written for this app (owner refinement R-010). Each idea is app-written wording, not CDC content and not a CDC milestone. It is traced to the verified CDC milestones (milestones.cdc-2022.json) and recommended activities (activities.cdc-2022.json) that support it; no other source was used. Reference ages of the supporting records lie within the range (its upper bound included, because CDC milestones describe what most children do by that age). Ideas are possibilities a parent may choose, never assignments, deadlines or individual advice. Safety qualifications come from the supporting CDC activity records and are shown with the idea.",
+ "ranges": [
+  {
+   "id": "r0-6",
+   "label": "Birth to under 6 months",
+   "fromMonths": 0,
+   "toMonths": 6,
+   "supportAges": [
+    2,
+    4,
+    6
+   ],
+   "ideas": [
+    {
+     "id": "gi-r0-6-01",
+     "title": "Get comfortable with tummy time",
+     "appCategory": "gross-motor",
+     "milestoneIds": [
+      "cdc22-m02-mp-01",
+      "cdc22-m04-mp-05"
+     ],
+     "activityIds": [
+      "cdc22-act-a004",
+      "cdc22-act-a019"
+     ]
+    },
+    {
+     "id": "gi-r0-6-02",
+     "title": "Share back-and-forth “conversations” with sounds and smiles",
+     "appCategory": "language-communication",
+     "milestoneIds": [
+      "cdc22-m04-lc-02",
+      "cdc22-m06-lc-01"
+     ],
+     "activityIds": [
+      "cdc22-act-a001",
+      "cdc22-act-a017"
+     ]
+    },
+    {
+     "id": "gi-r0-6-03",
+     "title": "Make talking, reading and singing part of our day",
+     "appCategory": "language-communication",
+     "milestoneIds": [
+      "cdc22-m04-lc-03"
+     ],
+     "activityIds": [
+      "cdc22-act-a002",
+      "cdc22-act-a011"
+     ]
+    },
+    {
+     "id": "gi-r0-6-04",
+     "title": "Enjoy calm cuddle time together",
+     "appCategory": "social-emotional",
+     "milestoneIds": [
+      "cdc22-m02-se-01"
+     ],
+     "activityIds": [
+      "cdc22-act-a003"
+     ]
+    },
+    {
+     "id": "gi-r0-6-05",
+     "title": "Practice holding and reaching for easy-to-hold toys",
+     "appCategory": "fine-motor",
+     "milestoneIds": [
+      "cdc22-m04-mp-02",
+      "cdc22-m06-cg-02"
+     ],
+     "activityIds": [
+      "cdc22-act-a012"
+     ]
+    },
+    {
+     "id": "gi-r0-6-06",
+     "title": "Watch a moving toy together",
+     "appCategory": "cognitive",
+     "milestoneIds": [
+      "cdc22-m02-cg-01",
+      "cdc22-m02-cg-02"
+     ],
+     "activityIds": [
+      "cdc22-act-a013"
+     ]
+    },
+    {
+     "id": "gi-r0-6-07",
+     "title": "Listen for sounds together, like a rattle",
+     "appCategory": "cognitive",
+     "milestoneIds": [
+      "cdc22-m02-lc-02"
+     ],
+     "activityIds": [
+      "cdc22-act-a005"
+     ]
+    },
+    {
+     "id": "gi-r0-6-08",
+     "title": "Share laughs with peek-a-boo",
+     "appCategory": "social-emotional",
+     "milestoneIds": [
+      "cdc22-m04-se-02",
+      "cdc22-m06-se-03"
+     ],
+     "activityIds": [
+      "cdc22-act-a016"
+     ]
+    },
+    {
+     "id": "gi-r0-6-09",
+     "title": "Reach and kick during floor play",
+     "appCategory": "gross-motor",
+     "milestoneIds": [
+      "cdc22-m02-mp-02",
+      "cdc22-m04-mp-03"
+     ],
+     "activityIds": [
+      "cdc22-act-a010",
+      "cdc22-act-a019"
+     ]
+    },
+    {
+     "id": "gi-r0-6-10",
+     "title": "Work toward rolling from tummy to back",
+     "appCategory": "gross-motor",
+     "milestoneIds": [
+      "cdc22-m06-mp-01"
+     ],
+     "activityIds": [
+      "cdc22-act-a027"
+     ]
+    },
+    {
+     "id": "gi-r0-6-11",
+     "title": "Look in a baby-safe mirror together",
+     "appCategory": "social-emotional",
+     "milestoneIds": [
+      "cdc22-m06-se-02"
+     ],
+     "activityIds": [
+      "cdc22-act-a008"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "r6-12",
+   "label": "6 to under 12 months",
+   "fromMonths": 6,
+   "toMonths": 12,
+   "supportAges": [
+    6,
+    9,
+    12
+   ],
+   "ideas": [
+    {
+     "id": "gi-r6-12-01",
+     "title": "Practice sitting, with support at first",
+     "appCategory": "gross-motor",
+     "milestoneIds": [
+      "cdc22-m06-mp-03",
+      "cdc22-m09-mp-04"
+     ],
+     "activityIds": [
+      "cdc22-act-a028"
+     ]
+    },
+    {
+     "id": "gi-r6-12-02",
+     "title": "Reach toys by crawling, scooting or rolling",
+     "appCategory": "gross-motor",
+     "milestoneIds": [],
+     "activityIds": [
+      "cdc22-act-a033"
+     ]
+    },
+    {
+     "id": "gi-r6-12-03",
+     "title": "Find safe places to pull up to stand",
+     "appCategory": "gross-motor",
+     "milestoneIds": [
+      "cdc22-m12-mp-01",
+      "cdc22-m12-mp-02"
+     ],
+     "activityIds": [
+      "cdc22-act-a043"
+     ]
+    },
+    {
+     "id": "gi-r6-12-04",
+     "title": "Learn to wave “bye-bye” or a simple sign",
+     "appCategory": "language-communication",
+     "milestoneIds": [
+      "cdc22-m12-lc-01"
+     ],
+     "activityIds": [
+      "cdc22-act-a034"
+     ]
+    },
+    {
+     "id": "gi-r6-12-05",
+     "title": "Take turns babbling, and add simple words",
+     "appCategory": "language-communication",
+     "milestoneIds": [
+      "cdc22-m09-lc-01"
+     ],
+     "activityIds": [
+      "cdc22-act-a032"
+     ]
+    },
+    {
+     "id": "gi-r6-12-06",
+     "title": "Play peek-a-boo with a cloth",
+     "appCategory": "social-emotional",
+     "milestoneIds": [
+      "cdc22-m09-se-05"
+     ],
+     "activityIds": [
+      "cdc22-act-a035"
+     ]
+    },
+    {
+     "id": "gi-r6-12-07",
+     "title": "Look for a hidden toy together",
+     "appCategory": "cognitive",
+     "milestoneIds": [
+      "cdc22-m09-cg-01",
+      "cdc22-m12-cg-02"
+     ],
+     "activityIds": [
+      "cdc22-act-a041"
+     ]
+    },
+    {
+     "id": "gi-r6-12-08",
+     "title": "Practice putting things in a container and taking them out",
+     "appCategory": "fine-motor",
+     "milestoneIds": [
+      "cdc22-m12-cg-01"
+     ],
+     "activityIds": [
+      "cdc22-act-a036"
+     ]
+    },
+    {
+     "id": "gi-r6-12-09",
+     "title": "Play with blocks and toys that use both hands",
+     "appCategory": "fine-motor",
+     "milestoneIds": [
+      "cdc22-m09-mp-02"
+     ],
+     "activityIds": [
+      "cdc22-act-a049"
+     ]
+    },
+    {
+     "id": "gi-r6-12-10",
+     "title": "Name the pictures in books together",
+     "appCategory": "language-communication",
+     "milestoneIds": [],
+     "activityIds": [
+      "cdc22-act-a038"
+     ]
+    },
+    {
+     "id": "gi-r6-12-11",
+     "title": "Put feelings into words together",
+     "appCategory": "social-emotional",
+     "milestoneIds": [
+      "cdc22-m09-se-02"
+     ],
+     "activityIds": [
+      "cdc22-act-a042"
+     ]
+    },
+    {
+     "id": "gi-r6-12-12",
+     "title": "Make music by banging pots and pans",
+     "appCategory": "cognitive",
+     "milestoneIds": [
+      "cdc22-m09-cg-02"
+     ],
+     "activityIds": [
+      "cdc22-act-a047"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "r12-24",
+   "label": "12 to under 24 months",
+   "fromMonths": 12,
+   "toMonths": 24,
+   "supportAges": [
+    12,
+    15,
+    18,
+    24
+   ],
+   "ideas": [
+    {
+     "id": "gi-r12-24-01",
+     "title": "Practice walking, with a helping hand or a push toy",
+     "appCategory": "gross-motor",
+     "milestoneIds": [
+      "cdc22-m15-mp-01",
+      "cdc22-m18-mp-01"
+     ],
+     "activityIds": [
+      "cdc22-act-a050",
+      "cdc22-act-a051"
+     ]
+    },
+    {
+     "id": "gi-r12-24-02",
+     "title": "Learn a few new words",
+     "appCategory": "language-communication",
+     "milestoneIds": [
+      "cdc22-m15-lc-01",
+      "cdc22-m18-lc-01"
+     ],
+     "activityIds": [
+      "cdc22-act-a052",
+      "cdc22-act-a053"
+     ]
+    },
+    {
+     "id": "gi-r12-24-03",
+     "title": "Point to and name body parts",
+     "appCategory": "language-communication",
+     "milestoneIds": [
+      "cdc22-m24-lc-03"
+     ],
+     "activityIds": [
+      "cdc22-act-a071"
+     ]
+    },
+    {
+     "id": "gi-r12-24-04",
+     "title": "Stack blocks and knock them down",
+     "appCategory": "fine-motor",
+     "milestoneIds": [
+      "cdc22-m15-cg-02"
+     ],
+     "activityIds": [
+      "cdc22-act-a057"
+     ]
+    },
+    {
+     "id": "gi-r12-24-05",
+     "title": "Help with simple everyday tasks",
+     "appCategory": "social-emotional",
+     "milestoneIds": [
+      "cdc22-m18-cg-01"
+     ],
+     "activityIds": [
+      "cdc22-act-a054"
+     ]
+    },
+    {
+     "id": "gi-r12-24-06",
+     "title": "Look at picture books together",
+     "appCategory": "language-communication",
+     "milestoneIds": [
+      "cdc22-m18-se-04",
+      "cdc22-m24-lc-01"
+     ],
+     "activityIds": [
+      "cdc22-act-a074"
+     ]
+    },
+    {
+     "id": "gi-r12-24-07",
+     "title": "Enjoy pretend feeding play",
+     "appCategory": "cognitive",
+     "milestoneIds": [
+      "cdc22-m24-cg-03"
+     ],
+     "activityIds": [
+      "cdc22-act-a067"
+     ]
+    },
+    {
+     "id": "gi-r12-24-08",
+     "title": "Sing songs with actions",
+     "appCategory": "language-communication",
+     "milestoneIds": [
+      "cdc22-m24-lc-04"
+     ],
+     "activityIds": [
+      "cdc22-act-a056"
+     ]
+    },
+    {
+     "id": "gi-r12-24-09",
+     "title": "Try scribbling with crayons",
+     "appCategory": "fine-motor",
+     "milestoneIds": [
+      "cdc22-m18-mp-02"
+     ],
+     "activityIds": [
+      "cdc22-act-a085"
+     ]
+    },
+    {
+     "id": "gi-r12-24-10",
+     "title": "Kick, roll and throw a ball together",
+     "appCategory": "gross-motor",
+     "milestoneIds": [
+      "cdc22-m24-mp-01"
+     ],
+     "activityIds": [
+      "cdc22-act-a080"
+     ]
+    },
+    {
+     "id": "gi-r12-24-11",
+     "title": "Talk about how other people feel",
+     "appCategory": "social-emotional",
+     "milestoneIds": [
+      "cdc22-m24-se-01"
+     ],
+     "activityIds": [
+      "cdc22-act-a068"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "r24-36",
+   "label": "24 to under 36 months",
+   "fromMonths": 24,
+   "toMonths": 36,
+   "supportAges": [
+    24,
+    30,
+    36
+   ],
+   "ideas": [
+    {
+     "id": "gi-r24-36-01",
+     "title": "Learn the names of a few colors",
+     "appCategory": "cognitive",
+     "milestoneIds": [
+      "cdc22-m30-cg-04"
+     ],
+     "activityIds": [
+      "cdc22-act-a100"
+     ]
+    },
+    {
+     "id": "gi-r24-36-02",
+     "title": "Help with a simple chore, like putting toys in a basket",
+     "appCategory": "social-emotional",
+     "milestoneIds": [
+      "cdc22-m30-se-03"
+     ],
+     "activityIds": [
+      "cdc22-act-a083"
+     ]
+    },
+    {
+     "id": "gi-r24-36-03",
+     "title": "Do simple puzzles together",
+     "appCategory": "cognitive",
+     "milestoneIds": [],
+     "activityIds": [
+      "cdc22-act-a087"
+     ]
+    },
+    {
+     "id": "gi-r24-36-04",
+     "title": "Draw lines and circles",
+     "appCategory": "fine-motor",
+     "milestoneIds": [
+      "cdc22-m36-cg-01"
+     ],
+     "activityIds": [
+      "cdc22-act-a095"
+     ]
+    },
+    {
+     "id": "gi-r24-36-05",
+     "title": "Practice playing with other children",
+     "appCategory": "social-emotional",
+     "milestoneIds": [
+      "cdc22-m30-se-01"
+     ],
+     "activityIds": [
+      "cdc22-act-a094"
+     ]
+    },
+    {
+     "id": "gi-r24-36-06",
+     "title": "Ask and answer “who,” “what” and “where” questions",
+     "appCategory": "language-communication",
+     "milestoneIds": [
+      "cdc22-m36-lc-02"
+     ],
+     "activityIds": [
+      "cdc22-act-a093"
+     ]
+    },
+    {
+     "id": "gi-r24-36-07",
+     "title": "Make reading and library visits part of our routine",
+     "appCategory": "language-communication",
+     "milestoneIds": [
+      "cdc22-m30-lc-03"
+     ],
+     "activityIds": [
+      "cdc22-act-a103"
+     ]
+    },
+    {
+     "id": "gi-r24-36-08",
+     "title": "Pretend play with a big box",
+     "appCategory": "cognitive",
+     "milestoneIds": [
+      "cdc22-m30-cg-01"
+     ],
+     "activityIds": [
+      "cdc22-act-a099"
+     ]
+    },
+    {
+     "id": "gi-r24-36-09",
+     "title": "Climb and run in safe places at the park",
+     "appCategory": "gross-motor",
+     "milestoneIds": [
+      "cdc22-m24-mp-02"
+     ],
+     "activityIds": [
+      "cdc22-act-a098"
+     ]
+    },
+    {
+     "id": "gi-r24-36-10",
+     "title": "Take turns kicking a ball to each other",
+     "appCategory": "gross-motor",
+     "milestoneIds": [
+      "cdc22-m24-mp-01"
+     ],
+     "activityIds": [
+      "cdc22-act-a101"
+     ]
+    },
+    {
+     "id": "gi-r24-36-11",
+     "title": "Play follow-the-leader",
+     "appCategory": "gross-motor",
+     "milestoneIds": [],
+     "activityIds": [
+      "cdc22-act-a102"
+     ]
+    },
+    {
+     "id": "gi-r24-36-12",
+     "title": "Practice taking off loose clothes",
+     "appCategory": "fine-motor",
+     "milestoneIds": [
+      "cdc22-m30-mp-02"
+     ],
+     "activityIds": []
+    }
+   ]
+  },
+  {
+   "id": "r36-48",
+   "label": "36 to under 48 months",
+   "fromMonths": 36,
+   "toMonths": 48,
+   "supportAges": [
+    36,
+    48
+   ],
+   "ideas": [
+    {
+     "id": "gi-r36-48-01",
+     "title": "Talk about stories after reading them",
+     "appCategory": "language-communication",
+     "milestoneIds": [
+      "cdc22-m48-cg-02"
+     ],
+     "activityIds": [
+      "cdc22-act-a108"
+     ]
+    },
+    {
+     "id": "gi-r36-48-02",
+     "title": "Find words for feelings",
+     "appCategory": "social-emotional",
+     "milestoneIds": [
+      "cdc22-m48-se-03"
+     ],
+     "activityIds": [
+      "cdc22-act-a107"
+     ]
+    },
+    {
+     "id": "gi-r36-48-03",
+     "title": "Play counting games",
+     "appCategory": "cognitive",
+     "milestoneIds": [],
+     "activityIds": [
+      "cdc22-act-a109"
+     ]
+    },
+    {
+     "id": "gi-r36-48-04",
+     "title": "Follow two- and three-step instructions",
+     "appCategory": "language-communication",
+     "milestoneIds": [],
+     "activityIds": [
+      "cdc22-act-a112"
+     ]
+    },
+    {
+     "id": "gi-r36-48-05",
+     "title": "Help make a meal, like washing fruit or stirring",
+     "appCategory": "fine-motor",
+     "milestoneIds": [
+      "cdc22-m48-mp-02"
+     ],
+     "activityIds": [
+      "cdc22-act-a111"
+     ]
+    },
+    {
+     "id": "gi-r36-48-06",
+     "title": "Squish, roll and shape playdough",
+     "appCategory": "fine-motor",
+     "milestoneIds": [],
+     "activityIds": [
+      "cdc22-act-a116"
+     ]
+    },
+    {
+     "id": "gi-r36-48-07",
+     "title": "Enjoy playtime with other children",
+     "appCategory": "social-emotional",
+     "milestoneIds": [
+      "cdc22-m36-se-02"
+     ],
+     "activityIds": [
+      "cdc22-act-a115"
+     ]
+    },
+    {
+     "id": "gi-r36-48-08",
+     "title": "Play matching games",
+     "appCategory": "cognitive",
+     "milestoneIds": [],
+     "activityIds": [
+      "cdc22-act-a118"
+     ]
+    },
+    {
+     "id": "gi-r36-48-09",
+     "title": "Get ready for a new place, like childcare",
+     "appCategory": "social-emotional",
+     "milestoneIds": [
+      "cdc22-m36-se-01"
+     ],
+     "activityIds": [
+      "cdc22-act-a120"
+     ]
+    },
+    {
+     "id": "gi-r36-48-10",
+     "title": "Say their first name and age",
+     "appCategory": "language-communication",
+     "milestoneIds": [
+      "cdc22-m36-lc-04"
+     ],
+     "activityIds": [
+      "cdc22-act-a121"
+     ]
+    },
+    {
+     "id": "gi-r36-48-11",
+     "title": "Play outside, with your child leading",
+     "appCategory": "gross-motor",
+     "milestoneIds": [],
+     "activityIds": [
+      "cdc22-act-a119"
+     ]
+    },
+    {
+     "id": "gi-r36-48-12",
+     "title": "String large beads or macaroni",
+     "appCategory": "fine-motor",
+     "milestoneIds": [
+      "cdc22-m36-mp-01"
+     ],
+     "activityIds": []
+    }
+   ]
+  },
+  {
+   "id": "r48-60",
+   "label": "48 to 60 months",
+   "fromMonths": 48,
+   "toMonths": 60,
+   "supportAges": [
+    48,
+    60
+   ],
+   "ideas": [
+    {
+     "id": "gi-r48-60-01",
+     "title": "Play games with rules and turns",
+     "appCategory": "cognitive",
+     "milestoneIds": [
+      "cdc22-m60-se-01"
+     ],
+     "activityIds": [
+      "cdc22-act-a145"
+     ]
+    },
+    {
+     "id": "gi-r48-60-02",
+     "title": "Play rhyming games",
+     "appCategory": "language-communication",
+     "milestoneIds": [
+      "cdc22-m60-lc-04"
+     ],
+     "activityIds": [
+      "cdc22-act-a144"
+     ]
+    },
+    {
+     "id": "gi-r48-60-03",
+     "title": "Tell a story from the pictures in a book",
+     "appCategory": "language-communication",
+     "milestoneIds": [
+      "cdc22-m60-lc-01"
+     ],
+     "activityIds": [
+      "cdc22-act-a146"
+     ]
+    },
+    {
+     "id": "gi-r48-60-04",
+     "title": "Talk about colors, shapes and sizes",
+     "appCategory": "cognitive",
+     "milestoneIds": [
+      "cdc22-m48-cg-01"
+     ],
+     "activityIds": [
+      "cdc22-act-a123"
+     ]
+    },
+    {
+     "id": "gi-r48-60-05",
+     "title": "Count everyday things together",
+     "appCategory": "cognitive",
+     "milestoneIds": [
+      "cdc22-m60-cg-01"
+     ],
+     "activityIds": [
+      "cdc22-act-a127"
+     ]
+    },
+    {
+     "id": "gi-r48-60-06",
+     "title": "Help with chores, like matching socks",
+     "appCategory": "social-emotional",
+     "milestoneIds": [
+      "cdc22-m60-se-03"
+     ],
+     "activityIds": [
+      "cdc22-act-a131"
+     ]
+    },
+    {
+     "id": "gi-r48-60-07",
+     "title": "Practice doing buttons and other things on their own",
+     "appCategory": "fine-motor",
+     "milestoneIds": [
+      "cdc22-m60-mp-01"
+     ],
+     "activityIds": [
+      "cdc22-act-a142"
+     ]
+    },
+    {
+     "id": "gi-r48-60-08",
+     "title": "Make art with crayons, paper and child scissors",
+     "appCategory": "fine-motor",
+     "milestoneIds": [
+      "cdc22-m48-cg-03"
+     ],
+     "activityIds": [
+      "cdc22-act-a149"
+     ]
+    },
+    {
+     "id": "gi-r48-60-09",
+     "title": "Make time for active play they choose",
+     "appCategory": "gross-motor",
+     "milestoneIds": [],
+     "activityIds": [
+      "cdc22-act-a137"
+     ]
+    },
+    {
+     "id": "gi-r48-60-10",
+     "title": "Dance together and copy each other’s moves",
+     "appCategory": "gross-motor",
+     "milestoneIds": [
+      "cdc22-m60-se-02"
+     ],
+     "activityIds": [
+      "cdc22-act-a133"
+     ]
+    },
+    {
+     "id": "gi-r48-60-11",
+     "title": "Get ready for kindergarten",
+     "appCategory": "social-emotional",
+     "milestoneIds": [],
+     "activityIds": [
+      "cdc22-act-a153"
+     ]
+    },
+    {
+     "id": "gi-r48-60-12",
+     "title": "Use words about time, like today and tomorrow",
+     "appCategory": "cognitive",
+     "milestoneIds": [
+      "cdc22-m60-cg-03"
+     ],
+     "activityIds": [
+      "cdc22-act-a141"
+     ]
+    }
+   ]
+  }
+ ]
+}

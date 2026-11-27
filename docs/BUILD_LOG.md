@@ -387,3 +387,51 @@ Environment: Linux cloud container, Node 22.23.5, headless Chromium (Playwright;
 - **Changed intentionally:** 3 unit and 4 end-to-end tests (see `docs/reviews/CHECKPOINT_2B_IMPLEMENTATION_REPORT.md` §6). None removed.
 - **During development (before the final runs):** test defects and two confirmed defects in new code were found and fixed (challenges #35–#41). One intermittent failure was caused by a non-waiting assertion in a new test (fixed).
 - **Coverage notes:** accessibility (axe, WCAG 2.1 AA) on 14 new screens; colour contrast on the main new screens in all five themes; no horizontal overflow at 320 px on every new screen; offline creation and recording after caching; two open copies; simulated clocks for the stopwatch, midnight and clock anomalies.
+
+## Draft entry — Checkpoint 2b-R: Human Acceptance Refinements (drafted by Claude Code; edit before submitting)
+**Date:** 2026-11-27
+**What I asked Claude Code to do:**
+- After testing Checkpoint 2b in Mac Safari (64 of 65 applicable checks passed), implement refinements R-010 to R-017 from the exact preserved 2b commit, record R-018 as deferred, keep R-001, R-003 and R-009 deferred, and stop before Checkpoint 3.
+
+**What it produced:**
+- Age-responsive goal ideas (70 ideas in six ranges, traced to the verified milestones and activities), centralized CDC attribution on activity pages, aligned exercise-form headings and a shared duration-entry component, session deletion without placeholders (database version 3 unchanged), a re-laid-out stopwatch recovery notice, and full 6- and 12-month reporting periods.
+- Tests, screenshots (`docs/screenshots/checkpoint-2b-r/`), and review records (`docs/reviews/CHECKPOINT_2B_R_REFINEMENT_REPORT.md`, `CHECKPOINT_2B_R_GOAL_IDEAS.md`).
+
+**What I corrected or redirected:** (to be completed by the owner) — the findings from my Mac acceptance testing: inspiration ideas unsuited to a 4-month-old, repeated CDC references, misaligned headings and fields, removed-session placeholders, the recovery notice's appearance, and the 6-month/1-year periods showing the same five months.
+
+### Owner's acceptance of Checkpoint 2b (reported, Mac Safari, port 4179)
+Phase A 7/7 · B 12/12 · C & D 16/16 · E 14/14 · F 15/16 (reporting period) · G not applicable (no legacy data) · H positive (subject to iPhone review). **64 of 65 applicable checks passed.** The update was detected, a refresh was offered and existing profiles, themes, milestone statuses, Notes & Observations and milestone progress were preserved.
+
+### Baseline (before any change; this conversation, 2026-11-27)
+Recovered by fast-forwarding `claude/vigilant-keller-w6ss5f` to `64202e22f3183e81d572a4115f03bb5f080b18f6` (13 commits; no history rewritten); working tree clean; database version 3; Node 22.23.5: type check and build passed; **360 unit + 201 end-to-end = 561 passed** (one run).
+
+### Development challenges and lessons learned (continued from #42)
+| # | Challenge | Class | What happened | Outcome |
+|---|---|---|---|---|
+| 43 | **Generic goal examples unsuited to young babies** | Previously approved design that proved less useful in human testing | The eight D8 examples (library visits, art, playing with other children…) were approved and worked as specified, but the owner's 4-month-old test profile saw ideas for much older children. Not a programming defect. | R-010: six age ranges, 70 traced ideas, validated at build time. |
+| 44 | **Reporting periods truncated at birth** | Previously approved, tested requirement that proved less useful in human testing | D7 deliberately left out months before the birth month, and unit tests enforced it; for a young child both periods showed the same five months. | R-017: fixed 6/12 positions with “before birth” and “not tracked” states; the old tests were rewritten with the requirement change explained. |
+| 45 | **Misaligned form headings and duration fields** | Visual defect (implementation) | Group headings were `<legend>`s, which browsers draw on the fieldset's top border; and the stacked-field rule `.field + .field { margin-top }` also applied to side-by-side fields, pushing the second and third fields down. The automated suite checked overflow, accessibility and contrast but not alignment. | R-012–R-014: floated legends; one `DurationFields` component; a guard rule; new geometry tests (positions, sizes, label placement) at 320 and 390 px. |
+| 46 | **Recovery notice layout** | Visual defect (implementation) | The notice reused the `banner` style, a horizontal flex row, for text plus a row of three differently styled small buttons, so text and buttons sat side by side unevenly. | R-016: a column `notice-panel` with full-width actions and a clear hierarchy; the same for the reset and clock-check notices; geometry and axe tests. |
+| 47 | **Intermittent “blocked upgrade” test** | Test defect (pre-existing) | Under parallel load, the test failed once in this conversation: the app page could reopen the database at version 3 after the test deleted it, so the simulated old copy's version-2 open failed and the test timed out. It passed 8/8 alone on both the baseline and the new build. | The test now moves the app page off the app before deleting the database (same assertions); 10/10 in parallel. |
+| 48 | **Deleting sessions inside database version 3** | Proactively identified risk | The unique `[customItemId, slotKey]` index would have blocked re-recording a slot whose deleted record kept its key; reviving a deleted id could let a stale copy “resurrect” it; a moved session's reversed original still held its note and values. | Tombstones get `slotKey: deleted:<id>` (original kept in `deletedSlotKey`); a deleted id is never reused; the reversed lineage is tombstoned too; live sessions are never touched. No schema change. |
+| 49 | **Content duplicates caught by validation** | Proactively identified risk | The new validation rejected an idea titled exactly like an activity (“Kick a ball back and forth”), and a unit test found one idea titled like an old generic example. | Reworded before release. |
+| 50 | **Defects in newly written tests** | Test defects | A locator matched the nested duration legend as well as the group heading; expected durations lacked the app's commas; the chart period persists between views, so a test assumed the wrong period; one axe scan ran during a screen transition. | All corrected before the final runs; no application change was needed. |
+| 51 | **Screenshot and tooling limits** | Environment or tooling limitation | Scripts in the scratch directory couldn't import Playwright; element screenshots were overlapped by the sticky top bar and the bottom navigation; one complex inline command was blocked by a safety check (it deleted nothing) and was rewritten as a script file. | Script kept in `scripts/`; bars hidden only while capturing elements. |
+| 52 | **Intermittent repetition-counter test** | Test defect (pre-existing) | The first full regression cycle failed 218/219: the 2b test reloaded the page immediately after the third “+1”, before that write had finished, so the count came back as 2; its check `toContainText('3')` still passed because the target “/ 3” is shown. It had also failed once earlier in this conversation under parallel load. | The test waits until the stored count is 3 and checks the exact count (10/10 in parallel). The three-cycle sequence was restarted. App note: as in any web app, a change made in the instant before the page is closed may not be saved. |
+
+### Automated results (run by Claude Code in this conversation)
+Environment: Linux cloud container, Node 22.23.5, headless Chromium (Playwright; 390×844 phone project plus the desktop responsive project), `--retries=0`. **No Safari, Mac, iPhone or Android testing was performed.**
+
+**First attempt (not counted):** cycle 1 failed 218/219 end-to-end (the repetition-counter test, challenge #52). The test was corrected and the sequence restarted from cycle 1.
+
+| Check | Run 1 | Run 2 | Run 3 |
+|---|---|---|---|
+| Type check | Passed | Passed | Passed |
+| Unit tests (19 files) | **379 passed** | **379 passed** | **379 passed** |
+| Production build (includes content and goal-idea validation) | Passed (JS 529.04 kB, 122.74 kB gzip) | Passed | Passed |
+| End-to-end tests | **219 passed** | **219 passed** | **219 passed** |
+| **Total** | **598 passed** | **598 passed** | **598 passed** |
+
+- **New:** 19 unit tests (goalIdeas 10, sessionDeletion 8, stopwatchCharts +1) and 18 end-to-end tests (`acceptance-2b-r.spec.ts`).
+- **Changed intentionally:** the chart-period unit tests (R-017), the session removal/restore and inspiration e2e tests (R-015, R-010); two pre-existing tests made deterministic (#47, #52). None removed.
+- **Bundle:** 512.39 → 529.04 kB (116.36 → 122.74 kB gzip).

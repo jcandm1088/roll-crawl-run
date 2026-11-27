@@ -7,7 +7,7 @@
 import { useMemo, useState } from 'preact/hooks';
 import { useApp } from '../../../state/app';
 import { notifyPersonalChanged, useChildPersonal } from '../../../state/personal';
-import { useChildMilestones } from '../../../state/milestones';
+import { useChildMilestones, useMilestoneAge } from '../../../state/milestones';
 import { setFlash, takeFlash } from '../../../state/flash';
 import { href, navigate } from '../../../router';
 import { formatLongDate } from '../../../domain/dates';
@@ -15,6 +15,7 @@ import { MILESTONES, getMilestone, isApplicable } from '../../../domain/mileston
 import { displayTextOf } from '../../../domain/milestoneDisplay';
 import { accomplishmentsOf, activeGoalsOf } from '../../../domain/personalProgress';
 import { routineFor } from '../../../domain/schedule';
+import { GOAL_IDEA_RANGES, getGoalIdea, getIdeaRange, ideaBasisLine, ideaRangeFor, ideaSafety } from '../../../domain/goalIdeas';
 import { newId } from '../../../data/envelope';
 import type { Achievement, PersonalCategory, PersonalGoal } from '../../../types';
 import {
@@ -30,18 +31,6 @@ import { CategorySelect, ItemHistory, ItemNotes, MoreDetails, RelatedMilestone, 
 export const GOALS_SECTIONS = [
   { title: 'My Goals', subtitle: 'Set personal goals and celebrate achievements.' },
   { title: 'Exercises', subtitle: 'Discover activities and build your own routines.' },
-] as const;
-
-/** D8: original, app-written examples (owner-approved). Not CDC recommendations. */
-export const GOAL_IDEAS = [
-  'Read a book together every day',
-  'Play outside together',
-  'Learn a new song',
-  'Try a new art activity',
-  'Visit the library',
-  'Play with other children',
-  'Practice a new word or sign',
-  'Try a new outdoor game',
 ] as const;
 
 const plural = (n: number, one: string, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
@@ -216,7 +205,7 @@ function MilestonePicker({ value, onChange, childMonths }: { value: string | nul
   );
 }
 
-export function GoalFormScreen({ id, milestone, idea }: { id: string | null; milestone?: string; idea?: number }) {
+export function GoalFormScreen({ id, milestone, idea }: { id: string | null; milestone?: string; idea?: string }) {
   const app = useApp();
   const child = app.activeChild;
   const p = useChildPersonal(child);
@@ -228,14 +217,16 @@ export function GoalFormScreen({ id, milestone, idea }: { id: string | null; mil
   return <GoalForm key={id ?? 'new'} existing={existing} milestone={milestone} idea={idea} exercises={(p.data?.exercises ?? []).filter((e) => !e.archivedAt)} childMonths={m.age?.months ?? null} />;
 }
 
-function GoalForm({ existing, milestone, idea, exercises, childMonths }: { existing?: PersonalGoal; milestone?: string; idea?: number; exercises: Array<{ id: string; title: string; goalIds: string[] }>; childMonths: number | null }) {
+function GoalForm({ existing, milestone, idea, exercises, childMonths }: { existing?: PersonalGoal; milestone?: string; idea?: string; exercises: Array<{ id: string; title: string; goalIds: string[] }>; childMonths: number | null }) {
   const app = useApp();
   const child = app.activeChild!;
   const p = useChildPersonal(child);
   const prefillDef = milestone ? getMilestone(milestone) : undefined;
+  // R-010: an idea only fills in the name and area for the parent to change. No date, link or schedule is set.
+  const prefillIdea = idea ? getGoalIdea(idea) : undefined;
   const [formId] = useState(() => newId());
-  const [title, setTitle] = useState(existing?.title ?? (prefillDef ? displayTextOf(prefillDef) : idea !== undefined ? GOAL_IDEAS[idea] ?? '' : ''));
-  const [area, setArea] = useState<PersonalCategory>(existing?.appCategory ?? prefillDef?.appCategory ?? null);
+  const [title, setTitle] = useState(existing?.title ?? (prefillDef ? displayTextOf(prefillDef) : prefillIdea?.title ?? ''));
+  const [area, setArea] = useState<PersonalCategory>(existing?.appCategory ?? prefillDef?.appCategory ?? prefillIdea?.appCategory ?? null);
   const [start, setStart] = useState<string>(existing ? existing.startDate ?? '' : p.today);
   const [target, setTarget] = useState(existing?.targetDate ?? '');
   const [description, setDescription] = useState(existing?.description ?? '');
@@ -270,6 +261,7 @@ function GoalForm({ existing, milestone, idea, exercises, childMonths }: { exist
   };
   return (
     <form class="card stack" onSubmit={(e) => { e.preventDefault(); void save(); }} data-testid="goal-form">
+      {prefillIdea && !existing && <p class="xsmall muted" data-testid="idea-prefill-note">Filled in from an idea. Change anything you like; nothing is saved until you choose Save goal.</p>}
       <div class="field">
         <label class="label" for="goal-title">Goal name</label>
         <input id="goal-title" class="input" maxLength={120} value={title} onInput={(e) => setTitle((e.target as HTMLInputElement).value)} required aria-required="true" />
@@ -546,18 +538,28 @@ export function GoalEditScreen({ id }: { id: string }) {
   return <GoalFormScreen id={id} />;
 }
 
-export function GoalIdeasScreen() {
+/**
+ * Inspiration (R-010): Start from a milestone, plus optional, age-responsive goal ideas written for this
+ * app. The default range follows the child's milestone age (chronological or corrected, as chosen);
+ * before the due date nothing is presented as being for the child. Nothing is added until it is saved.
+ */
+export function GoalIdeasScreen({ range }: { range?: string }) {
   const { activeChild } = useApp();
   const m = useChildMilestones(activeChild);
+  const age = useMilestoneAge(activeChild);
   const [q, setQ] = useState('');
   const [upcoming, setUpcoming] = useState(false);
-  if (!activeChild) return null;
+  if (!activeChild || !age.age) return null;
   const name = childNameInline(activeChild);
   const t = q.trim().toLowerCase();
   const months = m.age?.months ?? null;
   const list = upcoming
     ? MILESTONES.filter((d) => !isApplicable(d, months) && !m.sourcedStates.get(d.id)?.hidden).sort((a, b) => a.referenceAgeMonths - b.referenceAgeMonths).slice(0, 12)
     : t.length >= 2 ? MILESTONES.filter((d) => displayTextOf(d).toLowerCase().includes(t)).slice(0, 12) : [];
+  const def = ideaRangeFor(age.age.months);
+  const chosen = (range ? getIdeaRange(range) : undefined) ?? (def.kind === 'range' ? def.range : undefined);
+  const usingCorrected = activeChild.correctedAge.enabled && activeChild.ageBasis === 'corrected';
+  const go = (id: string) => window.location.replace(href({ name: 'goalIdeas', range: id }));
   return (
     <div class="stack-lg" data-testid="goal-ideas">
       <p class="small muted">Ideas are optional. Change anything to fit {name}. Nothing is added until you save it.</p>
@@ -581,19 +583,53 @@ export function GoalIdeasScreen() {
         )}
         <p class="xsmall muted">Choosing a milestone fills in a new goal for you to edit. It doesn’t change the milestone.</p>
       </section>
-      <section class="card stack" aria-labelledby="ideas-title" data-testid="original-ideas">
-        <h2 class="title-3" id="ideas-title">Ideas to get you started</h2>
-        <p class="xsmall muted">Written for this app as examples. They aren’t recommendations from CDC or any medical organization.</p>
-        <ul class="ms-list">
-          {GOAL_IDEAS.map((idea, i) => (
-            <li key={idea}>
-              <a class="ms-item" style={{ paddingLeft: 0, paddingRight: 0 }} href={href({ name: 'goalNew', idea: i })} data-testid="idea">
-                <span class="ms-text">{idea}</span>
-                <span class="small text-link">Use this idea</span>
-              </a>
-            </li>
-          ))}
-        </ul>
+      <section class="card stack" aria-labelledby="ideas-title" data-testid="original-ideas" data-range={chosen?.id ?? ''}>
+        <h2 class="title-3" id="ideas-title">Goal ideas by age</h2>
+        <div class="field">
+          <label class="label" for="idea-range">Age range</label>
+          <select id="idea-range" class="select" value={chosen?.id ?? ''} onChange={(e) => { const v = (e.target as HTMLSelectElement).value; if (v) go(v); }} data-testid="idea-range">
+            {!chosen && <option value="">Choose an age range</option>}
+            {GOAL_IDEA_RANGES.map((r) => <option key={r.id} value={r.id}>{r.label}</option>)}
+          </select>
+        </div>
+        <p class="xsmall muted" data-testid="idea-age-context">
+          {name}’s age used for milestones: {age.age.months === null ? 'before due date' : `${age.age.months} month${age.age.months === 1 ? '' : 's'} (${usingCorrected ? 'corrected' : 'chronological'} age)`}.
+          {chosen && def.kind === 'range' && chosen.id !== def.range.id ? ` You’re looking at another age range than ${name}’s.` : ''}
+        </p>
+        {def.kind === 'range' && def.olderThanFive && chosen?.id === def.range.id && (
+          <p class="xsmall muted" data-testid="idea-over-five">These ideas go up to age 5, the age the milestones and activities in this app cover, so these are the ideas for 48 to 60 months.</p>
+        )}
+        {!chosen ? (
+          <div class="stack" data-testid="idea-before-due">
+            <p class="small">{name}’s due date hasn’t arrived yet, so no ideas are suggested for {name} yet.</p>
+            <p class="small muted">Goal ideas are arranged by age, starting from birth. Because {name}’s age for milestones starts at the due date, no age range is chosen yet. You can look at any age range whenever you like.</p>
+            <button type="button" class="btn btn-secondary btn-block" onClick={() => go(GOAL_IDEA_RANGES[0]!.id)} data-testid="idea-browse-first">Look at ideas for birth to under 6 months</button>
+          </div>
+        ) : (
+          <ul class="ms-list" data-testid="idea-list">
+            {chosen.ideas.map((idea) => {
+              const safety = ideaSafety(idea);
+              return (
+                <li key={idea.id} class="idea-item" data-testid="idea" data-idea={idea.id}>
+                  <a class="ms-item" style={{ paddingLeft: 0, paddingRight: 0 }} href={href({ name: 'goalNew', idea: idea.id })} aria-describedby={`${idea.id}-basis`}>
+                    <span class="ms-text">{idea.title}<span class="ms-meta" id={`${idea.id}-basis`}>{categoryLabel(idea.appCategory)} · {ideaBasisLine(idea)}</span></span>
+                    <span class="small text-link idea-use">Use this idea</span>
+                  </a>
+                  {safety.length > 0 && (
+                    <p class="info-note xsmall" data-testid="idea-safety">
+                      <Icon name="shield" size={16} />
+                      <span>
+                        {safety.flatMap((x) => x.sentences).length > 0 ? `${[...new Set(safety.flatMap((x) => x.sentences))].join(' ')} ` : ''}
+                        <a class="text-link" href={href({ name: 'activity', id: safety[0]!.activity.id })}>Safety notes for the related activity</a>
+                      </span>
+                    </p>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        )}
+        <p class="xsmall muted" data-testid="idea-disclaimer">Written for this app as possible goals, based on the milestones and activities in this app. They aren’t CDC milestones, recommendations from CDC or any medical organization, or things {name} is expected to do. Using one sets no deadline.</p>
       </section>
     </div>
   );

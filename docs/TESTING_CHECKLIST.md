@@ -319,3 +319,49 @@ Record only actual results. **Mac** = local production build in Safari (`npm ci 
 | GE24 | iPhone, airplane mode after install: create a goal and an exercise, record a session, relaunch: everything is there | iPhone | | | |
 
 Automated coverage for these items is listed in `docs/BUILD_LOG.md` (Checkpoint 2b entry). Physical-device behaviour (GE10 on iPhone, GE23, GE24) can only be confirmed by hand.
+
+*Note (2b-R):* GE6 (example ideas), GE12 (“remove and restore”) and GE19 (periods) describe 2b behaviour that R-010, R-015 and R-017 changed; use GR1–GR16 below for the refined behaviour. The table above is kept unchanged as the 2b checklist; the owner tested 2b with their own phased plan (next section), so no GE row is marked individually.
+
+## Checkpoint 2b — initial human acceptance (owner report, Mac Safari, 2026-11-27)
+Reported by the owner for the local build of `64202e2` in Mac Safari (port 4179). Recorded as reported; Claude Code did not observe these tests.
+- **Update:** the app detected the new version, offered a refresh, and preserved existing profiles, themes, milestone statuses, Notes & Observations and milestone progress.
+
+| Phase | Area | Result |
+|---|---|---|
+| A | Database upgrade | 7/7 passed |
+| B | Goals and accomplishments | 12/12 passed |
+| C & D | Exercises and tracking | 16/16 passed |
+| E | Scheduling and daily routine | 14/14 passed |
+| F | Home and historical progress | 15/16 passed; the historical reporting period needed refinement (→ R-017) |
+| G | Legacy personal entries | **Not applicable** (no legacy entries in the owner's test data); neither passed nor failed |
+| H | Overall usability | Positive: navigation, visual consistency, ease of use and usefulness accepted, subject to physical iPhone review |
+
+**Total: 64 of 65 applicable functional checks passed.** Further findings: R-010 to R-016 (usability and visual refinements) and R-018 (deferred suggestion). An earlier suspected legacy-entry concern was resolved as a misunderstanding. **Still outstanding:** physical iPhone acceptance, offline editing on a device, installed-app upgrade testing.
+
+## Checkpoint 2b-R — automated (headless Chromium; results in BUILD_LOG)
+- **Unit:** `goalIdeas.test.ts` (10: content validation and tampering detection, range boundaries, newborn, before the due date, older than five, corrected age, safety carried with ideas, no old examples); `sessionDeletion.test.ts` (8: removal from all totals, slot reuse, no note or values kept, lineage of moved sessions, no revival, merge-protection fields, profile isolation, version 3); `stopwatchCharts.test.ts` (period tests rewritten for R-017, +1).
+- **End-to-end:** `acceptance-2b-r.spec.ts` (18): ideas for a 4-month-old, browsing other ranges, editable prefill with no deadline, before the due date, over five, newborn; attribution only in the Source section and preserved after adoption; heading and duration-field geometry at 320 and 390 px; correction and manual-entry fields; deletion with Cancel default, totals, Home, slot reuse and no stored note; recovery notice hierarchy and all three actions; 6/12-month periods with before-birth, zero and not-tracked months; 12-month chart at 320 and 390 px in five themes (overflow, label overlap, axe); axe on ideas, form and deletion dialog; offline ideas and deletion.
+- **Changed intentionally:** the removal-and-restore e2e test (R-015), the inspiration disclaimer assertion (R-010), the chart-period unit tests (R-017); the “blocked upgrade” and “repetition counter” e2e tests were made deterministic (test defects, BUILD_LOG #47, #52).
+
+## Checkpoint 2b-R — targeted human retest (owner; record actual results)
+**Mac** = local production build in Safari. **iPhone** = needs a deployment or a local-network test the owner sets up.
+
+| # | Check | Where | Result | Date | Notes |
+|---|---|---|---|---|---|
+| GR1 | Update from the 2b build: everything from your 2b testing (goals, exercises, sessions, history, milestones, themes) is unchanged | Mac | | | |
+| GR2 | 4-month-old: Looking for inspiration? shows “Birth to under 6 months” and ideas such as tummy time and cuddle time; nothing for much older children | Mac | | | |
+| GR3 | Choose another age range; the ideas change; your child's own range is still the default next time | Mac | | | |
+| GR4 | Use an idea: the goal name and area are filled in; you can edit them; no target date; nothing is saved until Save goal | Mac | | | |
+| GR5 | Ideas with safety notes (tummy time, rolling, mirror, sitting, walking) show them; the safety link opens the activity | Mac | | | |
+| GR6 | A child with corrected age chosen (or before the due date) gets the right range (or the neutral note) | Mac | | | |
+| GR7 | Activity page (e.g. Tummy time): “Recommended activity”, “Reference age: 2 months”, safety text complete; CDC named only in the Source section, which still has the link and non-endorsement | Mac | | | |
+| GR8 | Add exercise: “How do you want to track it?” and “How often?” line up with their options; Minutes/Seconds are the same size and aligned | Mac | | | |
+| GR9 | Correct a stopwatch session; record one manually; the stopwatch's “Enter duration manually”: Hours/Minutes/Seconds aligned | Mac | | | |
+| GR10 | Delete a session: the confirmation appears with Cancel; Cancel keeps it; Delete removes it with no placeholder; Today's routine, Home and Personal progress update; the slot can be done again | Mac | | | |
+| GR11 | Correct a session's date (move it), then delete it: no trace remains in the list; other sessions are unchanged | Mac | | | |
+| GR12 | Stopwatch: start, refresh, Continue: the recovery notice is tidy, Keep running is the main button; each of the three options works | Mac | | | |
+| GR13 | Progress over time for your 4-month-old: 6 months shows six months (June marked “–” before birth), 1 year shows twelve; the table matches | Mac | | | |
+| GR14 | Exercises view: months before you started tracking are dotted (“Not tracked yet”); a backdated session is counted in its month | Mac | | | |
+| GR15 | All five themes: the ideas page, the recovery notice and the 12-month chart read well | Mac | | | |
+| GR16 | iPhone: the 12-month chart, the duration fields and the recovery notice are comfortable and nothing overflows | iPhone | | | |
+

@@ -150,7 +150,9 @@ test('pause and resume; archived exercises leave Today’s routine and the Home 
   await expect(page.getByTestId('home-exercises')).toHaveCount(0);
 });
 
-test('backdated and corrected sessions: recorded for the right day; removal and restore update counts', async ({ page }) => {
+// R-015 (Checkpoint 2b-R): requirement changed. “Remove” (which left a “Removed” placeholder with Restore)
+// is replaced by “Delete” with a confirmation; a deleted session leaves no placeholder.
+test('backdated and corrected sessions: recorded for the right day; deletion updates counts and leaves no placeholder', async ({ page }) => {
   await completeOnboarding(page, { dob: DOB });
   await newExercise(page, 'Fictional counted', { method: 'reps', rule: 'asNeeded' });
   await page.getByTestId('record-past').click();
@@ -163,11 +165,11 @@ test('backdated and corrected sessions: recorded for the right day; removal and 
   await page.getByLabel('Repetitions').fill('9');
   await page.getByTestId('save-session-correction').click();
   await expect(page.getByTestId('session-row').first()).toContainText('9 repetitions');
-  await page.getByTestId('remove-session').click();
-  await expect(page.getByTestId('session-row').first()).toHaveAttribute('data-reversed', 'true');
+  await page.getByTestId('delete-session').click();
+  await page.getByTestId('confirm-delete-session').click();
+  await expect(page.getByTestId('session-row')).toHaveCount(0);
   await expect(page.getByTestId('sessions')).toContainText('Sessions (0)');
-  await page.getByRole('button', { name: 'Restore' }).click();
-  await expect(page.getByTestId('sessions')).toContainText('Sessions (1)');
+  await expect(page.getByTestId('sessions')).not.toContainText(/Removed|Restore/);
 });
 
 test('two open copies: the same scheduled session can’t be recorded twice', async ({ page, context }) => {
@@ -343,7 +345,9 @@ test('the stopwatch requires review when the device clock jumps a long way', asy
 });
 
 test('blocked upgrade: a parent-friendly notice while another copy holds the old database, then the app continues', async ({ page, context }) => {
-  await page.goto('./');
+  // Test defect fixed at 2b-R (challenge #47): the app page is moved off the app before the database is
+  // deleted, so it can't reopen it at version 3 before the old copy opens version 2 (a race under load).
+  await page.goto('./licenses/idb-ISC.txt').catch(() => undefined);
   await page.evaluate(() => new Promise<void>((resolve) => indexedDB.deleteDatabase('roll-crawl-run').onsuccess = () => resolve()));
   const holder = await context.newPage();
   await holder.goto('./licenses/idb-ISC.txt').catch(() => undefined); // any same-origin page that doesn't run the app
@@ -357,7 +361,7 @@ test('blocked upgrade: a parent-friendly notice while another copy holds the old
     };
     r.onsuccess = () => { (window as unknown as { held: IDBDatabase }).held = r.result; resolve(); };
   }));
-  await page.reload();
+  await page.goto('./');
   await expect(page.getByTestId('storage-notice')).toHaveAttribute('data-notice', 'blocked');
   await expect(page.getByTestId('storage-notice')).toContainText('Your information is safe');
   await holder.evaluate(() => (window as unknown as { held: IDBDatabase }).held.close());

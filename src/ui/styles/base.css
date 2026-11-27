@@ -232,6 +232,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .error-text .icon { color: var(--primary); margin-top: 1px; }
 .input-row { display: flex; gap: var(--space-3); }
 .input-row > * { flex: 1; }
+/* R-013/R-014: fields side by side never take the vertical gap meant for stacked fields. */
+.input-row > .field + .field { margin-top: 0; }
 
 /* Segmented control / choice cards */
 .segmented { display: flex; padding: 4px; gap: 4px; background: var(--surface-sunken); border-radius: var(--radius-pill); }
@@ -591,3 +593,32 @@ input[type='checkbox'] { width: 20px; height: 20px; accent-color: var(--primary)
 .data-table td { text-align: right; font-variant-numeric: tabular-nums; }
 .data-table thead th { font-weight: 600; border-top: 0; }
 .history-card > summary { list-style: none; }
+
+/* Checkpoint 2b-R: grouped choices with a heading (R-012). A floated legend sits inside the card's
+   padding in every browser (an unfloated legend is drawn on the fieldset's top edge, misaligned). */
+.choice-group { border: 0; margin: 0; padding: 0; min-width: 0; }
+.choice-group > legend { float: left; width: 100%; padding: 0; margin: 0 0 var(--space-3); }
+.choice-group > legend + * { clear: both; margin-top: 0; }
+.choice-group > legend.title-3 { margin-bottom: var(--space-4); }
+/* Duration entry (R-013, R-014): equal columns, labels above, equal heights, fits 320 px. */
+.duration-grid { display: grid; gap: var(--space-3); align-items: end; }
+.duration-field { display: flex; flex-direction: column; gap: var(--space-1); min-width: 0; }
+.duration-label { font-size: var(--text-sm); font-weight: 500; color: var(--text-muted); }
+.duration-field .input { min-width: 0; text-align: center; font-variant-numeric: tabular-nums; padding-left: var(--space-2); padding-right: var(--space-2); }
+/* In-sheet notices with actions (R-016): text first, then full-width actions in one column. */
+.notice-panel { padding: var(--space-4); border-radius: var(--radius-md); background: var(--surface-sunken); border: 1px solid var(--border); color: var(--text); }
+.notice-panel > p { margin: 0; font-size: var(--text-sm); line-height: 1.5; }
+.notice-panel > p + p { margin-top: var(--space-2); }
+.notice-actions { display: grid; gap: var(--space-2); margin-top: var(--space-4); }
+.notice-actions .btn { width: 100%; min-height: var(--touch); }
+/* Goal ideas (R-010) */
+.idea-item + .idea-item { border-top: 1px solid var(--border); }
+.ms-list > li.idea-item .ms-item { border-top: 0; }
+.idea-use { flex: none; white-space: nowrap; }
+.idea-item .info-note { margin: 0 0 var(--space-3); padding: var(--space-3); }
+/* Progress over time (R-017) */
+.chart-zero { font-size: 11px; fill: var(--text-muted); }
+.chart-na { font-size: 12px; fill: var(--text-muted); }
+.chart-nottracked { stroke: var(--text-muted); stroke-width: 2; stroke-dasharray: 2 3; }
+.chart-label.na { opacity: 0.75; }
+.chart-legend { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); margin: var(--space-2) 0 0; padding: 0; list-style: none; }
