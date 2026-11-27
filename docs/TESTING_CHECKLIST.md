@@ -220,6 +220,7 @@ Still applicable from the original list: **G3–G8, G12–G17, G19** (G18 = H18)
 | Validator rejects: changed qualifier, added word, non-pronoun replacement, gendered result, stale source, unknown id, duplicate, missing coverage, no pronoun, wrong catalog version | acceptanceRefinements.test.ts |
 | Guide validation rejects gendered text; Library search uses displayed wording | acceptanceRefinements.test.ts |
 | Notes & Observations storage: ordering, no status change, append-only edits, validation, chain erase (from original or edit), undated legacy note, identical-version erase, removal keeps history, child isolation, database version 2 | acceptanceRefinements.test.ts |
+| Erasure isolation (added after secondary review): identical text survives note erasure in an unrelated observation, on another milestone, for another child, and in a personal entry; separate identical observations keep independent lineages; ids through the wrong child or milestone are rejected with nothing changed | acceptanceRefinements.test.ts |
 | Legacy personal entries never change Progress | acceptanceRefinements.test.ts |
 | Age-settings route round-trip | acceptanceRefinements.test.ts |
 | Every visible milestone gender-neutral: guide (20 ranges), Library (159 rows), Home, Growth, Progress, About, Settings → About | tests/e2e/acceptance-refinements.spec.ts |

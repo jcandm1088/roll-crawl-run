@@ -196,13 +196,15 @@ Compiled on 2026-11-26 from the review documents, decisions and earlier entries 
 | 24 | **Screenshot capture overlays** | Environmental limitation (screenshot tooling) | Element screenshots drew the sticky top bar and bottom navigation over the Notes & Observations card. The app layout was correct. | The screenshot script hides the fixed bars for element captures. |
 | 25 | **R-003 missing from the backlog table** | Documentation discrepancy (found at workspace recovery) | The owner referred to R-003, but it existed only as a KNOWN_LIMITATIONS note. The handoff's section 8 also still listed the superseded Growth order. | R-003 added to the backlog; handoff corrected. |
 
+| 26 | **Erasure-isolation coverage gap (secondary review)** | Testing gap (no application defect) | Asked to confirm the scope of “erasing a note version also erases other saved versions with identical text”, Claude Code inspected `eraseEntryText`. The scope is one child, one record and one lineage. The committed tests did not directly prove that identical text elsewhere survives. A temporary test outside the repository passed. | With the owner's authorization, it became a permanent regression test. It passed; **no application defect was found and no application code changed**. The review document's wording was clarified. |
+
 **Still unresolved:**
 - The one-time “server not responding” delay on the first iPhone load (cause unknown).
 - R-001, the onboarding name-input overflow (pending investigation).
 - Whether iPhone Safari and the installed app share storage (M13, untested).
 - R-002 is corrected in code but **not yet verified by the owner** (hands-on acceptance pending).
 - The Library's controls fill most of a phone's first screen (R-003; recorded for owner review; unchanged except one chip removed).
-- R-004 to R-008 are corrected in code but **not yet verified by the owner**. The CDC reuse-condition question for R-004 awaits the owner's decision.
+- R-004 to R-008 are corrected in code but **not yet verified by the owner** (hands-on acceptance pending). The R-004 reuse-condition question is resolved by the owner's determination (Decision #86).
 
 ## Draft entry — Growth UX refinement (drafted by Claude Code; edit before submitting)
 **Date:** 2026-11-26
@@ -295,3 +297,24 @@ Environment: Linux cloud container, Node 22, headless Chromium (Playwright; 390�
   - The first full run after the changes had 17 expected failures, all from superseded wording or controls; each was reviewed individually before updating.
   - New-test mistakes are listed in challenge #23.
   - Two application defects in the new code were found by tests and fixed (#20, #21).
+
+## Draft entry — Final review and erasure regression coverage (drafted by Claude Code; edit before submitting)
+**Date:** 2026-11-27
+
+**What I did:**
+- **Decision #77:** I reviewed CDC's “Use of Agency Materials” myself on November 26, 2026. Condition 3 says “You may not change the substantive content of the materials.” I approved the gender-neutral display wording as grammatical adaptation rather than substantive change. This is my editorial and product-design determination, not CDC approval or a legal determination.
+- **Personal entries:** I kept the legacy personal-entry approach as it is and deferred conversion and deletion to 2b.
+- **Erasure scope:** I asked for confirmation of the permanent-erasure scope.
+
+**What Claude Code found:**
+- Erasure is limited to one child, one milestone or personal entry, and one note or observation lineage.
+- The existing tests did not directly prove isolation from unrelated entries with identical text (a coverage gap).
+- A temporary test passed. With my authorization, it is now a permanent regression test. No application defect was found and no application code changed.
+
+### Automated results (one complete run, as authorized for this test- and documentation-only revision)
+| Check | Result (2026-11-27, headless Chromium, Node 22) |
+|---|---|
+| Type check | Passed |
+| Unit tests | **282 passed** (11 files; +1, the erasure-isolation test) |
+| Production build | Passed. The bundle is byte-identical to `8843a25` (same content hash, `index-VSweNDhW.js`, 255.5 KB), confirming no application change |
+| End-to-end tests | **155 passed** (2.6 min); no failures, no retries |

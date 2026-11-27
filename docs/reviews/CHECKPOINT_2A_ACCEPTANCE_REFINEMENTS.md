@@ -83,7 +83,16 @@ Each line was read for meaning (Claude Code, 2026-11-27):
   - `cdc22-m09-cg-01`: “(like a spoon or toy)” for “(like his spoon or toy)”. The example is unchanged in kind.
 - **Considered and rejected:** “Feeds self with fingers” (CDC's own style in “look at self in a mirror”). Not chosen, because “themselves … their” is clearer to parents.
 
-**For the owner to review:** the source register records CDC's reuse conditions, including “no substantive changes”. The adaptation changes only grammatical gender. It is disclosed on every affected page, and CDC's original wording is available. We consider it non-substantive, but it is a modification of CDC wording; whether it is acceptable under CDC's conditions is an owner decision (section 6).
+**Owner determination (Decision #77, resolved):**
+- **Review:** on November 26, 2026, the owner independently reviewed CDC's “Use of Agency Materials” page (https://www.cdc.gov/other/agencymaterials.html). Its condition 3 reads: “You may not change the substantive content of the materials.”
+- **Decision:** the owner approved this approach because the changes are grammatical adaptations, not changes to the substance of the developmental guidance. This is the owner's reasoned editorial and product-design determination. It is **not** CDC approval, a legal certification or an official agency interpretation.
+- **Safeguards kept:**
+  - the verbatim catalog;
+  - the separate display layer;
+  - validated substitutions;
+  - unchanged reference ages and qualifiers;
+  - adaptation disclosures and access to CDC's original wording;
+  - attribution, prominent non-endorsement and free-availability statements.
 
 ## 2. Personal milestone creation removed (R-005)
 - **Removed:** “Make a personal version” (milestone page), its creation sheet, and the Library's “Your versions” filter. Personal records are no longer listed among the milestones.
@@ -130,8 +139,12 @@ Each line was read for meaning (Claude Code, 2026-11-27):
 | Earlier **note** (the old standalone Note box) | unchanged `record.note` + `note` events | Shown first as **“No observation date · saved [date]”**. No observation date is invented. Edit and Remove use the existing note functions (no date added) |
 
 ### Permanent erase
-- Erasing any version of an entry erases the original and every edit of it.
-- Erasing a note version also erases other saved versions with identical text.
+- **Scope (clarified after the owner's secondary review).** Erasure is limited to **one child, one milestone (or one personal entry), and one note or observation lineage**.
+  - The app first finds the record for that child and milestone or personal entry, and refuses (“Entry not found”) unless the chosen entry belongs to it.
+  - It then considers only that record's history.
+- **An observation:** erasing any version erases that observation's original and every edit of it, matched by the original's id, never by text.
+- **The undated note:** erasing a version also erases earlier versions **of that same record's note** with exactly the same text. Observations are never included, even with identical text.
+- **Never reached by text matching:** another milestone, another child, a personal entry, or a separate observation with identical text. Covered by the unit test “permanent erasure never reaches unrelated entries with identical text, and rejects wrong child or milestone”.
 - An erase marker remains.
 - Profile deletion and app reset still remove everything.
 
@@ -149,6 +162,6 @@ Each line was read for meaning (Claude Code, 2026-11-27):
 - **Unchanged:** the form, calculations, eligibility and preferences.
 
 ## 6. Open items for the owner
-1. Accept or adjust the gender-neutral approach under CDC's “no substantive changes” condition (section 1).
-2. How to treat legacy personal entries in Checkpoint 2b (section 2).
+1. ~~The gender-neutral approach under CDC's condition 3~~: **resolved**. Owner determination of November 26, 2026 (section 1; Decision #77).
+2. Legacy personal entries: the current preservation and management approach is retained. Conversion to goals and permanent deletion are deferred to Checkpoint 2b (section 2).
 3. Hands-on acceptance (TESTING_CHECKLIST, “Human acceptance refinements” section).

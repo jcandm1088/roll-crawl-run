@@ -153,3 +153,17 @@ Details are in `docs/reviews/CHECKPOINT_1_FINAL.md`.
 83. **Age settings link (R-008).** `#/profiles/<id>/age` (`section: 'age'`) opens the selected child's profile at the Corrected age section and returns to Progress. The form and age engine are unchanged.
 84. **Library search** matches the displayed (gender-neutral) wording.
 85. **No schema change, no new dependency.** The JavaScript bundle grew from about 241 KB to about 255 KB (63 → 66 KB gzip): the display layer, the validator and the Notes & Observations UI.
+
+## Checkpoint 2a — final review resolution (owner, 2026-11-27)
+86. **Resolution of #77 (gender-neutral display wording).**
+    - **Review:** on **November 26, 2026**, the owner independently reviewed CDC's “Use of Agency Materials” (https://www.cdc.gov/other/agencymaterials.html). Condition 3: “You may not change the substantive content of the materials.”
+    - **Decision:** the owner approves the display approach because the reviewed changes are grammatical adaptations, not substantive changes to developmental guidance. This is the owner's reasoned editorial and product-design determination. It is **not** CDC approval, a legal certification or an official agency interpretation.
+    - **Safeguards that must stay:**
+      - the verbatim source catalog;
+      - the separate display layer;
+      - validation of permitted substitutions;
+      - original reference ages and substantive qualifiers;
+      - adaptation disclosures and access to the original wording;
+      - attribution, prominent non-endorsement and free-availability statements.
+87. **Legacy personal entries.** The current preservation and management approach is retained. Optional conversion to goals and permanent deletion are deferred to Checkpoint 2b.
+88. **Erasure scope (clarification; no behavior change).** Permanent erasure is limited to one child, one milestone or personal entry, and one note or observation lineage. A permanent regression test now covers this (secondary review).

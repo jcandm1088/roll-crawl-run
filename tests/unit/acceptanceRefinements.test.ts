@@ -242,6 +242,70 @@ describe('R-007: Notes & Observations', () => {
     expect(d.events.some((e) => e.type === 'note' && e.text === 'Fictional kept note')).toBe(true);
   });
 
+  // Added after the owner's secondary review identified a coverage gap: permanent erasure is scoped to one
+  // child, one milestone (or personal entry) and one note or observation lineage. Text matching alone never
+  // reaches another entry.
+  it('permanent erasure never reaches unrelated entries with identical text, and rejects wrong child or milestone', async () => {
+    const T = 'Identical fictional text';
+    const m1 = def;
+    const m2 = { kind: 'sourced' as const, defId: 'cdc22-m12-lc-02' };
+    const pv = await createPersonalVersion(db, ctx, { title: 'Fictional personal entry', description: '', derivedFromDefId: m1.defId, appCategory: 'language-communication', referenceAgeMonths: 12 });
+    const personal = { kind: 'personal' as const, customId: pv.id };
+    await setNote(db, ctx, m1, T); // the note to erase: child A, milestone 1
+    await addObservation(db, ctx, m1, '2026-10-01', T); // same child and milestone, observation lineage
+    await setNote(db, ctx, m2, T); // same child, another milestone
+    await addObservation(db, ctx, m2, '2026-10-01', T);
+    await setNote(db, ctxB, m1, T); // another child, same milestone
+    await addObservation(db, ctxB, m1, '2026-10-01', T);
+    await setNote(db, ctx, personal, T); // personal entry based on milestone 1
+    await addObservation(db, ctx, personal, '2026-10-01', T);
+
+    let a = await loadChildMilestones(db, ctx.childId);
+    const recOf = (d: typeof a, key: string) => d.records.find((r) => (r.milestoneDefId ?? `p-${r.customItemId}`) === key)!;
+    const r1 = recOf(a, m1.defId);
+    const note1 = a.events.find((e) => e.recordId === r1.id && e.type === 'note')!;
+    await eraseEntryText(db, ctx, m1, note1.id);
+
+    a = await loadChildMilestones(db, ctx.childId);
+    let b = await loadChildMilestones(db, ctxB.childId);
+    const textOf = (d: typeof a, key: string, type: string) => d.events.filter((e) => e.recordId === recOf(d, key).id && e.type === type).map((e) => e.text);
+    expect(textOf(a, m1.defId, 'note')).toEqual([null]); // erased
+    expect(recOf(a, m1.defId).note).toBe('');
+    expect(textOf(a, m1.defId, 'observation')).toEqual([T]); // unrelated observation, same milestone
+    expect(textOf(a, m2.defId, 'note')).toEqual([T]); // another milestone
+    expect(textOf(a, m2.defId, 'observation')).toEqual([T]);
+    expect(recOf(a, m2.defId).note).toBe(T);
+    expect(textOf(b, m1.defId, 'note')).toEqual([T]); // another child
+    expect(textOf(b, m1.defId, 'observation')).toEqual([T]);
+    expect(recOf(b, m1.defId).note).toBe(T);
+    expect(textOf(a, `p-${pv.id}`, 'note')).toEqual([T]); // personal entry
+    expect(textOf(a, `p-${pv.id}`, 'observation')).toEqual([T]);
+    expect(recOf(a, `p-${pv.id}`).note).toBe(T);
+
+    // Two separate observations with identical text keep independent lineages.
+    await addObservation(db, ctx, m2, '2026-10-02', T);
+    a = await loadChildMilestones(db, ctx.childId);
+    const [o1, o2] = a.events.filter((e) => e.recordId === recOf(a, m2.defId).id && e.type === 'observation');
+    await editObservation(db, ctx, m2, o1!.id, '2026-10-01', `${T}, edited`);
+    await eraseEntryText(db, ctx, m2, o1!.id);
+    a = await loadChildMilestones(db, ctx.childId);
+    const obs = observationsFor(a.events, recOf(a, m2.defId).id);
+    expect(obs.find((o) => o.id === o1!.id)).toMatchObject({ erased: true, text: null });
+    expect(obs.find((o) => o.id === o2!.id)).toMatchObject({ erased: false, text: T });
+    expect(textOf(a, m2.defId, 'note')).toEqual([T]);
+
+    // Entry ids supplied through the wrong child or the wrong milestone are rejected, and nothing changes.
+    const before = JSON.stringify([await loadChildMilestones(db, ctx.childId), await loadChildMilestones(db, ctxB.childId)]);
+    const o2Id = o2!.id;
+    await expect(eraseEntryText(db, ctx, m1, o2Id)).rejects.toThrow(/Entry not found/); // A, wrong milestone
+    await expect(eraseEntryText(db, ctx, personal, o2Id)).rejects.toThrow(/Entry not found/); // A, personal entry
+    await expect(eraseEntryText(db, ctxB, m2, o2Id)).rejects.toThrow(/Entry not found/); // child B, same milestone
+    b = await loadChildMilestones(db, ctxB.childId);
+    const bNote = b.events.find((e) => e.type === 'note')!.id;
+    await expect(eraseEntryText(db, ctx, m1, bNote)).rejects.toThrow(/Entry not found/); // B's note through child A
+    expect(JSON.stringify([await loadChildMilestones(db, ctx.childId), await loadChildMilestones(db, ctxB.childId)])).toBe(before);
+  });
+
   it('entries stay with their own child', async () => {
     await addObservation(db, ctx, def, '2026-10-01', 'Fictional for A');
     await addObservation(db, ctxB, def, '2026-10-01', 'Fictional for B');

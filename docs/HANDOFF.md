@@ -2,7 +2,7 @@
 
 **This is the single authoritative, current-state handoff.** It replaces the earlier handoff notes. The original end-of-Checkpoint-1 handoff is kept unchanged as a historical record in `docs/reviews/CHECKPOINT_1_HANDOFF.md`; statements there describe the project as it was at commit `aa8c869` and are no longer current.
 
-*Last updated: 2026-11-27 (Checkpoint 2a human acceptance refinements, local commit).*
+*Last updated: 2026-11-27 (Checkpoint 2a final review and erasure regression coverage; preserved on `claude/sharp-franklin-vrbgmd`).*
 
 ## 1. Status at a glance
 
@@ -24,9 +24,9 @@
 | **Remote `main`** | `aa8c869352cdd734eafb0ed8b7219069d4457241` (Checkpoint 1: Deployment Acceptance and Handoff; documentation only, so no redeploy was needed) |
 | **Remote `checkpoint-2a`** | `73d9f6fc356b3f792a9f71cc8f38ff421e13581d` (Checkpoint 2a: Verified Milestone Tracking), a direct child of `aa8c869`. This is the **recovered original commit** (section 6) |
 | Branch `claude/beautiful-allen-1vjobt` (remote) | `170cc99` “Checkpoint 2a: Growth UX Refinement”, preserved with the owner's authorization |
-| Session branch `claude/sharp-franklin-vrbgmd` | Fast-forwarded to `170cc99`; then one local commit, “Checkpoint 2a: Human Acceptance Refinements”, **not pushed**. Pushes only with the owner's authorization |
+| Session branch `claude/sharp-franklin-vrbgmd` (remote) | Fast-forwarded to `170cc99`, then “Checkpoint 2a: Human Acceptance Refinements” (`8843a2506b0e284b365ec048406d9b6b92d0503b`) and “Checkpoint 2a: Final Review and Erasure Regression Coverage”. Preserved on this remote branch with the owner's explicit authorization (2026-11-27) after a publication safety review. Normal push, no force; not merged; no deployment |
 
-**History:** `a4e12b5` → `ade3171` → `820bb0e` → `873ed1c` → `e40287f` → `aa8c869` → `73d9f6f` → `9ca6149` → `170cc99` → Human Acceptance Refinements (local, ten commits).
+**History:** `a4e12b5` → `ade3171` → `820bb0e` → `873ed1c` → `e40287f` → `aa8c869` → `73d9f6f` → `9ca6149` → `170cc99` → `8843a25` (Human Acceptance Refinements) → Final Review and Erasure Regression Coverage (eleven commits).
 
 `main` is not to receive Checkpoint 2a until the owner accepts it and authorizes the merge. Pushing never deploys: deployment is a separate manual workflow (section 7).
 
@@ -42,7 +42,10 @@
 - **Details:** plan R12, Decisions #75–#85, `docs/reviews/CHECKPOINT_2A_ACCEPTANCE_REFINEMENTS.md`.
 - **Unchanged:** database version 2, dependencies, ids, calculations and the Progress denominator, the read-only guide, isolation, offline behavior and themes.
 - **Results:** 281 unit + 155 end-to-end tests, ×3 (BUILD_LOG).
-- **Owner decisions needed:** the CDC reuse-condition question (Decision #77); legacy personal entries in 2b.
+- **Resolved at final review (2026-11-27):**
+  - Decision #77: the owner's determination is recorded in #86 (policy reviewed 2026-11-26; grammatical adaptation, not substantive change; not CDC approval).
+  - Legacy personal entries: current approach kept; conversion and deletion deferred to 2b.
+  - Erasure isolation: covered by a permanent regression test; no defect found.
 
 ## 3a. Growth UX refinement (implemented, not yet accepted)
 - **Why:** R-002. The owner's first hands-on acceptance testing found the Growth sections repetitive and unclear about what updates progress, even though all 339 automated tests passed.
@@ -88,9 +91,9 @@ Acceptance is complete only when the owner says so. Defects found during accepta
 | Decision | Needed before | Notes |
 |---|---|---|
 | Owner acceptance of Checkpoint 2a (with both refinements) | Merging into `main`, deployment, Checkpoint 2b | Section 4 |
-| Gender-neutral display wording vs CDC's “no substantive changes” condition | Acceptance | Decision #77 |
-| Treatment of legacy personal entries | Checkpoint 2b | Keep / offer conversion to goals / offer delete; no automatic migration |
-| Remote preservation of the acceptance-refinement commit | Avoiding loss in a conversation transfer | Push only with authorization naming the branch |
+| ~~Gender-neutral display wording vs CDC's condition 3~~ | — | **Resolved:** owner determination, Decision #86 |
+| Legacy personal entries: optional conversion to goals, permanent deletion | Checkpoint 2b | Current preservation approach retained until then; no automatic migration |
+| ~~Remote preservation of the acceptance-refinement work~~ | — | **Done:** `claude/sharp-franklin-vrbgmd` (owner-authorized) |
 | Remote preservation of the refinement commit | Avoiding loss in a conversation transfer | Push to the session branch only with authorization |
 | Option B educational excerpts | Optional | Deferred (D-10) |
 | Authorization to begin Checkpoint 2b | Checkpoint 2b | Supporting activities to come from verified CDC tips |
