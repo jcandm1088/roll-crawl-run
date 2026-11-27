@@ -479,16 +479,19 @@ Reported by the owner for the local build of `64202e2` in Mac Safari (port 4179)
 - **Unchanged and still passing:** every vaccine age, date-arithmetic, overlay, event, isolation, persistence and upgrade test.
 
 ## Checkpoint 3-R — focused visual acceptance (owner; record actual results)
-**Mac** = local production build of the refinement commit in Safari. Leave Result blank until tested.
+**Mac** = local production build of the refinement commit in Safari. *Results below were reported by the owner on 2026-11-27; Claude Code did not observe these tests.*
 
 | # | Check | Where | Result | Date | Notes |
 |---|---|---|---|---|---|
-| CR1 | Vaccine schedule on: selecting a marked day shows “Recommended vaccinations: 4 months” with no “CDC schedule reference · not an appointment” label and no “CDC's notes…” wording | Mac | | | |
-| CR2 | “Next recommended vaccinations: 6 months” with the date; tapping it still goes to that day | Mac | | | |
-| CR3 | One statement only: “Your child's healthcare provider determines their individual vaccination schedule. The dates shown are general recommendations, not scheduled appointments or confirmation of eligibility.” | Mac | | | |
-| CR4 | “Source” is visible without expanding: “Based on the CDC childhood immunization schedule, July 2, 2025. This app is not endorsed by CDC, HHS or the U.S. Government and has not been clinically reviewed.” “Source details” opens the full record and the CDC link | Mac | | | |
-| CR5 | “Ask your child's provider about” reads naturally and still gives each age and condition (RSV antibody, rotavirus dose 3, Hib dose 3, influenza, COVID-19) | Mac | | | |
-| CR6 | Symbols: an upright cross for medical appointments, a heart for personal events, the diamond for vaccinations; the same in the controls, the month grid, the lists and Home; clear in all five themes | Mac | | | |
-| CR7 | A narrow window: three symbols under one day stay readable and don't overlap or enlarge the calendar | Mac | | | |
-| CR8 | Home: the card is headed “Upcoming Appointments” and still lists medical and personal events | Mac | | | |
-| CR9 | Settings → Calendar: the text and the Open Calendar link are comfortably inset, like the other sections, in a wide and a narrow window | Mac | | | |
+| CR1 | Vaccine schedule on: selecting a marked day shows “Recommended vaccinations: 4 months” with no “CDC schedule reference · not an appointment” label and no “CDC's notes…” wording | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `77d263b` |
+| CR2 | “Next recommended vaccinations: 6 months” with the date; tapping it still goes to that day | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `77d263b` |
+| CR3 | One statement only: “Your child's healthcare provider determines their individual vaccination schedule. The dates shown are general recommendations, not scheduled appointments or confirmation of eligibility.” | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `77d263b` |
+| CR4 | “Source” is visible without expanding: “Based on the CDC childhood immunization schedule, July 2, 2025. This app is not endorsed by CDC, HHS or the U.S. Government and has not been clinically reviewed.” “Source details” opens the full record and the CDC link | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `77d263b` |
+| CR5 | “Ask your child's provider about” reads naturally and still gives each age and condition (RSV antibody, rotavirus dose 3, Hib dose 3, influenza, COVID-19) | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `77d263b` |
+| CR6 | Symbols: an upright cross for medical appointments, a heart for personal events, the diamond for vaccinations; the same in the controls, the month grid, the lists and Home; clear in all five themes | Mac | FAIL (medical symbol shape only) | 2026-11-27 | Owner, Mac Safari, against `77d263b`. The owner intended a symmetrical plus, not an upright cross with a raised crossbar. Heart and diamond accepted. Corrected in the symbol-correction commit; **awaiting the owner's re-check (CR6b)** |
+| CR7 | A narrow window: three symbols under one day stay readable and don't overlap or enlarge the calendar | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `77d263b` |
+| CR8 | Home: the card is headed “Upcoming Appointments” and still lists medical and personal events | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `77d263b` |
+| CR9 | Settings → Calendar: the text and the Open Calendar link are comfortably inset, like the other sections, in a wide and a narrow window | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `77d263b` |
+| CR6b | Medical appointments now show a simple plus: four equal arms, crossing in the middle, the same thickness throughout, in the theme's color; the same in the control, the month grid, the lists, the event details and Home. Heart and diamond unchanged | Mac | | | Re-check of CR6 against the symbol-correction commit |
+
+**Owner's visual acceptance of `77d263b` (reported 2026-11-27):** CR1–CR5 PASS · CR6 FAIL (medical cross shape only) · CR7–CR9 PASS. **8 passed, 1 failed.** All other refinements are accepted. The failed item was a misunderstanding of the requested shape, corrected in a follow-up commit under targeted testing only (authorized). Final acceptance of the corrected symbol (CR6b) is pending.

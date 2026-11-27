@@ -385,29 +385,38 @@ test('the three overlays switch independently, hiding never deletes, and the cho
   expect((await storedEvents(page)).filter((e) => stored.some((s) => s.id === e.id))).toEqual(stored); // unchanged throughout
 });
 
-test('markers differ by shape, not only color: cross, heart and diamond, used consistently', async ({ page }) => {
+test('markers differ by shape, not only color: plus, heart and diamond, used consistently', async ({ page }) => {
   await start(page);
   await page.getByTestId('overlay-vaccines').click();
   await addEvent(page, { title: 'Fictional checkup', date: '2026-11-20' });
   await addEvent(page, { title: 'Fictional visit', date: '2026-11-20', kind: 'personal' });
   const cell = day(page, '2026-11-20');
   await expect(cell.locator('.cal-mark')).toHaveCount(3);
-  // R-020: an upright cross (medical), a heart (personal), a hollow diamond (recommended vaccinations).
+  // R-020: a plus with four equal arms (medical), a heart (personal), a hollow diamond (recommended vaccinations).
   const shapes = await cell.locator('.cal-mark').evaluateAll((els) => els.map((el) => {
     const cs = getComputedStyle(el);
     const b = el.getBoundingClientRect();
-    const rects = [...el.querySelectorAll('rect')].map((r) => ({ w: Number(r.getAttribute('width')), h: Number(r.getAttribute('height')), y: Number(r.getAttribute('y')) }));
-    return { shape: el.getAttribute('data-shape'), tag: el.tagName.toLowerCase(), hidden: el.getAttribute('aria-hidden'), fill: cs.fill, bg: cs.backgroundColor, rotated: cs.transform !== 'none', outlined: parseFloat(cs.borderTopWidth) > 0, w: b.width, h: b.height, rects, paths: el.querySelectorAll('path').length };
+    const n = (r: Element, a: string) => Number(r.getAttribute(a));
+    const rects = [...el.querySelectorAll('rect')].map((r) => ({ x: n(r, 'x'), y: n(r, 'y'), w: n(r, 'width'), h: n(r, 'height') }));
+    return { shape: el.getAttribute('data-shape'), tag: el.tagName.toLowerCase(), hidden: el.getAttribute('aria-hidden'), fill: cs.fill, bg: cs.backgroundColor, rotated: cs.transform !== 'none', outlined: parseFloat(cs.borderTopWidth) > 0, w: b.width, h: b.height, rects, paths: el.querySelectorAll('path').length, viewBox: el.getAttribute('viewBox') };
   }));
-  expect(shapes.map((x) => x.shape)).toEqual(['cross', 'heart', 'diamond']);
+  expect(shapes.map((x) => x.shape)).toEqual(['plus', 'heart', 'diamond']);
   expect(shapes.every((x) => x.hidden === 'true')).toBe(true); // decorative: the day's name carries the meaning
-  // Cross: one tall upright and one shorter crossbar above the middle (a lowercase-t shape, not an equal-armed cross).
-  const [upright, bar] = shapes[0]!.rects;
+  // Plus: a vertical and a horizontal bar of equal length and equal thickness, crossing at the exact midpoint
+  // of both, centred in a square box. Four equal arms.
+  expect(shapes[0]!.viewBox).toBe('0 0 12 12');
   expect(shapes[0]!.rects).toHaveLength(2);
-  expect(upright!.h).toBeGreaterThan(upright!.w * 4);
-  expect(bar!.w).toBeGreaterThan(bar!.h * 3);
-  expect(bar!.w).toBeLessThan(upright!.h); // arms shorter than the upright
-  expect(bar!.y + bar!.h / 2).toBeLessThan(6); // crossbar above the centre of the 12-unit box
+  const [upright, bar] = shapes[0]!.rects as [{ x: number; y: number; w: number; h: number }, { x: number; y: number; w: number; h: number }];
+  expect(upright.h).toBe(bar.w); // equal length
+  expect(upright.w).toBe(bar.h); // uniform thickness
+  expect(upright.x + upright.w / 2).toBe(6); // both bars centred on the middle of the box…
+  expect(upright.y + upright.h / 2).toBe(6);
+  expect(bar.x + bar.w / 2).toBe(6);
+  expect(bar.y + bar.h / 2).toBe(6); // …so they cross at the midpoint of each
+  const arm = (upright.h - bar.h) / 2;
+  expect((bar.w - upright.w) / 2).toBe(arm); // left/right arms equal the top/bottom arms
+  expect(upright.w).toBeLessThanOrEqual(upright.h / 4); // thin bars: not the thick-armed emblem
+  expect(Math.abs(shapes[0]!.w - shapes[0]!.h)).toBeLessThan(0.5); // drawn square, so the arms stay equal on screen
   expect(shapes[1]).toMatchObject({ tag: 'svg', paths: 1 }); // heart: a single filled path
   expect(shapes[2]).toMatchObject({ tag: 'span', bg: 'rgba(0, 0, 0, 0)', rotated: true, outlined: true }); // hollow diamond, unchanged
   // Theme colors only, and not red on white.
@@ -426,15 +435,15 @@ test('markers differ by shape, not only color: cross, heart and diamond, used co
     if (n > 0) expect(b.l).toBeGreaterThanOrEqual(boxes[n - 1]!.r - 0.5);
   }
   // The same symbols lead the overlay controls and the event rows.
-  await expect(page.getByTestId('overlay-medical').locator('[data-shape="cross"]')).toHaveCount(1);
+  await expect(page.getByTestId('overlay-medical').locator('[data-shape="plus"]')).toHaveCount(1);
   await expect(page.getByTestId('overlay-personal').locator('[data-shape="heart"]')).toHaveCount(1);
   await expect(page.getByTestId('overlay-vaccines').locator('[data-shape="diamond"]')).toHaveCount(1);
   await cell.click();
-  await expect(page.getByTestId('day-events').getByTestId('event-row').nth(0).locator('[data-shape="cross"]')).toHaveCount(1); // Fictional checkup
+  await expect(page.getByTestId('day-events').getByTestId('event-row').nth(0).locator('[data-shape="plus"]')).toHaveCount(1); // Fictional checkup
   await expect(page.getByTestId('day-events').getByTestId('event-row').nth(1).locator('[data-shape="heart"]')).toHaveCount(1); // Fictional visit
   await expect(page.getByTestId('vax-on-day').locator('[data-shape="diamond"]')).toHaveCount(1);
   await page.getByTestId('day-events').getByTestId('event-row').nth(0).click();
-  await expect(page.getByTestId('event-view').locator('[data-shape="cross"]')).toHaveCount(1);
+  await expect(page.getByTestId('event-view').locator('[data-shape="plus"]')).toHaveCount(1);
   await page.keyboard.press('Escape');
   await expect(cell).toHaveAttribute('aria-label', 'Friday, November 20, 2026, 1 medical appointment, 1 personal event, recommended vaccinations');
 });
@@ -808,7 +817,7 @@ test('Home’s New event opens the add form, Upcoming Appointments lists the nex
   const coming = page.getByTestId('home-coming-up');
   await expect(coming.locator('.cal-event-title')).toHaveText(['Fictional visit', 'Fictional checkup', 'Fictional therapy']); // the next three: medical and personal together
   await expect(coming.getByTestId('event-row').nth(0).locator('[data-shape="heart"]')).toHaveCount(1);
-  await expect(coming.getByTestId('event-row').nth(1).locator('[data-shape="cross"]')).toHaveCount(1);
+  await expect(coming.getByTestId('event-row').nth(1).locator('[data-shape="plus"]')).toHaveCount(1);
   await expect(coming).not.toContainText('vaccine');
   await coming.getByTestId('home-open-calendar').click();
   await expect(page.getByTestId('calendar')).toBeVisible();
@@ -899,6 +908,16 @@ for (const theme of ['earth', 'sky', 'blush', 'lavender', 'sage']) {
     await addEvent(page, { title: 'Fictional checkup', date: '2026-11-20', time: '09:30', location: 'Sample Clinic' });
     await addEvent(page, { title: 'Fictional visit', date: '2026-11-26', kind: 'personal' });
     await page.getByTestId('overlay-vaccines').click();
+    // The medical plus takes this theme's own primary color (never a fixed red), in the month grid and the control.
+    const themed = await page.evaluate(() => {
+      const probe = document.createElement('span'); probe.style.color = 'var(--primary)'; document.body.append(probe);
+      const primary = getComputedStyle(probe).color; probe.remove();
+      const fills = [...document.querySelectorAll('[data-shape="plus"]')].map((el) => getComputedStyle(el).fill);
+      return { primary, fills };
+    });
+    expect(themed.fills.length).toBeGreaterThanOrEqual(2);
+    expect(new Set(themed.fills)).toEqual(new Set([themed.primary]));
+    expect(themed.primary).not.toBe('rgb(255, 0, 0)');
     await day(page, '2026-11-20').click();
     for (const id of ['vax-month', 'vax-discuss', 'vax-source-details']) await page.getByTestId(id).locator('summary').click();
     await settle(page);
@@ -957,6 +976,18 @@ for (const width of [320, 390]) {
     for (const b of [...g.nav, ...g.chips, g.add]) expect(b.h).toBeGreaterThanOrEqual(40);
     for (const b of g.nav) expect(b.w).toBeGreaterThanOrEqual(44);
     expect(g.month.h).toBeLessThan(40); // the month name stays on one line
+    // Symbols at this width: the plus is drawn square (equal arms on screen), readable, and inside its day beside the heart.
+    const marks = await day(page, '2026-11-30').evaluate((el) => { const c = el.getBoundingClientRect(); return { cell: { l: c.left, r: c.right, b: c.bottom }, m: [...el.querySelectorAll('.cal-mark')].map((x) => { const b = x.getBoundingClientRect(); return { shape: x.getAttribute('data-shape'), l: b.left, r: b.right, w: b.width, h: b.height, b: b.bottom }; }) }; });
+    expect(marks.m.map((x) => x.shape)).toEqual(['plus', 'heart']);
+    expect(Math.abs(marks.m[0]!.w - marks.m[0]!.h)).toBeLessThan(0.5);
+    for (const x of marks.m) {
+      expect(x.w).toBeGreaterThanOrEqual(8);
+      expect(x.w).toBeLessThanOrEqual(13);
+      expect(x.l).toBeGreaterThanOrEqual(marks.cell.l);
+      expect(x.r).toBeLessThanOrEqual(marks.cell.r);
+      expect(x.b).toBeLessThanOrEqual(marks.cell.b);
+    }
+    expect(marks.m[1]!.l).toBeGreaterThanOrEqual(marks.m[0]!.r - 0.5); // no overlap
     // The form and the details fit too.
     await day(page, '2026-11-30').click();
     await page.getByTestId('day-events').getByTestId('event-row').first().click();

@@ -6,7 +6,7 @@
  * - Exactly three overlays, switched independently and remembered on this device: Recommended vaccine
  *   schedule (off by default; the only prepopulated one), Medical appointments and Personal. Hiding an
  *   overlay only filters what is shown; no record is changed.
- * - Markers differ by shape as well as color (R-020): an upright cross (medical), a heart (personal)
+ * - Markers differ by shape as well as color (R-020): a plus with four equal arms (medical), a heart (personal)
  *   and a hollow diamond (recommended vaccinations).
  * - Vaccine wording is parent-first (R-019): one visible statement about the provider's role, one
  *   visible source line with the non-endorsement, and the full source record in an expandable section.
@@ -60,12 +60,12 @@ export const overlaysOf = (layers: { medical?: boolean; personal?: boolean; vacc
 
 /** Shape marker (decorative: every use has a text equivalent). */
 export function Mark({ kind }: { kind: OverlayId }) {
-  // Medical: a plain upright cross with a short crossbar above the middle (like a lowercase t), in the
-  // theme's own color. It is deliberately not the equal-armed red cross emblem.
+  // Medical: a simple plus. Two bars of equal length and thickness crossing at their midpoints, so the four
+  // arms are equal. Thin bars in the theme's own color: it is not the Red Cross emblem (thick red arms on white).
   if (kind === 'medical') {
     return (
-      <svg class="cal-mark cal-mark-medical" data-shape="cross" viewBox="0 0 12 12" aria-hidden="true" focusable="false">
-        <rect x="5" y="0.5" width="2" height="11" rx="0.4" /><rect x="2" y="3" width="8" height="2" rx="0.4" />
+      <svg class="cal-mark cal-mark-medical" data-shape="plus" viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+        <rect x="5" y="1" width="2" height="10" rx="0.4" /><rect x="1" y="5" width="10" height="2" rx="0.4" />
       </svg>
     );
   }

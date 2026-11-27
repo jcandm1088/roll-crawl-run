@@ -645,7 +645,7 @@ input[type='checkbox'] { width: 20px; height: 20px; accent-color: var(--primary)
 .cal-day.is-selected .cal-num { font-weight: 700; }
 .cal-day:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
 .cal-marks { display: flex; align-items: center; justify-content: center; gap: 2px; height: 10px; }
-/* Overlay markers (R-020): upright cross (medical), heart (personal), hollow diamond (recommended vaccinations). */
+/* Overlay markers (R-020): plus with four equal arms (medical), heart (personal), hollow diamond (recommended vaccinations). */
 .cal-mark { display: inline-block; width: 10px; height: 10px; flex: none; box-sizing: border-box; }
 svg.cal-mark { overflow: visible; }
 .cal-mark-medical { fill: var(--primary); }

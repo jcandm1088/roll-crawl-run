@@ -550,3 +550,30 @@ Environment: Linux cloud container, Node 22.23.5, headless Chromium, no retries.
 - **Bundle:** 562.19 → 564.02 kB (132.00 → 132.33 kB gzip).
 - **Screenshots:** `docs/screenshots/checkpoint-3-r/` (13). The Checkpoint 3 set in `docs/screenshots/checkpoint-3/` is kept as the record of what was accepted.
 
+## Draft entry — Checkpoint 3-R: medical symbol correction (drafted by Claude Code; edit before submitting)
+**Date:** 2026-11-27
+**What I asked Claude Code to do:** after my visual check of `77d263b` (CR1–CR5 and CR7–CR9 passed; CR6 failed on the medical symbol's shape), replace the cross with a symmetrical plus and stop for my final look. Targeted testing only.
+
+**What it produced:** a plus with four equal arms for medical appointments, everywhere the symbol appears; the heart and the diamond untouched; updated geometry, theme and narrow-width tests; an updated screenshot and archive.
+
+**What I corrected or redirected:** (to be completed by the owner) — I had described the symbol as “a simple upright cross, resembling a lowercase t without curves” and meant a plus; the first version was a cross with a raised crossbar, which looked religious.
+
+### Development challenges and lessons learned (continued from #68)
+| # | Challenge | Class | What happened | Outcome |
+|---|---|---|---|---|
+| 69 | **Misread symbol description** | Requirement misunderstanding | “Upright cross, resembling a lowercase t” was implemented literally: a tall upright with a short crossbar above the middle. Claude Code noticed it could read as a religious cross and said so in its report, but built it and left the judgement to the visual check instead of asking first. The owner wanted a symmetrical plus and failed CR6. The automated tests had passed because they checked the shape that was built, not the shape that was meant. | Replaced by a plus with equal bars crossing at their midpoints; the test now checks equal length, uniform thickness, centring and equal arms. **Lesson:** when a visual description has two plausible readings and one has an unwanted connotation, ask or show both before building. |
+
+### Automated results (run by Claude Code in this conversation)
+Environment: Linux cloud container, Node 22.23.5, headless Chromium, no retries. **No Safari, Mac, iPhone or Android testing was performed by Claude Code.** Targeted testing only, as I authorized for this isolated visual correction; **no complete regression cycle was run** (the last one, on `77d263b`, was 427 unit and 251 end-to-end).
+
+| Check | Result |
+|---|---|
+| Type check | Passed |
+| Production build with content validation (JS 564.02 kB, 132.32 kB gzip) | Passed |
+| `calendar.spec.ts` (31 tests: plus geometry and consistent use; five themes with axe and the plus in each theme's color; 320 and 390 px with the plus drawn square inside its day; Settings spacing; everything else in the Calendar suite) | First run 26 of 31: one new assertion expected the plus in three places where the test's own data shows it in two (a test defect, in all five theme tests). After correction **31 of 31** |
+| Upgrade from the accepted 2b-R build (`update.spec.ts`, one test) | Passed |
+| Unit tests (all 21 files) | **427 passed** |
+
+- **Application change:** the two bars' coordinates in the shared symbol component, and two comments. Nothing else.
+- **Not run:** the other end-to-end suites (Growth, goals, exercises, profiles, earlier update tests). They do not use the symbol; full regression resumes at Checkpoint 4.
+- **Screenshots:** `docs/screenshots/checkpoint-3-r/` regenerated (14), including `10-symbols-plus-heart-diamond-320.png` and `-390.png`.

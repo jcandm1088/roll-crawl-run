@@ -129,7 +129,7 @@ Last updated 2026-11-27 (Checkpoint 3 accepted on Mac; refinements R-019 to R-02
 
 ## Checkpoint 3 (Simplified Calendar)
 - ~~**Not yet reviewed by the owner.** Tested only in automated headless Chromium on Linux.~~ *Superseded 2026-11-27:* accepted by the owner in Mac Safari (CAL1–CAL33). **Keyboard operation and offline editing were not human-tested** (automated coverage only). Not tested on an iPhone or Android (Checkpoint 6); not pushed, merged or deployed.
-- **Refinements R-019 to R-022** (wording, symbols, Home heading, Settings spacing) are tested only in automated headless Chromium and await the owner's visual acceptance. They had one complete regression cycle, not three (reduced cadence authorized for this presentation-only round).
+- **Refinements R-019 to R-022** were visually accepted by the owner in Mac Safari except the medical symbol's shape, which was then corrected to a simple plus and awaits a re-check. The refinements had one complete regression cycle, not three; the symbol correction had targeted tests, a type check and a build only (both reductions authorized; full regression resumes at Checkpoint 4).
 - **Parent-facing vaccine notes are the app's paraphrase** of CDC's qualifications where reworded (the exact quantities are kept and checked automatically; the original wording is in the content file and at cdc.gov). They have had no clinical review.
 - **Vaccine schedule reference:**
   - It is a fixed copy of CDC's July 2, 2025 schedule, retrieved November 27, 2026. It does not update itself. CDC's pages said this was its current schedule because of a preliminary court order (March 16, 2026); that can change. **Recheck at Checkpoint 6.**

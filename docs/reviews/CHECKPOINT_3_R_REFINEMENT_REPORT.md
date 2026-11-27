@@ -51,11 +51,11 @@
 ### R-020 — Calendar symbols
 | Group | Symbol | Color |
 |---|---|---|
-| Medical appointments | Upright cross: a tall upright with a shorter crossbar above the middle (like a lowercase t) | `--primary` (the theme's own color) |
+| Medical appointments | **A simple plus** with four equal arms (corrected; see section 6). *First attempt: an upright cross with a raised crossbar* | `--primary` (the theme's own color) |
 | Personal | Heart | `--text` |
 | Recommended vaccine schedule | Hollow diamond (unchanged) | `--text` outline |
 
-Used in the overlay controls, the month grid, the selected-day and Upcoming lists, the event details and Home. The cross is not the equal-armed red cross emblem: its arms are unequal and it takes the theme color. Sizes: 10 px in the grid (9 px below 360 px wide), 12 px elsewhere; day cells did not grow. Three symbols under one day fit inside the day without overlap: checked by an automated test at 390 px, and measured once at 320 px (9 px each, side by side, within the 36.6 px cell; screenshot 10). The cross was drawn as the owner specified; with its short, high crossbar it can also read as a religious cross at small sizes, which the owner may want to judge in the visual check. Accessible names still carry the meaning in words; a marked day now says “recommended vaccinations”.
+Used in the overlay controls, the month grid, the selected-day and Upcoming lists, the event details and Home. The plus is not the Red Cross emblem: its bars are thin and it takes the theme color. Sizes: 10 px in the grid (9 px below 360 px wide), 12 px elsewhere; day cells did not grow. Three symbols under one day fit inside the day without overlap: checked by an automated test at 390 px, and measured once at 320 px (9 px each, side by side, within the 36.6 px cell; screenshot 10). The cross was drawn as the owner specified; with its short, high crossbar it can also read as a religious cross at small sizes, which the owner may want to judge in the visual check. Accessible names still carry the meaning in words; a marked day now says “recommended vaccinations”.
 
 ### R-021 — Home heading
 “Coming up” → “Upcoming Appointments”. The card's behavior is unchanged: the next three parent-entered events, medical and personal, following the overlay choices.
@@ -82,3 +82,26 @@ Points worth a look:
 3. **The selected-day panel no longer says “not an appointment”.** The dashed outline, the diamond and the single statement in the vaccine card carry that distinction.
 4. **Keyboard operation and offline editing** remain unconfirmed by a person (CAL34, CAL35).
 5. **Schedule currency recheck at Checkpoint 6** is still required.
+
+## 6. Visual acceptance and the medical symbol correction (2026-11-27)
+**Owner's visual acceptance of `77d263b6243edd99ea7a8e0d2ce159fab303010f` (reported; Mac Safari):** CR1–CR5 PASS · CR6 FAIL (medical cross shape only) · CR7–CR9 PASS. R-019, R-021, R-022, the heart and the diamond are accepted.
+
+**What was wrong:** Claude Code read “a simple upright cross, resembling a lowercase t without curves” as an upright cross with a short crossbar above the middle, and noted in its report that it could read as a religious cross. The owner intended a symmetrical plus.
+
+**Correction (R-020, medical symbol only):**
+
+| Requirement | Implementation |
+|---|---|
+| Horizontal and vertical lines of equal length | Two bars, each 10 units long in a 12-unit square box |
+| Intersection at the exact midpoint of both | Both bars are centred on the middle of the box (6, 6) |
+| Four equal arms | Each arm is 4 units |
+| Uniform thickness | Both bars are 2 units thick |
+| Theme-compatible color | `--primary`, as before |
+| Not the Red Cross emblem | Thin bars (one sixth of the width) in the theme's color, never a fixed red on white |
+| Used consistently | One shared component draws it in the overlay control, the month grid, the selected-day and Upcoming lists, the event details and Home |
+
+Heart, diamond, sizes (10 px in the grid, 9 px below 360 px wide, 12 px elsewhere), spacing and accessible names are unchanged. The only application change is the two bars' coordinates in `Calendar.tsx` (and two comments).
+
+**Tests (targeted only, as authorized):** the marker test now checks equal bar length, uniform thickness, both bars centred, equal arms, thin bars and a square rendered size; the five theme tests check the plus takes each theme's primary color; the 320 and 390 px tests check it is drawn square, readable and inside its day beside the heart without overlap. Results in `docs/BUILD_LOG.md`.
+
+**Pending:** the owner's re-check of the corrected symbol (CR6b).

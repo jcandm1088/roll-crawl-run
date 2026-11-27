@@ -106,6 +106,23 @@ for (const [w, h] of [[390, 844], [1280, 900]]) {
   await s.shot(`09-settings-calendar-${w}`);
   await s.context.close();
 }
+// 10: the three symbols under one day and in the controls and lists (320 px and 390 px)
+for (const w of [320, 390]) {
+  const s = await session(w, 844);
+  await onboard(s.page, 'Sample Child A', '2026-07-20');
+  await s.page.goto(`${BASE}#/calendar`);
+  await addEvent(s.page, { kind: 'medical', title: 'Fictional checkup', date: '2026-11-20', time: '09:30' });
+  await addEvent(s.page, { kind: 'personal', title: 'Fictional visit', date: '2026-11-20' });
+  await s.page.getByTestId('overlay-vaccines').click();
+  await s.page.locator('[data-date="2026-11-20"]').click();
+  await s.page.addStyleTag({ content: '.topbar{position:static !important} .bottomnav{display:none !important} [data-testid="saved"]{display:none !important}' });
+  await s.page.waitForTimeout(450);
+  const top = await s.page.locator('.cal-card').boundingBox();
+  const bottom = await s.page.getByTestId('selected-day').boundingBox();
+  await s.page.screenshot({ path: new URL(`10-symbols-plus-heart-diamond-${w}.png`, OUT).pathname, fullPage: true, clip: { x: 0, y: top.y - 8, width: w, height: bottom.y + bottom.height - top.y + 16 } });
+  console.log('saved', `10-symbols-plus-heart-diamond-${w}`);
+  await s.context.close();
+}
 // 7: desktop (1280 px), Lavender theme
 {
   const s = await populated(1280, 900, 'Lavender');
