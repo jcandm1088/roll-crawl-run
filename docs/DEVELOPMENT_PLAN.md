@@ -1,6 +1,8 @@
 # Development Plan — Roll, Crawl, RUN: Tracking Growth Together (Revision 2)
 
-> **Current status (2026-11-27, Checkpoint 2b-R):** Checkpoint 1 is completed, accepted and deployed (`e40287f`). Checkpoint 2a is accepted for Mac usability (physical iPhone acceptance pending); not merged, not deployed. Checkpoint 2b (R13) passed the owner's initial Mac Safari acceptance (64 of 65 applicable checks; preserved on `claude/upbeat-thompson-skpm8j` at `64202e2`). The resulting refinements R-010 to R-017 (R14, Checkpoint 2b-R) are implemented in a local commit and await the owner's acceptance; not pushed, merged or deployed. Physical iPhone acceptance of 2a and 2b is pending. Checkpoints 3–6 are planned and not started. The current-state handoff is `docs/HANDOFF.md`.
+> **Current status (2026-11-27, after the 2b-R closeout):** Checkpoint 1 is completed, accepted and deployed (`e40287f`). Checkpoints 2a, 2b and 2b-R are accepted by the owner in Mac Safari (2b-R: GR1–GR15 passed against `b45af43`); all physical-iPhone checks are deferred to Checkpoint 6. Nothing after Checkpoint 1 is merged or deployed. **Submission scope (R15):** Checkpoint 3 (Simplified Calendar) is next, then Checkpoint 4 (Journal; Resources removed from navigation) and Checkpoint 6 (final testing, deployment, iPhone acceptance). Checkpoint 5 and Resources are deferred until after submission. The current-state handoff is `docs/HANDOFF.md`.
+>
+> *Previous status line (2026-11-27, Checkpoint 2b-R implementation, kept as recorded):* **Current status (2026-11-27, Checkpoint 2b-R):** Checkpoint 1 is completed, accepted and deployed (`e40287f`). Checkpoint 2a is accepted for Mac usability (physical iPhone acceptance pending); not merged, not deployed. Checkpoint 2b (R13) passed the owner's initial Mac Safari acceptance (64 of 65 applicable checks; preserved on `claude/upbeat-thompson-skpm8j` at `64202e2`). The resulting refinements R-010 to R-017 (R14, Checkpoint 2b-R) are implemented in a local commit and await the owner's acceptance; not pushed, merged or deployed. Physical iPhone acceptance of 2a and 2b is pending. Checkpoints 3–6 are planned and not started. The current-state handoff is `docs/HANDOFF.md`.
 >
 > *Previous status line (2026-11-27, before 2b-R, kept as recorded):* **Current status (2026-11-27):** Checkpoint 1 is completed, accepted and deployed (`e40287f`). Checkpoint 2a is accepted for Mac usability (physical iPhone acceptance pending); not merged, not deployed. Checkpoint 2b (R13) is implemented locally and awaiting the owner's acceptance; not pushed, merged or deployed. Checkpoints 3–6 are planned and not started. The current-state handoff is `docs/HANDOFF.md`.
 >
@@ -34,7 +36,36 @@
 
 ---
 
-## R14 — Checkpoint 2b-R: Human Acceptance Refinements (implemented; awaiting owner acceptance) — supersedes conflicting R13 text (D7 chart periods, D8 inspiration examples, session removal)
+## R15 — Submission scope revision and Checkpoint 2b-R closeout (owner, 2026-11-27) — supersedes conflicting §6 and §10 text on Checkpoints 3–6, R4 Calendar items and the Resources tab
+**Checkpoint 2b-R:** accepted for continued development (GR1–GR15 passed in Mac Safari against `b45af43`; R-010 to R-017 closed). GR16 and all iPhone, installed-app upgrade and device offline-editing checks → Checkpoint 6. Decisions #118–#124.
+
+**Remaining submission checkpoints** (deadline: about 12 hours preferred, up to 36 acceptable; no post-deployment waiting period):
+
+**Checkpoint 3 — Simplified Calendar** (replaces Calendar & Reminders; standalone record-keeping, not developmental scheduling)
+- Monthly calendar with navigation and today highlighted; date selection; upcoming events.
+- Three independently toggleable overlays: **Recommended vaccine schedule** (off by default; the only automatically populated overlay), **Medical appointments**, **Personal**.
+- Vaccine schedule: an authoritative U.S. childhood schedule, with its content-use permissions researched and verified during Checkpoint 3 (AAP sources remain excluded); source-defined age ranges preserved; recommendations visibly distinct from actual appointments.
+- Parent-entered medical and personal events: title, date, optional time, optional location, optional notes; create, view, edit, delete.
+- Child-specific isolation, local persistence, offline operation, all five themes.
+- **Out of scope:** goal/exercise integration, automatic therapy scheduling, the well-child reference schedule, recurring events, notifications and reminders, external calendar export, personalized vaccine eligibility or catch-up recommendations, vaccination compliance tracking.
+
+**Checkpoint 4 — Journal:** the approved scope (Personal Reflections and Care Notes, local persistence, offline, privacy distinctions). **Resources removed from the primary navigation** in the submission version; source attribution and existing source information stay elsewhere.
+
+**Checkpoint 6 — Final testing, deployment and consolidated physical-iPhone acceptance** (including all deferred iPhone, installed-app upgrade and device offline-editing checks from 2a, 2b and 2b-R).
+
+**Deferred until after submission (not abandoned; approved requirements below and in the original plan remain the reference):**
+- **Resources** (original plan §6 Resources and R4 items).
+- **Backup, export and restoration** (Checkpoint 5; §8.1a merge design, R3 clarifications 1–4, R5 partner theme rule).
+- **Partner sharing and synchronization** (Checkpoint 5; the data model already carries stable ids, logical keys, tombstones and device provenance).
+- **Provider reports** (Checkpoint 5).
+- **Deferred usability refinements:** R-001, R-003, R-009, R-018.
+- **Earlier Calendar ideas** removed from Checkpoint 3 (reminders, export, recurring events, well-child references, exercise scheduling hooks such as `occurrencesBetween`) may be reconsidered later.
+
+**Limitation accepted for submission:** no supported backup or restoration; local data loss can't be recovered.
+
+---
+
+## R14 — Checkpoint 2b-R: Human Acceptance Refinements (implemented; accepted for continued development 2026-11-27, see R15) — supersedes conflicting R13 text (D7 chart periods, D8 inspiration examples, session removal)
 **Authorization:** owner, 2026-11-27, after the initial Mac Safari acceptance of Checkpoint 2b (`64202e2`): Phase A 7/7, B 12/12, C–D 16/16, E 14/14, F 15/16 (reporting period), G not applicable, H positive. Decisions #107–#117; report `docs/reviews/CHECKPOINT_2B_R_REFINEMENT_REPORT.md`.
 
 **Built:**

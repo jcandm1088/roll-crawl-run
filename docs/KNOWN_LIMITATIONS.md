@@ -1,6 +1,6 @@
 # Known Limitations
 
-Last updated 2026-11-27 (Checkpoint 2b-R human acceptance refinements). Earlier sections are kept as dated records; where a later statement supersedes an earlier one, the earlier one is marked. Items marked *(planned)* are scheduled for later checkpoints. Refinements and suspected defects awaiting correction are tracked in `docs/REFINEMENT_BACKLOG.md`.
+Last updated 2026-11-27 (Checkpoint 2b-R closeout and submission scope revision). Earlier sections are kept as dated records; where a later statement supersedes an earlier one, the earlier one is marked. Items marked *(planned)* are scheduled for later checkpoints. Refinements and suspected defects awaiting correction are tracked in `docs/REFINEMENT_BACKLOG.md`.
 
 ## Not built yet (placeholders)
 - ~~Goals & Exercises, recurring activities, CDC activities, and charts *(Checkpoint 2b)*~~ Built at Checkpoint 2b (awaiting the owner's acceptance).
@@ -110,7 +110,7 @@ Last updated 2026-11-27 (Checkpoint 2b-R human acceptance refinements). Earlier 
 - **Multiple open copies:** the same scheduled session can't be recorded twice, and a stale stopwatch or counter shows the newer state instead of overwriting it; but each copy shows its own screen until it reloads or becomes visible again.
 
 ## Checkpoint 2b-R (Human Acceptance Refinements R-010 to R-017)
-- **Not yet reviewed by the owner.** Tested only in automated headless Chromium on Linux (Node.js 22). Not tested in Safari, on a Mac, an iPhone or Android; not pushed, merged or deployed.
+- ~~**Not yet reviewed by the owner.** Tested only in automated headless Chromium on Linux (Node.js 22). Not tested in Safari, on a Mac, an iPhone or Android; not pushed, merged or deployed.~~ *Superseded 2026-11-27:* accepted by the owner in Mac Safari (GR1–GR15 passed); preserved on `claude/vigilant-keller-w6ss5f`; not merged or deployed. **iPhone and Android untested** (iPhone deferred to Checkpoint 6).
 - **Goal ideas (R-010)** are app-written and traced to the verified milestone and activity inventories; the wording and mapping had an editorial review by Claude Code, not a clinical one. They are general possibilities, not individual advice, and the app doesn't check whether one suits a particular child. Coverage ends at 60 months.
 - **Session deletion (R-015):**
   - Deletion has no undo (the confirmation is the safeguard). A content-free tombstone remains on the device for future merge protection (Checkpoint 5); it holds no note or measured value.
@@ -119,3 +119,10 @@ Last updated 2026-11-27 (Checkpoint 2b-R human acceptance refinements). Earlier 
 - **Charts (R-017):** month labels on the 12-month chart are short (“Jan”); the table gives full month names. “Not tracked” for exercises is inferred from the first exercise added on this device or the earliest session, whichever is earlier.
 - **Bundle size:** about 529 KB (123 KB gzip), up from 512 KB (116 KB), mainly the goal-idea content and the source-aware code.
 - **R-018** (shading distinction) is deferred; R-001, R-003 and R-009 remain deferred.
+
+## Submission version (scope revision, 2026-11-27)
+- **No supported backup or restoration.** The submission version has no backup, export or restore feature (Checkpoint 5 is deferred until after submission). Everything lives only in this browser's storage on this device; if that data is lost — browser data cleared, the app removed, the device lost or replaced — it **cannot be recovered**. The app's existing notice that backups aren't available yet remains accurate.
+- **No partner sharing, synchronization or provider reports** (deferred with Checkpoint 5).
+- **No Resources tab** in the submission version (deferred); CDC attribution and source information remain on the relevant screens and in About.
+- **Calendar (Checkpoint 3, planned) is record-keeping only:** no reminders, notifications, recurring events, export, well-child schedule, therapy or exercise scheduling, personalized vaccine eligibility or catch-up advice, or compliance tracking.
+- **Physical-device acceptance is consolidated in Checkpoint 6:** until then, iPhone behaviour of Checkpoints 2a, 2b and 2b-R (layout, installed-app upgrade, offline editing) is unverified.

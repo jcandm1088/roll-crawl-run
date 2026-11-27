@@ -2,6 +2,8 @@
 
 *Prepared by Claude Code on 2026-11-27. Implementation authorized by the owner on 2026-11-27. Automated results come from a Linux container (Node.js 22.23.5, headless Chromium). **Nothing here has been tested in Safari, on a Mac, an iPhone or Android.** Not pushed, merged or deployed.*
 
+> **Closeout (2026-11-27):** accepted by the owner for continued development — GR1–GR15 passed in Mac Safari against `b45af43`; R-010 to R-017 closed; GR16 and all iPhone checks deferred to Checkpoint 6. The commit was later pushed to `claude/vigilant-keller-w6ss5f` with the owner's authorization; not merged or deployed. The statements below are kept as written at implementation time.
+
 Related: Decisions #107–#117, plan R14, REFINEMENT_BACKLOG (R-010 to R-018), goal-idea mapping `CHECKPOINT_2B_R_GOAL_IDEAS.md`, TESTING_CHECKLIST (owner's 2b results; GR1–GR16), BUILD_LOG (challenges #43–#51, three regression cycles), screenshots `docs/screenshots/checkpoint-2b-r/`.
 
 ## 1. Baseline

@@ -435,3 +435,13 @@ Environment: Linux cloud container, Node 22.23.5, headless Chromium (Playwright;
 - **New:** 19 unit tests (goalIdeas 10, sessionDeletion 8, stopwatchCharts +1) and 18 end-to-end tests (`acceptance-2b-r.spec.ts`).
 - **Changed intentionally:** the chart-period unit tests (R-017), the session removal/restore and inspiration e2e tests (R-015, R-010); two pre-existing tests made deterministic (#47, #52). None removed.
 - **Bundle:** 512.39 → 529.04 kB (116.36 → 122.74 kB gzip).
+
+## Draft entry — Checkpoint 2b-R human acceptance closeout and submission scope revision (drafted by Claude Code; edit before submitting)
+**Date:** 2026-11-27
+**What happened:**
+- **Human acceptance (owner, Mac Safari, against `b45af43`):** GR1–GR15 all passed — 15 of 15 applicable checks. Checkpoint 2b-R accepted for continued development; R-010 to R-017 closed. GR16 and all outstanding iPhone, installed-app upgrade and device offline-editing checks deferred to Checkpoint 6.
+- **Automated results (unchanged, recorded earlier):** three consecutive complete cycles of 379 unit and 219 end-to-end tests each, no retries. No new run was needed for this documentation-only closeout.
+- **Preservation:** `b45af43` pushed to `claude/vigilant-keller-w6ss5f` with the owner's authorization (normal push); this closeout commit is pushed the same way. `main` unchanged; no deployment.
+- **Scope revision:** submission deadline about 12 hours (up to 36); the several-days-of-use requirement was removed by the professor. Remaining: Checkpoint 3 (Simplified Calendar), Checkpoint 4 (Journal; Resources removed from navigation), Checkpoint 6 (final testing, deployment, iPhone acceptance). Checkpoint 5 and Resources deferred until after submission. The submission version will have no supported backup or restoration (KNOWN_LIMITATIONS).
+
+**What I corrected or redirected:** (to be completed by the owner) — narrowing the Calendar to a standalone record-keeping feature with a default-off vaccine overlay, removing Resources from the submission, and deferring Checkpoint 5 to fit the deadline.

@@ -348,20 +348,37 @@ Reported by the owner for the local build of `64202e2` in Mac Safari (port 4179)
 
 | # | Check | Where | Result | Date | Notes |
 |---|---|---|---|---|---|
-| GR1 | Update from the 2b build: everything from your 2b testing (goals, exercises, sessions, history, milestones, themes) is unchanged | Mac | | | |
-| GR2 | 4-month-old: Looking for inspiration? shows “Birth to under 6 months” and ideas such as tummy time and cuddle time; nothing for much older children | Mac | | | |
-| GR3 | Choose another age range; the ideas change; your child's own range is still the default next time | Mac | | | |
-| GR4 | Use an idea: the goal name and area are filled in; you can edit them; no target date; nothing is saved until Save goal | Mac | | | |
-| GR5 | Ideas with safety notes (tummy time, rolling, mirror, sitting, walking) show them; the safety link opens the activity | Mac | | | |
-| GR6 | A child with corrected age chosen (or before the due date) gets the right range (or the neutral note) | Mac | | | |
-| GR7 | Activity page (e.g. Tummy time): “Recommended activity”, “Reference age: 2 months”, safety text complete; CDC named only in the Source section, which still has the link and non-endorsement | Mac | | | |
-| GR8 | Add exercise: “How do you want to track it?” and “How often?” line up with their options; Minutes/Seconds are the same size and aligned | Mac | | | |
-| GR9 | Correct a stopwatch session; record one manually; the stopwatch's “Enter duration manually”: Hours/Minutes/Seconds aligned | Mac | | | |
-| GR10 | Delete a session: the confirmation appears with Cancel; Cancel keeps it; Delete removes it with no placeholder; Today's routine, Home and Personal progress update; the slot can be done again | Mac | | | |
-| GR11 | Correct a session's date (move it), then delete it: no trace remains in the list; other sessions are unchanged | Mac | | | |
-| GR12 | Stopwatch: start, refresh, Continue: the recovery notice is tidy, Keep running is the main button; each of the three options works | Mac | | | |
-| GR13 | Progress over time for your 4-month-old: 6 months shows six months (June marked “–” before birth), 1 year shows twelve; the table matches | Mac | | | |
-| GR14 | Exercises view: months before you started tracking are dotted (“Not tracked yet”); a backdated session is counted in its month | Mac | | | |
-| GR15 | All five themes: the ideas page, the recovery notice and the 12-month chart read well | Mac | | | |
-| GR16 | iPhone: the 12-month chart, the duration fields and the recovery notice are comfortable and nothing overflows | iPhone | | | |
+| GR1 | Update from the 2b build: everything from your 2b testing (goals, exercises, sessions, history, milestones, themes) is unchanged | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `b45af43` |
+| GR2 | 4-month-old: Looking for inspiration? shows “Birth to under 6 months” and ideas such as tummy time and cuddle time; nothing for much older children | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `b45af43` |
+| GR3 | Choose another age range; the ideas change; your child's own range is still the default next time | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `b45af43` |
+| GR4 | Use an idea: the goal name and area are filled in; you can edit them; no target date; nothing is saved until Save goal | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `b45af43` |
+| GR5 | Ideas with safety notes (tummy time, rolling, mirror, sitting, walking) show them; the safety link opens the activity | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `b45af43` |
+| GR6 | A child with corrected age chosen (or before the due date) gets the right range (or the neutral note) | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `b45af43` |
+| GR7 | Activity page (e.g. Tummy time): “Recommended activity”, “Reference age: 2 months”, safety text complete; CDC named only in the Source section, which still has the link and non-endorsement | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `b45af43` |
+| GR8 | Add exercise: “How do you want to track it?” and “How often?” line up with their options; Minutes/Seconds are the same size and aligned | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `b45af43` |
+| GR9 | Correct a stopwatch session; record one manually; the stopwatch's “Enter duration manually”: Hours/Minutes/Seconds aligned | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `b45af43` |
+| GR10 | Delete a session: the confirmation appears with Cancel; Cancel keeps it; Delete removes it with no placeholder; Today's routine, Home and Personal progress update; the slot can be done again | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `b45af43` |
+| GR11 | Correct a session's date (move it), then delete it: no trace remains in the list; other sessions are unchanged | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `b45af43` |
+| GR12 | Stopwatch: start, refresh, Continue: the recovery notice is tidy, Keep running is the main button; each of the three options works | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `b45af43` |
+| GR13 | Progress over time for your 4-month-old: 6 months shows six months (June marked “–” before birth), 1 year shows twelve; the table matches | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `b45af43` |
+| GR14 | Exercises view: months before you started tracking are dotted (“Not tracked yet”); a backdated session is counted in its month | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `b45af43` |
+| GR15 | All five themes: the ideas page, the recovery notice and the 12-month chart read well | Mac | PASS | 2026-11-27 | Owner, Mac Safari, against `b45af43` |
+| GR16 | iPhone: the 12-month chart, the duration fields and the recovery notice are comfortable and nothing overflows | iPhone | Deferred | — | Deferred to Checkpoint 6 consolidated final acceptance; not completed |
 
+
+## Checkpoint 2b-R — human acceptance closeout (owner report, 2026-11-27)
+**Human results (reported by the owner; Mac Safari; implementation commit `b45af4326085b822a2b932ef21c4ee96b3954f84`).** Recorded separately from automated results; Claude Code did not observe these tests.
+
+| Group | Checks | Result |
+|---|---|---|
+| Update and existing-data preservation | GR1 | PASS |
+| Goal inspiration, age ranges, editable goals, safety guidance, corrected-age behaviour | GR2–GR6 | PASS |
+| Source attribution, headings, duration-field alignment | GR7–GR9 | PASS |
+| Session deletion, moved-session deletion, stopwatch recovery | GR10–GR12 | PASS |
+| Reporting periods, tracking distinctions, backdated sessions, all five themes | GR13–GR15 | PASS |
+
+**15 of 15 applicable Mac checks passed.** Checkpoint 2b-R is accepted for continued development.
+
+**Deferred to Checkpoint 6 (consolidated final acceptance), not completed:** GR16; all physical-iPhone checks from 2a (HA16, HA17, H16–H18 and related G-items), 2b (GE10 on iPhone, GE23, GE24) and 2b-R; installed-app upgrade testing; device-level offline editing.
+
+**Automated results (Claude Code, headless Chromium; separate from the human results):** three consecutive complete cycles of 379 unit and 219 end-to-end tests each, no retries (BUILD_LOG, Checkpoint 2b-R). No new automated run was made for this documentation-only closeout.

@@ -16,14 +16,14 @@ A living list of refinements and suspected defects that are recorded but not yet
 | R-007 | Consolidate Note and Observations into Notes & Observations | Milestone page | 2026-11-27 (owner usability review) | Accepted for Mac usability (2026-11-27); iPhone pending |
 | R-008 | Explain how to change the age basis on Progress | Progress | 2026-11-27 (owner usability review) | Accepted for Mac usability (2026-11-27); iPhone pending |
 | R-009 | Simplify deleted-entry presentation | Milestone page · Notes & Observations | 2026-11-27 (owner, Mac acceptance) | Deferred (low priority) |
-| R-010 | Age-responsive goal inspiration | My Goals · inspiration | 2026-11-27 (owner, 2b Mac acceptance) | Corrected (awaiting verification) |
-| R-011 | Reduce repetitive CDC attribution on activity pages | Exercises · activity pages | 2026-11-27 (owner, 2b Mac acceptance) | Corrected (awaiting verification) |
-| R-012 | Exercise form heading alignment | Exercises · Add/Edit exercise | 2026-11-27 (owner, 2b Mac acceptance) | Corrected (awaiting verification) |
-| R-013 | Stopwatch target duration input alignment | Exercises · Add/Edit exercise | 2026-11-27 (owner, 2b Mac acceptance) | Corrected (awaiting verification) |
-| R-014 | Session correction duration input alignment | Exercises · session correction | 2026-11-27 (owner, 2b Mac acceptance) | Corrected (awaiting verification) |
-| R-015 | Remove deleted exercise sessions from visible history | Exercises · sessions | 2026-11-27 (owner, 2b Mac acceptance) | Corrected (awaiting verification) |
-| R-016 | Stopwatch recovery interface | Stopwatch | 2026-11-27 (owner, 2b Mac acceptance) | Corrected (awaiting verification) |
-| R-017 | Full historical reporting periods | Progress over time | 2026-11-27 (owner, 2b Mac acceptance) | Corrected (awaiting verification) |
+| R-010 | Age-responsive goal inspiration | My Goals · inspiration | 2026-11-27 (owner, 2b Mac acceptance) | **Verified** (owner, Mac Safari, 2026-11-27; closed) |
+| R-011 | Reduce repetitive CDC attribution on activity pages | Exercises · activity pages | 2026-11-27 (owner, 2b Mac acceptance) | **Verified** (owner, Mac Safari, 2026-11-27; closed) |
+| R-012 | Exercise form heading alignment | Exercises · Add/Edit exercise | 2026-11-27 (owner, 2b Mac acceptance) | **Verified** (owner, Mac Safari, 2026-11-27; closed) |
+| R-013 | Stopwatch target duration input alignment | Exercises · Add/Edit exercise | 2026-11-27 (owner, 2b Mac acceptance) | **Verified** (owner, Mac Safari, 2026-11-27; closed) |
+| R-014 | Session correction duration input alignment | Exercises · session correction | 2026-11-27 (owner, 2b Mac acceptance) | **Verified** (owner, Mac Safari, 2026-11-27; closed) |
+| R-015 | Remove deleted exercise sessions from visible history | Exercises · sessions | 2026-11-27 (owner, 2b Mac acceptance) | **Verified** (owner, Mac Safari, 2026-11-27; closed) |
+| R-016 | Stopwatch recovery interface | Stopwatch | 2026-11-27 (owner, 2b Mac acceptance) | **Verified** (owner, Mac Safari, 2026-11-27; closed) |
+| R-017 | Full historical reporting periods | Progress over time | 2026-11-27 (owner, 2b Mac acceptance) | **Verified** (owner, Mac Safari, 2026-11-27; closed) |
 | R-018 | Greater shading distinction between backgrounds, cards and elements | Visual design · all screens | 2026-11-27 (owner suggestion, 2b Mac acceptance) | Deferred (low priority; reassess after iPhone use) |
 
 ---
@@ -111,7 +111,7 @@ A living list of refinements and suspected defects that are recorded but not yet
 | R-016 | Recovery notice and its three options had inconsistent colours, spacing and alignment | Notice laid out as a column with full-width actions: Keep running (primary), Pause, Enter duration manually | **Visual defect** (a row-flex banner used for a stacked layout) |
 | R-017 | 6 months and 1 year showed the same five months for a young child | Exactly 6 or 12 month positions; before birth “not applicable”, zero shown as 0, not tracked shown separately | **Previously approved, tested requirement (D7) that proved less useful in human testing** |
 
-- **Status:** Corrected (awaiting verification). Covered by automated tests in headless Chromium only. Each becomes **Verified** only after the owner's hands-on acceptance on Mac and, where relevant, iPhone.
+- **Status:** ~~Corrected (awaiting verification).~~ **Verified and closed** (2026-11-27): the owner's Mac Safari retest GR1–GR15 passed against `b45af43`. iPhone confirmation (GR16) is deferred to Checkpoint 6 consolidated acceptance.
 
 ---
 
@@ -127,3 +127,10 @@ A living list of refinements and suspected defects that are recorded but not yet
 ## Checkpoint 2b-R note (2026-11-27)
 - **Legacy-entry concern resolved:** an earlier suspected legacy-entry problem was resolved during human acceptance as a misunderstanding. No legacy-entry interface change was made or authorized.
 - **R-001, R-003 and R-009 remain deferred** and were not changed. R-015 removes placeholders for deleted *exercise sessions* only; Notes & Observations placeholders (R-009) are unchanged.
+
+---
+
+## Checkpoint 2b-R closeout (2026-11-27)
+- **R-010 to R-017:** closed as human-accepted (owner, Mac Safari, GR1–GR15 PASS).
+- **Deferred:** R-001, R-003, R-009 and R-018 stay deferred — after submission, or reassessed during Checkpoint 6 iPhone use (R-018). R-001 (onboarding field overflow on a phone) may be observed again during Checkpoint 6 iPhone acceptance; any correction still needs authorization.
+- **Earlier status lines** in this file that say “Corrected (awaiting verification)” or “iPhone pending” for R-002 and R-004 to R-008 are kept as recorded; their iPhone checks are part of Checkpoint 6.

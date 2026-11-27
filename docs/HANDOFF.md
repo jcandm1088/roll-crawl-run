@@ -2,7 +2,7 @@
 
 **This is the single authoritative, current-state handoff.** It replaces the earlier handoff notes. The original end-of-Checkpoint-1 handoff is kept unchanged as a historical record in `docs/reviews/CHECKPOINT_1_HANDOFF.md`; statements there describe the project as it was at commit `aa8c869` and are no longer current.
 
-*Last updated: 2026-11-27 (Checkpoint 2b-R human acceptance refinements: local commit on `claude/vigilant-keller-w6ss5f`, not pushed). Earlier: Checkpoint 2b, preserved on `claude/upbeat-thompson-skpm8j` (`64202e2`); Checkpoint 2a closeout, preserved on `claude/sharp-franklin-vrbgmd`.*
+*Last updated: 2026-11-27 (Checkpoint 2b-R human acceptance closeout and submission scope revision; documentation-only commit on `claude/vigilant-keller-w6ss5f`, pushed with the owner's authorization). Earlier: Checkpoint 2b-R implementation `b45af43` (pushed); Checkpoint 2b `64202e2` on `claude/upbeat-thompson-skpm8j`; Checkpoint 2a closeout on `claude/sharp-franklin-vrbgmd`.*
 
 ## 1. Status at a glance
 
@@ -11,9 +11,12 @@
 | **Checkpoint 1** — Design & Foundation | ✅ **Completed, accepted and deployed** |
 | **Checkpoint 2a** — Verified Milestone Tracking, the Growth UX refinement (R-002, plan R11) and the human acceptance refinements (R-004 to R-008, plan R12) | ✅ **Accepted by the owner for Mac usability (2026-11-27;** local build of `bf790b5`, macOS, Node.js 26, Safari). **Pending:** physical iPhone acceptance, offline editing on a device, manual legacy-data upgrade verification. Not merged into `main`, not deployed |
 | **Checkpoint 2b** — Goals, Exercises & Historical Progress | ✅ **Initial owner acceptance in Mac Safari: 64 of 65 applicable checks passed** (2026-11-27; Phase G not applicable). Preserved on remote `claude/upbeat-thompson-skpm8j` at `64202e2`. Not merged or deployed. Database version 3. iPhone pending |
-| **Checkpoint 2b-R** — Human Acceptance Refinements R-010 to R-017 | 🧪 **Implemented, awaiting the owner's acceptance.** One local commit on `claude/vigilant-keller-w6ss5f` on top of `64202e2`. **Not pushed, merged or deployed.** Tested only in headless Chromium. Database version 3 unchanged |
-| **Checkpoints 3–6** — Calendar, Journal & Resources, Backups/Sharing/Reports, Device polish | ⏳ **Planned, not started.** Checkpoints 3 and 5 have pending decisions (section 5) |
-| **Deferred** | R-018 (shading), R-001, R-003, R-009; project license; GitHub Actions version upgrades; live multi-device sync and other 🔮 Future items in the plan |
+| **Checkpoint 2b-R** — Human Acceptance Refinements R-010 to R-017 | ✅ **Accepted for continued development** (owner, Mac Safari, 2026-11-27): **all 15 applicable Mac checks (GR1–GR15) passed** against `b45af43`. GR16 (iPhone) deferred to Checkpoint 6. Preserved on remote `claude/vigilant-keller-w6ss5f`. Not merged or deployed. Database version 3 |
+| **Checkpoint 3** — Simplified Calendar (revised scope, plan R15) | ⏳ **Next; not started.** Standalone record-keeping calendar with vaccine-schedule, medical and personal overlays. Needs separate authorization to begin |
+| **Checkpoint 4** — Journal (Resources tab removed from the submission version) | ⏳ Planned, not started |
+| **Checkpoint 6** — Final testing, deployment and consolidated physical iPhone acceptance | ⏳ Planned, not started |
+| **Checkpoint 5** — Backups, export/restore, partner sharing, provider reports; and **Resources** | ⏸ **Deferred until after submission** (not abandoned) |
+| **Deferred** | Checkpoint 5 and Resources (after submission); R-018 (shading), R-001, R-003, R-009; project license; GitHub Actions version upgrades; live multi-device sync and other 🔮 Future items in the plan |
 
 ## 2. Repository, branches and deployment
 
@@ -26,20 +29,30 @@
 | **Remote `checkpoint-2a`** | `73d9f6fc356b3f792a9f71cc8f38ff421e13581d` (Checkpoint 2a: Verified Milestone Tracking), a direct child of `aa8c869`. This is the **recovered original commit** (section 6) |
 | Branch `claude/beautiful-allen-1vjobt` (remote) | `170cc99` “Checkpoint 2a: Growth UX Refinement”, preserved with the owner's authorization |
 | Branch `claude/upbeat-thompson-skpm8j` (remote) | `64202e22f3183e81d572a4115f03bb5f080b18f6` “Checkpoint 2b: Personal Goals, Exercises and Historical Progress” on top of `53d6212` (13 commits). Preserved remotely by the previous conversation |
-| Session branch `claude/vigilant-keller-w6ss5f` | Fast-forwarded to `64202e2` (13 commits, no history rewritten), then the local commit “Checkpoint 2b-R: Human Acceptance Refinements”. **Not pushed** (the authorization excludes pushing); the hash is in the 2b-R report and the final message |
+| Session branch `claude/vigilant-keller-w6ss5f` (remote) | Fast-forwarded to `64202e2` (13 commits, no history rewritten), then `b45af4326085b822a2b932ef21c4ee96b3954f84` “Checkpoint 2b-R: Human Acceptance Refinements” (14; pushed with the owner's authorization, normal push) and the documentation-only “Checkpoint 2b-R: Human Acceptance Closeout and Submission Scope Revision” (15). Not merged; no deployment |
 | Session branch `claude/sharp-franklin-vrbgmd` (remote) | Fast-forwarded to `170cc99`, then “Checkpoint 2a: Human Acceptance Refinements” (`8843a2506b0e284b365ec048406d9b6b92d0503b`) and “Checkpoint 2a: Final Review and Erasure Regression Coverage”. Preserved on this remote branch with the owner's explicit authorization (2026-11-27) after a publication safety review. Normal push, no force; not merged; no deployment |
 
 **History:** `a4e12b5` → `ade3171` → `820bb0e` → `873ed1c` → `e40287f` → `aa8c869` → `73d9f6f` → `9ca6149` → `170cc99` → `8843a25` (Human Acceptance Refinements) → `bf790b5` Final Review and Erasure Regression Coverage (eleven commits) → `53d6212` (2a closeout, 12) → `64202e2` (Checkpoint 2b, 13) → “Checkpoint 2b-R: Human Acceptance Refinements” (local, 14).
 
 `main` is not to receive Checkpoint 2a until the owner accepts it and authorizes the merge. Pushing never deploys: deployment is a separate manual workflow (section 7).
 
-## 3e. Checkpoint 2b-R — Human Acceptance Refinements (implemented, awaiting acceptance)
+## 3f. Submission scope revision (owner, 2026-11-27)
+- **Deadline:** preferably about 12 hours; up to 36 hours acceptable. The professor removed the several-days-of-use requirement; no post-deployment waiting period is needed.
+- **Remaining submission checkpoints:** 3 (Simplified Calendar), 4 (Journal; Resources tab removed from navigation), 6 (final testing, deployment, consolidated iPhone acceptance).
+- **Deferred until after submission (not abandoned):** Checkpoint 5 (backup, export and restoration; partner sharing and synchronization; provider reports) and Resources; R-001, R-003, R-009, R-018.
+- **Consequence:** the submission version has **no supported backup or restoration** if local data is lost (KNOWN_LIMITATIONS).
+- Details: plan R15, Decisions #118–#124.
+
+## 3e. Checkpoint 2b-R — Human Acceptance Refinements (accepted for continued development)
+- **Human acceptance (owner, Mac Safari, against `b45af43`):** GR1–GR15 all PASS (15 of 15 applicable). GR16 and all physical-iPhone, installed-app upgrade and device offline-editing checks are **deferred to Checkpoint 6**, not completed.
+- **Automated (Claude Code, headless Chromium, separate from the human results):** 379 unit + 219 end-to-end, three consecutive cycles, no retries.
+- R-010 to R-017 closed as human-accepted (REFINEMENT_BACKLOG).
 - **Why:** the owner's Mac Safari acceptance of 2b (64/65; TESTING_CHECKLIST) found R-010 to R-017. R-018 recorded and deferred.
 - **What:** R-010 age-responsive goal ideas; R-011 centralized attribution; R-012–R-014 form and duration alignment; R-015 session deletion without placeholders; R-016 recovery notice; R-017 full reporting periods. Plan R14, Decisions #107–#117, `docs/reviews/CHECKPOINT_2B_R_REFINEMENT_REPORT.md`, `docs/reviews/CHECKPOINT_2B_R_GOAL_IDEAS.md`.
 - **Data:** database version 3 unchanged; deleted sessions are content-free tombstones. Upgrade tests from Checkpoint 1, 2a and `53d6212` still pass.
 - **Results:** 379 unit + 219 end-to-end, three consecutive cycles (BUILD_LOG).
-- **Human retest:** GR1–GR16 in TESTING_CHECKLIST.
-- **Next, each needing separate owner authorization:** acceptance of 2b-R; preserving the commit remotely (this session may push only to `claude/vigilant-keller-w6ss5f`); merging into `main`; deployment (needed for iPhone testing unless a local-network test is set up); Checkpoint 3.
+- **Human retest:** GR1–GR16 in TESTING_CHECKLIST (results recorded there).
+- *(Earlier “next steps” — acceptance and remote preservation — are done.)* **Next, each needing separate owner authorization:** beginning Checkpoint 3; merging into `main`; deployment.
 
 ## 3d. Checkpoint 2b — Goals, Exercises & Historical Progress (initial Mac acceptance 64/65; refined by 2b-R)
 - **What:** plan R13, Decisions #89–#106, `docs/reviews/CHECKPOINT_2B_IMPLEMENTATION_REPORT.md` (requirement-by-requirement report), `docs/reviews/CHECKPOINT_2B_ACTIVITY_INVENTORY.md`, `docs/reviews/CHECKPOINT_2B_IMPLEMENTATION_PLAN.md` (approved plan, preserved).
@@ -125,19 +138,21 @@ Acceptance is complete only when the owner says so. Defects found during accepta
 | Decision | Needed before | Notes |
 |---|---|---|
 | ~~Owner acceptance of Checkpoint 2a for Mac usability~~ | — | **Done** (2026-11-27, section 3c) |
-| Physical iPhone acceptance, offline editing on a device, manual legacy-data upgrade verification | Full acceptance on iPhone | Needs a deployment or a local-network test the owner sets up |
+| Physical iPhone acceptance, offline editing on a device, installed-app upgrade, manual legacy-data upgrade verification | Checkpoint 6 (consolidated final acceptance) | Needs a deployment. Deferred to Checkpoint 6 by the owner (2026-11-27) |
 | Merge Checkpoint 2a into `main`, and deploy | iPhone testing, Checkpoint 2b | Separate owner authorization |
 | ~~Gender-neutral display wording vs CDC's condition 3~~ | — | **Resolved:** owner determination, Decision #86 |
 | ~~Legacy personal entries: optional conversion to goals, permanent deletion~~ | — | **Built at 2b** (D9, D10): explicit Move to My Goals and Delete permanently; nothing automatic |
 | ~~Remote preservation of the acceptance-refinement work~~ | — | **Done:** `claude/sharp-franklin-vrbgmd` (owner-authorized) |
-| Remote preservation of the refinement commit | Avoiding loss in a conversation transfer | Push to the session branch only with authorization |
+| ~~Remote preservation of the 2b-R commits~~ | — | **Done:** `claude/vigilant-keller-w6ss5f` (owner-authorized, normal push) |
 | Option B educational excerpts | Optional | Deferred (D-10) |
 | ~~Authorization to begin Checkpoint 2b~~ | — | **Given 2026-11-27**; implemented |
 | ~~Owner acceptance of Checkpoint 2b~~ | — | **Initial Mac acceptance done** (64/65); refinements → 2b-R |
-| Owner acceptance of Checkpoint 2b-R; remote preservation; merge; deployment; iPhone acceptance | Checkpoint 3 | Each needs separate authorization |
+| ~~Owner acceptance of Checkpoint 2b-R~~ | — | **Accepted for continued development** (GR1–GR15 pass) |
+| Authorization to begin Checkpoint 3; merge into `main`; deployment | Submission | Each needs separate authorization |
+| Vaccine schedule source and its content-use permissions | Checkpoint 3 | To be researched and verified during Checkpoint 3 (U.S. childhood schedule; AAP sources remain excluded) |
 | Pathways.org terms review | Any collection or analysis of Pathways.org content | Domain is reachable but its content must not be collected until terms are reviewed and approved |
-| Alternative well-child visit and vaccine reference sources | Checkpoint 3 | AAP/Bright Futures and the AAP immunization schedule are blocked by the AAP exclusion. CDC/ACIP not yet retrieved |
-| Partner-sharing theme behavior (plan R5) | Checkpoint 5 | The proposed rule needs the owner's confirmation |
+| ~~Alternative well-child visit reference sources~~ | — | **Out of scope:** the well-child reference schedule was removed from Checkpoint 3 (Decision #119) |
+| Partner-sharing theme behavior (plan R5) | Checkpoint 5 (after submission) | The proposed rule needs the owner's confirmation |
 | GitHub Actions version upgrades | Before relying on future deployments | Deferred pending review (Decisions #46 and #61) |
 | Project license | Deferred | No license chosen; third-party licenses are included |
 
@@ -165,9 +180,9 @@ It never merges into `main` and never deploys. Claude Code must respect any sess
 ## 8. Approved decisions to carry forward
 **Platform and data:** Vite + TypeScript + Preact; IndexedDB (`idb`), local-first; no accounts, servers, analytics or AI; strict content security policy; offline-first service worker; atomic multi-record writes.
 
-**Navigation and screens:** five tabs (Home, Growth, Calendar, Journal, Resources); Profiles and Settings from the top-right control; the child selector is a downward popover. **Growth order (Decision #65; corrected here 2026-11-27, this line previously showed the superseded R4 order):** Progress → Milestone Library → Goals & Exercises → What to Expect at Every Age.
+**Navigation and screens:** five tabs (Home, Growth, Calendar, Journal, Resources) — *submission version (Checkpoint 4): Resources is removed from the primary navigation; source attribution stays elsewhere*; Profiles and Settings from the top-right control; the child selector is a downward popover. **Growth order (Decision #65; corrected here 2026-11-27, this line previously showed the superseded R4 order):** Progress → Milestone Library → Goals & Exercises → What to Expect at Every Age.
 
-**Design principle:** parent-first interface, evidence-backed infrastructure (DESIGN_SYSTEM). **Calendar** (Checkpoint 3) opens straight to the current month with today highlighted, month navigation, an agenda view and upcoming events. **Settings:** Profiles and Appearance open; Your Data, Calendar & Reminders, This Device and About collapsed.
+**Design principle:** parent-first interface, evidence-backed infrastructure (DESIGN_SYSTEM). **Calendar** (Checkpoint 3, simplified scope R15) opens straight to the current month with today highlighted, month navigation, date selection and upcoming events; overlays for the recommended vaccine schedule (off by default), medical appointments and personal events. **Settings:** Profiles and Appearance open; Your Data, Calendar & Reminders, This Device and About collapsed.
 
 **Appearance:** themes Earth (default), Sky, Blush (baby pink), Lavender, Sage, chosen per child and stored per device. Typography Option B (Inter for all functional text, Fraunces only for the wordmark; shared heading tokens and `PageHeader`). Logo Concept 5, “Growing Together”.
 
