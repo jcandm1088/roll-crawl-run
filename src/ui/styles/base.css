@@ -149,7 +149,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   padding: 0 calc(var(--safe-right) + var(--space-2)) var(--safe-bottom) calc(var(--safe-left) + var(--space-2));
   box-shadow: 0 -4px 20px var(--shadow-color);
 }
-.bottomnav ul { list-style: none; margin: 0 auto; padding: 0; max-width: var(--content-max); display: grid; grid-template-columns: repeat(5, 1fr); }
+.bottomnav ul { list-style: none; margin: 0 auto; padding: 0; max-width: var(--content-max); display: grid; grid-template-columns: repeat(4, 1fr); }
 .navlink {
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
   min-height: var(--nav-height); padding: var(--space-2) 0;
@@ -672,3 +672,50 @@ p > .cal-mark-vaccines { margin-right: 8px; vertical-align: 0; }
 }
 .vax-next:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 @media (max-width: 359px) { .cal-marks { gap: 1px; } .cal-grid .cal-mark { width: 9px; height: 9px; } .cal-grid .cal-mark-vaccines { width: 6.5px; height: 6.5px; } }
+
+/* ---------- Journal (Checkpoint 4) ---------- */
+/* Two entry types, told apart by label and icon first; the edge and badge tints are a second, subtle cue
+   built only from each theme's existing tokens. */
+.journal-filters .more-details { margin-top: var(--space-1); }
+.journal-count { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2) var(--space-3); margin-top: var(--space-2); }
+.journal-feed { margin-top: var(--space-4); }
+.journal-feed > li + li { margin-top: var(--space-3); }
+.journal-card { padding: 0; overflow: hidden; border-left: 4px solid var(--border-strong); }
+.journal-card-reflection { border-left-color: var(--primary); }
+.journal-open {
+  display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2); width: 100%; min-height: var(--touch);
+  padding: var(--space-4); border: 0; background: transparent; color: var(--text); font: inherit; text-align: left; cursor: pointer;
+}
+.journal-open:focus-visible { outline: 2px solid var(--focus); outline-offset: -3px; border-radius: var(--radius-md); }
+.journal-meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); margin: 0; }
+.journal-type-care { background: var(--surface-sunken); color: var(--text); }
+.journal-title { font-weight: 600; font-size: var(--text-lg); line-height: 1.35; overflow-wrap: anywhere; }
+.journal-excerpt {
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 5; line-clamp: 5; overflow: hidden;
+  white-space: pre-line; overflow-wrap: anywhere; line-height: 1.5; max-width: 100%;
+}
+.journal-tags { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; }
+.journal-tags .tag-mini { max-width: 100%; overflow-wrap: anywhere; }
+.journal-card > .journal-tags { padding: 0 var(--space-4) var(--space-4); }
+.journal-question {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2) var(--space-3);
+  padding: var(--space-3) var(--space-4); background: var(--surface-sunken); border-radius: var(--radius-md);
+}
+.journal-card > .journal-question { border-radius: 0; border-top: 1px solid var(--border); }
+.journal-empty { margin-top: var(--space-4); text-align: center; display: flex; flex-direction: column; align-items: center; gap: var(--space-2); }
+.journal-empty .icon { color: var(--text-muted); }
+.journal-body { min-height: 200px; }
+.journal-body-text { margin: 0; line-height: 1.6; }
+.choice > .icon { flex: none; }
+#entry-error { scroll-margin: var(--space-6); }
+[data-testid='question-controls'] .choice + .choice { margin-top: var(--space-2); }
+.journal-view { display: flex; flex-direction: column; gap: var(--space-4); }
+.journal-question .btn { background: var(--surface); color: var(--text); border-color: var(--border-strong); }
+.journal-open > * { max-width: 100%; min-width: 0; }
+/* Long unbroken words (a pasted address, a title without spaces) wrap inside a sheet instead of widening it. */
+.sheet > .title-2, .sheet p { overflow-wrap: anywhere; }
+.journal-filters .input-row > .field { min-width: 0; }
+@media (max-width: 359px) {
+  /* Two date fields side by side don't fit on the narrowest phones: stack them. */
+  .journal-filters .input-row { flex-direction: column; }
+}

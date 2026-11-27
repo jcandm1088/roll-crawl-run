@@ -58,7 +58,8 @@ test('each child keeps their own theme; switching applies it everywhere', async 
 
 test('switching children from every tab applies the selected child’s theme', async ({ page }) => {
   await twoChildren(page);
-  for (const tab of ['home', 'growth', 'calendar', 'journal', 'resources']) {
+  // Checkpoint 4: four primary tabs (Resources was removed from the navigation).
+  for (const tab of ['home', 'growth', 'calendar', 'journal']) {
     await page.goto(`./#/${tab}`);
     await switchTo(page, 'Sample Child A');
     await expectTheme(page, 'sage');
@@ -188,7 +189,8 @@ test('all primary tab headings share identical typography (Inter) and placement'
   await completeOnboarding(page);
   const styles: string[] = [];
   const tops: number[] = [];
-  for (const tab of ['growth', 'calendar', 'journal', 'resources']) {
+  // Checkpoint 4: four primary tabs (Resources was removed from the navigation).
+  for (const tab of ['growth', 'calendar', 'journal']) {
     await page.goto(`./#/${tab}`);
     const h = page.getByTestId('page-title');
     await h.waitFor();

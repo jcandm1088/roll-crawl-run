@@ -5,7 +5,6 @@ import { useToday } from '../../../state/today';
 import { formatLongDate } from '../../../domain/dates';
 import { Avatar, childDisplayName } from '../../components/Avatar';
 import { Icon } from '../../components/Icon';
-import { PlaceholderCard } from '../../components/Placeholder';
 import { href, navigate } from '../../../router';
 import { useChildMilestones } from '../../../state/milestones';
 import { currentProgress, getMilestone } from '../../../domain/milestones';
@@ -90,11 +89,10 @@ export function Home() {
             <Icon name="sprout" />
             <span>Record a milestone</span>
           </a>
-          <div class="quick-action" aria-disabled="true" aria-label="Journal entry — coming soon">
+          <a class="quick-action active" href={href({ name: 'journal', add: true })} data-testid="qa-journal-entry">
             <Icon name="notebook" />
             <span>Journal entry</span>
-            <span class="xsmall" style={{ fontWeight: 500 }}>Coming soon</span>
-          </div>
+          </a>
           <a class="quick-action active" href={href({ name: 'calendar', add: true })} data-testid="qa-new-event">
             <Icon name="calendar" />
             <span>New event</span>
@@ -107,13 +105,6 @@ export function Home() {
       <HomeMilestoneCards />
 
       <HomeComingUp />
-
-      <div class="section">
-        <h2 class="title-2 section-title">Coming next</h2>
-        <PlaceholderCard icon="heart" title="Daily encouragement">
-          A gentle note for each day.
-        </PlaceholderCard>
-      </div>
     </div>
   );
 }

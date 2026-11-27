@@ -43,8 +43,8 @@ export type Route =
   | { name: 'progressHistory'; view: 'milestones' | 'goals' | 'exercises' }
   /** add: opened from Home's “New event”; the Calendar opens with the Add event form. */
   | { name: 'calendar'; add?: boolean }
-  | { name: 'journal' }
-  | { name: 'resources' }
+  /** add: opened from Home’s “Journal entry”; the Journal opens with the new entry form. */
+  | { name: 'journal'; add?: boolean }
   | { name: 'settings' }
   | { name: 'privacy' }
   | { name: 'storage' }
@@ -89,8 +89,7 @@ export function parseHash(hash: string): Route {
     case 'calendar':
       return b === 'add' ? { name: 'calendar', add: true } : { name: 'calendar' };
     case 'journal':
-    case 'resources':
-      return { name: a };
+      return b === 'new' ? { name: 'journal', add: true } : { name: 'journal' };
     case 'settings':
       if (b === 'privacy' || b === 'storage' || b === 'install' || b === 'about') return { name: b };
       return { name: 'settings' };
@@ -184,6 +183,8 @@ export function href(route: Route): string {
       return route.interval === null ? '#/growth/expect' : `#/growth/expect/${route.interval}`;
     case 'calendar':
       return route.add ? '#/calendar/add' : '#/calendar';
+    case 'journal':
+      return route.add ? '#/journal/new' : '#/journal';
     case 'profileEdit':
       return `#/profiles/${encodeURIComponent(route.id)}${route.section === 'age' ? '/age' : ''}`;
     default:

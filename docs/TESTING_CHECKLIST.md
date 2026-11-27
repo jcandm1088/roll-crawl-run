@@ -514,3 +514,58 @@ Reported by the owner for the local build of `64202e2` in Mac Safari (port 4179)
 - physical-iPhone acceptance (CAL36, with the earlier deferred iPhone, installed-app upgrade and device offline-editing checks from 2a, 2b and 2b-R);
 - the vaccine schedule currency recheck (Decision #125);
 - a complete regression cycle covering `c8aa0c5` (resumes at the start of Checkpoint 4).
+
+## Checkpoint 4 — automated (headless Chromium; results in BUILD_LOG)
+- **Unit (45 new):** `journal.test.ts` (24: validation of text, dates, titles, tags and types; the provider-question rules; tag parsing; feed order; search and each filter alone and combined; stored-record recognition; the Journal and Resources routes) and `journalRepo.test.ts` (21: the existing store at database version 3; create, edit and outright deletion for both types; long entries; idempotent retried saves; the answered status changing one field only; invalid input and simulated storage failures rolled back; unrecognised records untouched; child isolation, including a save that follows the editor's child; profile deletion; full reset; no effect on milestone, goal, calendar or settings records).
+- **End-to-end (29 new):** `journal.spec.ts` (28): four-tab navigation and the removal of Resources; the empty state; the privacy notice; both entry types (create, view, edit, delete, optional title and tags, backdating); distinct types; feed order; a 9,000-character entry; validation; simulated failures of save, edit, answered change and deletion; the discard-changes question (Cancel, Escape, tap outside, new and edited entries); search and combined filters with no-results and clearing; saving while filtered; provider questions; child isolation including search, tags, tag suggestions and an editor open while the active child changes in another window; profile deletion and full reset; reload and reopen; offline create, edit, answer, filter and delete; Home's shortcut; source attribution without Resources; keyboard and focus; axe in all five themes; 320 and 390 px layouts. `update.spec.ts` (+1): upgrade from the accepted Checkpoint 3 build (`c8aa0c5`) with every record identical and **both stored photographs compared byte for byte**, then the Journal used on the upgraded data.
+- **Changed intentionally (authorized requirement change: four tabs, no Resources, no placeholders):** the bottom-navigation count (5 → 4); the tab lists in the child-selector, per-child-theme and shared-heading tests; the Resources line in the Growth wording test; the screen list in the no-development-wording test; and the Checkpoint 1 placeholder-tab test, which now checks that no primary tab is a placeholder. No other existing assertion was changed.
+- **Not covered by automation:** Safari, iPhone, Android; native date pickers; the on-screen keyboard with the bottom sheet and a long entry; dictation and autocorrect; an installed-app update on a device.
+
+## Checkpoint 4 — human acceptance checklist (owner; record actual results)
+**Mac** = local production build of the Checkpoint 4 commit in Safari (`npm ci`, `npm run build`, `npm run preview`). Use fictional data only. Record PASS, FAIL or N/A for each. **iPhone** items are deferred to Checkpoint 6 unless you choose to test over the local network. *Claude Code has not performed any of these.*
+
+### A. Update and navigation
+- **J1** With existing data from the Checkpoint 3 build (profiles, a photo, milestones, goals, exercises, calendar events), open the new build: everything is still there and looks the same.
+- **J2** The bottom navigation shows exactly Home, Growth, Calendar, Journal, evenly spaced. There is no Resources tab anywhere. The settings button (top right) still opens Settings.
+- **J3** Home: “Journal entry” opens the Journal with a new entry form. “Record a milestone” and “New event” still work. Confirm you are content that the “Daily encouragement” placeholder is gone (Decision #168).
+
+### B. Writing entries
+- **J4** Empty Journal: the heading, one “New Journal Entry” button, a friendly empty state and the privacy note read well.
+- **J5** Save a Personal Reflection with only some text (no title, no tags). It appears dated “Today”.
+- **J6** Save a Care Note with a title, two tags and an earlier date. It appears in the right place in the feed.
+- **J7** Try to save with no text, and with tomorrow's date: a clear message appears and what you typed stays.
+- **J8** Write a long entry (several paragraphs). Typing is comfortable; the feed shows the beginning; opening it shows all of it with line breaks kept.
+- **J9** Open an entry, edit every field including the type, and save. The feed updates.
+- **J10** Delete an entry: “Cancel — keep it” keeps it; “Delete entry” removes it.
+
+### C. Two kinds of entry
+- **J11** Personal Reflections and Care Notes are easy to tell apart at a glance (label, icon, edge) without feeling like two different apps.
+- **J12** A Personal Reflection never shows provider-question controls, in the feed, when open, or in its editor.
+- **J13** Check the feed in each of the five themes (Settings → Appearance): both types remain clear and readable.
+
+### D. Finding entries
+- **J14** Search finds words in titles and in text; capitals don't matter.
+- **J15** All / Personal Reflections / Care Notes filter the feed.
+- **J16** Under “Dates and tags”: a From/To range and one or more tags narrow the feed; combining them with search and type works as you expect.
+- **J17** A search with no matches shows “No matching entries”; “Clear search and filters” brings everything back.
+
+### E. Questions for the provider
+- **J18** Tick “This includes a question for the provider” on a Care Note. The card shows “Question for the provider · Unanswered”.
+- **J19** “Unanswered questions (n)” near the top is easy to find, shows the right number, and lists only unanswered questions.
+- **J20** “Mark answered” changes the status; the note stays in the ordinary feed with its text unchanged. “Mark unanswered” reverses it.
+- **J21** Edit an answered question to add what the provider said. It saves and stays answered.
+
+### F. Unsaved changes and profiles
+- **J22** Start an entry, type something, then press Cancel, press Escape, and click outside the form: each asks “Discard your changes?”. “Keep writing” returns to your text; “Discard changes” closes without saving. An untouched form closes without asking.
+- **J23** With two children: each has their own Journal. Search and tags in one never show the other's entries. Switching children refreshes the feed.
+- **J24** While an entry form is open, the child selector can't be used.
+- **J25** Delete a test profile: its Journal entries are gone and the other child's remain.
+
+### G. Persistence, offline, privacy and layout
+- **J26** Reload the page and quit and reopen Safari: entries, tags and answered statuses are unchanged.
+- **J27** Turn Wi-Fi off (after the app has loaded once): open the Journal, create, edit and delete an entry, switch tabs. Turn Wi-Fi on again.
+- **J28** The privacy note at the foot of the Journal is clear, appears once, and promises nothing the app doesn't do. Settings → Privacy agrees with it.
+- **J29** Narrow the Safari window to phone width (about 320–390 px): the feed, filters, an open entry and the editor fit without sideways scrolling.
+- **J30** Keyboard only (Tab, Shift+Tab, Enter, Space, Escape): create an entry, open it, mark it answered, delete it. Focus is always visible and stays inside open forms.
+- **J31** Source information is still easy to find without Resources: Settings → About, Growth → Milestone Library → About these milestones, and the Calendar's Source section.
+- **J32 (iPhone, deferred to Checkpoint 6)** Installed app: writing a long entry with the on-screen keyboard, dictation, the date picker, offline use, and the four-tab bar above the home indicator.

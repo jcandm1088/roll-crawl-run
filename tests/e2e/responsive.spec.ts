@@ -16,6 +16,6 @@ for (const width of [320, 390, 768, 1280]) {
 test('bottom navigation targets are at least 48px tall', async ({ page }) => {
   await completeOnboarding(page);
   const boxes = await page.locator('.navlink').evaluateAll((els) => els.map((e) => e.getBoundingClientRect().height));
-  expect(boxes).toHaveLength(5);
+  expect(boxes).toHaveLength(4); // Checkpoint 4: Resources left the primary navigation (Home, Growth, Calendar, Journal)
   for (const h of boxes) expect(h).toBeGreaterThanOrEqual(48);
 });

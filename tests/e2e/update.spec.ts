@@ -26,6 +26,9 @@ const ACCEPTED_CHECKPOINT_2A = '53d6212d9a7d99854e7195df7979a9a5758b88de';
 /** The accepted Checkpoint 2b-R implementation (human-accepted in Mac Safari), database version 3, before the Calendar. */
 const ACCEPTED_CHECKPOINT_2B_R = 'b45af4326085b822a2b932ef21c4ee96b3954f84';
 
+/** The final accepted Checkpoint 3 build (Calendar, refinements and the medical symbol correction), before the Journal. */
+const ACCEPTED_CHECKPOINT_3 = 'c8aa0c54350fbe79df7bbeb4a40448560e20b265';
+
 const ROOT = join(process.cwd(), '.tmp-update-test');
 const PORT = 4190;
 const TYPES: Record<string, string> = {
@@ -74,6 +77,11 @@ test.beforeAll(() => {
   execFileSync('sh', ['-c', `git archive ${ACCEPTED_CHECKPOINT_2B_R} | tar -x -C "${brSrc}"`]);
   symlinkSync(join(process.cwd(), 'node_modules'), join(brSrc, 'node_modules'));
   execFileSync('npx', ['vite', 'build', '--outDir', join(ROOT, 'cp2br'), '--emptyOutDir'], { cwd: brSrc, stdio: 'ignore' });
+  const cp3Src = join(ROOT, 'cp3-src');
+  mkdirSync(cp3Src, { recursive: true });
+  execFileSync('sh', ['-c', `git archive ${ACCEPTED_CHECKPOINT_3} | tar -x -C "${cp3Src}"`]);
+  symlinkSync(join(process.cwd(), 'node_modules'), join(cp3Src, 'node_modules'));
+  execFileSync('npx', ['vite', 'build', '--outDir', join(ROOT, 'cp3'), '--emptyOutDir'], { cwd: cp3Src, stdio: 'ignore' });
   server = createServer(async (req, res) => {
     const path = normalize(decodeURIComponent((req.url ?? '/').split('?')[0]!)).replace(/^(\.\.[/\\])+/, '');
     const file = join(ROOT, current, path.endsWith('/') ? `${path}index.html` : path);
@@ -743,4 +751,188 @@ test('updating from the accepted Checkpoint 2b-R (b45af43) keeps every record at
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'sage');
   await page.goto(`${base}#/calendar`);
   await expect(page.getByTestId('no-upcoming')).toBeVisible();
+});
+
+test('updating from the accepted Checkpoint 3 (c8aa0c5) keeps every record and both photographs byte for byte at database version 3; the Journal works on the existing data', async ({ page }) => {
+  test.setTimeout(240_000);
+  current = 'cp3';
+  const base = `http://localhost:${PORT}/`;
+  await page.clock.setFixedTime(new Date('2026-11-27T10:00:00'));
+  // Two different fictional 1×1 images, so each child's stored photograph can be told apart by its contents.
+  const photoA = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==', 'base64');
+  const photoB = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAFBQIAX8jx0gAAAABJRU5ErkJggg==', 'base64');
+  await page.goto(base);
+  await page.getByRole('button', { name: 'Get started' }).click();
+  await page.getByLabel('Date of birth').fill('2025-07-10');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByLabel('Name or nickname').fill('Sample Child A');
+  await page.getByTestId('photo-input').setInputFiles({ name: 'sample-a.png', mimeType: 'image/png', buffer: photoA });
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByTestId('theme-lavender').click();
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByRole('button', { name: 'Start using the app' }).click();
+  await expect(page.getByRole('heading', { name: 'Sample Child A' })).toBeVisible();
+  // The accepted Checkpoint 3 build: the Journal is still a placeholder and Resources is still a tab.
+  await page.goto(`${base}#/journal`);
+  await expect(page.getByText('Preview only.', { exact: false }).first()).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'Main' }).getByRole('link')).toHaveCount(5);
+
+  // Existing data: a milestone with an observation, a goal, an exercise with a session, two calendar events,
+  // the vaccine overlay switched on, and a second child with their own photograph and theme.
+  const saved = () => expect(page.getByTestId('saved')).toBeVisible();
+  await page.goto(`${base}#/growth/milestone/cdc22-m12-mp-03`);
+  await page.getByRole('radio', { name: 'Achieved' }).click();
+  await page.getByLabel('Date achieved', { exact: true }).fill('2026-07-01');
+  await page.getByRole('button', { name: 'Save status' }).click();
+  await saved();
+  await page.getByLabel('Note or observation').fill('Fictional Checkpoint 3 observation');
+  await page.getByTestId('add-entry').click();
+  await saved();
+  await page.goto(`${base}#/growth/goals/new`);
+  await page.getByLabel('Goal name').fill('Fictional Checkpoint 3 goal');
+  await page.getByTestId('save-goal').click();
+  await expect(page.getByTestId('goal-title')).toHaveText('Fictional Checkpoint 3 goal');
+  await page.goto(`${base}#/growth/exercises/new`);
+  await page.getByLabel('Exercise name').fill('Fictional Checkpoint 3 exercise');
+  await page.getByTestId('rule-daily').click();
+  await page.getByTestId('save-exercise').click();
+  await expect(page.getByTestId('exercise-title')).toHaveText('Fictional Checkpoint 3 exercise');
+  await page.goto(`${base}#/growth/exercises`);
+  await page.getByTestId('routine-complete').click();
+  await expect(page.getByTestId('daily-count')).toHaveText('1 of 1 session done');
+  await page.goto(`${base}#/calendar`);
+  for (const e of [{ kind: 'medical', title: 'Fictional Checkpoint 3 checkup', date: '2026-12-03' }, { kind: 'personal', title: 'Fictional Checkpoint 3 visit', date: '2026-12-05' }]) {
+    await page.getByTestId('add-event').click();
+    await page.getByTestId(`event-kind-${e.kind}`).click();
+    await page.getByLabel('Title').fill(e.title);
+    await page.getByLabel('Date', { exact: true }).fill(e.date);
+    await page.getByLabel('Notes (optional)').fill('Fictional Checkpoint 3 note');
+    await page.getByTestId('save-event').click();
+    await saved();
+  }
+  await page.getByTestId('overlay-vaccines').click();
+  await expect(page.getByTestId('vaccine-info')).toBeVisible();
+  await page.goto(`${base}#/profiles/new`);
+  await page.getByLabel('Name or nickname (optional)').fill('Sample Child B');
+  await page.getByLabel('Date of birth').fill('2023-04-10');
+  await page.getByTestId('photo-input').setInputFiles({ name: 'sample-b.png', mimeType: 'image/png', buffer: photoB });
+  await page.getByTestId('theme-sage').click();
+  await page.getByRole('button', { name: 'Add child' }).click();
+  await expect(page.getByTestId('child-chip')).toContainText('Sample Child B');
+  await page.getByTestId('child-chip').click();
+  await page.getByRole('radio', { name: /Sample Child A/ }).click();
+  await expect(page.getByTestId('child-chip')).toContainText('Sample Child A');
+  await page.goto(`${base}#/growth/progress`);
+  const progressBefore = await page.getByTestId('progress-all').getByTestId('fraction').textContent();
+  await page.goto(`${base}#/home`);
+  await expect(page.getByTestId('home-recent').locator('li')).not.toHaveCount(0);
+  const recentBefore = await page.getByTestId('home-recent').innerText();
+  const comingBefore = await page.getByTestId('home-coming-up').innerText();
+
+  // Every store, with each photograph's actual bytes (not only its size).
+  const dump = () => page.evaluate(async () => {
+    const db = await new Promise<IDBDatabase>((resolve, reject) => { const r = indexedDB.open('roll-crawl-run'); r.onsuccess = () => resolve(r.result); r.onerror = () => reject(r.error); });
+    const names = [...db.objectStoreNames];
+    const raw: Record<string, unknown[]> = {};
+    await new Promise<void>((resolve) => {
+      const tx = db.transaction(names, 'readonly');
+      for (const n of names) { const q = tx.objectStore(n).getAll(); q.onsuccess = () => { raw[n] = q.result; }; }
+      tx.oncomplete = () => resolve();
+    });
+    const version = db.version;
+    db.close();
+    const walk = async (v: unknown): Promise<unknown> => {
+      if (v instanceof Blob) return { blobType: v.type, blobSize: v.size, blobHex: [...new Uint8Array(await v.arrayBuffer())].map((x) => x.toString(16).padStart(2, '0')).join('') };
+      if (Array.isArray(v)) return Promise.all(v.map(walk));
+      if (v && typeof v === 'object') { const o: Record<string, unknown> = {}; for (const [k, x] of Object.entries(v)) o[k] = await walk(x); return o; }
+      return v;
+    };
+    return JSON.stringify({ version, stores: names, data: await walk(raw) });
+  });
+  type Dump = { version: number; stores: string[]; data: Record<string, Array<Record<string, unknown>>> };
+  const before = JSON.parse(await dump()) as Dump;
+  expect(before.version).toBe(3);
+  expect(before.data.journal).toEqual([]);
+  expect(before.data.events).toHaveLength(2);
+  expect(before.data.children).toHaveLength(2);
+  expect(before.data.completions).toHaveLength(1);
+  const photosBefore = before.data.photos as Array<{ childId: string; blob: { blobType: string; blobSize: number; blobHex: string } }>;
+  expect(photosBefore).toHaveLength(2);
+  for (const ph of photosBefore) {
+    expect(ph.blob.blobSize).toBeGreaterThan(0);
+    expect(ph.blob.blobHex).toHaveLength(ph.blob.blobSize * 2); // the whole image was read
+    expect(ph.blob.blobType).toMatch(/^image\//);
+  }
+  expect(photosBefore[0]!.blob.blobHex).not.toBe(photosBefore[1]!.blob.blobHex); // two different images
+  expect(photosBefore[0]!.childId).not.toBe(photosBefore[1]!.childId);
+  await page.evaluate(() => navigator.serviceWorker.ready);
+  await page.reload();
+  await expect.poll(() => page.evaluate(() => !!navigator.serviceWorker.controller)).toBe(true);
+
+  current = 'b';
+  await page.evaluate(async () => (await navigator.serviceWorker.getRegistration())?.update());
+  await expect(page.getByText('A new version is available.')).toBeVisible({ timeout: 20_000 });
+  await Promise.all([page.waitForEvent('load'), page.getByRole('button', { name: 'Refresh' }).click()]);
+  await page.goto(`${base}#/journal`);
+  await expect(page.getByTestId('journal')).toBeVisible({ timeout: 20_000 }); // the Journal is running
+
+  // Same database version, same stores, every record identical, and both photographs byte for byte. No migration ran.
+  const after = JSON.parse(await dump()) as Dump;
+  expect(after.version).toBe(3);
+  expect(after.stores).toEqual(before.stores);
+  for (const n of before.stores) expect(after.data[n], n).toEqual(before.data[n]);
+  expect((after.data.photos as typeof photosBefore).map((ph) => ph.blob.blobHex)).toEqual(photosBefore.map((ph) => ph.blob.blobHex));
+
+  // The new navigation, on the existing data.
+  await expect(page.getByRole('navigation', { name: 'Main' }).getByRole('link')).toHaveText(['Home', 'Growth', 'Calendar', 'Journal']);
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'lavender');
+  await expect(page.getByTestId('journal-empty')).toBeVisible();
+
+  // The Journal works on the upgraded data, and changes only the journal store.
+  await page.getByTestId('new-entry').click();
+  await page.getByTestId('entry-form').getByLabel('Entry', { exact: true }).fill('Fictional upgraded reflection');
+  await page.getByTestId('save-entry').click();
+  await expect(page.getByTestId('saved-text')).toHaveText('Entry saved.');
+  await page.getByTestId('new-entry').click();
+  await page.getByTestId('entry-type-care').click();
+  await page.getByTestId('entry-form').getByLabel('Title (optional)').fill('Fictional upgraded question');
+  await page.getByTestId('entry-form').getByLabel('Entry', { exact: true }).fill('Fictional: is this expected?');
+  await page.getByTestId('entry-question-flag').locator('input').check();
+  await page.getByTestId('save-entry').click();
+  await expect(page.getByTestId('filter-unanswered')).toHaveText('Unanswered questions (1)');
+  await page.getByTestId('toggle-answered').click();
+  await expect(page.getByTestId('filter-unanswered')).toHaveText('Unanswered questions (0)');
+  const later = JSON.parse(await dump()) as Dump;
+  expect(later.version).toBe(3);
+  for (const n of before.stores.filter((x) => x !== 'journal')) expect(later.data[n], n).toEqual(before.data[n]);
+  const journal = later.data.journal ?? [];
+  expect(journal).toHaveLength(2);
+  expect(journal.map((e) => e.recordType)).toEqual(['journalEntry', 'journalEntry']);
+  expect(journal.find((e) => e.type === 'care')).toMatchObject({ title: 'Fictional upgraded question', isProviderQuestion: true, answered: true });
+
+  // Previously accepted features are unchanged.
+  await page.goto(`${base}#/home`);
+  await expect(page.locator('.child-hero .avatar img')).toBeVisible(); // the photograph still displays
+  await expect.poll(() => page.getByTestId('home-recent').innerText()).toBe(recentBefore);
+  await expect.poll(() => page.getByTestId('home-coming-up').innerText()).toBe(comingBefore);
+  await page.goto(`${base}#/growth/progress`);
+  await expect(page.getByTestId('progress-all').getByTestId('fraction')).toHaveText(progressBefore!);
+  await page.goto(`${base}#/growth/milestone/cdc22-m12-mp-03`);
+  await expect(page.getByTestId('entries')).toContainText('Fictional Checkpoint 3 observation');
+  await page.goto(`${base}#/growth/goals/my`);
+  await expect(page.locator('body')).toContainText('Fictional Checkpoint 3 goal');
+  await page.goto(`${base}#/growth/exercises`);
+  await expect(page.getByTestId('daily-count')).toHaveText('1 of 1 session done');
+  await page.goto(`${base}#/calendar`);
+  await expect(page.getByTestId('overlay-vaccines')).toHaveAttribute('aria-pressed', 'true'); // the overlay choice is kept
+  await expect(page.getByTestId('upcoming-events').locator('.cal-event-title')).toHaveText(['Fictional Checkpoint 3 checkup', 'Fictional Checkpoint 3 visit']);
+  // The other child: their own theme and photograph, and an empty journal.
+  await page.getByTestId('child-chip').click();
+  await page.getByRole('radio', { name: /Sample Child B/ }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'sage');
+  await page.goto(`${base}#/journal`);
+  await expect(page.getByTestId('journal-empty')).toBeVisible();
+  await page.goto(`${base}#/home`);
+  await expect(page.locator('.child-hero .avatar img')).toBeVisible();
 });

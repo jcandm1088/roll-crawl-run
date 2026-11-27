@@ -598,3 +598,58 @@ Environment: Linux cloud container, Node 22.23.5, headless Chromium, no retries.
 | 70 | **Three checkpoint commits held only in a temporary workspace** | Workflow risk (accepted, then resolved) | From the Checkpoint 3 implementation until this closeout, the commits existed only in one conversation's container, plus ZIP archives I kept. The environment's stop hook asked for a push after every turn; Claude Code declined each time because pushes need my authorization, and said so each time. This is the same exposure as the 2a transfer incident (HANDOFF section 6), held deliberately until I had accepted the work. | Preserved at this closeout. **Lesson:** an accepted checkpoint should be preserved before a further round of refinement begins, not after. |
 
 **What I corrected or redirected:** (to be completed by the owner)
+
+## Draft entry — Checkpoint 4: Journal (drafted by Claude Code; edit before submitting)
+**Date:** 2026-11-27
+**Tool:** Claude Code (cloud session)
+**What I asked for:** recover the accepted Checkpoint 3 baseline in a fresh conversation, run one complete regression cycle, and, if it passed, build the Journal I had already designed with my project manager: one feed with Personal Reflections and Care Notes, optional titles and tags, search and filters, provider questions that can be marked answered, a privacy notice, and Resources removed from the navigation. No push, merge or deployment.
+
+**What it produced:**
+- The session branch fast-forwarded to the exact authoritative commit `8122feb` (parent `c8aa0c5`, 19 commits, clean tree, `main` still `aa8c869`).
+- A passing baseline: type check, build with content validation, **427 of 427 unit and 251 of 251 end-to-end**, the first complete cycle on the final Calendar code.
+- The Journal (Decisions #154–#168), using the store that has existed since database version 1. **Database version 3 unchanged; no migration.**
+- Four primary tabs. Resources removed; Home's Journal shortcut live.
+- 45 new unit tests and 29 new end-to-end tests, including an upgrade test from the accepted Checkpoint 3 build that compares both stored photographs byte for byte.
+- A report (`docs/reviews/CHECKPOINT_4_IMPLEMENTATION_REPORT.md`), a Mac checklist (J1–J32 in TESTING_CHECKLIST), 12 screenshots (`docs/screenshots/checkpoint-4/`) and a ZIP.
+
+**Choices Claude Code made without my explicit guidance** (Decisions #155–#168): a date rather than a date and time, and no future dates; the length limits; comma-separated tags with suggestions; how search and filters combine; where the answered control appears; outright deletion; the wording of the privacy notice and the change to Settings → Privacy; and **removing the “Daily encouragement” placeholder from Home**.
+
+**What I corrected or redirected:** (to be completed by the owner)
+
+### Development challenges and lessons learned (continued from #70)
+| # | Challenge | Class | What happened | Outcome |
+|---|---|---|---|---|
+| 71 | **Edits began before the baseline run had finished** | Workflow error (Claude Code) | The instruction was to finish the baseline before changing application code. Claude Code created new, unreferenced files while the end-to-end run was in progress (harmless), then applied the first edits to existing files seconds before the last spec file, the upgrade tests, completed. Those tests rebuild the app from the working tree, so their result could have included the edits. | Claude Code noticed, stashed all work, re-ran that file on the pristine commit (7 of 7 passed) and restored the work. The baseline is 251 of 251 on unmodified code. **Lesson:** a gate means waiting for the run's last line, not its likely result. |
+| 72 | **Escape closed a form with unsaved writing without asking** | Application defect, found by a new test before delivery | The shared sheet attaches its Escape handler once, when it opens. The Journal editor's “has anything changed?” check was therefore read as it stood at opening (nothing changed), so Escape discarded new writing silently. Cancel and a tap outside were unaffected. The first discard test missed it because it pressed Escape only after the form had been re-shown; the keyboard test caught it. | The editor passes the sheet a handler that reads the current state. A direct regression check was added (type, press Escape at once, expect the question). The Calendar's form is unaffected: it has no unsaved-changes check. |
+| 73 | **Long unbroken words and two date fields overflowed narrow screens** | Application layout defects, found by the 320 px test | A 100-character word in a title widened the open-entry sheet to 829 px. The two date filter fields side by side were wider than a 320 px screen. | Sheet titles and paragraphs wrap long words; card contents are constrained to the card; the date fields stack below 360 px. |
+| 74 | **Defects in the new tests themselves** | Test defects | (a) With the test clock fixed, two entries had the same creation time, so “most recent first” was undecided: the tests now advance the clock between entries. (b) A test expected Tab to wrap to the selected radio; the shared focus trap wraps to the first control (recorded in KNOWN_LIMITATIONS). (c) Two fixtures exceeded the title and tag limits they were not testing. (d) A test expected a button name with different spacing from the one the browser computes. | Corrected in the tests; no assertion about application behavior was weakened. |
+
+### Automated results (run by Claude Code in this conversation)
+Environment: Linux cloud container, Node 22.23.5, headless Chromium, no retries. **No Safari, Mac, iPhone or Android testing was performed by Claude Code.**
+
+**Baseline, before any change (commit `8122feb`):**
+
+| Check | Result |
+|---|---|
+| Type check; production build with content validation | Passed |
+| Unit tests (21 files) | **427 of 427** |
+| End-to-end tests | **251 of 251** (one complete cycle; the upgrade file re-run on the pristine commit, 7 of 7, see challenge #71) |
+
+**Development runs (not part of the final sequence):**
+- `journal.spec.ts`, first run: 24 of 28. All four failures were defects in the new tests (#74).
+- Second and third runs exposed the two application defects (#72, #73), fixed in the application.
+- Then `journal.spec.ts` 28 of 28 and `update.spec.ts` 8 of 8.
+
+**Final sequence on the finished code — three consecutive complete cycles, each from a clean build, no retries, no changes between them:**
+
+| Cycle | Type check | Build with content validation (JS 582.52 kB, 136.74 kB gzip) | Unit (23 files) | End-to-end |
+|---|---|---|---|---|
+| 1 | Passed | Passed | **472 of 472** | **280 of 280** (5.8 min) |
+| 2 | Passed | Passed | **472 of 472** | **280 of 280** (5.8 min) |
+| 3 | Passed | Passed | **472 of 472** | **280 of 280** (5.8 min) |
+
+- **Totals:** 752 automated tests (678 before; +45 unit, +29 end-to-end). No test was skipped, disabled or retried. No failure occurred in the final sequence.
+- **Database:** version 3 before and after; the upgrade test from `c8aa0c5` found every record identical and both photographs identical byte for byte.
+- **Only documentation changed after the final sequence began** (these documents and regenerated screenshots).
+- **Screenshots:** `docs/screenshots/checkpoint-4/` (12), from the final build.
+- **Not tested by anyone yet:** Safari, Mac, iPhone, Android, an installed app.

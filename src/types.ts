@@ -97,6 +97,31 @@ export interface CalendarEvent extends RecordEnvelope {
   notes: string;
 }
 
+export type JournalEntryType = 'reflection' | 'care';
+
+/**
+ * A journal entry (stored in the `journal` store, one child each). Personal Reflections and Care Notes
+ * share the store but stay distinct by `type`, so a later export can leave Personal Reflections out by
+ * default. Only a Care Note can be a provider question, and only a question can be answered.
+ * Deleting an entry removes the record outright: no title, text or tag is kept (Checkpoint 4).
+ */
+export interface JournalEntry extends RecordEnvelope {
+  deletedAt: null;
+  recordType: 'journalEntry';
+  childId: string;
+  type: JournalEntryType;
+  /** The day the entry is about (today by default; can be earlier, never later). */
+  date: LocalDate;
+  /** Optional: "" when the parent gave none. */
+  title: string;
+  body: string;
+  /** Parent-created, free-form; unique without regard to capitals. */
+  tags: string[];
+  isProviderQuestion: boolean;
+  /** Meaningful only when isProviderQuestion is true; otherwise always false. */
+  answered: boolean;
+}
+
 export interface Settings {
   id: 'settings';
   /**

@@ -3,7 +3,7 @@ import { useRoute, type Route } from './router';
 import { Screen } from './ui/components/Shell';
 import { Onboarding } from './ui/screens/onboarding/Onboarding';
 import { Home } from './ui/screens/home/Home';
-import { TabPlaceholder } from './ui/screens/placeholders/TabPlaceholder';
+import { JournalScreen } from './ui/screens/journal/Journal';
 import { ExpectScreen, GrowthHome, ProgressScreen } from './ui/screens/growth/Growth';
 import { AboutMilestonesScreen, LibraryScreen } from './ui/screens/growth/Library';
 import { MilestoneDetailScreen } from './ui/screens/growth/MilestoneDetail';
@@ -81,8 +81,7 @@ function renderRoute(route: Route) {
     case 'calendar':
       return <Screen nav current="calendar"><CalendarScreen openAdd={route.add === true} /></Screen>;
     case 'journal':
-    case 'resources':
-      return <Screen nav current={route.name}><TabPlaceholder tab={route.name} /></Screen>;
+      return <Screen nav current="journal"><JournalScreen openNew={route.add === true} /></Screen>;
     case 'settings':
       return <Screen nav={false} current="settings" title="Settings" back={{ name: 'home' }}><Settings /></Screen>;
     case 'privacy':

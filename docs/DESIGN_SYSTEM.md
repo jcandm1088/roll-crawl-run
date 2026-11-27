@@ -167,3 +167,12 @@ History: Fraunces produced undesirable letterforms (J, f) in functional headings
 - **Events:** the existing `.list.card.list-card` rows: marker, title (600), a muted line “date · time · type · location”, chevron.
 - **Vaccine references (R-019):** dashed outline panels (`.vax-ref`, `.vax-next`), never the solid card used for events, headed in plain words (“Recommended vaccinations: 4 months”) with the diamond. Lists use a left rule (`.vax-list`). The vaccine card has one info note (the provider statement), two collapsed disclosures, and a **Source** block: a visible attribution and non-endorsement line, then a collapsed “Source details”. Attribution is not repeated beside individual recommendations.
 - **Forms:** bottom sheets with the existing fields, radio `label.choice` for the type, primary Save, quiet Cancel. Delete confirmation: Cancel is primary and focused (as for sessions, #112).
+
+## Journal (Checkpoint 4)
+- **Page:** shared `PageHeader`; one primary **New Journal Entry** button; a search field; filter chips; the feed; one privacy `info-note` at the foot.
+- **Filters:** the existing `.chip` with `aria-pressed`: All, Personal Reflections, Care Notes, and “Unanswered questions (n)”. Dates and tags sit in a `more-details` disclosure (“Dates and tags”). When anything is filtered, a status line (“Showing 2 of 5 entries”) and a quiet “Clear search and filters” button appear. The two date fields stack below 360 px.
+- **Entry card (`.journal-card`):** the existing `.card` with a 4 px left edge. The top is one button (type badge, date, optional title, up to five lines of text) that opens the entry. Tags are `.tag-mini`. A provider question adds a sunken footer strip with its status and a small button.
+- **Two types, existing tokens only:** Personal Reflection: heart icon, `.badge` (`--primary-soft`), `--primary` edge. Care Note: document icon, `--surface-sunken` badge with `--text`, `--border-strong` edge. The label is always present, so neither relies on color.
+- **Entry, editor and confirmations:** bottom sheets. The editor uses `label.choice` radios (with the type's icon and a one-line description) and checkboxes, the existing fields, a 200 px text area, primary Save and quiet Cancel. Delete and discard confirmations put the safe choice first and focused.
+- **Navigation:** four equal bottom tabs.
+- **Sheets:** long unbroken words in a sheet's title or paragraphs now wrap (applies to every sheet).

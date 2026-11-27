@@ -120,7 +120,7 @@ test('no development checkpoint terminology appears anywhere in the parent-facin
   test.setTimeout(90_000);
   await start(page, { dob: '2025-07-10' });
   const screens = ['./#/home', './#/growth', './#/growth/progress', './#/growth/library', './#/growth/library/all', './#/growth/expect', './#/growth/expect/6',
-    './#/growth/about', './#/growth/milestone/cdc22-m15-mp-01', './#/calendar', './#/journal', './#/resources', './#/settings', './#/settings/about', './#/profiles'];
+    './#/growth/about', './#/growth/milestone/cdc22-m15-mp-01', './#/calendar', './#/journal', './#/settings', './#/settings/about', './#/profiles'];
   for (const s of screens) {
     await page.goto(s);
     await page.waitForTimeout(150);

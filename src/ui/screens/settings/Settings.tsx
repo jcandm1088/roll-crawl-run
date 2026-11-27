@@ -280,7 +280,7 @@ export function PrivacyInfo() {
           <li><strong>No tracking.</strong> The app contains no analytics, advertising, or tracking scripts, and doesn’t load fonts or code from other websites.</li>
           <li><strong>Not encrypted or password-protected.</strong> Anyone who can use this unlocked device and browser could open the app and see what’s stored.</li>
           <li><strong>Not a medical record.</strong> Local storage isn’t an authenticated, encrypted, or clinically compliant (for example, HIPAA) record system.</li>
-          <li><strong>You decide what to share.</strong> Sharing features (coming later) will always show you what’s included first. Personal Reflections are excluded from sharing by default.</li>
+          <li data-testid="privacy-sharing"><strong>No sharing or backup in this version.</strong> The app can’t share, export, back up or restore what you enter. If sharing is added later, it will show you what’s included first, and Personal Reflections in the Journal will be left out unless you choose to include them.</li>
         </ul>
       </div>
       <div class="card stack small">

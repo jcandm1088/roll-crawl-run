@@ -34,7 +34,8 @@ for (const vp of VIEWPORTS) {
     await page.setViewportSize(vp);
     await completeOnboarding(page, { name: 'Sample Child A' });
     await addChild(page, 'Sample Child B', '2023-04-10');
-    for (const tab of ['home', 'growth', 'calendar', 'journal', 'resources']) {
+    // Checkpoint 4: four primary tabs (Resources was removed from the navigation).
+    for (const tab of ['home', 'growth', 'calendar', 'journal']) {
       await page.goto(`./#/${tab}`);
       await page.getByTestId('child-chip').click();
       const panel = page.getByTestId('child-switcher');
@@ -343,8 +344,10 @@ test('Growth uses the approved wording and section order', async ({ page }) => {
   expect(titles).toEqual(['Progress', 'Milestone Library', 'Goals & Exercises', 'What to Expect at Every Age']);
   // Updated at Checkpoint 2b: Goals & Exercises is live (it was a “Coming soon” placeholder until then).
   await expect(page.getByTestId('section-goals').getByTestId('section-subtitle')).toHaveText('Know what to work on.');
+  // Updated at Checkpoint 4: Resources is no longer a destination; its old address opens Home.
   await page.goto('./#/resources');
-  await expect(page.getByText('A curated library of trusted, science-backed resources.')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Quick actions' })).toBeVisible();
+  await expect(page.getByText('A curated library of trusted, science-backed resources.')).toHaveCount(0);
 });
 
 for (const vp of [{ width: 390, height: 844 }, { width: 1280, height: 800 }]) {

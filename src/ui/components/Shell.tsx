@@ -13,7 +13,6 @@ const TABS: Array<{ name: Route['name']; label: string; icon: IconName }> = [
   { name: 'growth', label: 'Growth', icon: 'sprout' },
   { name: 'calendar', label: 'Calendar', icon: 'calendar' },
   { name: 'journal', label: 'Journal', icon: 'notebook' },
-  { name: 'resources', label: 'Resources', icon: 'library' },
 ];
 
 export function BottomNav({ current }: { current: Route['name'] }) {

@@ -121,15 +121,18 @@ test('deleting the only profile asks for a new child instead of breaking', async
   await expect(page.getByText('Add a child')).toBeVisible();
 });
 
-test('later-checkpoint tabs are clearly marked as not available', async ({ page }) => {
+test('no primary tab is a placeholder any more', async ({ page }) => {
   await completeOnboarding(page);
-  // Checkpoint 2a: Growth is now implemented (covered in growth.spec.ts); the remaining placeholder tabs are checked here.
-  // Checkpoint 3: the Calendar is now implemented (covered in calendar.spec.ts), so it is no longer a placeholder.
-  for (const tab of ['Journal', 'Resources']) {
+  // Checkpoint 2a: Growth is now implemented (covered in growth.spec.ts).
+  // Checkpoint 3: the Calendar is now implemented (covered in calendar.spec.ts).
+  // Checkpoint 4: the Journal is implemented (journal.spec.ts) and Resources left the primary navigation, so
+  // this test, which used to check the “Preview only.” placeholders, now checks that none remains.
+  for (const tab of ['Home', 'Growth', 'Calendar', 'Journal']) {
     await page.getByRole('link', { name: tab, exact: true }).click();
-    await expect(page.getByRole('heading', { name: tab, level: 1 })).toBeVisible();
-    await expect(page.getByText('Preview only.', { exact: false }).first()).toBeVisible();
+    await expect(page.getByRole('link', { name: tab, exact: true })).toHaveAttribute('aria-current', 'page');
+    await expect(page.getByText('Preview only.', { exact: false })).toHaveCount(0);
   }
+  await expect(page.getByRole('heading', { name: 'Journal', level: 1 })).toBeVisible();
 });
 
 test('reset erases all data after typed confirmation', async ({ page }) => {

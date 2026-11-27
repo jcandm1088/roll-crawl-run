@@ -171,3 +171,8 @@ A living list of refinements and suspected defects that are recorded but not yet
 - **Why deferred:** deliberately left out by the owner. Photos would exist only in this device's storage, and the submission version has no backup or restoration.
 - **Plan:** reconsider alongside or after backup and restoration (Checkpoint 5).
 - **Status:** Deferred. **Do not implement until authorized.** Checkpoint 4 should not add storage or interface for Journal photos.
+
+## Checkpoint 4 note (2026-11-27)
+- **R-023 respected:** the Journal has no photographs, attachments or supporting storage for them. Status unchanged: Deferred.
+- **No new refinement items** were opened by the implementation. Items for the owner's attention at acceptance are listed as decisions (#155–#168), notably the removal of Home's “Daily encouragement” placeholder (#168).
+- **Deferred, unchanged:** R-001, R-003, R-009, R-018, R-023.

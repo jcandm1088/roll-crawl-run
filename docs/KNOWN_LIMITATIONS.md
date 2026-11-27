@@ -1,11 +1,11 @@
 # Known Limitations
 
-Last updated 2026-11-27 (Checkpoint 3 and refinements R-019 to R-022 formally accepted; preserved on `claude/great-dijkstra-wwi9g1`). Earlier sections are kept as dated records; where a later statement supersedes an earlier one, the earlier one is marked. Items marked *(planned)* are scheduled for later checkpoints. Refinements and suspected defects awaiting correction are tracked in `docs/REFINEMENT_BACKLOG.md`.
+Last updated 2026-11-27 (Checkpoint 4, Journal, implemented locally and awaiting the owner's acceptance; Checkpoint 3 formally accepted). Earlier sections are kept as dated records; where a later statement supersedes an earlier one, the earlier one is marked. Items marked *(planned)* are scheduled for later checkpoints. Refinements and suspected defects awaiting correction are tracked in `docs/REFINEMENT_BACKLOG.md`.
 
 ## Not built yet (placeholders)
 - ~~Goals & Exercises, recurring activities, CDC activities, and charts *(Checkpoint 2b)*~~ Built at Checkpoint 2b (awaiting the owner's acceptance).
 - ~~Calendar, well-child and vaccination references *(Checkpoint 3)*~~ The Simplified Calendar was built at Checkpoint 3 (awaiting the owner's acceptance). There is no well-child reference schedule (removed from scope, Decision #119).
-- Journal, resources, motivational messages, notification settings *(Checkpoint 4)*
+- ~~Journal, resources, motivational messages, notification settings *(Checkpoint 4)*~~ The Journal was built at Checkpoint 4 (awaiting the owner's acceptance). Resources, motivational messages and notification settings are **deferred until after submission**; the Resources tab is no longer in the app.
 - Backups, partner sharing, import and merge, reports, calendar export *(Checkpoint 5)*
 - Backup features (create, restore, history, reminders) *(Checkpoint 5)*. The app says that changes save automatically on this device and that backups are separate and not yet available.
 - "I have a file from a partner" in onboarding *(Checkpoint 5)*. It was left out of the welcome screen for now so that no button appears that can't work.
@@ -155,3 +155,19 @@ Last updated 2026-11-27 (Checkpoint 3 and refinements R-019 to R-022 formally ac
 - **No complete regression cycle on the final commit:** the symbol correction (`c8aa0c5`) had targeted tests only. The last complete cycle (427 unit, 251 end-to-end) was on `77d263b`. Run one at the start of Checkpoint 4.
 - **Vaccine schedule currency** must be rechecked at Checkpoint 6.
 - **Journal photographs** will not be in the submission version (R-023, deferred).
+
+## Checkpoint 4 (Journal)
+- **No backup or restoration.** Journal entries exist only in this browser's storage on this device. Clearing browser data, removing the app or losing the device loses them. The Journal says so.
+- **Not encrypted or password-protected.** Anyone who can use the unlocked device can read every entry, including Care Notes. The app is not a medical record system and makes no HIPAA or clinical-security claim.
+- **No sharing or export.** Personal Reflections and Care Notes are kept distinct for a later export, but nothing can be shared, exported or printed from the Journal now.
+- **No photographs or attachments** (R-023, deferred).
+- **No automatic drafts.** An entry is saved only when Save is pressed. Closing an editor with changes asks first; closing the browser tab, reloading or the phone discarding the page mid-entry loses unsaved writing without a question.
+- **Deleted entries can't be recovered,** and there is no edit history: saving an edit replaces the earlier text.
+- **Dates only.** An entry has a date, not a time, and can't be dated in the future. Entries on the same date are ordered by when they were written.
+- **Search is simple.** It matches whole typed words anywhere in the title and text, without spelling tolerance, and doesn't look inside tags (use the tag filter). Filters reset when you leave the Journal.
+- **Tags are free text.** A misspelt tag is a different tag; a tag can't be renamed everywhere at once.
+- **A 20,000-character limit per entry;** up to 10 tags of 30 characters.
+- **Two windows of the app.** If the active child is changed in another window while an editor is open, the entry is saved for the child it was written for; the first window shows the newly chosen child only after it reloads.
+- **Focus in a form:** pressing Tab on the last control returns to the first control in the sheet, which in the entry form is the first type option even when the other is selected (the selection does not change).
+- **Resources is not in the submission version.** There is no resource library or daily encouragement. Source attribution remains in Settings → About, Growth → About these milestones, each milestone and activity, and the Calendar.
+- **Human testing:** nothing in Checkpoint 4 has been tested by a person, in Safari or on an iPhone, at the time of this commit. Automated results are from headless Chromium on Linux.

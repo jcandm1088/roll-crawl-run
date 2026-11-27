@@ -1,6 +1,8 @@
 # Development Plan — Roll, Crawl, RUN: Tracking Growth Together (Revision 2)
 
-> **Current status (2026-11-27, Checkpoint 3 closeout):** Checkpoint 3 (Simplified Calendar) and refinements R-019 to R-022 are **formally accepted** for the submission version and preserved on `claude/great-dijkstra-wwi9g1` (R18). Not merged into `main`; not deployed. **Next: Checkpoint 4 (Journal; Resources removed from navigation)**, in a fresh conversation, with the owner-approved design in R18. Checkpoint 5 is deferred until after submission; Checkpoint 6 is final acceptance and publication. The current-state handoff is `docs/HANDOFF.md`.
+> **Current status (2026-11-27, Checkpoint 4 implemented):** Checkpoint 4 (Journal; Resources removed from the primary navigation; R19) is **implemented in a local commit and awaits the owner's secondary review and Mac acceptance**. Nothing is pushed, merged or deployed. Database version 3 is unchanged. Checkpoint 5 remains deferred until after submission; Checkpoint 6 is final acceptance and publication. The current-state handoff is `docs/HANDOFF.md`.
+
+> *Previous status line (2026-11-27, Checkpoint 3 closeout, kept as recorded):* **Current status (2026-11-27, Checkpoint 3 closeout):** Checkpoint 3 (Simplified Calendar) and refinements R-019 to R-022 are **formally accepted** for the submission version and preserved on `claude/great-dijkstra-wwi9g1` (R18). Not merged into `main`; not deployed. **Next: Checkpoint 4 (Journal; Resources removed from navigation)**, in a fresh conversation, with the owner-approved design in R18. Checkpoint 5 is deferred until after submission; Checkpoint 6 is final acceptance and publication. The current-state handoff is `docs/HANDOFF.md`.
 >
 > *Previous status line (2026-11-27, Checkpoint 3-R, kept as recorded):* **Current status (2026-11-27, Checkpoint 3-R):** Checkpoint 3 (Simplified Calendar, R16) was accepted by the owner in Mac Safari (CAL1–CAL33 passed; keyboard and offline editing not human-tested; iPhone deferred to Checkpoint 6). The resulting presentation refinements R-019 to R-022 (R17) are implemented in a second local commit on `claude/great-dijkstra-wwi9g1` and await the owner's visual acceptance before formal closeout; nothing is pushed, merged or deployed. Checkpoints 1–2b-R are as described below. Next, each needing authorization: acceptance of Checkpoint 3, then Checkpoint 4 (Journal; Resources removed from navigation) and Checkpoint 6. The current-state handoff is `docs/HANDOFF.md`.
 >
@@ -37,6 +39,24 @@
 **Visual direction (CP1):** premium, warm, calm, adult-oriented; no cartoon imagery, not clinical, not generic dashboard. Five cohesive theme systems (Earth default, Sky, Blush, Lavender, Sage) sharing typography, spacing, iconography, components, buttons, navigation. Fraunces (display) + Inter (UI), subject to review. Initial app icon + wordmark preserving "Roll, Crawl, RUN: Tracking Growth Together". Safe-area insets, ≥44–48px targets.
 
 **Checkpoint 1 build list:** scaffold (Vite/TS/Preact, Vitest, Playwright); fonts self-hosted (fetched from npm `@fontsource` packages, OFL); icon/wordmark (SVG → PNG sizes generated with Playwright); design tokens + 5 themes + contrast test; app shell (top bar with child chip + settings, bottom nav, hash router); placeholder tabs clearly labeled "Coming in a later checkpoint"; onboarding (DOB, name/photo, corrected age, theme, privacy); profiles create/edit/switch/delete (typed confirmation; backup purge option present but backups feature labeled pending); age domain (chronological + corrected with safeguards); IndexedDB schema v1 for all planned stores with logical-key indexes and atomic transaction helper; repositories for meta/settings/children/photos; storage-persistence status; privacy disclosures in Settings; manifest + basic service worker (precache, update banner); unit + e2e tests; mobile screenshots via Playwright at deviceScaleFactor 2; docs skeletons (README, BUILD_LOG template, TESTING_CHECKLIST, KNOWN_LIMITATIONS, DECISIONS, SOURCE_REGISTER). Code lives in `/home/user/roll-crawl-run` (git init locally; no push until you provide the remote).
+
+---
+
+## R19 — Checkpoint 4: Journal, and Resources removed from the navigation (implemented 2026-11-27; awaiting owner acceptance) — implements R18
+**Built (Decisions #154–#168; report in `docs/reviews/CHECKPOINT_4_IMPLEMENTATION_REPORT.md`):**
+- **Journal:** one feed per child, newest entry date first. Personal Reflections and Care Notes with their own label, icon and subtle treatment. Create, view, edit, delete with confirmation. A date (today by default, earlier allowed, never later), optional title, free-form text up to 20,000 characters, optional tags.
+- **Finding entries:** search by title and text; filters for type, unanswered provider questions, dates and tags, alone or combined; empty and no-results states.
+- **Provider questions:** a flag on Care Notes, an answered status that changes only that field, and an always-visible “Unanswered questions (n)” filter.
+- **Safety:** child-keyed screen, modal editors, child-checked atomic writes, typed text kept after a failed write, a discard-changes question, outright deletion.
+- **Privacy:** one notice on the Journal; Settings → Privacy updated.
+- **Navigation:** four primary tabs (Home, Growth, Calendar, Journal). Resources removed; its old address opens Home. Home's “Journal entry” shortcut is live; the “Daily encouragement” placeholder is removed.
+- **Data:** the existing `journal` store; **database version 3, no migration**.
+
+**Not built (out of scope):** photographs or other attachments (R-023), Calendar or Growth integration, AI or medical analysis, mood or medication tracking, recurrence, reminders, sharing, backup, restoration, exports, synchronization, a Resources library, automatic drafts, version history.
+
+**Preserved for later:** Personal Reflections excluded by default from all three export workflows, including full backups (#165); the Resources requirements in §6.13.
+
+**Sequence:** owner acceptance of Checkpoint 4 → (Checkpoint 5 deferred until after submission) → Checkpoint 6.
 
 ---
 
