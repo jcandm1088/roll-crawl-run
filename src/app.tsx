@@ -10,6 +10,10 @@ import { MilestoneDetailScreen } from './ui/screens/growth/MilestoneDetail';
 import { ProfileForm, ProfilesList } from './ui/screens/profiles/Profiles';
 import { AboutInfo, InstallInfo, PrivacyInfo, Settings, StorageInfo } from './ui/screens/settings/Settings';
 import { UpdateBanner } from './ui/components/UpdateBanner';
+import { ExerciseDetailScreen, ExerciseFormScreen, ExercisesScreen } from './ui/screens/personal/Exercises';
+import { ActivityDetailScreen, BrowseScreen } from './ui/screens/personal/Browse';
+import { ProgressHistoryScreen } from './ui/screens/personal/History';
+import { AchievementFormScreen, GoalDetailScreen, GoalEditScreen, GoalFormScreen, GoalIdeasScreen, GoalsLanding, MyGoalsScreen } from './ui/screens/personal/Goals';
 
 export function App() {
   const { meta, children } = useApp();
@@ -51,6 +55,28 @@ function renderRoute(route: Route) {
           <MilestoneDetailScreen key={route.key} routeKey={route.key} />
         </Screen>
       );
+    case 'goals':
+      return <Screen nav current="goals" navCurrent="growth" title="Goals & Exercises" back={{ name: 'growth' }}><GoalsLanding /></Screen>;
+    case 'myGoals':
+      return <Screen nav current="myGoals" navCurrent="growth" title="My Goals" back={{ name: 'goals' }}><MyGoalsScreen /></Screen>;
+    case 'goalNew':
+      return <Screen nav current="goalNew" navCurrent="growth" title="Create a goal" back={{ name: 'myGoals' }}><GoalFormScreen key={`${route.milestone ?? ''}-${route.idea ?? ''}`} id={null} milestone={route.milestone} idea={route.idea} /></Screen>;
+    case 'achievementNew':
+      return <Screen nav current="achievementNew" navCurrent="growth" title="Record an achievement" back={{ name: 'myGoals' }}><AchievementFormScreen id={null} /></Screen>;
+    case 'goalItem':
+      return <Screen nav current="goalItem" navCurrent="growth" title="My Goals" back={{ name: 'myGoals' }}><GoalDetailScreen key={route.id} id={route.id} /></Screen>;
+    case 'goalEdit':
+      return <Screen nav current="goalEdit" navCurrent="growth" title="Edit" back={{ name: 'goalItem', id: route.id }}><GoalEditScreen key={route.id} id={route.id} /></Screen>;
+    case 'goalIdeas':
+      return <Screen nav current="goalIdeas" navCurrent="growth" title="Looking for inspiration?" back={{ name: 'myGoals' }}><GoalIdeasScreen /></Screen>;
+    case 'exercises':
+    case 'exerciseNew':
+    case 'exerciseBrowse':
+    case 'activity':
+    case 'exerciseItem':
+    case 'exerciseEdit':
+    case 'progressHistory':
+      return renderPersonalRoute(route);
     case 'calendar':
     case 'journal':
     case 'resources':
@@ -75,5 +101,27 @@ function renderRoute(route: Route) {
           <ProfileForm key={`${route.id}-${route.section ?? ''}`} childId={route.id} focusAgeSettings={route.section === 'age'} />
         </Screen>
       );
+  }
+}
+
+function renderPersonalRoute(route: Route) {
+  const g = { nav: true, navCurrent: 'growth' as const };
+  switch (route.name) {
+    case 'exercises':
+      return <Screen {...g} current="exercises" title="Exercises" back={{ name: 'goals' }}><ExercisesScreen focus={route.focus} /></Screen>;
+    case 'exerciseNew':
+      return <Screen {...g} current="exerciseNew" title={route.activity ? 'Add to My Exercises' : 'Create exercise'} back={route.activity ? { name: 'activity', id: route.activity.split('~')[0]! } : { name: 'exercises' }}><ExerciseFormScreen key={route.activity ?? 'new'} id={null} activity={route.activity} /></Screen>;
+    case 'exerciseBrowse':
+      return <Screen {...g} current="exerciseBrowse" title="Browse Exercises" back={{ name: 'exercises' }}><BrowseScreen key={String(route.age)} age={route.age} /></Screen>;
+    case 'activity':
+      return <Screen {...g} current="activity" title="Activity" back={{ name: 'exerciseBrowse', age: null }} backUsesHistory><ActivityDetailScreen key={route.id} id={route.id} /></Screen>;
+    case 'exerciseItem':
+      return <Screen {...g} current="exerciseItem" title="Exercise" back={{ name: 'exercises' }}><ExerciseDetailScreen key={route.id} id={route.id} /></Screen>;
+    case 'exerciseEdit':
+      return <Screen {...g} current="exerciseEdit" title="Edit exercise" back={{ name: 'exerciseItem', id: route.id }}><ExerciseFormScreen key={route.id} id={route.id} /></Screen>;
+    case 'progressHistory':
+      return <Screen {...g} current="progressHistory" title="Progress over time" back={{ name: 'growthProgress' }}><ProgressHistoryScreen view={route.view} /></Screen>;
+    default:
+      return null;
   }
 }

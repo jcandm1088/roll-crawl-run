@@ -49,9 +49,9 @@ test('Growth landing shows the four sections in order; each opens its own screen
   const titles = await page.locator('[data-testid="growth-sections"] .title-3').allTextContents();
   // Growth UX refinement (owner-approved requirements change, not a regression): Review → Record → Support → Learn.
   expect(titles).toEqual(['Progress', 'Milestone Library', 'Goals & Exercises', 'What to Expect at Every Age']);
-  await expect(page.getByTestId('section-goals')).toContainText('Coming soon');
-  await expect(page.getByTestId('section-goals').getByRole('link')).toHaveCount(0); // placeholder is not clickable
-  for (const [id, title] of [['section-progress', 'Progress'], ['section-expect', 'What to Expect'], ['section-library', 'Milestone Library']] as const) {
+  // Updated at Checkpoint 2b: Goals & Exercises is no longer a placeholder; it opens its own screen too.
+  await expect(page.getByTestId('section-goals')).not.toContainText('Coming soon');
+  for (const [id, title] of [['section-progress', 'Progress'], ['section-expect', 'What to Expect'], ['section-library', 'Milestone Library'], ['section-goals', 'Goals & Exercises']] as const) {
     await page.getByTestId(id).click();
     await expect(page.getByRole('heading', { name: title, level: 1 })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Growth', exact: true })).toHaveAttribute('aria-current', 'page');

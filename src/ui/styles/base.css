@@ -542,3 +542,52 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .entry-text { margin: 4px 0 var(--space-2); white-space: pre-wrap; overflow-wrap: anywhere; }
 .original-wording summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; }
 .original-wording p { margin: 0 0 var(--space-2); }
+
+/* Checkpoint 2b: Goals & Exercises, stopwatch and counter, Today's routine, Progress over time. */
+.more-details summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; }
+.center { text-align: center; }
+.activity-text { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.55; }
+.safety-inline { font-weight: 600; color: var(--text); }
+.choice input[type='radio'] { width: 20px; height: 20px; accent-color: var(--primary); flex: none; margin: 0 var(--space-2) 0 0; }
+label.choice { display: flex; align-items: center; cursor: pointer; }
+label.choice:has(input:checked) { border-color: var(--primary); background: var(--primary-soft); color: var(--on-primary-soft); }
+label.choice:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
+input[type='checkbox'] { width: 20px; height: 20px; accent-color: var(--primary); flex: none; }
+.stepper { display: flex; align-items: center; gap: var(--space-2); }
+.stepper .input { width: 5.5rem; text-align: center; font-variant-numeric: tabular-nums; }
+.stepper .btn { min-width: var(--touch); }
+.routine-item { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) 0; border-top: 1px solid var(--border); }
+.routine-item:first-child { border-top: 0; }
+.routine-link { display: flex; flex-direction: column; gap: 4px; color: inherit; text-decoration: none; min-width: 0; overflow-wrap: anywhere; }
+.routine-action { flex: none; min-width: 88px; }
+.session-dots { display: inline-flex; gap: 5px; flex-wrap: wrap; }
+.session-dots .dot { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--border-strong); }
+.session-dots .dot.done { background: var(--primary); border-color: var(--primary); }
+.tracker .stopwatch-display, .tracker .counter-display {
+  font-size: clamp(3rem, 16vw, 4.5rem); font-weight: 600; text-align: center; margin: var(--space-2) 0 0;
+  font-variant-numeric: tabular-nums; letter-spacing: 0.02em; line-height: 1.1; color: var(--text);
+}
+.tracker .reached { color: var(--primary); }
+.counter-target { font-size: 0.45em; color: var(--text-muted); font-weight: 500; }
+.tracker-controls { display: grid; grid-template-columns: 1fr 2fr; gap: var(--space-3); }
+.tracker-controls .btn { min-height: 56px; font-size: var(--text-lg); }
+.tracker-main { font-weight: 600; }
+.count-list { display: grid; gap: var(--space-2); margin: 0; }
+.count-list > div { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); padding: var(--space-2) 0; border-top: 1px solid var(--border); }
+.count-list > div:first-child { border-top: 0; }
+.count-list dt { font-size: var(--text-sm); }
+.count-list dd { margin: 0; font-size: var(--text-xl); font-weight: 600; font-variant-numeric: tabular-nums; }
+.chart { margin: 0; }
+.chart svg { display: block; max-width: 100%; height: auto; overflow: visible; }
+.chart-axis { stroke: var(--border-strong); stroke-width: 1; }
+.chart-bar { fill: var(--primary); }
+.chart-bar.current { fill: var(--primary); opacity: 0.7; }
+.chart-unavailable { fill: var(--surface-sunken); }
+.chart-value { font-size: 11px; font-weight: 600; fill: var(--text); }
+.chart-label { font-size: 11px; fill: var(--text-muted); }
+.chart figcaption { margin-top: var(--space-2); }
+.data-table { width: 100%; border-collapse: collapse; margin-top: var(--space-2); }
+.data-table th, .data-table td { text-align: left; padding: 6px 0; border-top: 1px solid var(--border); font-weight: 400; }
+.data-table td { text-align: right; font-variant-numeric: tabular-nums; }
+.data-table thead th { font-weight: 600; border-top: 0; }
+.history-card > summary { list-style: none; }

@@ -13,6 +13,9 @@ import { displayTextOf } from '../../../domain/milestoneDisplay';
 import { recentProgressEvents } from '../../../domain/milestoneHistory';
 import { CategoryProgressList, MilestoneSafeguard, StatusBadge } from '../growth/parts';
 import type { Child } from '../../../types';
+import { useChildPersonal } from '../../../state/personal';
+import { routineFor } from '../../../domain/schedule';
+import { DailyBar } from '../personal/Tracker';
 
 /**
  * Age on Home, in plain language. The standard (chronological) age needs no
@@ -97,6 +100,8 @@ export function Home() {
         </div>
       </div>
 
+      <HomeTodaysExercises />
+
       <HomeMilestoneCards />
 
       <div class="section">
@@ -161,5 +166,26 @@ function HomeMilestoneCards() {
         </div>
       </section>
     </>
+  );
+}
+
+/**
+ * Today's exercises (Checkpoint 2b, D13): shown only when the selected child has scheduled sessions today.
+ * Same calculation and records as Today's routine on the Exercises page — no separate tracking.
+ */
+function HomeTodaysExercises() {
+  const { activeChild } = useApp();
+  const p = useChildPersonal(activeChild);
+  if (!activeChild || !p.data) return null;
+  const r = routineFor(p.data.exercises, p.data.sessions, p.today);
+  if (r.scheduledCount === 0) return null;
+  return (
+    <section class="section" aria-labelledby="home-exercises-title" data-testid="home-exercises">
+      <h2 class="title-2 section-title" id="home-exercises-title">Today’s exercises</h2>
+      <div class="card stack">
+        <DailyBar done={r.doneCount} scheduled={r.scheduledCount} />
+        <a class="btn btn-secondary btn-block" href={href({ name: 'exercises', focus: 'today' })} data-testid="view-todays-routine">View today’s routine</a>
+      </div>
+    </section>
   );
 }

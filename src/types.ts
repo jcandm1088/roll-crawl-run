@@ -185,3 +185,190 @@ export interface PersonalMilestone extends RecordEnvelope {
   /** Copied reference age of the original, for context only (never counted in sourced progress). */
   referenceAgeMonths: number | null;
 }
+
+// ---------------------------------------------------------------------------
+// Checkpoint 2b: personal goals, achievements, exercises and sessions.
+// customItems (kinds goal / achievement / exercise), completions (sessions),
+// itemEvents (history and Notes & Observations) and trackerState (device-local).
+// Database version 3; see src/data/db.ts.
+// ---------------------------------------------------------------------------
+
+/** One of the five app areas, or null (Uncategorized). */
+export type PersonalCategory = 'gross-motor' | 'fine-motor' | 'cognitive' | 'language-communication' | 'social-emotional' | null;
+
+/** Provenance kept when a legacy personal milestone entry was moved to My Goals. */
+export interface ConvertedFrom {
+  legacyCustomItemId: string;
+  convertedAt: string;
+}
+
+export interface PersonalGoal extends RecordEnvelope {
+  childId: string;
+  kind: 'goal';
+  title: string;
+  appCategory: PersonalCategory;
+  description: string;
+  /** Default today; null only when it isn't known (a converted legacy entry). Never invented. */
+  startDate: string | null;
+  /** The parent's own plan; never a deadline. */
+  targetDate: string | null;
+  status: 'active' | 'accomplished';
+  accomplishedDate: string | null;
+  /** Optional related CDC milestone. Linking never changes the milestone. */
+  milestoneDefId: string | null;
+  archivedAt: string | null;
+  convertedFrom?: ConvertedFrom;
+}
+
+export interface Achievement extends RecordEnvelope {
+  childId: string;
+  kind: 'achievement';
+  title: string;
+  appCategory: PersonalCategory;
+  description: string;
+  achievedDate: string;
+  /** Optional related CDC milestone (kept from a converted legacy entry). Never changes the milestone. */
+  milestoneDefId: string | null;
+  archivedAt: string | null;
+  convertedFrom?: ConvertedFrom;
+}
+
+export type Weekday = 0 | 1 | 2 | 3 | 4 | 5 | 6; // 0 = Sunday
+
+export type ScheduleRule = { kind: 'asNeeded' } | { kind: 'daily' } | { kind: 'weekdays'; days: Weekday[] };
+
+/** A schedule in force from `effectiveFrom` (inclusive) until the next version. History is never rewritten. */
+export interface ScheduleVersion {
+  effectiveFrom: string;
+  rule: ScheduleRule;
+  /** 1–24 scheduled sessions on each scheduled day. A capacity limit, not a recommended frequency. */
+  sessionsPerDay: number;
+  paused: boolean;
+}
+
+export type TrackingMethod = 'simple' | 'stopwatch' | 'reps';
+export type Tracking = { method: 'simple' } | { method: 'stopwatch'; targetSeconds: number | null } | { method: 'reps'; targetReps: number | null };
+
+export type ExerciseOrigin = 'recommended' | 'parent' | 'provider';
+
+export interface ExerciseSource {
+  /** Stable activity id from the locked CDC activity inventory. */
+  activityId: string;
+  /** The CDC tip record adopted (one of the activity's source records). */
+  sourceRecordId: string;
+  contentVersion: string;
+  /** True once the parent edits the instructions: the wording is then theirs, not CDC's. */
+  instructionsEdited: boolean;
+}
+
+export interface Exercise extends RecordEnvelope {
+  childId: string;
+  kind: 'exercise';
+  title: string;
+  appCategory: PersonalCategory;
+  instructions: string;
+  origin: ExerciseOrigin;
+  /** Optional: who recommended it (for provider-directed exercises). */
+  providerName: string;
+  source: ExerciseSource | null;
+  goalIds: string[];
+  tracking: Tracking;
+  schedule: ScheduleVersion[];
+  archivedAt: string | null;
+}
+
+export type PersonalItem = PersonalGoal | Achievement | Exercise;
+
+/** Content-free remainder of a permanently deleted goal, achievement, exercise or legacy entry. */
+export interface ItemTombstone extends RecordEnvelope {
+  childId: string;
+  kind: 'goal' | 'achievement' | 'exercise' | 'milestone';
+  deletedAt: string;
+  /** Set when a legacy personal milestone entry was moved to My Goals. */
+  convertedToItemId?: string;
+}
+
+/** One recorded exercise session. Logical key: (customItemId, slotKey). */
+export interface ExerciseSession extends RecordEnvelope {
+  childId: string;
+  customItemId: string;
+  /** The local day the session belongs to. */
+  occurrenceDate: string;
+  /** `${date}#${n}` for scheduled session n, or `extra:${uuid}` for an additional session. */
+  slotKey: string;
+  method: TrackingMethod;
+  durationSeconds: number | null;
+  reps: number | null;
+  targetSnapshot: number | null;
+  note: string;
+  entry: 'live' | 'manual';
+  /** Un-completion marker (the session no longer counts); cleared if the same slot is recorded again. */
+  reversedAt: string | null;
+  correctsSessionId?: string;
+}
+
+export type ItemEventType =
+  | 'created'
+  | 'edited'
+  | 'status'
+  | 'date-corrected'
+  | 'archived'
+  | 'restored'
+  | 'schedule-changed'
+  | 'session-recorded'
+  | 'session-reversed'
+  | 'session-edited'
+  | 'observation'
+  | 'observation-edited'
+  | 'observation-removed'
+  | 'note'
+  | 'entry-erased'
+  /** History carried over from a legacy personal milestone entry. */
+  | 'legacy-status'
+  | 'legacy-event'
+  | 'converted';
+
+/** Append-only history for goals, achievements and exercises (separate from milestone history). */
+export interface ItemEvent extends RecordEnvelope {
+  childId: string;
+  itemId: string;
+  /** 'goal:<id>' | 'achievement:<id>' | 'exercise:<id>' — stable logical key for future merging. */
+  itemKey: string;
+  type: ItemEventType;
+  eventDate: string | null;
+  recordedAt: string;
+  deviceId: string;
+  text?: string | null;
+  refEventId?: string;
+  erasedAt?: string;
+  fromStatus?: string;
+  toStatus?: string;
+  fromDate?: string | null;
+  toDate?: string | null;
+  sessionId?: string;
+  /** For copied legacy history: the original milestone event id and type. */
+  migratedFromEventId?: string;
+  legacyType?: string;
+}
+
+/** Device-local, in-progress stopwatch or counter. Never part of partner sharing. */
+export interface TrackerState {
+  /** `${exerciseId}|${slotKey}` */
+  id: string;
+  childId: string;
+  exerciseId: string;
+  slotKey: string;
+  occurrenceDate: string;
+  method: 'stopwatch' | 'reps';
+  running: boolean;
+  /** Time banked from earlier running periods. */
+  accumulatedMs: number;
+  /** Wall clock at the last Start/Resume (used only to recover after suspension or reload). */
+  runningSinceEpochMs: number | null;
+  count: number;
+  /** Pre-generated session id, so saving twice can never create two sessions. */
+  sessionId: string;
+  /** Incremented on every write; a write based on an older revision is refused (multiple open copies). */
+  rev: number;
+  updatedAt: string;
+}

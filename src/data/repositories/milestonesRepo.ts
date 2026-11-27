@@ -10,6 +10,7 @@ import { newEnvelope, newId, nowIso, touch } from '../envelope';
 import { runAtomic, type RcrTx } from '../transactions';
 import { compareDates, isValidLocalDate, type LocalDate } from '../../domain/dates';
 import { getMilestone } from '../../domain/milestones';
+import { monotonicRecordedAt } from '../history';
 
 export type MilestoneTarget = { kind: 'sourced'; defId: string } | { kind: 'personal'; customId: string };
 
@@ -35,15 +36,8 @@ export const recordKeyOf = (t: MilestoneTarget) => (t.kind === 'sourced' ? `def:
 
 export class MilestoneInputError extends Error {}
 
-/**
- * Recording timestamps that always increase on this device, so history order is
- * exact even when several entries are recorded within the same millisecond.
- */
-let lastRecordedMs = 0;
-export function monotonicRecordedAt(): string {
-  lastRecordedMs = Math.max(Date.now(), lastRecordedMs + 1);
-  return new Date(lastRecordedMs).toISOString();
-}
+/** Recording timestamps that always increase on this device (shared with personal history since 2b). */
+export { monotonicRecordedAt };
 
 function checkDate(ctx: WriteContext, date: string, what: string): void {
   if (!isValidLocalDate(date)) throw new MilestoneInputError(`Please enter a real ${what}.`);

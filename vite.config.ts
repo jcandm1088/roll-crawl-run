@@ -57,6 +57,11 @@ function milestoneContentPlugin(): Plugin {
       const { CONTENT_VERSION } = await import('./src/domain/milestones');
       const displayErrors = validateDisplay(undefined, undefined, CONTENT_VERSION);
       if (displayErrors.length) this.error(`Milestone display wording validation failed:\n${displayErrors.join('\n')}`);
+      // Recommended activities (Checkpoint 2b): verbatim CDC records, validated display fields, locked ids.
+      const { validateActivities } = await import('./src/domain/activities');
+      const activityLock = JSON.parse(readFileSync(new URL('./src/content/activity-ids.lock.json', import.meta.url), 'utf8')) as Record<string, string>;
+      const activityErrors = validateActivities(undefined, activityLock, (s) => createHash('sha256').update(s).digest('hex').slice(0, 16));
+      if (activityErrors.length) this.error(`Activity content validation failed:\n${activityErrors.join('\n')}`);
     },
   };
 }

@@ -8,13 +8,16 @@ import { viewCounts } from '../../../domain/library';
 import { ageBetween, formatPreciseAge } from '../../../domain/age';
 import { PageHeader } from '../../components/PageHeader';
 import { Icon, type IconName } from '../../components/Icon';
-import { PlannedTag } from '../../components/Placeholder';
 import { Accordion } from '../../components/Accordion';
 import { childNameInline } from '../../components/Avatar';
 import { AgeBasisPanel, CDC_CONCERNED_URL, CDC_MILESTONES_URL, CategoryProgressList, ExternalLink, ForChild, MilestoneSafeguard, OlderThanFiveNote, ProgressLine, SourceNote } from './parts';
 import { displayTextOf } from '../../../domain/milestoneDisplay';
 import { PAGE_SOURCES } from '../../../domain/milestones';
 import type { Child } from '../../../types';
+import { useChildPersonal } from '../../../state/personal';
+import { routineFor } from '../../../domain/schedule';
+import { activeGoalsOf } from '../../../domain/personalProgress';
+import { PersonalProgressCard } from '../personal/History';
 
 // ---------------------------------------------------------------------------
 // Growth landing page — Review → Record → Support → Learn (owner-approved order and subtitles).
@@ -45,12 +48,18 @@ function SectionLink({ to, icon, index, live, testId }: { to: string; icon: Icon
 export function GrowthHome() {
   const { activeChild } = useApp();
   const m = useChildMilestones(activeChild);
+  const p = useChildPersonal(activeChild);
   if (!activeChild || !m.age) return null;
   const overall = currentProgress(m.age.months, m.sourcedStates).overall;
   const counts = viewCounts(m.age.months, m.sourcedStates);
   const progressLive = overall.state === 'ok' ? `${overall.achieved} of ${overall.applicable} recorded as achieved` : overall.state === 'all-hidden' ? 'All current milestones are hidden' : 'Nothing to track yet at this age';
   const libraryLive = counts.now === 0 ? 'No milestones apply yet' : `${counts.now} milestone${counts.now === 1 ? '' : 's'} apply now`;
-  const goals = GROWTH_SECTIONS[2];
+  const goalsLive = !p.data ? '' : (() => {
+    const r = routineFor(p.data.exercises, p.data.sessions, p.today);
+    if (r.scheduledCount > 0) return `Today: ${r.doneCount} of ${r.scheduledCount} exercise sessions done`;
+    const active = activeGoalsOf(p.data.goals).length;
+    return active > 0 ? `${active} goal${active === 1 ? '' : 's'} working toward` : 'Set goals and build routines';
+  })();
   return (
     <div>
       <PageHeader title="Growth" intro="Tracking your developmental milestones." />
@@ -58,16 +67,7 @@ export function GrowthHome() {
       <div class="stack" data-testid="growth-sections">
         <SectionLink to={href({ name: 'growthProgress' })} icon="chart" index={0} live={progressLive} testId="section-progress" />
         <SectionLink to={href({ name: 'growthLibrary', preset: { view: 'now', area: null } })} icon="bookOpen" index={1} live={libraryLive} testId="section-library" />
-        <section class="card placeholder" aria-label={`${goals.title} — coming soon`} data-testid="section-goals">
-          <div class="row" style={{ alignItems: 'flex-start' }}>
-            <span class="muted"><Icon name="target" /></span>
-            <div class="grow stack" style={{ marginTop: 0 }}>
-              <h3 class="title-3">{goals.title}</h3>
-              <p class="small section-subtitle" data-testid="section-subtitle">{goals.subtitle}</p>
-              <PlannedTag />
-            </div>
-          </div>
-        </section>
+        <SectionLink to={href({ name: 'goals' })} icon="target" index={2} live={goalsLive} testId="section-goals" />
         <SectionLink to={href({ name: 'growthExpect', interval: null })} icon="map" index={3} live={`Now: ${m.currentInterval.label}`} testId="section-expect" />
       </div>
     </div>
@@ -153,9 +153,7 @@ export function ProgressScreen() {
         <AgeSettingsNote child={activeChild} />
       </div>
       <SourceNote />
-      <p class="small muted" style={{ margin: 'var(--space-4) var(--space-1)' }} data-testid="coming-soon-note">
-        Charts of your records over time, and progress on your own goals and activities, are coming soon.
-      </p>
+      <PersonalProgressCard />
     </div>
   );
 }

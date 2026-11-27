@@ -101,7 +101,8 @@ async function seedRecords(page: Page) {
 // Growth landing and parent-facing wording
 // ---------------------------------------------------------------------------
 
-test('Growth landing: approved order, subtitles and useful live lines; Goals is a “Coming soon” placeholder', async ({ page }) => {
+// Updated at Checkpoint 2b: Goals & Exercises became a live destination (previously a “Coming soon” placeholder).
+test('Growth landing: approved order, subtitles and useful live lines; Goals & Exercises is live', async ({ page }) => {
   await start(page, { dob: '2025-07-10' }); // 16 months
   await page.goto('./#/growth');
   await expect(page.getByText('Tracking your developmental milestones.')).toBeVisible();
@@ -111,8 +112,8 @@ test('Growth landing: approved order, subtitles and useful live lines; Goals is 
   await expect(page.getByTestId('section-progress').getByTestId('section-live')).toHaveText('0 of 72 recorded as achieved');
   await expect(page.getByTestId('section-library').getByTestId('section-live')).toHaveText('72 milestones apply now');
   await expect(page.getByTestId('section-expect').getByTestId('section-live')).toHaveText('Now: 15–18 months');
-  await expect(page.getByTestId('section-goals')).toContainText('Coming soon');
-  await expect(page.getByTestId('section-goals').getByRole('link')).toHaveCount(0);
+  await expect(page.getByTestId('section-goals').getByTestId('section-live')).toHaveText('Set goals and build routines');
+  await expect(page.getByTestId('section-goals')).toHaveAttribute('href', '#/growth/goals');
 });
 
 test('no development checkpoint terminology appears anywhere in the parent-facing app', async ({ page }) => {
@@ -262,7 +263,9 @@ test('Progress: headline, what updates it, area links into the Library, and the 
   await expect(overall(page)).toHaveText('1 of 72 achieved');
   await expect(page.getByTestId('what-updates')).toContainText('Reading What to Expect doesn’t change Progress.');
   await expect(page.getByTestId('milestone-safeguard')).toContainText('not an assessment of your child’s development');
-  await expect(page.getByTestId('coming-soon-note')).toContainText('coming soon');
+  // Updated at Checkpoint 2b: the “coming soon” sentence was replaced by the Personal progress summary.
+  await expect(page.getByTestId('coming-soon-note')).toHaveCount(0);
+  await expect(page.getByTestId('personal-progress')).toContainText('never change milestone progress');
   // By CDC age: collapsed by default, applicable ages only, newest first.
   await expect(page.getByTestId('by-age')).toBeHidden();
   await page.getByTestId('acc-by-age').getByRole('button').first().click();

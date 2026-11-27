@@ -153,7 +153,12 @@ describe('R-007: Notes & Observations', () => {
     return { d, entries: notesAndObservationsFor(d.events, d.records[0]!) };
   };
 
-  it('the database version is unchanged (no schema change)', () => expect(db.version).toBe(2));
+  // Updated at Checkpoint 2b: the database is now version 3 (Decision D1). R-007 itself still needed no
+  // schema change: its entries use the existing milestoneEvents store, which v3 leaves untouched.
+  it('R-007 needed no schema change of its own (entries use the existing milestone history store)', () => {
+    expect(db.version).toBe(3);
+    expect(db.objectStoreNames.contains('milestoneEvents')).toBe(true);
+  });
 
   it('dated entries are listed newest first and never change the status', async () => {
     await addObservation(db, ctx, def, '2026-10-01', 'Fictional entry one');

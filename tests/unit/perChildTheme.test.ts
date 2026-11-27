@@ -36,7 +36,8 @@ describe('migration from the app-wide theme (schema v1 → v2)', () => {
   it('gives every existing child the previously saved app-wide theme', async () => {
     const name = `mig-${++n}`;
     const childrenBefore = await legacyDatabase(name, 'lavender');
-    const d = await db(name);
+    // Opened at version 2 explicitly so this keeps testing the v1 → v2 step (v3 is tested in schemaV3.test.ts).
+    const d = await db(name, 2);
     expect(d.version).toBe(2);
     const s = await getSettings(d);
     expect(s.childThemes).toEqual({ 'child-a': 'lavender', 'child-b': 'lavender' }); // tombstone gets none

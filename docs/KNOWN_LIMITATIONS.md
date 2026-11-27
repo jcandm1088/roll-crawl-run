@@ -3,7 +3,7 @@
 Last updated 2026-11-27 (Checkpoint 2a human acceptance refinements). Earlier sections are kept as dated records; where a later statement supersedes an earlier one, the earlier one is marked. Items marked *(planned)* are scheduled for later checkpoints. Refinements and suspected defects awaiting correction are tracked in `docs/REFINEMENT_BACKLOG.md`.
 
 ## Not built yet (placeholders)
-- Goals & Exercises, recurring activities, CDC activities, and charts *(Checkpoint 2b)*
+- ~~Goals & Exercises, recurring activities, CDC activities, and charts *(Checkpoint 2b)*~~ Built at Checkpoint 2b (awaiting the owner's acceptance).
 - Calendar, well-child and vaccination references *(Checkpoint 3)*
 - Journal, resources, motivational messages, notification settings *(Checkpoint 4)*
 - Backups, partner sharing, import and merge, reports, calendar export *(Checkpoint 5)*
@@ -95,3 +95,16 @@ Last updated 2026-11-27 (Checkpoint 2a human acceptance refinements). Earlier se
   - Different earlier versions of a note are separate history entries and are erased one by one.
 - **Downgrade:** if an older version of the app were reopened after entries were edited, it would show the original wording of edited entries. Edits are separate history entries that older versions don't read. No data is lost.
 - **R-001 and R-003 remain pending;** not changed in this refinement except for the removed “Your versions” chip.
+
+## Checkpoint 2b (Goals, Exercises & Historical Progress)
+- **Not yet reviewed by the owner.** Tested only in automated headless Chromium on Linux (Node.js 22). No Safari, Mac, iPhone or Android testing has occurred; not pushed, merged or deployed.
+- **Stopwatch in the background:** the app can't alert you, play a sound or wake a locked phone when a target is reached (no push service; iOS web apps have no background timers). Elapsed time is recovered from the stored start time when the app returns. Behaviour during real phone sleep, app switching and iOS page eviction is verified only with simulated clocks in Chromium, not on a device.
+- **Clock anomalies:** a device clock change while the app is closed can't always be told apart from real elapsed time. Gaps over an hour that the app couldn't measure, or more than 12 hours of running time, ask the parent to check the time before saving; shorter undetected clock changes would be included.
+- **Time zones and travel:** sessions belong to the device's local date when they were recorded (or started, for the stopwatch). After travel, a day may appear shorter, longer or repeated; recorded dates never shift.
+- **No clock times, reminders or calendar entries** for exercises (Checkpoint 3 will use the stored schedules).
+- **Activity content** is frozen at the CDC pages reviewed May 15, 2026 and retrieved 2026-11-27. Titles, areas, grouping and materials are the app's editorial organization; the review was editorial, not clinical. The activities are general ideas, not individualized advice; the app doesn't check whether an activity suits a particular child, and it doesn't review instructions entered from a provider.
+- **Bundle size:** the JavaScript bundle is about 512 KB (116 KB gzip), up from 255 KB, mainly the activity content. It is cached for offline use after the first load.
+- **Legacy entry conversion has no automatic undo** (preview and confirmation instead). A converted entry can be edited, reopened, archived or deleted in My Goals.
+- **Removed and deleted entries** in Notes & Observations and session lists follow the accepted 2a presentation, which R-009 (deferred) may simplify later.
+- **Downgrade:** after the update to database version 3, an older version of the app can't open the data (IndexedDB doesn't allow a lower version). An old copy left open in another tab is told to reload.
+- **Multiple open copies:** the same scheduled session can't be recorded twice, and a stale stopwatch or counter shows the newer state instead of overwriting it; but each copy shows its own screen until it reloads or becomes visible again.

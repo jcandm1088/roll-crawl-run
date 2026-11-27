@@ -78,3 +78,9 @@ A living list of refinements and suspected defects that are recorded but not yet
 - **Status:** Deferred. **Do not implement until authorized.**
 
 **Also deferred:** R-001 (onboarding name-field overflow) and R-003 (Library control density), both unchanged. R-002 and R-004 to R-008: accepted as part of Checkpoint 2a's Mac usability acceptance. Physical iPhone verification is still pending.
+
+---
+
+## Checkpoint 2b note (2026-11-27)
+- **No new backlog items** were recorded during the 2b implementation; the owner has not yet reviewed 2b.
+- **R-001, R-003 and R-009 remain deferred and were not changed.** The new Notes & Observations and session lists follow the accepted 2a presentation of removed entries, so R-009 would apply to them too if it is taken up later.

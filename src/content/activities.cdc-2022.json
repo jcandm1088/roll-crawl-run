@@ -1,0 +1,5979 @@
+{
+ "format": "rcr-activities",
+ "version": 1,
+ "contentVersion": "cdc-2022-tips-retrieved-2026-11-27",
+ "retrieved": "2026-11-27",
+ "basis": "CDC “Learn the Signs. Act Early.” milestone pages, section “Tips and activities — What you can do for your [age]” (content last reviewed May 15, 2026). `source` is CDC’s exact wording. `display` applies only the declared gender-neutral replacements (pronouns and verb agreement, Decisions #86 and D4) and one disclosed typographical correction. Titles, app areas, grouping, materials phrases, segment roles and the safety-sensitive flag are the app’s editorial organization, not CDC content. Reviewed as an editorial and product review, not a clinical validation.",
+ "pageGuidance": {
+  "cdc-ltsae-2-months": {
+   "referenceAgeMonths": 2,
+   "source": "As your baby's first teacher, you can help his or her learning and brain development. Try these simple tips and activities in a safe way. Talk with your baby's doctor and teachers if you have questions or for more ideas on how to help your baby's development.",
+   "replacements": [
+    [
+     "his or her",
+     "their"
+    ]
+   ],
+   "display": "As your baby's first teacher, you can help their learning and brain development. Try these simple tips and activities in a safe way. Talk with your baby's doctor and teachers if you have questions or for more ideas on how to help your baby's development."
+  },
+  "cdc-ltsae-4-months": {
+   "referenceAgeMonths": 4,
+   "source": "As your baby's first teacher, you can help his or her learning and brain development. Try these simple tips and activities in a safe way. Talk with your baby's doctor and teachers if you have questions or for more ideas on how to help your baby's development.",
+   "replacements": [
+    [
+     "his or her",
+     "their"
+    ]
+   ],
+   "display": "As your baby's first teacher, you can help their learning and brain development. Try these simple tips and activities in a safe way. Talk with your baby's doctor and teachers if you have questions or for more ideas on how to help your baby's development."
+  },
+  "cdc-ltsae-6-months": {
+   "referenceAgeMonths": 6,
+   "source": "As your baby's first teacher, you can help his or her learning and brain development. Try these simple tips and activities in a safe way. Talk with your baby's doctor and teachers if you have questions or for more ideas on how to help your baby's development.",
+   "replacements": [
+    [
+     "his or her",
+     "their"
+    ]
+   ],
+   "display": "As your baby's first teacher, you can help their learning and brain development. Try these simple tips and activities in a safe way. Talk with your baby's doctor and teachers if you have questions or for more ideas on how to help your baby's development."
+  },
+  "cdc-ltsae-9-months": {
+   "referenceAgeMonths": 9,
+   "source": "As your baby's first teacher, you can help his or her learning and brain development. Try these simple tips and activities in a safe way. Talk with your baby's doctor and teachers if you have questions or for more ideas on how to help your baby's development.",
+   "replacements": [
+    [
+     "his or her",
+     "their"
+    ]
+   ],
+   "display": "As your baby's first teacher, you can help their learning and brain development. Try these simple tips and activities in a safe way. Talk with your baby's doctor and teachers if you have questions or for more ideas on how to help your baby's development."
+  },
+  "cdc-ltsae-1-year": {
+   "referenceAgeMonths": 12,
+   "source": "As your baby's first teacher, you can help his or her learning and brain development. Try these simple tips and activities in a safe way. Talk with your baby's doctor and teachers if you have questions or for more ideas on how to help your baby's development.",
+   "replacements": [
+    [
+     "his or her",
+     "their"
+    ]
+   ],
+   "display": "As your baby's first teacher, you can help their learning and brain development. Try these simple tips and activities in a safe way. Talk with your baby's doctor and teachers if you have questions or for more ideas on how to help your baby's development."
+  },
+  "cdc-ltsae-15-months": {
+   "referenceAgeMonths": 15,
+   "source": "As your child's first teacher, you can help his or her learning and brain development. Try these simple tips and activities in a safe way. Talk with your child's doctor and teachers if you have questions or for more ideas on how to help your child's development.",
+   "replacements": [
+    [
+     "his or her",
+     "their"
+    ]
+   ],
+   "display": "As your child's first teacher, you can help their learning and brain development. Try these simple tips and activities in a safe way. Talk with your child's doctor and teachers if you have questions or for more ideas on how to help your child's development."
+  },
+  "cdc-ltsae-18-months": {
+   "referenceAgeMonths": 18,
+   "source": "As your child's first teacher, you can help his or her learning and brain development. Try these simple tips and activities in a safe way. Talk with your child's doctor and teachers if you have questions or for more ideas on how to help your child's development.",
+   "replacements": [
+    [
+     "his or her",
+     "their"
+    ]
+   ],
+   "display": "As your child's first teacher, you can help their learning and brain development. Try these simple tips and activities in a safe way. Talk with your child's doctor and teachers if you have questions or for more ideas on how to help your child's development."
+  },
+  "cdc-ltsae-2-years": {
+   "referenceAgeMonths": 24,
+   "source": "As your child's first teacher, you can help his or her learning and brain development. Try these simple tips and activities in a safe way. Talk with your child's doctor and teachers if you have questions or for more ideas on how to help your child's development.",
+   "replacements": [
+    [
+     "his or her",
+     "their"
+    ]
+   ],
+   "display": "As your child's first teacher, you can help their learning and brain development. Try these simple tips and activities in a safe way. Talk with your child's doctor and teachers if you have questions or for more ideas on how to help your child's development."
+  },
+  "cdc-ltsae-30-months": {
+   "referenceAgeMonths": 30,
+   "source": "As your child's first teacher, you can help his or her learning and brain development. Try these simple tips and activities in a safe way. Talk with your child's doctor and teachers if you have questions or for more ideas on how to help your child's development.",
+   "replacements": [
+    [
+     "his or her",
+     "their"
+    ]
+   ],
+   "display": "As your child's first teacher, you can help their learning and brain development. Try these simple tips and activities in a safe way. Talk with your child's doctor and teachers if you have questions or for more ideas on how to help your child's development."
+  },
+  "cdc-ltsae-3-years": {
+   "referenceAgeMonths": 36,
+   "source": "As your child's first teacher, you can help his or her learning and brain development. Try these simple tips and activities in a safe way. Talk with your child's doctor and teachers if you have questions or for more ideas on how to help your child's development.",
+   "replacements": [
+    [
+     "his or her",
+     "their"
+    ]
+   ],
+   "display": "As your child's first teacher, you can help their learning and brain development. Try these simple tips and activities in a safe way. Talk with your child's doctor and teachers if you have questions or for more ideas on how to help your child's development."
+  },
+  "cdc-ltsae-4-years": {
+   "referenceAgeMonths": 48,
+   "source": "As your child's first teacher, you can help his or her learning and brain development. Try these simple tips and activities in a safe way. Talk with your child's doctor and teachers if you have questions or for more ideas on how to help your child's development.",
+   "replacements": [
+    [
+     "his or her",
+     "their"
+    ]
+   ],
+   "display": "As your child's first teacher, you can help their learning and brain development. Try these simple tips and activities in a safe way. Talk with your child's doctor and teachers if you have questions or for more ideas on how to help your child's development."
+  },
+  "cdc-ltsae-5-years": {
+   "referenceAgeMonths": 60,
+   "source": "As your child's first teacher, you can help his or her learning and brain development. Try these simple tips and activities in a safe way. Talk with your child's doctor and teachers if you have questions or for more ideas on how to help your child's development.",
+   "replacements": [
+    [
+     "his or her",
+     "their"
+    ]
+   ],
+   "display": "As your child's first teacher, you can help their learning and brain development. Try these simple tips and activities in a safe way. Talk with your child's doctor and teachers if you have questions or for more ideas on how to help your child's development."
+  }
+ },
+ "records": [
+  {
+   "id": "cdc22-act-m2-01",
+   "sourceId": "cdc-ltsae-2-months",
+   "referenceAgeMonths": 2,
+   "source": "Respond positively to your baby. Act excited, smile, and talk to him when he makes sounds. This teaches him to take turns \"talking\" back and forth in conversation.",
+   "replacements": [
+    [
+     "him",
+     "them"
+    ],
+    [
+     "he",
+     "they"
+    ],
+    [
+     "makes",
+     "make"
+    ],
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "Respond positively to your baby. Act excited, smile, and talk to them when they make sounds. This teaches them to take turns \"talking\" back and forth in conversation.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Respond positively to your baby."
+    },
+    {
+     "role": "step",
+     "text": "Act excited, smile, and talk to them when they make sounds."
+    },
+    {
+     "role": "purpose",
+     "text": "This teaches them to take turns \"talking\" back and forth in conversation."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m2-02",
+   "sourceId": "cdc-ltsae-2-months",
+   "referenceAgeMonths": 2,
+   "source": "Talk, read, and sing to your baby to help her develop and understand language.",
+   "replacements": [
+    [
+     "her",
+     "them"
+    ]
+   ],
+   "display": "Talk, read, and sing to your baby to help them develop and understand language.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Talk, read, and sing to your baby to help them develop and understand language."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m2-03",
+   "sourceId": "cdc-ltsae-2-months",
+   "referenceAgeMonths": 2,
+   "source": "Spend time cuddling and holding your baby. This will help him feel safe and cared for. You will not spoil your baby by holding or responding to him.",
+   "replacements": [
+    [
+     "him",
+     "them"
+    ],
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "Spend time cuddling and holding your baby. This will help them feel safe and cared for. You will not spoil your baby by holding or responding to them.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Spend time cuddling and holding your baby."
+    },
+    {
+     "role": "purpose",
+     "text": "This will help them feel safe and cared for."
+    },
+    {
+     "role": "step",
+     "text": "You will not spoil your baby by holding or responding to them."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m2-07",
+   "sourceId": "cdc-ltsae-2-months",
+   "referenceAgeMonths": 2,
+   "source": "Lay your baby on his tummy when he is awake and put toys at eye level in front of him. This will help him practice lifting his head up. Do not leave your baby alone. If he seems sleepy, place him on his back in a safe sleep area (firm mattress with no blankets, pillows, bumper pads, or toys).",
+   "replacements": [
+    [
+     "his",
+     "their"
+    ],
+    [
+     "he",
+     "they"
+    ],
+    [
+     "is",
+     "are"
+    ],
+    [
+     "him",
+     "them"
+    ],
+    [
+     "him",
+     "them"
+    ],
+    [
+     "his",
+     "their"
+    ],
+    [
+     "he",
+     "they"
+    ],
+    [
+     "seems",
+     "seem"
+    ],
+    [
+     "him",
+     "them"
+    ],
+    [
+     "his",
+     "their"
+    ]
+   ],
+   "display": "Lay your baby on their tummy when they are awake and put toys at eye level in front of them. This will help them practice lifting their head up. Do not leave your baby alone. If they seem sleepy, place them on their back in a safe sleep area (firm mattress with no blankets, pillows, bumper pads, or toys).",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Lay your baby on their tummy when they are awake and put toys at eye level in front of them."
+    },
+    {
+     "role": "purpose",
+     "text": "This will help them practice lifting their head up."
+    },
+    {
+     "role": "safety",
+     "text": "Do not leave your baby alone."
+    },
+    {
+     "role": "safety",
+     "text": "If they seem sleepy, place them on their back in a safe sleep area (firm mattress with no blankets, pillows, bumper pads, or toys)."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m2-13",
+   "sourceId": "cdc-ltsae-2-months",
+   "referenceAgeMonths": 2,
+   "source": "Hold a rattle off to one side of your baby's head, shake it, and see if your baby looks for the noise.",
+   "replacements": [],
+   "display": "Hold a rattle off to one side of your baby's head, shake it, and see if your baby looks for the noise.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Hold a rattle off to one side of your baby's head, shake it, and see if your baby looks for the noise."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m2-16",
+   "sourceId": "cdc-ltsae-2-months",
+   "referenceAgeMonths": 2,
+   "source": "Talk and play with your baby while feeding, dressing, and bathing.",
+   "replacements": [],
+   "display": "Talk and play with your baby while feeding, dressing, and bathing.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Talk and play with your baby while feeding, dressing, and bathing."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m2-18",
+   "sourceId": "cdc-ltsae-2-months",
+   "referenceAgeMonths": 2,
+   "source": "Copy your baby's sounds and see how long your baby \"talks\" by making sounds back and forth with you.",
+   "replacements": [],
+   "display": "Copy your baby's sounds and see how long your baby \"talks\" by making sounds back and forth with you.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Copy your baby's sounds and see how long your baby \"talks\" by making sounds back and forth with you."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m2-19",
+   "sourceId": "cdc-ltsae-2-months",
+   "referenceAgeMonths": 2,
+   "source": "Place a baby-safe mirror near your baby so she can look at herself. She will begin to develop a sense of who she is.",
+   "replacements": [
+    [
+     "she",
+     "they"
+    ],
+    [
+     "herself",
+     "themselves"
+    ],
+    [
+     "She",
+     "They"
+    ],
+    [
+     "she",
+     "they"
+    ],
+    [
+     "is",
+     "are"
+    ]
+   ],
+   "display": "Place a baby-safe mirror near your baby so they can look at themselves. They will begin to develop a sense of who they are.",
+   "segments": [
+    {
+     "role": "safety",
+     "text": "Place a baby-safe mirror near your baby so they can look at themselves."
+    },
+    {
+     "role": "step",
+     "text": "They will begin to develop a sense of who they are."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m2-20",
+   "sourceId": "cdc-ltsae-2-months",
+   "referenceAgeMonths": 2,
+   "source": "Look at pictures with bright colors or faces with your baby and talk about them.",
+   "replacements": [],
+   "display": "Look at pictures with bright colors or faces with your baby and talk about them.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Look at pictures with bright colors or faces with your baby and talk about them."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m4-01",
+   "sourceId": "cdc-ltsae-4-months",
+   "referenceAgeMonths": 4,
+   "source": "Respond positively to your baby. Act excited, smile, and talk to him when he makes sounds. This teaches him to take turns \"talking\" back and forth in conversation.",
+   "replacements": [
+    [
+     "him",
+     "them"
+    ],
+    [
+     "he",
+     "they"
+    ],
+    [
+     "makes",
+     "make"
+    ],
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "Respond positively to your baby. Act excited, smile, and talk to them when they make sounds. This teaches them to take turns \"talking\" back and forth in conversation.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Respond positively to your baby."
+    },
+    {
+     "role": "step",
+     "text": "Act excited, smile, and talk to them when they make sounds."
+    },
+    {
+     "role": "purpose",
+     "text": "This teaches them to take turns \"talking\" back and forth in conversation."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m4-02",
+   "sourceId": "cdc-ltsae-4-months",
+   "referenceAgeMonths": 4,
+   "source": "Provide safe opportunities for your baby to reach for toys, kick at toys and explore what is around her. For example, put her on a blanket with safe toys.",
+   "replacements": [
+    [
+     "her",
+     "them"
+    ],
+    [
+     "her",
+     "them"
+    ]
+   ],
+   "display": "Provide safe opportunities for your baby to reach for toys, kick at toys and explore what is around them. For example, put them on a blanket with safe toys.",
+   "segments": [
+    {
+     "role": "safety",
+     "text": "Provide safe opportunities for your baby to reach for toys, kick at toys and explore what is around them."
+    },
+    {
+     "role": "safety",
+     "text": "For example, put them on a blanket with safe toys."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m4-04",
+   "sourceId": "cdc-ltsae-4-months",
+   "referenceAgeMonths": 4,
+   "source": "Talk, read, and sing to your baby. This will help her learn to speak and understand words later.",
+   "replacements": [
+    [
+     "her",
+     "them"
+    ]
+   ],
+   "display": "Talk, read, and sing to your baby. This will help them learn to speak and understand words later.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Talk, read, and sing to your baby."
+    },
+    {
+     "role": "purpose",
+     "text": "This will help them learn to speak and understand words later."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m4-07",
+   "sourceId": "cdc-ltsae-4-months",
+   "referenceAgeMonths": 4,
+   "source": "Give your baby safe toys to play with that are easy to hold, like rattles or cloth books with colorful pictures for her age.",
+   "replacements": [
+    [
+     "her",
+     "their"
+    ]
+   ],
+   "display": "Give your baby safe toys to play with that are easy to hold, like rattles or cloth books with colorful pictures for their age.",
+   "segments": [
+    {
+     "role": "safety",
+     "text": "Give your baby safe toys to play with that are easy to hold, like rattles or cloth books with colorful pictures for their age."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m4-10",
+   "sourceId": "cdc-ltsae-4-months",
+   "referenceAgeMonths": 4,
+   "source": "Lay your baby on her back and show her a bright-colored toy. Move the toy slowly from left to right and up and down to see if she watches how the toy moves.",
+   "replacements": [
+    [
+     "her",
+     "their"
+    ],
+    [
+     "her",
+     "them"
+    ],
+    [
+     "she",
+     "they"
+    ],
+    [
+     "watches",
+     "watch"
+    ]
+   ],
+   "display": "Lay your baby on their back and show them a bright-colored toy. Move the toy slowly from left to right and up and down to see if they watch how the toy moves.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Lay your baby on their back and show them a bright-colored toy."
+    },
+    {
+     "role": "step",
+     "text": "Move the toy slowly from left to right and up and down to see if they watch how the toy moves."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m4-11",
+   "sourceId": "cdc-ltsae-4-months",
+   "referenceAgeMonths": 4,
+   "source": "Sing and talk to your baby as you help her \"exercise\" (move her body) for a few minutes. Gently bend and move her arms and legs up and down.",
+   "replacements": [
+    [
+     "her",
+     "them"
+    ],
+    [
+     "her",
+     "their"
+    ],
+    [
+     "her",
+     "their"
+    ]
+   ],
+   "display": "Sing and talk to your baby as you help them \"exercise\" (move their body) for a few minutes. Gently bend and move their arms and legs up and down.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Sing and talk to your baby as you help them \"exercise\" (move their body) for a few minutes."
+    },
+    {
+     "role": "safety",
+     "text": "Gently bend and move their arms and legs up and down."
+    }
+   ],
+   "timingLanguage": [
+    "for a few minutes"
+   ]
+  },
+  {
+   "id": "cdc22-act-m4-12",
+   "sourceId": "cdc-ltsae-4-months",
+   "referenceAgeMonths": 4,
+   "source": "Play with your baby by holding him securely under his arms with his feet on your lap. Let him bounce up and down.",
+   "replacements": [
+    [
+     "him",
+     "them"
+    ],
+    [
+     "his",
+     "their"
+    ],
+    [
+     "his",
+     "their"
+    ],
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "Play with your baby by holding them securely under their arms with their feet on your lap. Let them bounce up and down.",
+   "segments": [
+    {
+     "role": "safety",
+     "text": "Play with your baby by holding them securely under their arms with their feet on your lap."
+    },
+    {
+     "role": "step",
+     "text": "Let them bounce up and down."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m4-13",
+   "sourceId": "cdc-ltsae-4-months",
+   "referenceAgeMonths": 4,
+   "source": "Play games, such as peek-a-boo. You can cover your eyes with your hands and then uncover and say \"peek-a-boo.\" Watch for your baby's smile or other signs he is enjoying the game.",
+   "replacements": [
+    [
+     "he",
+     "they"
+    ],
+    [
+     "is",
+     "are"
+    ]
+   ],
+   "display": "Play games, such as peek-a-boo. You can cover your eyes with your hands and then uncover and say \"peek-a-boo.\" Watch for your baby's smile or other signs they are enjoying the game.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Play games, such as peek-a-boo."
+    },
+    {
+     "role": "step",
+     "text": "You can cover your eyes with your hands and then uncover and say \"peek-a-boo.\""
+    },
+    {
+     "role": "step",
+     "text": "Watch for your baby's smile or other signs they are enjoying the game."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m4-15",
+   "sourceId": "cdc-ltsae-4-months",
+   "referenceAgeMonths": 4,
+   "source": "Copy your baby's sounds and see how long your baby \"talks\" back and forth with you.",
+   "replacements": [],
+   "display": "Copy your baby's sounds and see how long your baby \"talks\" back and forth with you.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Copy your baby's sounds and see how long your baby \"talks\" back and forth with you."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m4-16",
+   "sourceId": "cdc-ltsae-4-months",
+   "referenceAgeMonths": 4,
+   "source": "Call your baby by his name to help him learn it. He will start to recognize it around 9 months. For example, \"Are you ticklish, Jordan?\"",
+   "replacements": [
+    [
+     "his",
+     "their"
+    ],
+    [
+     "him",
+     "them"
+    ],
+    [
+     "He",
+     "They"
+    ]
+   ],
+   "display": "Call your baby by their name to help them learn it. They will start to recognize it around 9 months. For example, \"Are you ticklish, Jordan?\"",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Call your baby by their name to help them learn it."
+    },
+    {
+     "role": "step",
+     "text": "They will start to recognize it around 9 months."
+    },
+    {
+     "role": "step",
+     "text": "For example, \"Are you ticklish, Jordan?\""
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m4-17",
+   "sourceId": "cdc-ltsae-4-months",
+   "referenceAgeMonths": 4,
+   "source": "Playing on the floor or play mat with your baby every day helps him to move, learn, and explore.",
+   "replacements": [
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "Playing on the floor or play mat with your baby every day helps them to move, learn, and explore.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Playing on the floor or play mat with your baby every day helps them to move, learn, and explore."
+    }
+   ],
+   "timingLanguage": [
+    "every day"
+   ]
+  },
+  {
+   "id": "cdc22-act-m4-18",
+   "sourceId": "cdc-ltsae-4-months",
+   "referenceAgeMonths": 4,
+   "source": "Hold and talk to your baby; smile and be cheerful while you do.",
+   "replacements": [],
+   "display": "Hold and talk to your baby; smile and be cheerful while you do.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Hold and talk to your baby; smile and be cheerful while you do."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m4-19",
+   "sourceId": "cdc-ltsae-4-months",
+   "referenceAgeMonths": 4,
+   "source": "Have quiet play times when you \"read\" or sing to your baby.",
+   "replacements": [],
+   "display": "Have quiet play times when you \"read\" or sing to your baby.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Have quiet play times when you \"read\" or sing to your baby."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m6-01",
+   "sourceId": "cdc-ltsae-6-months",
+   "referenceAgeMonths": 6,
+   "source": "Use \"back and forth\" play with your baby. When your baby smiles, you smile; when he makes sounds, you copy them. This helps him learn to be social.",
+   "replacements": [
+    [
+     "he",
+     "they"
+    ],
+    [
+     "makes",
+     "make"
+    ],
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "Use \"back and forth\" play with your baby. When your baby smiles, you smile; when they make sounds, you copy them. This helps them learn to be social.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Use \"back and forth\" play with your baby."
+    },
+    {
+     "role": "step",
+     "text": "When your baby smiles, you smile; when they make sounds, you copy them."
+    },
+    {
+     "role": "purpose",
+     "text": "This helps them learn to be social."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m6-02",
+   "sourceId": "cdc-ltsae-6-months",
+   "referenceAgeMonths": 6,
+   "source": "\"Read\" to your baby every day by looking at colorful pictures in magazines or books and talk about them. Respond to her when she babbles and \"reads\" too. For example, if she makes sounds, say \"Yes, that's the doggy!\"",
+   "replacements": [
+    [
+     "her",
+     "them"
+    ],
+    [
+     "she",
+     "they"
+    ],
+    [
+     "babbles",
+     "babble"
+    ],
+    [
+     "reads",
+     "read"
+    ],
+    [
+     "she",
+     "they"
+    ],
+    [
+     "makes",
+     "make"
+    ]
+   ],
+   "display": "\"Read\" to your baby every day by looking at colorful pictures in magazines or books and talk about them. Respond to them when they babble and \"read\" too. For example, if they make sounds, say \"Yes, that's the doggy!\"",
+   "segments": [
+    {
+     "role": "step",
+     "text": "\"Read\" to your baby every day by looking at colorful pictures in magazines or books and talk about them."
+    },
+    {
+     "role": "step",
+     "text": "Respond to them when they babble and \"read\" too."
+    },
+    {
+     "role": "step",
+     "text": "For example, if they make sounds, say \"Yes, that's the doggy!\""
+    }
+   ],
+   "timingLanguage": [
+    "every day"
+   ]
+  },
+  {
+   "id": "cdc22-act-m6-03",
+   "sourceId": "cdc-ltsae-6-months",
+   "referenceAgeMonths": 6,
+   "source": "Point out new things to your baby and name them. For example, when on a walk, point out cars, trees, and animals.",
+   "replacements": [],
+   "display": "Point out new things to your baby and name them. For example, when on a walk, point out cars, trees, and animals.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Point out new things to your baby and name them."
+    },
+    {
+     "role": "step",
+     "text": "For example, when on a walk, point out cars, trees, and animals."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m6-04",
+   "sourceId": "cdc-ltsae-6-months",
+   "referenceAgeMonths": 6,
+   "source": "Sing to your baby and play music. This will help his brain develop.",
+   "replacements": [
+    [
+     "his",
+     "their"
+    ]
+   ],
+   "display": "Sing to your baby and play music. This will help their brain develop.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Sing to your baby and play music."
+    },
+    {
+     "role": "purpose",
+     "text": "This will help their brain develop."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m6-06",
+   "sourceId": "cdc-ltsae-6-months",
+   "referenceAgeMonths": 6,
+   "source": "When your baby looks at something, point to it and talk about it.",
+   "replacements": [],
+   "display": "When your baby looks at something, point to it and talk about it.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "When your baby looks at something, point to it and talk about it."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m6-07",
+   "sourceId": "cdc-ltsae-6-months",
+   "referenceAgeMonths": 6,
+   "source": "Put your baby on her tummy or back and put toys just out of reach. Encourage her to roll over to reach the toys.",
+   "replacements": [
+    [
+     "her",
+     "their"
+    ],
+    [
+     "her",
+     "them"
+    ]
+   ],
+   "display": "Put your baby on their tummy or back and put toys just out of reach. Encourage them to roll over to reach the toys.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Put your baby on their tummy or back and put toys just out of reach."
+    },
+    {
+     "role": "step",
+     "text": "Encourage them to roll over to reach the toys."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m6-12",
+   "sourceId": "cdc-ltsae-6-months",
+   "referenceAgeMonths": 6,
+   "source": "Hold your baby up while she sits. Let her look around and give her toys to look at while she learns to balance herself.",
+   "replacements": [
+    [
+     "she",
+     "they"
+    ],
+    [
+     "sits",
+     "sit"
+    ],
+    [
+     "her",
+     "them"
+    ],
+    [
+     "her",
+     "them"
+    ],
+    [
+     "she",
+     "they"
+    ],
+    [
+     "learns",
+     "learn"
+    ],
+    [
+     "herself",
+     "themselves"
+    ]
+   ],
+   "display": "Hold your baby up while they sit. Let them look around and give them toys to look at while they learn to balance themselves.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Hold your baby up while they sit."
+    },
+    {
+     "role": "step",
+     "text": "Let them look around and give them toys to look at while they learn to balance themselves."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m6-13",
+   "sourceId": "cdc-ltsae-6-months",
+   "referenceAgeMonths": 6,
+   "source": "Hold your baby with both of your hands securely under her arms and let her stand. Look around with your baby and name what you can see while she is standing.",
+   "replacements": [
+    [
+     "her",
+     "their"
+    ],
+    [
+     "her",
+     "them"
+    ],
+    [
+     "she",
+     "they"
+    ],
+    [
+     "is",
+     "are"
+    ]
+   ],
+   "display": "Hold your baby with both of your hands securely under their arms and let them stand. Look around with your baby and name what you can see while they are standing.",
+   "segments": [
+    {
+     "role": "safety",
+     "text": "Hold your baby with both of your hands securely under their arms and let them stand."
+    },
+    {
+     "role": "step",
+     "text": "Look around with your baby and name what you can see while they are standing."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m6-14",
+   "sourceId": "cdc-ltsae-6-months",
+   "referenceAgeMonths": 6,
+   "source": "Introduce your baby to different sounds and voices. For example, whisper, clap, or make funny noises. See if your baby looks or is curious and see which sounds she prefers.",
+   "replacements": [
+    [
+     "she",
+     "they"
+    ],
+    [
+     "prefers",
+     "prefer"
+    ]
+   ],
+   "display": "Introduce your baby to different sounds and voices. For example, whisper, clap, or make funny noises. See if your baby looks or is curious and see which sounds they prefer.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Introduce your baby to different sounds and voices."
+    },
+    {
+     "role": "step",
+     "text": "For example, whisper, clap, or make funny noises."
+    },
+    {
+     "role": "step",
+     "text": "See if your baby looks or is curious and see which sounds they prefer."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m6-15",
+   "sourceId": "cdc-ltsae-6-months",
+   "referenceAgeMonths": 6,
+   "source": "Playing on the floor or play mat with your baby every day helps him to move, learn, and explore.",
+   "replacements": [
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "Playing on the floor or play mat with your baby every day helps them to move, learn, and explore.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Playing on the floor or play mat with your baby every day helps them to move, learn, and explore."
+    }
+   ],
+   "timingLanguage": [
+    "every day"
+   ]
+  },
+  {
+   "id": "cdc22-act-m6-16",
+   "sourceId": "cdc-ltsae-6-months",
+   "referenceAgeMonths": 6,
+   "source": "When he drops a toy on the floor, pick it up and give it back. This game helps him learn cause and effect.",
+   "replacements": [
+    [
+     "he",
+     "they"
+    ],
+    [
+     "drops",
+     "drop"
+    ],
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "When they drop a toy on the floor, pick it up and give it back. This game helps them learn cause and effect.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "When they drop a toy on the floor, pick it up and give it back."
+    },
+    {
+     "role": "purpose",
+     "text": "This game helps them learn cause and effect."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m9-01",
+   "sourceId": "cdc-ltsae-9-months",
+   "referenceAgeMonths": 9,
+   "source": "Repeat your baby's sounds and say simple words using those sounds. For example, if your baby says \"bababa,\" repeat \"bababa,\" then say \"book.\"",
+   "replacements": [],
+   "display": "Repeat your baby's sounds and say simple words using those sounds. For example, if your baby says \"bababa,\" repeat \"bababa,\" then say \"book.\"",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Repeat your baby's sounds and say simple words using those sounds."
+    },
+    {
+     "role": "step",
+     "text": "For example, if your baby says \"bababa,\" repeat \"bababa,\" then say \"book.\""
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m9-02",
+   "sourceId": "cdc-ltsae-9-months",
+   "referenceAgeMonths": 9,
+   "source": "Place toys on the ground or on a play mat a little out of reach and encourage your baby to crawl, scoot, or roll to get them. Celebrate when she reaches them.",
+   "replacements": [
+    [
+     "she",
+     "they"
+    ],
+    [
+     "reaches",
+     "reach"
+    ]
+   ],
+   "display": "Place toys on the ground or on a play mat a little out of reach and encourage your baby to crawl, scoot, or roll to get them. Celebrate when they reach them.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Place toys on the ground or on a play mat a little out of reach and encourage your baby to crawl, scoot, or roll to get them."
+    },
+    {
+     "role": "step",
+     "text": "Celebrate when they reach them."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m9-03",
+   "sourceId": "cdc-ltsae-9-months",
+   "referenceAgeMonths": 9,
+   "source": "Teach your baby to wave \"bye-bye\" or shake his head \"no.\" For example, wave and say \"bye-bye\" when you are leaving. You can also teach simple baby sign language to help your baby tell you what he wants before he can use words.",
+   "replacements": [
+    [
+     "his",
+     "their"
+    ],
+    [
+     "he",
+     "they"
+    ],
+    [
+     "wants",
+     "want"
+    ],
+    [
+     "he",
+     "they"
+    ]
+   ],
+   "display": "Teach your baby to wave \"bye-bye\" or shake their head \"no.\" For example, wave and say \"bye-bye\" when you are leaving. You can also teach simple baby sign language to help your baby tell you what they want before they can use words.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Teach your baby to wave \"bye-bye\" or shake their head \"no.\""
+    },
+    {
+     "role": "step",
+     "text": "For example, wave and say \"bye-bye\" when you are leaving."
+    },
+    {
+     "role": "step",
+     "text": "You can also teach simple baby sign language to help your baby tell you what they want before they can use words."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m9-04",
+   "sourceId": "cdc-ltsae-9-months",
+   "referenceAgeMonths": 9,
+   "source": "Play games, such as peek-a-boo. You can cover your head with a cloth and see if your baby pulls it off.",
+   "replacements": [],
+   "display": "Play games, such as peek-a-boo. You can cover your head with a cloth and see if your baby pulls it off.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Play games, such as peek-a-boo."
+    },
+    {
+     "role": "step",
+     "text": "You can cover your head with a cloth and see if your baby pulls it off."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m9-05",
+   "sourceId": "cdc-ltsae-9-months",
+   "referenceAgeMonths": 9,
+   "source": "Play with your baby by dumping blocks from a container and putting them back in together.",
+   "replacements": [],
+   "display": "Play with your baby by dumping blocks from a container and putting them back in together.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Play with your baby by dumping blocks from a container and putting them back in together."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m9-06",
+   "sourceId": "cdc-ltsae-9-months",
+   "referenceAgeMonths": 9,
+   "source": "Play games with your baby, such as my turn, your turn. Try this by passing a toy back and forth.",
+   "replacements": [],
+   "display": "Play games with your baby, such as my turn, your turn. Try this by passing a toy back and forth.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Play games with your baby, such as my turn, your turn."
+    },
+    {
+     "role": "step",
+     "text": "Try this by passing a toy back and forth."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m9-07",
+   "sourceId": "cdc-ltsae-9-months",
+   "referenceAgeMonths": 9,
+   "source": "\"Read\" to your baby. Reading can be talking about pictures. For example, while looking at books or magazines, name the pictures as you point to them.",
+   "replacements": [],
+   "display": "\"Read\" to your baby. Reading can be talking about pictures. For example, while looking at books or magazines, name the pictures as you point to them.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "\"Read\" to your baby."
+    },
+    {
+     "role": "step",
+     "text": "Reading can be talking about pictures."
+    },
+    {
+     "role": "step",
+     "text": "For example, while looking at books or magazines, name the pictures as you point to them."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m9-17",
+   "sourceId": "cdc-ltsae-9-months",
+   "referenceAgeMonths": 9,
+   "source": "Make it a game when your baby drops things. Hand the item back to her so she can drop it again.",
+   "replacements": [
+    [
+     "her",
+     "them"
+    ],
+    [
+     "she",
+     "they"
+    ]
+   ],
+   "display": "Make it a game when your baby drops things. Hand the item back to them so they can drop it again.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Make it a game when your baby drops things."
+    },
+    {
+     "role": "step",
+     "text": "Hand the item back to them so they can drop it again."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m9-19",
+   "sourceId": "cdc-ltsae-9-months",
+   "referenceAgeMonths": 9,
+   "source": "Describe what your baby is looking at; for example, \"red, round ball.\"",
+   "replacements": [],
+   "display": "Describe what your baby is looking at; for example, \"red, round ball.\"",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Describe what your baby is looking at; for example, \"red, round ball.\""
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m9-20",
+   "sourceId": "cdc-ltsae-9-months",
+   "referenceAgeMonths": 9,
+   "source": "Play a game that teaches your baby to look for things she sees you hide, such as a toy under a blanket.",
+   "replacements": [
+    [
+     "she",
+     "they"
+    ],
+    [
+     "sees",
+     "see"
+    ]
+   ],
+   "display": "Play a game that teaches your baby to look for things they see you hide, such as a toy under a blanket.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Play a game that teaches your baby to look for things they see you hide, such as a toy under a blanket."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m9-22",
+   "sourceId": "cdc-ltsae-9-months",
+   "referenceAgeMonths": 9,
+   "source": "Use your words, facial expressions, and voice to show what you think your baby is feeling (sad, mad, happy). For example, tell him \"You are sad, let's see if we can make you feel better.\"",
+   "replacements": [
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "Use your words, facial expressions, and voice to show what you think your baby is feeling (sad, mad, happy). For example, tell them \"You are sad, let's see if we can make you feel better.\"",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Use your words, facial expressions, and voice to show what you think your baby is feeling (sad, mad, happy)."
+    },
+    {
+     "role": "step",
+     "text": "For example, tell them \"You are sad, let's see if we can make you feel better.\""
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m9-23",
+   "sourceId": "cdc-ltsae-9-months",
+   "referenceAgeMonths": 9,
+   "source": "Put your baby close to things that she can pull up on safely.",
+   "replacements": [
+    [
+     "she",
+     "they"
+    ]
+   ],
+   "display": "Put your baby close to things that they can pull up on safely.",
+   "segments": [
+    {
+     "role": "safety",
+     "text": "Put your baby close to things that they can pull up on safely."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m12-03",
+   "sourceId": "cdc-ltsae-1-year",
+   "referenceAgeMonths": 12,
+   "source": "Build on what your baby tries to say. If he says \"ta,\" say \"Yes, a truck,\" or if he says \"truck,\" say \"Yes, that's a big, blue truck.\"",
+   "replacements": [
+    [
+     "he",
+     "they"
+    ],
+    [
+     "says",
+     "say"
+    ],
+    [
+     "he",
+     "they"
+    ],
+    [
+     "says",
+     "say"
+    ]
+   ],
+   "display": "Build on what your baby tries to say. If they say \"ta,\" say \"Yes, a truck,\" or if they say \"truck,\" say \"Yes, that's a big, blue truck.\"",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Build on what your baby tries to say."
+    },
+    {
+     "role": "step",
+     "text": "If they say \"ta,\" say \"Yes, a truck,\" or if they say \"truck,\" say \"Yes, that's a big, blue truck.\""
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m12-06",
+   "sourceId": "cdc-ltsae-1-year",
+   "referenceAgeMonths": 12,
+   "source": "Respond with words when your baby points. Babies point to ask for things. For example, say \"You want the cup? Here is the cup. It's your cup.\" If he tries to say \"cup,\" celebrate his attempt.",
+   "replacements": [
+    [
+     "he",
+     "they"
+    ],
+    [
+     "tries",
+     "try"
+    ],
+    [
+     "his",
+     "their"
+    ]
+   ],
+   "display": "Respond with words when your baby points. Babies point to ask for things. For example, say \"You want the cup? Here is the cup. It's your cup.\" If they try to say \"cup,\" celebrate their attempt.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Respond with words when your baby points."
+    },
+    {
+     "role": "step",
+     "text": "Babies point to ask for things."
+    },
+    {
+     "role": "step",
+     "text": "For example, say \"You want the cup? Here is the cup. It's your cup.\""
+    },
+    {
+     "role": "step",
+     "text": "If they try to say \"cup,\" celebrate their attempt."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m12-07",
+   "sourceId": "cdc-ltsae-1-year",
+   "referenceAgeMonths": 12,
+   "source": "Point to interesting things you see, such as a truck, bus, or animals. This will help your baby pay attention to what others are \"showing\" him through pointing.",
+   "replacements": [
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "Point to interesting things you see, such as a truck, bus, or animals. This will help your baby pay attention to what others are \"showing\" them through pointing.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Point to interesting things you see, such as a truck, bus, or animals."
+    },
+    {
+     "role": "purpose",
+     "text": "This will help your baby pay attention to what others are \"showing\" them through pointing."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m12-12",
+   "sourceId": "cdc-ltsae-1-year",
+   "referenceAgeMonths": 12,
+   "source": "Give your baby pots and pans or a small musical instrument like a drum or cymbals. Encourage your baby to make noise.",
+   "replacements": [],
+   "display": "Give your baby pots and pans or a small musical instrument like a drum or cymbals. Encourage your baby to make noise.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Give your baby pots and pans or a small musical instrument like a drum or cymbals."
+    },
+    {
+     "role": "step",
+     "text": "Encourage your baby to make noise."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m12-15",
+   "sourceId": "cdc-ltsae-1-year",
+   "referenceAgeMonths": 12,
+   "source": "\"Read\" books with your baby. Reading can be talking about pictures. Babies this age like books with things they can feel or flaps they can lift.",
+   "replacements": [],
+   "display": "\"Read\" books with your baby. Reading can be talking about pictures. Babies this age like books with things they can feel or flaps they can lift.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "\"Read\" books with your baby."
+    },
+    {
+     "role": "step",
+     "text": "Reading can be talking about pictures."
+    },
+    {
+     "role": "step",
+     "text": "Babies this age like books with things they can feel or flaps they can lift."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m12-16",
+   "sourceId": "cdc-ltsae-1-year",
+   "referenceAgeMonths": 12,
+   "source": "Play together with blocks and other toys that encourage your baby to use her hands.",
+   "replacements": [
+    [
+     "her",
+     "their"
+    ]
+   ],
+   "display": "Play together with blocks and other toys that encourage your baby to use their hands.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Play together with blocks and other toys that encourage your baby to use their hands."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m12-18",
+   "sourceId": "cdc-ltsae-1-year",
+   "referenceAgeMonths": 12,
+   "source": "Let your baby push things around, such as empty boxes, a \"kiddie chair,\" or \"push toys,\" so he can practice walking.",
+   "replacements": [
+    [
+     "he",
+     "they"
+    ]
+   ],
+   "display": "Let your baby push things around, such as empty boxes, a \"kiddie chair,\" or \"push toys,\" so they can practice walking.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Let your baby push things around, such as empty boxes, a \"kiddie chair,\" or \"push toys,\" so they can practice walking."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m12-19",
+   "sourceId": "cdc-ltsae-1-year",
+   "referenceAgeMonths": 12,
+   "source": "Encourage your baby to practice walking on her own. Baby walkers are not recommended. Let her hold your hands or hold onto furniture that is safe.",
+   "replacements": [
+    [
+     "her",
+     "their"
+    ],
+    [
+     "her",
+     "them"
+    ]
+   ],
+   "display": "Encourage your baby to practice walking on their own. Baby walkers are not recommended. Let them hold your hands or hold onto furniture that is safe.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Encourage your baby to practice walking on their own."
+    },
+    {
+     "role": "safety",
+     "text": "Baby walkers are not recommended."
+    },
+    {
+     "role": "safety",
+     "text": "Let them hold your hands or hold onto furniture that is safe."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m15-01",
+   "sourceId": "cdc-ltsae-15-months",
+   "referenceAgeMonths": 15,
+   "source": "Help your child learn to speak. A child's early words are not complete. Repeat and add to what he says. He may say \"ba\" for ball and you can say \"Ball, yes, that's a ball.\"",
+   "replacements": [
+    [
+     "he",
+     "they"
+    ],
+    [
+     "says",
+     "say"
+    ],
+    [
+     "He",
+     "They"
+    ]
+   ],
+   "display": "Help your child learn to speak. A child's early words are not complete. Repeat and add to what they say. They may say \"ba\" for ball and you can say \"Ball, yes, that's a ball.\"",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Help your child learn to speak."
+    },
+    {
+     "role": "step",
+     "text": "A child's early words are not complete."
+    },
+    {
+     "role": "step",
+     "text": "Repeat and add to what they say."
+    },
+    {
+     "role": "step",
+     "text": "They may say \"ba\" for ball and you can say \"Ball, yes, that's a ball.\""
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m15-02",
+   "sourceId": "cdc-ltsae-15-months",
+   "referenceAgeMonths": 15,
+   "source": "Tell your child the names of objects when he points to them and wait a few seconds to see if he makes any sounds before handing it to him. If he does make a sound, acknowledge him, and repeat the name of the object. \"Yes! Cup.\"",
+   "replacements": [
+    [
+     "he",
+     "they"
+    ],
+    [
+     "points",
+     "point"
+    ],
+    [
+     "he",
+     "they"
+    ],
+    [
+     "makes",
+     "make"
+    ],
+    [
+     "him",
+     "them"
+    ],
+    [
+     "he",
+     "they"
+    ],
+    [
+     "does",
+     "do"
+    ],
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "Tell your child the names of objects when they point to them and wait a few seconds to see if they make any sounds before handing it to them. If they do make a sound, acknowledge them, and repeat the name of the object. \"Yes! Cup.\"",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Tell your child the names of objects when they point to them and wait a few seconds to see if they make any sounds before handing it to them."
+    },
+    {
+     "role": "step",
+     "text": "If they do make a sound, acknowledge them, and repeat the name of the object."
+    },
+    {
+     "role": "step",
+     "text": "\"Yes! Cup.\""
+    }
+   ],
+   "timingLanguage": [
+    "a few seconds"
+   ]
+  },
+  {
+   "id": "cdc22-act-m15-03",
+   "sourceId": "cdc-ltsae-15-months",
+   "referenceAgeMonths": 15,
+   "source": "Find ways to let your child help with everyday activities. Let her get her shoes to go outside, put the snacks in the bag for the park, or put the socks in the basket.",
+   "replacements": [
+    [
+     "her",
+     "them"
+    ],
+    [
+     "her",
+     "their"
+    ]
+   ],
+   "display": "Find ways to let your child help with everyday activities. Let them get their shoes to go outside, put the snacks in the bag for the park, or put the socks in the basket.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Find ways to let your child help with everyday activities."
+    },
+    {
+     "role": "step",
+     "text": "Let them get their shoes to go outside, put the snacks in the bag for the park, or put the socks in the basket."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m15-05",
+   "sourceId": "cdc-ltsae-15-months",
+   "referenceAgeMonths": 15,
+   "source": "Show your child different things, such as a hat. Ask him, \"What do you do with a hat? You put it on your head.\" Put it on your head and then give it to him to see if he copies you. Do this with other objects, such as a book or a cup.",
+   "replacements": [
+    [
+     "him",
+     "them"
+    ],
+    [
+     "him",
+     "them"
+    ],
+    [
+     "he",
+     "they"
+    ],
+    [
+     "copies",
+     "copy"
+    ]
+   ],
+   "display": "Show your child different things, such as a hat. Ask them, \"What do you do with a hat? You put it on your head.\" Put it on your head and then give it to them to see if they copy you. Do this with other objects, such as a book or a cup.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Show your child different things, such as a hat."
+    },
+    {
+     "role": "step",
+     "text": "Ask them, \"What do you do with a hat? You put it on your head.\""
+    },
+    {
+     "role": "step",
+     "text": "Put it on your head and then give it to them to see if they copy you."
+    },
+    {
+     "role": "step",
+     "text": "Do this with other objects, such as a book or a cup."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m15-06",
+   "sourceId": "cdc-ltsae-15-months",
+   "referenceAgeMonths": 15,
+   "source": "Sing songs with gestures, such as \"Wheels on the Bus.\" See if your child tries to do some of the actions.",
+   "replacements": [],
+   "display": "Sing songs with gestures, such as \"Wheels on the Bus.\" See if your child tries to do some of the actions.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Sing songs with gestures, such as \"Wheels on the Bus.\""
+    },
+    {
+     "role": "step",
+     "text": "See if your child tries to do some of the actions."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m15-11",
+   "sourceId": "cdc-ltsae-15-months",
+   "referenceAgeMonths": 15,
+   "source": "Encourage your child to play with blocks. You can stack the blocks and she can knock them down.",
+   "replacements": [
+    [
+     "she",
+     "they"
+    ]
+   ],
+   "display": "Encourage your child to play with blocks. You can stack the blocks and they can knock them down.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Encourage your child to play with blocks."
+    },
+    {
+     "role": "step",
+     "text": "You can stack the blocks and they can knock them down."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m15-15",
+   "sourceId": "cdc-ltsae-15-months",
+   "referenceAgeMonths": 15,
+   "source": "Continue to talk, read, sing, and tell your child the names of things throughout the day. She will try to say and learn many new words, which can help her read later on.",
+   "replacements": [
+    [
+     "She",
+     "They"
+    ],
+    [
+     "her",
+     "them"
+    ]
+   ],
+   "display": "Continue to talk, read, sing, and tell your child the names of things throughout the day. They will try to say and learn many new words, which can help them read later on.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Continue to talk, read, sing, and tell your child the names of things throughout the day."
+    },
+    {
+     "role": "step",
+     "text": "They will try to say and learn many new words, which can help them read later on."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m15-16",
+   "sourceId": "cdc-ltsae-15-months",
+   "referenceAgeMonths": 15,
+   "source": "Make a \"book\" with pictures of people and pets in your child's life. Name them as you look through the book together. Include a picture of your child.",
+   "replacements": [],
+   "display": "Make a \"book\" with pictures of people and pets in your child's life. Name them as you look through the book together. Include a picture of your child.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Make a \"book\" with pictures of people and pets in your child's life."
+    },
+    {
+     "role": "step",
+     "text": "Name them as you look through the book together."
+    },
+    {
+     "role": "step",
+     "text": "Include a picture of your child."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m15-17",
+   "sourceId": "cdc-ltsae-15-months",
+   "referenceAgeMonths": 15,
+   "source": "Sing or play children's songs and songs your family enjoys. Dance with your child.",
+   "replacements": [],
+   "display": "Sing or play children's songs and songs your family enjoys. Dance with your child.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Sing or play children's songs and songs your family enjoys."
+    },
+    {
+     "role": "step",
+     "text": "Dance with your child."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m15-18",
+   "sourceId": "cdc-ltsae-15-months",
+   "referenceAgeMonths": 15,
+   "source": "Read a new book after a favorite one to explore and try new books. Children like to do favorite things again and again. You can use the things they like to do to introduce new things.",
+   "replacements": [],
+   "display": "Read a new book after a favorite one to explore and try new books. Children like to do favorite things again and again. You can use the things they like to do to introduce new things.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Read a new book after a favorite one to explore and try new books."
+    },
+    {
+     "role": "step",
+     "text": "Children like to do favorite things again and again."
+    },
+    {
+     "role": "step",
+     "text": "You can use the things they like to do to introduce new things."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m15-19",
+   "sourceId": "cdc-ltsae-15-months",
+   "referenceAgeMonths": 15,
+   "source": "Play simple games, such as hide and seek. Let your child watch you hide behind a chair and then wait for her to come \"find\" you.",
+   "replacements": [
+    [
+     "her",
+     "them"
+    ]
+   ],
+   "display": "Play simple games, such as hide and seek. Let your child watch you hide behind a chair and then wait for them to come \"find\" you.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Play simple games, such as hide and seek."
+    },
+    {
+     "role": "step",
+     "text": "Let your child watch you hide behind a chair and then wait for them to come \"find\" you."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m15-20",
+   "sourceId": "cdc-ltsae-15-months",
+   "referenceAgeMonths": 15,
+   "source": "Make up a simple \"cleanup song\" and sing it while you teach your child to help \"clean up.\" Have him help put toys in a basket or hand you things to put away.",
+   "replacements": [
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "Make up a simple \"cleanup song\" and sing it while you teach your child to help \"clean up.\" Have them help put toys in a basket or hand you things to put away.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Make up a simple \"cleanup song\" and sing it while you teach your child to help \"clean up.\""
+    },
+    {
+     "role": "step",
+     "text": "Have them help put toys in a basket or hand you things to put away."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m15-21",
+   "sourceId": "cdc-ltsae-15-months",
+   "referenceAgeMonths": 15,
+   "source": "You can teach simple gestures and sign language (for example, pointing and waving) to help your child \"talk\" to you and show you what she wants.",
+   "replacements": [
+    [
+     "she",
+     "they"
+    ],
+    [
+     "wants",
+     "want"
+    ]
+   ],
+   "display": "You can teach simple gestures and sign language (for example, pointing and waving) to help your child \"talk\" to you and show you what they want.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "You can teach simple gestures and sign language (for example, pointing and waving) to help your child \"talk\" to you and show you what they want."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m15-22",
+   "sourceId": "cdc-ltsae-15-months",
+   "referenceAgeMonths": 15,
+   "source": "\"Pretend talk\" to your child with a stuffed animal. See if your child tries to copy you or if he uses another stuffed animal to \"talk\" with the one you are holding.",
+   "replacements": [
+    [
+     "he",
+     "they"
+    ],
+    [
+     "uses",
+     "use"
+    ]
+   ],
+   "display": "\"Pretend talk\" to your child with a stuffed animal. See if your child tries to copy you or if they use another stuffed animal to \"talk\" with the one you are holding.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "\"Pretend talk\" to your child with a stuffed animal."
+    },
+    {
+     "role": "step",
+     "text": "See if your child tries to copy you or if they use another stuffed animal to \"talk\" with the one you are holding."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m15-23",
+   "sourceId": "cdc-ltsae-15-months",
+   "referenceAgeMonths": 15,
+   "source": "Blow bubbles and let your child pop them. Say things as she pops them, such as \"Pop, pop.\"",
+   "replacements": [
+    [
+     "she",
+     "they"
+    ],
+    [
+     "pops",
+     "pop"
+    ]
+   ],
+   "display": "Blow bubbles and let your child pop them. Say things as they pop them, such as \"Pop, pop.\"",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Blow bubbles and let your child pop them."
+    },
+    {
+     "role": "step",
+     "text": "Say things as they pop them, such as \"Pop, pop.\""
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m18-02",
+   "sourceId": "cdc-ltsae-18-months",
+   "referenceAgeMonths": 18,
+   "source": "Encourage \"pretend\" play. Give your child a spoon so she can pretend to feed her stuffed animal. Take turns pretending.",
+   "replacements": [
+    [
+     "she",
+     "they"
+    ],
+    [
+     "her",
+     "their"
+    ]
+   ],
+   "display": "Encourage \"pretend\" play. Give your child a spoon so they can pretend to feed their stuffed animal. Take turns pretending.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Encourage \"pretend\" play."
+    },
+    {
+     "role": "step",
+     "text": "Give your child a spoon so they can pretend to feed their stuffed animal."
+    },
+    {
+     "role": "step",
+     "text": "Take turns pretending."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m18-03",
+   "sourceId": "cdc-ltsae-18-months",
+   "referenceAgeMonths": 18,
+   "source": "Help your child learn about others' feelings and about positive ways to react. For example, when he sees a child who is sad, say \"He looks sad. Let's bring him a teddy.\"",
+   "replacements": [
+    [
+     "he",
+     "they"
+    ],
+    [
+     "sees",
+     "see"
+    ],
+    [
+     "He",
+     "They"
+    ],
+    [
+     "looks",
+     "look"
+    ],
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "Help your child learn about others' feelings and about positive ways to react. For example, when they see a child who is sad, say \"They look sad. Let's bring them a teddy.\"",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Help your child learn about others' feelings and about positive ways to react."
+    },
+    {
+     "role": "step",
+     "text": "For example, when they see a child who is sad, say \"They look sad. Let's bring them a teddy.\""
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m18-04",
+   "sourceId": "cdc-ltsae-18-months",
+   "referenceAgeMonths": 18,
+   "source": "Ask simple questions to help your child think about what's around her. For example, ask her, \"What is that?\"",
+   "replacements": [
+    [
+     "her",
+     "them"
+    ],
+    [
+     "her",
+     "them"
+    ]
+   ],
+   "display": "Ask simple questions to help your child think about what's around them. For example, ask them, \"What is that?\"",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Ask simple questions to help your child think about what's around them."
+    },
+    {
+     "role": "step",
+     "text": "For example, ask them, \"What is that?\""
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m18-11",
+   "sourceId": "cdc-ltsae-18-months",
+   "referenceAgeMonths": 18,
+   "source": "Talk with your child by facing her and getting down to her eye level when possible. This helps your child \"see\" what you're saying through your eyes and face, not just your words.",
+   "replacements": [
+    [
+     "her",
+     "them"
+    ],
+    [
+     "her",
+     "their"
+    ]
+   ],
+   "display": "Talk with your child by facing them and getting down to their eye level when possible. This helps your child \"see\" what you're saying through your eyes and face, not just your words.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Talk with your child by facing them and getting down to their eye level when possible."
+    },
+    {
+     "role": "purpose",
+     "text": "This helps your child \"see\" what you're saying through your eyes and face, not just your words."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m18-12",
+   "sourceId": "cdc-ltsae-18-months",
+   "referenceAgeMonths": 18,
+   "source": "Start to teach your child the names for body parts by pointing them out and saying things like \"Here's your nose, here's my nose,\" while pointing to her nose and your own.",
+   "replacements": [
+    [
+     "her",
+     "their"
+    ]
+   ],
+   "display": "Start to teach your child the names for body parts by pointing them out and saying things like \"Here's your nose, here's my nose,\" while pointing to their nose and your own.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Start to teach your child the names for body parts by pointing them out and saying things like \"Here's your nose, here's my nose,\" while pointing to their nose and your own."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m18-14",
+   "sourceId": "cdc-ltsae-18-months",
+   "referenceAgeMonths": 18,
+   "source": "Teach your child more words by adding to the words she says. For example, if she says \"Dog,\" say \"Yes, that's a dog. Dogs say 'woof, woof.'\"",
+   "replacements": [
+    [
+     "she",
+     "they"
+    ],
+    [
+     "says",
+     "say"
+    ],
+    [
+     "she",
+     "they"
+    ],
+    [
+     "says",
+     "say"
+    ]
+   ],
+   "display": "Teach your child more words by adding to the words they say. For example, if they say \"Dog,\" say \"Yes, that's a dog. Dogs say 'woof, woof.'\"",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Teach your child more words by adding to the words they say."
+    },
+    {
+     "role": "step",
+     "text": "For example, if they say \"Dog,\" say \"Yes, that's a dog. Dogs say 'woof, woof.'\""
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m18-15",
+   "sourceId": "cdc-ltsae-18-months",
+   "referenceAgeMonths": 18,
+   "source": "Play with your child by rolling balls back and forth, pushing toy cars, and putting blocks or other items in and out of containers.",
+   "replacements": [],
+   "display": "Play with your child by rolling balls back and forth, pushing toy cars, and putting blocks or other items in and out of containers.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Play with your child by rolling balls back and forth, pushing toy cars, and putting blocks or other items in and out of containers."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m18-16",
+   "sourceId": "cdc-ltsae-18-months",
+   "referenceAgeMonths": 18,
+   "source": "Read books and talk about the pictures using simple words.",
+   "replacements": [],
+   "display": "Read books and talk about the pictures using simple words.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Read books and talk about the pictures using simple words."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m18-17",
+   "sourceId": "cdc-ltsae-18-months",
+   "referenceAgeMonths": 18,
+   "source": "Play simple games where both of you have a part to play. Blow bubbles and let your child pop them. Say things as he pops them, such as \"Pop, pop.\"",
+   "replacements": [
+    [
+     "he",
+     "they"
+    ],
+    [
+     "pops",
+     "pop"
+    ]
+   ],
+   "display": "Play simple games where both of you have a part to play. Blow bubbles and let your child pop them. Say things as they pop them, such as \"Pop, pop.\"",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Play simple games where both of you have a part to play."
+    },
+    {
+     "role": "step",
+     "text": "Blow bubbles and let your child pop them."
+    },
+    {
+     "role": "step",
+     "text": "Say things as they pop them, such as \"Pop, pop.\""
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m18-19",
+   "sourceId": "cdc-ltsae-18-months",
+   "referenceAgeMonths": 18,
+   "source": "Give toys that your child can push or pull safely.",
+   "replacements": [],
+   "display": "Give toys that your child can push or pull safely.",
+   "segments": [
+    {
+     "role": "safety",
+     "text": "Give toys that your child can push or pull safely."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m18-20",
+   "sourceId": "cdc-ltsae-18-months",
+   "referenceAgeMonths": 18,
+   "source": "Give toys and things to your child that encourage \"pretend\" play, such as a doll and a baby blanket.",
+   "replacements": [],
+   "display": "Give toys and things to your child that encourage \"pretend\" play, such as a doll and a baby blanket.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Give toys and things to your child that encourage \"pretend\" play, such as a doll and a baby blanket."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m24-01",
+   "sourceId": "cdc-ltsae-2-years",
+   "referenceAgeMonths": 24,
+   "source": "Help your child learn how words sound, even if he can't say them clearly yet. For example, if your child says, \"or nana,\" say \"You want more banana.\"",
+   "replacements": [
+    [
+     "he",
+     "they"
+    ]
+   ],
+   "display": "Help your child learn how words sound, even if they can't say them clearly yet. For example, if your child says, \"or nana,\" say \"You want more banana.\"",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Help your child learn how words sound, even if they can't say them clearly yet."
+    },
+    {
+     "role": "step",
+     "text": "For example, if your child says, \"or nana,\" say \"You want more banana.\""
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m24-03",
+   "sourceId": "cdc-ltsae-2-years",
+   "referenceAgeMonths": 24,
+   "source": "Have your child help you get ready for mealtime, by letting him carry things to the table, such as plastic cups or napkins. Thank your child for helping.",
+   "replacements": [
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "Have your child help you get ready for mealtime, by letting them carry things to the table, such as plastic cups or napkins. Thank your child for helping.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Have your child help you get ready for mealtime, by letting them carry things to the table, such as plastic cups or napkins."
+    },
+    {
+     "role": "step",
+     "text": "Thank your child for helping."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m24-04",
+   "sourceId": "cdc-ltsae-2-years",
+   "referenceAgeMonths": 24,
+   "source": "Give your child balls to kick, roll, and throw.",
+   "replacements": [],
+   "display": "Give your child balls to kick, roll, and throw.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Give your child balls to kick, roll, and throw."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m24-05",
+   "sourceId": "cdc-ltsae-2-years",
+   "referenceAgeMonths": 24,
+   "source": "Give toys that teach your child how to make things work and how to solve problems. For example, give her toys where she can push a button and something happens.",
+   "replacements": [
+    [
+     "her",
+     "them"
+    ],
+    [
+     "she",
+     "they"
+    ]
+   ],
+   "display": "Give toys that teach your child how to make things work and how to solve problems. For example, give them toys where they can push a button and something happens.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Give toys that teach your child how to make things work and how to solve problems."
+    },
+    {
+     "role": "step",
+     "text": "For example, give them toys where they can push a button and something happens."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m24-06",
+   "sourceId": "cdc-ltsae-2-years",
+   "referenceAgeMonths": 24,
+   "source": "Let your child play dress up with grown-up clothes, such as shoes, hats, and shirts. This helps him begin to pretend play.",
+   "replacements": [
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "Let your child play dress up with grown-up clothes, such as shoes, hats, and shirts. This helps them begin to pretend play.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Let your child play dress up with grown-up clothes, such as shoes, hats, and shirts."
+    },
+    {
+     "role": "purpose",
+     "text": "This helps them begin to pretend play."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m24-10",
+   "sourceId": "cdc-ltsae-2-years",
+   "referenceAgeMonths": 24,
+   "source": "Use positive words when your child is being a good helper. Let him help with simple chores, such as putting toys or laundry in a basket.",
+   "replacements": [
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "Use positive words when your child is being a good helper. Let them help with simple chores, such as putting toys or laundry in a basket.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Use positive words when your child is being a good helper."
+    },
+    {
+     "role": "step",
+     "text": "Let them help with simple chores, such as putting toys or laundry in a basket."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m24-11",
+   "sourceId": "cdc-ltsae-2-years",
+   "referenceAgeMonths": 24,
+   "source": "Play with your child outside, by playing \"ready, set, go.\" For example, pull your child back in a swing. Say \"Ready, set....\", then wait and say \"Go\" when you push the swing.",
+   "replacements": [],
+   "display": "Play with your child outside, by playing \"ready, set, go.\" For example, pull your child back in a swing. Say \"Ready, set....\", then wait and say \"Go\" when you push the swing.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Play with your child outside, by playing \"ready, set, go.\""
+    },
+    {
+     "role": "step",
+     "text": "For example, pull your child back in a swing."
+    },
+    {
+     "role": "step",
+     "text": "Say \"Ready, set....\", then wait and say \"Go\" when you push the swing."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m24-12",
+   "sourceId": "cdc-ltsae-2-years",
+   "referenceAgeMonths": 24,
+   "source": "Let your child create simple art projects with you. Give your child crayons or put some finger paint on paper and let her explore by spreading it around and making dots. Hang it on the wall or refrigerator so your child can see it.",
+   "replacements": [
+    [
+     "her",
+     "them"
+    ]
+   ],
+   "display": "Let your child create simple art projects with you. Give your child crayons or put some finger paint on paper and let them explore by spreading it around and making dots. Hang it on the wall or refrigerator so your child can see it.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Let your child create simple art projects with you."
+    },
+    {
+     "role": "step",
+     "text": "Give your child crayons or put some finger paint on paper and let them explore by spreading it around and making dots."
+    },
+    {
+     "role": "step",
+     "text": "Hang it on the wall or refrigerator so your child can see it."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m24-14",
+   "sourceId": "cdc-ltsae-2-years",
+   "referenceAgeMonths": 24,
+   "source": "Let your child play with sand toys or plastic containers, spoons, or a funnel in the tub or in a sandbox.",
+   "replacements": [],
+   "display": "Let your child play with sand toys or plastic containers, spoons, or a funnel in the tub or in a sandbox.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Let your child play with sand toys or plastic containers, spoons, or a funnel in the tub or in a sandbox."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m24-15",
+   "sourceId": "cdc-ltsae-2-years",
+   "referenceAgeMonths": 24,
+   "source": "Help your child do simple puzzles with shapes, colors, or animals. Name each piece when your child puts it in place.",
+   "replacements": [],
+   "display": "Help your child do simple puzzles with shapes, colors, or animals. Name each piece when your child puts it in place.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Help your child do simple puzzles with shapes, colors, or animals."
+    },
+    {
+     "role": "step",
+     "text": "Name each piece when your child puts it in place."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m24-16",
+   "sourceId": "cdc-ltsae-2-years",
+   "referenceAgeMonths": 24,
+   "source": "Encourage your child's curiosity and help her learn and explore new things. Take her to the park, take walks, or go on a bus ride.",
+   "replacements": [
+    [
+     "her",
+     "them"
+    ],
+    [
+     "her",
+     "them"
+    ]
+   ],
+   "display": "Encourage your child's curiosity and help them learn and explore new things. Take them to the park, take walks, or go on a bus ride.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Encourage your child's curiosity and help them learn and explore new things."
+    },
+    {
+     "role": "step",
+     "text": "Take them to the park, take walks, or go on a bus ride."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m24-17",
+   "sourceId": "cdc-ltsae-2-years",
+   "referenceAgeMonths": 24,
+   "source": "Sing songs, such as \"Head, Shoulders, Knees, and Toes,\" to teach names of body parts. After singing it a few times, see if your child sings some of the words when you touch a body part and wait.",
+   "replacements": [],
+   "display": "Sing songs, such as \"Head, Shoulders, Knees, and Toes,\" to teach names of body parts. After singing it a few times, see if your child sings some of the words when you touch a body part and wait.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Sing songs, such as \"Head, Shoulders, Knees, and Toes,\" to teach names of body parts."
+    },
+    {
+     "role": "step",
+     "text": "After singing it a few times, see if your child sings some of the words when you touch a body part and wait."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m24-19",
+   "sourceId": "cdc-ltsae-2-years",
+   "referenceAgeMonths": 24,
+   "source": "Encourage your child to play with blocks. Take turns building towers and knocking them down.",
+   "replacements": [],
+   "display": "Encourage your child to play with blocks. Take turns building towers and knocking them down.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Encourage your child to play with blocks."
+    },
+    {
+     "role": "step",
+     "text": "Take turns building towers and knocking them down."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m24-20",
+   "sourceId": "cdc-ltsae-2-years",
+   "referenceAgeMonths": 24,
+   "source": "Ask your child to help you open the drawer when you put away clothes or open the door when you go outside.",
+   "replacements": [],
+   "display": "Ask your child to help you open the drawer when you put away clothes or open the door when you go outside.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Ask your child to help you open the drawer when you put away clothes or open the door when you go outside."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m30-01",
+   "sourceId": "cdc-ltsae-30-months",
+   "referenceAgeMonths": 30,
+   "source": "Encourage \"free play,\" where your child can follow her interests, try new things, and use things in new ways.",
+   "replacements": [
+    [
+     "her",
+     "their"
+    ]
+   ],
+   "display": "Encourage \"free play,\" where your child can follow their interests, try new things, and use things in new ways.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Encourage \"free play,\" where your child can follow their interests, try new things, and use things in new ways."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m30-04",
+   "sourceId": "cdc-ltsae-30-months",
+   "referenceAgeMonths": 30,
+   "source": "Ask your child simple questions about books and stories. Ask questions, such as \"Who?\" \"What?\" and \"Where?\"",
+   "replacements": [],
+   "display": "Ask your child simple questions about books and stories. Ask questions, such as \"Who?\" \"What?\" and \"Where?\"",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Ask your child simple questions about books and stories."
+    },
+    {
+     "role": "step",
+     "text": "Ask questions, such as \"Who?\""
+    },
+    {
+     "role": "step",
+     "text": "\"What?\""
+    },
+    {
+     "role": "step",
+     "text": "and \"Where?\""
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m30-05",
+   "sourceId": "cdc-ltsae-30-months",
+   "referenceAgeMonths": 30,
+   "source": "Help your child learn how to play with other children. Show him how by helping him share, take turns, and use his \"words.\"",
+   "replacements": [
+    [
+     "him",
+     "them"
+    ],
+    [
+     "him",
+     "them"
+    ],
+    [
+     "his",
+     "their"
+    ]
+   ],
+   "display": "Help your child learn how to play with other children. Show them how by helping them share, take turns, and use their \"words.\"",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Help your child learn how to play with other children."
+    },
+    {
+     "role": "step",
+     "text": "Show them how by helping them share, take turns, and use their \"words.\""
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m30-06",
+   "sourceId": "cdc-ltsae-30-months",
+   "referenceAgeMonths": 30,
+   "source": "Let your child \"draw\" with crayons on paper, shaving cream on a tray, or chalk on a sidewalk. If you draw a straight line, see if she will copy you. When she gets good at lines, show her how to draw a circle.",
+   "replacements": [
+    [
+     "she",
+     "they"
+    ],
+    [
+     "she",
+     "they"
+    ],
+    [
+     "gets",
+     "get"
+    ],
+    [
+     "her",
+     "them"
+    ]
+   ],
+   "display": "Let your child \"draw\" with crayons on paper, shaving cream on a tray, or chalk on a sidewalk. If you draw a straight line, see if they will copy you. When they get good at lines, show them how to draw a circle.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Let your child \"draw\" with crayons on paper, shaving cream on a tray, or chalk on a sidewalk."
+    },
+    {
+     "role": "step",
+     "text": "If you draw a straight line, see if they will copy you."
+    },
+    {
+     "role": "step",
+     "text": "When they get good at lines, show them how to draw a circle."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m30-07",
+   "sourceId": "cdc-ltsae-30-months",
+   "referenceAgeMonths": 30,
+   "source": "Let your child play with other children, such as at a park or library. Ask about local play groups and pre-school programs. Playing with others helps him learn the value of sharing and friendship.",
+   "replacements": [
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "Let your child play with other children, such as at a park or library. Ask about local play groups and pre-school programs. Playing with others helps them learn the value of sharing and friendship.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Let your child play with other children, such as at a park or library."
+    },
+    {
+     "role": "step",
+     "text": "Ask about local play groups and pre-school programs."
+    },
+    {
+     "role": "purpose",
+     "text": "Playing with others helps them learn the value of sharing and friendship."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m30-10",
+   "sourceId": "cdc-ltsae-30-months",
+   "referenceAgeMonths": 30,
+   "source": "Use words to describe things to your child, such as big/small, fast/slow, on/off, and in/out.",
+   "replacements": [],
+   "display": "Use words to describe things to your child, such as big/small, fast/slow, on/off, and in/out.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Use words to describe things to your child, such as big/small, fast/slow, on/off, and in/out."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m30-11",
+   "sourceId": "cdc-ltsae-30-months",
+   "referenceAgeMonths": 30,
+   "source": "Help your child do simple puzzles with shapes, colors, or animals. Name each piece when your child puts it in place.",
+   "replacements": [],
+   "display": "Help your child do simple puzzles with shapes, colors, or animals. Name each piece when your child puts it in place.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Help your child do simple puzzles with shapes, colors, or animals."
+    },
+    {
+     "role": "step",
+     "text": "Name each piece when your child puts it in place."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m30-12",
+   "sourceId": "cdc-ltsae-30-months",
+   "referenceAgeMonths": 30,
+   "source": "Play with your child outside. For example, take your child to the park to climb on equipment and run in safe areas.",
+   "replacements": [],
+   "display": "Play with your child outside. For example, take your child to the park to climb on equipment and run in safe areas.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Play with your child outside."
+    },
+    {
+     "role": "safety",
+     "text": "For example, take your child to the park to climb on equipment and run in safe areas."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m30-15",
+   "sourceId": "cdc-ltsae-30-months",
+   "referenceAgeMonths": 30,
+   "source": "Let your child play with large boxes. He can pretend it is a car, bus, train, or house. Let him color, paint it, and put stickers on it.",
+   "replacements": [
+    [
+     "He",
+     "They"
+    ],
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "Let your child play with large boxes. They can pretend it is a car, bus, train, or house. Let them color, paint it, and put stickers on it.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Let your child play with large boxes."
+    },
+    {
+     "role": "step",
+     "text": "They can pretend it is a car, bus, train, or house."
+    },
+    {
+     "role": "step",
+     "text": "Let them color, paint it, and put stickers on it."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m30-16",
+   "sourceId": "cdc-ltsae-30-months",
+   "referenceAgeMonths": 30,
+   "source": "Play with your child outside by playing \"ready, set, go.\" For example, pull your child back in a swing. Say \"Ready, set...\", then wait and say \"Go\" when you push the swing.",
+   "replacements": [],
+   "display": "Play with your child outside by playing \"ready, set, go.\" For example, pull your child back in a swing. Say \"Ready, set...\", then wait and say \"Go\" when you push the swing.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Play with your child outside by playing \"ready, set, go.\""
+    },
+    {
+     "role": "step",
+     "text": "For example, pull your child back in a swing."
+    },
+    {
+     "role": "step",
+     "text": "Say \"Ready, set...\", then wait and say \"Go\" when you push the swing."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m30-17",
+   "sourceId": "cdc-ltsae-30-months",
+   "referenceAgeMonths": 30,
+   "source": "Encourage your child to name colors, body parts, and pictures in books.",
+   "replacements": [],
+   "display": "Encourage your child to name colors, body parts, and pictures in books.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Encourage your child to name colors, body parts, and pictures in books."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m30-18",
+   "sourceId": "cdc-ltsae-30-months",
+   "referenceAgeMonths": 30,
+   "source": "Kick a ball back and forth with your child. When your child is good at that, show her how to run and kick the ball.",
+   "replacements": [
+    [
+     "her",
+     "them"
+    ]
+   ],
+   "display": "Kick a ball back and forth with your child. When your child is good at that, show them how to run and kick the ball.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Kick a ball back and forth with your child."
+    },
+    {
+     "role": "step",
+     "text": "When your child is good at that, show them how to run and kick the ball."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m30-20",
+   "sourceId": "cdc-ltsae-30-months",
+   "referenceAgeMonths": 30,
+   "source": "Play \"follow the leader\" with your child. Walk in a straight line, make turns, walk backwards, and walk on tiptoes. Let your child lead after you show him how.",
+   "replacements": [
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "Play \"follow the leader\" with your child. Walk in a straight line, make turns, walk backwards, and walk on tiptoes. Let your child lead after you show them how.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Play \"follow the leader\" with your child."
+    },
+    {
+     "role": "step",
+     "text": "Walk in a straight line, make turns, walk backwards, and walk on tiptoes."
+    },
+    {
+     "role": "step",
+     "text": "Let your child lead after you show them how."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m30-21",
+   "sourceId": "cdc-ltsae-30-months",
+   "referenceAgeMonths": 30,
+   "source": "Read to your child and visit the local library. This will help your child enjoy reading and be ready to read when she is older.",
+   "replacements": [
+    [
+     "she",
+     "they"
+    ],
+    [
+     "is",
+     "are"
+    ]
+   ],
+   "display": "Read to your child and visit the local library. This will help your child enjoy reading and be ready to read when they are older.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Read to your child and visit the local library."
+    },
+    {
+     "role": "purpose",
+     "text": "This will help your child enjoy reading and be ready to read when they are older."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m30-22",
+   "sourceId": "cdc-ltsae-30-months",
+   "referenceAgeMonths": 30,
+   "source": "Encourage \"pretend\" play. For example, let your child pretend to cook using safe things from your kitchen.",
+   "replacements": [],
+   "display": "Encourage \"pretend\" play. For example, let your child pretend to cook using safe things from your kitchen.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Encourage \"pretend\" play."
+    },
+    {
+     "role": "safety",
+     "text": "For example, let your child pretend to cook using safe things from your kitchen."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m30-23",
+   "sourceId": "cdc-ltsae-30-months",
+   "referenceAgeMonths": 30,
+   "source": "Show your child how to turn pages in a book or magazine.",
+   "replacements": [],
+   "display": "Show your child how to turn pages in a book or magazine.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Show your child how to turn pages in a book or magazine."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m36-01",
+   "sourceId": "cdc-ltsae-3-years",
+   "referenceAgeMonths": 36,
+   "source": "Encourage your child to solve her own problems with your support. Ask questions to help her understand the problem. Help her think of solutions, try one out, and try more if needed.",
+   "replacements": [
+    [
+     "her",
+     "their"
+    ],
+    [
+     "her",
+     "them"
+    ],
+    [
+     "her",
+     "them"
+    ]
+   ],
+   "display": "Encourage your child to solve their own problems with your support. Ask questions to help them understand the problem. Help them think of solutions, try one out, and try more if needed.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Encourage your child to solve their own problems with your support."
+    },
+    {
+     "role": "step",
+     "text": "Ask questions to help them understand the problem."
+    },
+    {
+     "role": "step",
+     "text": "Help them think of solutions, try one out, and try more if needed."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m36-02",
+   "sourceId": "cdc-ltsae-3-years",
+   "referenceAgeMonths": 36,
+   "source": "Talk about your child's emotions and give him words to help him explain how he's feeling. Help your child manage stressful feelings by teaching him to take deep breaths, hug a favorite toy, or go to a quiet, safe place when he is upset.",
+   "replacements": [
+    [
+     "him",
+     "them"
+    ],
+    [
+     "him",
+     "them"
+    ],
+    [
+     "he's",
+     "they're"
+    ],
+    [
+     "him",
+     "them"
+    ],
+    [
+     "he",
+     "they"
+    ],
+    [
+     "is",
+     "are"
+    ]
+   ],
+   "display": "Talk about your child's emotions and give them words to help them explain how they're feeling. Help your child manage stressful feelings by teaching them to take deep breaths, hug a favorite toy, or go to a quiet, safe place when they are upset.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Talk about your child's emotions and give them words to help them explain how they're feeling."
+    },
+    {
+     "role": "step",
+     "text": "Help your child manage stressful feelings by teaching them to take deep breaths, hug a favorite toy, or go to a quiet, safe place when they are upset."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m36-04",
+   "sourceId": "cdc-ltsae-3-years",
+   "referenceAgeMonths": 36,
+   "source": "Read with your child. Ask questions, such as \"What is happening in the picture?\" and/or \"What do you think will happen next?\" When she gives you an answer, ask for more details.",
+   "replacements": [
+    [
+     "she",
+     "they"
+    ],
+    [
+     "gives",
+     "give"
+    ]
+   ],
+   "display": "Read with your child. Ask questions, such as \"What is happening in the picture?\" and/or \"What do you think will happen next?\" When they give you an answer, ask for more details.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Read with your child."
+    },
+    {
+     "role": "step",
+     "text": "Ask questions, such as \"What is happening in the picture?\""
+    },
+    {
+     "role": "step",
+     "text": "and/or \"What do you think will happen next?\""
+    },
+    {
+     "role": "step",
+     "text": "When they give you an answer, ask for more details."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m36-05",
+   "sourceId": "cdc-ltsae-3-years",
+   "referenceAgeMonths": 36,
+   "source": "Play counting games. Count body parts, stairs, and other things you use or see every day. Children this age are starting to learn about numbers and counting.",
+   "replacements": [],
+   "display": "Play counting games. Count body parts, stairs, and other things you use or see every day. Children this age are starting to learn about numbers and counting.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Play counting games."
+    },
+    {
+     "role": "step",
+     "text": "Count body parts, stairs, and other things you use or see every day."
+    },
+    {
+     "role": "step",
+     "text": "Children this age are starting to learn about numbers and counting."
+    }
+   ],
+   "timingLanguage": [
+    "every day"
+   ]
+  },
+  {
+   "id": "cdc22-act-m36-06",
+   "sourceId": "cdc-ltsae-3-years",
+   "referenceAgeMonths": 36,
+   "source": "Help your child develop his language skills by speaking to him in longer sentences than his, using real words. Repeat what he says, for example, \"need nana,\" and then show how to use more \"grown-up\" words by saying, \"I want a banana.\"",
+   "replacements": [
+    [
+     "his",
+     "their"
+    ],
+    [
+     "him",
+     "them"
+    ],
+    [
+     "his",
+     "theirs"
+    ],
+    [
+     "he",
+     "they"
+    ],
+    [
+     "says",
+     "say"
+    ]
+   ],
+   "display": "Help your child develop their language skills by speaking to them in longer sentences than theirs, using real words. Repeat what they say, for example, \"need nana,\" and then show how to use more \"grown-up\" words by saying, \"I want a banana.\"",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Help your child develop their language skills by speaking to them in longer sentences than theirs, using real words."
+    },
+    {
+     "role": "step",
+     "text": "Repeat what they say, for example, \"need nana,\" and then show how to use more \"grown-up\" words by saying, \"I want a banana.\""
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m36-07",
+   "sourceId": "cdc-ltsae-3-years",
+   "referenceAgeMonths": 36,
+   "source": "Let your child help with making meals. Give him simple tasks, such as washing fruits and vegetables or stirring.",
+   "replacements": [
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "Let your child help with making meals. Give them simple tasks, such as washing fruits and vegetables or stirring.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Let your child help with making meals."
+    },
+    {
+     "role": "step",
+     "text": "Give them simple tasks, such as washing fruits and vegetables or stirring."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m36-08",
+   "sourceId": "cdc-ltsae-3-years",
+   "referenceAgeMonths": 36,
+   "source": "Give your child instructions with 2 or 3 steps. For example, \"Go to your room and get your shoes and coat.\"",
+   "replacements": [],
+   "display": "Give your child instructions with 2 or 3 steps. For example, \"Go to your room and get your shoes and coat.\"",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Give your child instructions with 2 or 3 steps."
+    },
+    {
+     "role": "step",
+     "text": "For example, \"Go to your room and get your shoes and coat.\""
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m36-10",
+   "sourceId": "cdc-ltsae-3-years",
+   "referenceAgeMonths": 36,
+   "source": "Teach your child simple songs and rhymes, such as \"Itsy Bitsy Spider\" or \"Twinkle, Twinkle, Little Star.\"",
+   "replacements": [],
+   "display": "Teach your child simple songs and rhymes, such as \"Itsy Bitsy Spider\" or \"Twinkle, Twinkle, Little Star.\"",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Teach your child simple songs and rhymes, such as \"Itsy Bitsy Spider\" or \"Twinkle, Twinkle, Little Star.\""
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m36-11",
+   "sourceId": "cdc-ltsae-3-years",
+   "referenceAgeMonths": 36,
+   "source": "Give your child an \"activity box\" with paper, crayons, and coloring books. Color and draw lines and shapes with your child.",
+   "replacements": [],
+   "display": "Give your child an \"activity box\" with paper, crayons, and coloring books. Color and draw lines and shapes with your child.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Give your child an \"activity box\" with paper, crayons, and coloring books."
+    },
+    {
+     "role": "step",
+     "text": "Color and draw lines and shapes with your child."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m36-12",
+   "sourceId": "cdc-ltsae-3-years",
+   "referenceAgeMonths": 36,
+   "source": "Encourage your child to play with other children. This helps him learn the value of friendship and how to get along with others.",
+   "replacements": [
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "Encourage your child to play with other children. This helps them learn the value of friendship and how to get along with others.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Encourage your child to play with other children."
+    },
+    {
+     "role": "purpose",
+     "text": "This helps them learn the value of friendship and how to get along with others."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m36-13",
+   "sourceId": "cdc-ltsae-3-years",
+   "referenceAgeMonths": 36,
+   "source": "Let your child play with playdough by squishing it, pressing it, pinching it, and making balls in different colors. This builds her hand and finger muscles for writing, buttoning, and cutting.",
+   "replacements": [
+    [
+     "her",
+     "their"
+    ]
+   ],
+   "display": "Let your child play with playdough by squishing it, pressing it, pinching it, and making balls in different colors. This builds their hand and finger muscles for writing, buttoning, and cutting.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Let your child play with playdough by squishing it, pressing it, pinching it, and making balls in different colors."
+    },
+    {
+     "role": "purpose",
+     "text": "This builds their hand and finger muscles for writing, buttoning, and cutting."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m36-15",
+   "sourceId": "cdc-ltsae-3-years",
+   "referenceAgeMonths": 36,
+   "source": "Play games to teach opposites. Get down low and say, \"I am small.\" Then stand up and say, \"I am big.\" Do the same thing for fast/slow, quiet/loud.",
+   "replacements": [],
+   "display": "Play games to teach opposites. Get down low and say, \"I am small.\" Then stand up and say, \"I am big.\" Do the same thing for fast/slow, quiet/loud.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Play games to teach opposites."
+    },
+    {
+     "role": "step",
+     "text": "Get down low and say, \"I am small.\""
+    },
+    {
+     "role": "step",
+     "text": "Then stand up and say, \"I am big.\""
+    },
+    {
+     "role": "step",
+     "text": "Do the same thing for fast/slow, quiet/loud."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m36-16",
+   "sourceId": "cdc-ltsae-3-years",
+   "referenceAgeMonths": 36,
+   "source": "Play matching games. Ask your child to find objects in books or around the house that are the same.",
+   "replacements": [],
+   "display": "Play matching games. Ask your child to find objects in books or around the house that are the same.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Play matching games."
+    },
+    {
+     "role": "step",
+     "text": "Ask your child to find objects in books or around the house that are the same."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m36-17",
+   "sourceId": "cdc-ltsae-3-years",
+   "referenceAgeMonths": 36,
+   "source": "Play outside with your child. Go to the park or a walking trail. Allow your child plenty of time to choose what and how she wants to play. Join her and follow her lead.",
+   "replacements": [
+    [
+     "she",
+     "they"
+    ],
+    [
+     "wants",
+     "want"
+    ],
+    [
+     "her",
+     "them"
+    ],
+    [
+     "her",
+     "their"
+    ]
+   ],
+   "display": "Play outside with your child. Go to the park or a walking trail. Allow your child plenty of time to choose what and how they want to play. Join them and follow their lead.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Play outside with your child."
+    },
+    {
+     "role": "step",
+     "text": "Go to the park or a walking trail."
+    },
+    {
+     "role": "step",
+     "text": "Allow your child plenty of time to choose what and how they want to play."
+    },
+    {
+     "role": "step",
+     "text": "Join them and follow their lead."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m36-18",
+   "sourceId": "cdc-ltsae-3-years",
+   "referenceAgeMonths": 36,
+   "source": "Help your child be ready for new places and meeting new people. For example, you can read stories or role play (pretend play) about new places or things to help him feel more comfortable.",
+   "replacements": [
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "Help your child be ready for new places and meeting new people. For example, you can read stories or role play (pretend play) about new places or things to help them feel more comfortable.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Help your child be ready for new places and meeting new people."
+    },
+    {
+     "role": "step",
+     "text": "For example, you can read stories or role play (pretend play) about new places or things to help them feel more comfortable."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m36-19",
+   "sourceId": "cdc-ltsae-3-years",
+   "referenceAgeMonths": 36,
+   "source": "Encourage your child to tell you her name and age.",
+   "replacements": [
+    [
+     "her",
+     "their"
+    ]
+   ],
+   "display": "Encourage your child to tell you their name and age.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Encourage your child to tell you their name and age."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m48-01",
+   "sourceId": "cdc-ltsae-4-years",
+   "referenceAgeMonths": 48,
+   "source": "Help your child be ready for new places and meeting new people. For example, you can read stories or role play (pretend play) to help him be comfortable.",
+   "replacements": [
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "Help your child be ready for new places and meeting new people. For example, you can read stories or role play (pretend play) to help them be comfortable.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Help your child be ready for new places and meeting new people."
+    },
+    {
+     "role": "step",
+     "text": "For example, you can read stories or role play (pretend play) to help them be comfortable."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m48-02",
+   "sourceId": "cdc-ltsae-4-years",
+   "referenceAgeMonths": 48,
+   "source": "Read with your child. Ask him what's happening in the story and what he thinks might happen next.",
+   "replacements": [
+    [
+     "him",
+     "them"
+    ],
+    [
+     "he",
+     "they"
+    ],
+    [
+     "thinks",
+     "think"
+    ]
+   ],
+   "display": "Read with your child. Ask them what's happening in the story and what they think might happen next.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Read with your child."
+    },
+    {
+     "role": "step",
+     "text": "Ask them what's happening in the story and what they think might happen next."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m48-03",
+   "sourceId": "cdc-ltsae-4-years",
+   "referenceAgeMonths": 48,
+   "source": "Help your child learn about colors, shapes, and sizes. For example, ask the color, shapes, and size of things she sees during the day.",
+   "replacements": [
+    [
+     "she",
+     "they"
+    ],
+    [
+     "sees",
+     "see"
+    ]
+   ],
+   "display": "Help your child learn about colors, shapes, and sizes. For example, ask the color, shapes, and size of things they see during the day.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Help your child learn about colors, shapes, and sizes."
+    },
+    {
+     "role": "step",
+     "text": "For example, ask the color, shapes, and size of things they see during the day."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m48-04",
+   "sourceId": "cdc-ltsae-4-years",
+   "referenceAgeMonths": 48,
+   "source": "Encourage your child to use \"his words\" to ask for things and solve problems but show him how. He may not know the words he needs. For example, help your child say, \"Can I have a turn?\" instead of taking something from someone.",
+   "replacements": [
+    [
+     "his",
+     "their"
+    ],
+    [
+     "him",
+     "them"
+    ],
+    [
+     "He",
+     "They"
+    ],
+    [
+     "he",
+     "they"
+    ],
+    [
+     "needs",
+     "need"
+    ]
+   ],
+   "display": "Encourage your child to use \"their words\" to ask for things and solve problems but show them how. They may not know the words they need. For example, help your child say, \"Can I have a turn?\" instead of taking something from someone.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Encourage your child to use \"their words\" to ask for things and solve problems but show them how."
+    },
+    {
+     "role": "step",
+     "text": "They may not know the words they need."
+    },
+    {
+     "role": "step",
+     "text": "For example, help your child say, \"Can I have a turn?\""
+    },
+    {
+     "role": "step",
+     "text": "instead of taking something from someone."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m48-05",
+   "sourceId": "cdc-ltsae-4-years",
+   "referenceAgeMonths": 48,
+   "source": "Help your child learn about others' feelings, and about positive ways to react. For example, when he sees a child who is sad, say \"He looks sad. Let's bring him a teddy.\"",
+   "replacements": [
+    [
+     "he",
+     "they"
+    ],
+    [
+     "sees",
+     "see"
+    ],
+    [
+     "He",
+     "They"
+    ],
+    [
+     "looks",
+     "look"
+    ],
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "Help your child learn about others' feelings, and about positive ways to react. For example, when they see a child who is sad, say \"They look sad. Let's bring them a teddy.\"",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Help your child learn about others' feelings, and about positive ways to react."
+    },
+    {
+     "role": "step",
+     "text": "For example, when they see a child who is sad, say \"They look sad. Let's bring them a teddy.\""
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m48-08",
+   "sourceId": "cdc-ltsae-4-years",
+   "referenceAgeMonths": 48,
+   "source": "Let your child play with other children, such as at a park or library. Ask about local play groups and pre-school programs. Playing with others helps you child learn the value of sharing and friendship.",
+   "replacements": [],
+   "corrections": [
+    [
+     "you child",
+     "your child"
+    ]
+   ],
+   "display": "Let your child play with other children, such as at a park or library. Ask about local play groups and pre-school programs. Playing with others helps your child learn the value of sharing and friendship.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Let your child play with other children, such as at a park or library."
+    },
+    {
+     "role": "step",
+     "text": "Ask about local play groups and pre-school programs."
+    },
+    {
+     "role": "purpose",
+     "text": "Playing with others helps your child learn the value of sharing and friendship."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m48-11",
+   "sourceId": "cdc-ltsae-4-years",
+   "referenceAgeMonths": 48,
+   "source": "Give your child toys or things that encourage his imagination, such as dress-up clothes, pots and pans to pretend cook, or blocks to build with. Join him in pretend play, such as eating the pretend food he cooks.",
+   "replacements": [
+    [
+     "his",
+     "their"
+    ],
+    [
+     "him",
+     "them"
+    ],
+    [
+     "he",
+     "they"
+    ],
+    [
+     "cooks",
+     "cook"
+    ]
+   ],
+   "display": "Give your child toys or things that encourage their imagination, such as dress-up clothes, pots and pans to pretend cook, or blocks to build with. Join them in pretend play, such as eating the pretend food they cook.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Give your child toys or things that encourage their imagination, such as dress-up clothes, pots and pans to pretend cook, or blocks to build with."
+    },
+    {
+     "role": "step",
+     "text": "Join them in pretend play, such as eating the pretend food they cook."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m48-12",
+   "sourceId": "cdc-ltsae-4-years",
+   "referenceAgeMonths": 48,
+   "source": "Take time to answer your child's \"why\" questions. If you don't know the answer, say \"I don't know,\" or help your child find the answer in a book, on the Internet, or from another adult.",
+   "replacements": [],
+   "display": "Take time to answer your child's \"why\" questions. If you don't know the answer, say \"I don't know,\" or help your child find the answer in a book, on the Internet, or from another adult.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Take time to answer your child's \"why\" questions."
+    },
+    {
+     "role": "step",
+     "text": "If you don't know the answer, say \"I don't know,\" or help your child find the answer in a book, on the Internet, or from another adult."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m48-13",
+   "sourceId": "cdc-ltsae-4-years",
+   "referenceAgeMonths": 48,
+   "source": "Count simple things, such as fingers, toys, or bananas. This will help your child learn about numbers and counting.",
+   "replacements": [],
+   "display": "Count simple things, such as fingers, toys, or bananas. This will help your child learn about numbers and counting.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Count simple things, such as fingers, toys, or bananas."
+    },
+    {
+     "role": "purpose",
+     "text": "This will help your child learn about numbers and counting."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m48-15",
+   "sourceId": "cdc-ltsae-4-years",
+   "referenceAgeMonths": 48,
+   "source": "Continue to teach your child skills to play with others, such as using words, sharing toys, and taking turns.",
+   "replacements": [],
+   "display": "Continue to teach your child skills to play with others, such as using words, sharing toys, and taking turns.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Continue to teach your child skills to play with others, such as using words, sharing toys, and taking turns."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m48-16",
+   "sourceId": "cdc-ltsae-4-years",
+   "referenceAgeMonths": 48,
+   "source": "Teach your child to play outdoor games with friends, such as tag, follow the leader, and hide and seek.",
+   "replacements": [],
+   "display": "Teach your child to play outdoor games with friends, such as tag, follow the leader, and hide and seek.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Teach your child to play outdoor games with friends, such as tag, follow the leader, and hide and seek."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m48-17",
+   "sourceId": "cdc-ltsae-4-years",
+   "referenceAgeMonths": 48,
+   "source": "Spend time speaking to your child in complete sentences, using \"grown-up\" words. This will help her learn better speaking skills and helps with future reading and writing skills.",
+   "replacements": [
+    [
+     "her",
+     "them"
+    ]
+   ],
+   "display": "Spend time speaking to your child in complete sentences, using \"grown-up\" words. This will help them learn better speaking skills and helps with future reading and writing skills.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Spend time speaking to your child in complete sentences, using \"grown-up\" words."
+    },
+    {
+     "role": "purpose",
+     "text": "This will help them learn better speaking skills and helps with future reading and writing skills."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m48-18",
+   "sourceId": "cdc-ltsae-4-years",
+   "referenceAgeMonths": 48,
+   "source": "Let your child help with simple chores, such as bringing in the mail, feeding a pet, or wiping down tables. This helps build independence.",
+   "replacements": [],
+   "display": "Let your child help with simple chores, such as bringing in the mail, feeding a pet, or wiping down tables. This helps build independence.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Let your child help with simple chores, such as bringing in the mail, feeding a pet, or wiping down tables."
+    },
+    {
+     "role": "purpose",
+     "text": "This helps build independence."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m48-19",
+   "sourceId": "cdc-ltsae-4-years",
+   "referenceAgeMonths": 48,
+   "source": "Teach your child to stop and wait when excited by playing red light, green light, or freeze dance (play music, turn it off, and have everyone freeze when it stops).",
+   "replacements": [],
+   "display": "Teach your child to stop and wait when excited by playing red light, green light, or freeze dance (play music, turn it off, and have everyone freeze when it stops).",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Teach your child to stop and wait when excited by playing red light, green light, or freeze dance (play music, turn it off, and have everyone freeze when it stops)."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m48-20",
+   "sourceId": "cdc-ltsae-4-years",
+   "referenceAgeMonths": 48,
+   "source": "Play your child's favorite songs and dance with your child. Take turns copying each other's moves.",
+   "replacements": [],
+   "display": "Play your child's favorite songs and dance with your child. Take turns copying each other's moves.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Play your child's favorite songs and dance with your child."
+    },
+    {
+     "role": "step",
+     "text": "Take turns copying each other's moves."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m48-21",
+   "sourceId": "cdc-ltsae-4-years",
+   "referenceAgeMonths": 48,
+   "source": "Give your child time to solve her own problems with friends. For example, if they are arguing over who gets to be which superhero, let them work it out. Stay nearby to help if needed. If they can't work it out, use questions to help them think of other solutions.",
+   "replacements": [
+    [
+     "her",
+     "their"
+    ]
+   ],
+   "display": "Give your child time to solve their own problems with friends. For example, if they are arguing over who gets to be which superhero, let them work it out. Stay nearby to help if needed. If they can't work it out, use questions to help them think of other solutions.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Give your child time to solve their own problems with friends."
+    },
+    {
+     "role": "step",
+     "text": "For example, if they are arguing over who gets to be which superhero, let them work it out."
+    },
+    {
+     "role": "safety",
+     "text": "Stay nearby to help if needed."
+    },
+    {
+     "role": "step",
+     "text": "If they can't work it out, use questions to help them think of other solutions."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m48-22",
+   "sourceId": "cdc-ltsae-4-years",
+   "referenceAgeMonths": 48,
+   "source": "Use words, such as \"first,\" \"second,\" and \"finally.\" When playing, telling stories, or doing chores, ask your child what comes next. This will help your child learn about the order of events.",
+   "replacements": [],
+   "display": "Use words, such as \"first,\" \"second,\" and \"finally.\" When playing, telling stories, or doing chores, ask your child what comes next. This will help your child learn about the order of events.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Use words, such as \"first,\" \"second,\" and \"finally.\""
+    },
+    {
+     "role": "step",
+     "text": "When playing, telling stories, or doing chores, ask your child what comes next."
+    },
+    {
+     "role": "purpose",
+     "text": "This will help your child learn about the order of events."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m48-24",
+   "sourceId": "cdc-ltsae-4-years",
+   "referenceAgeMonths": 48,
+   "source": "Play simple games, such as Tic-Tac-Toe or matching games.",
+   "replacements": [],
+   "display": "Play simple games, such as Tic-Tac-Toe or matching games.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Play simple games, such as Tic-Tac-Toe or matching games."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m48-25",
+   "sourceId": "cdc-ltsae-4-years",
+   "referenceAgeMonths": 48,
+   "source": "Try to make time for active play each day. Your child will have more fun if she can choose the activity. For example, give her choices, such as playing music and dancing together, playing outside, or taking a walk together.",
+   "replacements": [
+    [
+     "she",
+     "they"
+    ],
+    [
+     "her",
+     "them"
+    ]
+   ],
+   "display": "Try to make time for active play each day. Your child will have more fun if they can choose the activity. For example, give them choices, such as playing music and dancing together, playing outside, or taking a walk together.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Try to make time for active play each day."
+    },
+    {
+     "role": "step",
+     "text": "Your child will have more fun if they can choose the activity."
+    },
+    {
+     "role": "step",
+     "text": "For example, give them choices, such as playing music and dancing together, playing outside, or taking a walk together."
+    }
+   ],
+   "timingLanguage": [
+    "each day"
+   ]
+  },
+  {
+   "id": "cdc22-act-m48-27",
+   "sourceId": "cdc-ltsae-4-years",
+   "referenceAgeMonths": 48,
+   "source": "Take trips to the library to let your child pick out books.",
+   "replacements": [],
+   "display": "Take trips to the library to let your child pick out books.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Take trips to the library to let your child pick out books."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m60-02",
+   "sourceId": "cdc-ltsae-5-years",
+   "referenceAgeMonths": 60,
+   "source": "Ask your child what she is playing. Help her expand her answers by asking \"Why?\" and \"How?\" For example, say \"That's a nice bridge you're building. Why did you put it there?\"",
+   "replacements": [
+    [
+     "she",
+     "they"
+    ],
+    [
+     "is",
+     "are"
+    ],
+    [
+     "her",
+     "them"
+    ],
+    [
+     "her",
+     "their"
+    ]
+   ],
+   "display": "Ask your child what they are playing. Help them expand their answers by asking \"Why?\" and \"How?\" For example, say \"That's a nice bridge you're building. Why did you put it there?\"",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Ask your child what they are playing."
+    },
+    {
+     "role": "step",
+     "text": "Help them expand their answers by asking \"Why?\""
+    },
+    {
+     "role": "step",
+     "text": "and \"How?\""
+    },
+    {
+     "role": "step",
+     "text": "For example, say \"That's a nice bridge you're building. Why did you put it there?\""
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m60-03",
+   "sourceId": "cdc-ltsae-5-years",
+   "referenceAgeMonths": 60,
+   "source": "Play with toys that encourage your child to put things together, such as puzzles and building blocks.",
+   "replacements": [],
+   "display": "Play with toys that encourage your child to put things together, such as puzzles and building blocks.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Play with toys that encourage your child to put things together, such as puzzles and building blocks."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m60-04",
+   "sourceId": "cdc-ltsae-5-years",
+   "referenceAgeMonths": 60,
+   "source": "Use words to help your child begin to understand time. For example, sing songs about the days of the week and let him know what day it is. Use words about time, such as today, tomorrow, and yesterday.",
+   "replacements": [
+    [
+     "him",
+     "them"
+    ]
+   ],
+   "display": "Use words to help your child begin to understand time. For example, sing songs about the days of the week and let them know what day it is. Use words about time, such as today, tomorrow, and yesterday.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Use words to help your child begin to understand time."
+    },
+    {
+     "role": "step",
+     "text": "For example, sing songs about the days of the week and let them know what day it is."
+    },
+    {
+     "role": "step",
+     "text": "Use words about time, such as today, tomorrow, and yesterday."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m60-05",
+   "sourceId": "cdc-ltsae-5-years",
+   "referenceAgeMonths": 60,
+   "source": "Let your child do things for himself, even if he doesn't do it perfectly. For example, let him make his bed, button his shirt, or pour water into a cup. Celebrate when he does it and try not to \"fix\" anything you don't have to.",
+   "replacements": [
+    [
+     "himself",
+     "themselves"
+    ],
+    [
+     "he",
+     "they"
+    ],
+    [
+     "doesn't",
+     "don't"
+    ],
+    [
+     "him",
+     "them"
+    ],
+    [
+     "his",
+     "their"
+    ],
+    [
+     "his",
+     "their"
+    ],
+    [
+     "he",
+     "they"
+    ],
+    [
+     "does",
+     "do"
+    ]
+   ],
+   "display": "Let your child do things for themselves, even if they don't do it perfectly. For example, let them make their bed, button their shirt, or pour water into a cup. Celebrate when they do it and try not to \"fix\" anything you don't have to.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Let your child do things for themselves, even if they don't do it perfectly."
+    },
+    {
+     "role": "step",
+     "text": "For example, let them make their bed, button their shirt, or pour water into a cup."
+    },
+    {
+     "role": "step",
+     "text": "Celebrate when they do it and try not to \"fix\" anything you don't have to."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m60-06",
+   "sourceId": "cdc-ltsae-5-years",
+   "referenceAgeMonths": 60,
+   "source": "Talk about and label your child's and your own feelings. Read books and talk about the feelings characters have and why they have them.",
+   "replacements": [],
+   "display": "Talk about and label your child's and your own feelings. Read books and talk about the feelings characters have and why they have them.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Talk about and label your child's and your own feelings."
+    },
+    {
+     "role": "step",
+     "text": "Read books and talk about the feelings characters have and why they have them."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m60-07",
+   "sourceId": "cdc-ltsae-5-years",
+   "referenceAgeMonths": 60,
+   "source": "Play rhyming games. For example, say \"What rhymes with cat?\"",
+   "replacements": [],
+   "display": "Play rhyming games. For example, say \"What rhymes with cat?\"",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Play rhyming games."
+    },
+    {
+     "role": "step",
+     "text": "For example, say \"What rhymes with cat?\""
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m60-08",
+   "sourceId": "cdc-ltsae-5-years",
+   "referenceAgeMonths": 60,
+   "source": "Teach your child to follow rules in games. For example, play simple board games, card games, or Simon Says.",
+   "replacements": [],
+   "display": "Teach your child to follow rules in games. For example, play simple board games, card games, or Simon Says.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Teach your child to follow rules in games."
+    },
+    {
+     "role": "step",
+     "text": "For example, play simple board games, card games, or Simon Says."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m60-12",
+   "sourceId": "cdc-ltsae-5-years",
+   "referenceAgeMonths": 60,
+   "source": "Encourage your child to \"read\" by looking at the pictures and telling the story.",
+   "replacements": [],
+   "display": "Encourage your child to \"read\" by looking at the pictures and telling the story.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Encourage your child to \"read\" by looking at the pictures and telling the story."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m60-13",
+   "sourceId": "cdc-ltsae-5-years",
+   "referenceAgeMonths": 60,
+   "source": "Play games that help with memory and attention. For example, play card games, Tic Tac Toe, I Spy, or Hot and Cold.",
+   "replacements": [],
+   "display": "Play games that help with memory and attention. For example, play card games, Tic Tac Toe, I Spy, or Hot and Cold.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Play games that help with memory and attention."
+    },
+    {
+     "role": "step",
+     "text": "For example, play card games, Tic Tac Toe, I Spy, or Hot and Cold."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m60-14",
+   "sourceId": "cdc-ltsae-5-years",
+   "referenceAgeMonths": 60,
+   "source": "Let your child play with other children, such as at a park or library. Ask about local play groups and pre-school programs. Playing with others helps your child learn the value of sharing and friendship.",
+   "replacements": [],
+   "display": "Let your child play with other children, such as at a park or library. Ask about local play groups and pre-school programs. Playing with others helps your child learn the value of sharing and friendship.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Let your child play with other children, such as at a park or library."
+    },
+    {
+     "role": "step",
+     "text": "Ask about local play groups and pre-school programs."
+    },
+    {
+     "role": "purpose",
+     "text": "Playing with others helps your child learn the value of sharing and friendship."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m60-17",
+   "sourceId": "cdc-ltsae-5-years",
+   "referenceAgeMonths": 60,
+   "source": "Encourage your child to pretend play. Help your child find items she can use to play dress up, school, or house.",
+   "replacements": [
+    [
+     "she",
+     "they"
+    ]
+   ],
+   "display": "Encourage your child to pretend play. Help your child find items they can use to play dress up, school, or house.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Encourage your child to pretend play."
+    },
+    {
+     "role": "step",
+     "text": "Help your child find items they can use to play dress up, school, or house."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m60-18",
+   "sourceId": "cdc-ltsae-5-years",
+   "referenceAgeMonths": 60,
+   "source": "Keep a box of crayons, paper, paint, child scissors, and glue for creative play. Encourage your child to draw and make art projects with different supplies.",
+   "replacements": [],
+   "display": "Keep a box of crayons, paper, paint, child scissors, and glue for creative play. Encourage your child to draw and make art projects with different supplies.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Keep a box of crayons, paper, paint, child scissors, and glue for creative play."
+    },
+    {
+     "role": "step",
+     "text": "Encourage your child to draw and make art projects with different supplies."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m60-19",
+   "sourceId": "cdc-ltsae-5-years",
+   "referenceAgeMonths": 60,
+   "source": "Take your child to the playground. Teach her how to pump her legs back and forth on a swing and help her play on the monkey bars.",
+   "replacements": [
+    [
+     "her",
+     "them"
+    ],
+    [
+     "her",
+     "their"
+    ],
+    [
+     "her",
+     "them"
+    ]
+   ],
+   "display": "Take your child to the playground. Teach them how to pump their legs back and forth on a swing and help them play on the monkey bars.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Take your child to the playground."
+    },
+    {
+     "role": "step",
+     "text": "Teach them how to pump their legs back and forth on a swing and help them play on the monkey bars."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m60-21",
+   "sourceId": "cdc-ltsae-5-years",
+   "referenceAgeMonths": 60,
+   "source": "Read to your child. Ask questions, such as \"What is happening in the picture?\" and \"What do you think will happen next?\"",
+   "replacements": [],
+   "display": "Read to your child. Ask questions, such as \"What is happening in the picture?\" and \"What do you think will happen next?\"",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Read to your child."
+    },
+    {
+     "role": "step",
+     "text": "Ask questions, such as \"What is happening in the picture?\""
+    },
+    {
+     "role": "step",
+     "text": "and \"What do you think will happen next?\""
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m60-22",
+   "sourceId": "cdc-ltsae-5-years",
+   "referenceAgeMonths": 60,
+   "source": "Explore things your child likes. For example, if he loves animals, get some library books about animals, look for birds and squirrels in a park, or visit a zoo to learn about animals.",
+   "replacements": [
+    [
+     "he",
+     "they"
+    ],
+    [
+     "loves",
+     "love"
+    ]
+   ],
+   "display": "Explore things your child likes. For example, if they love animals, get some library books about animals, look for birds and squirrels in a park, or visit a zoo to learn about animals.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Explore things your child likes."
+    },
+    {
+     "role": "step",
+     "text": "For example, if they love animals, get some library books about animals, look for birds and squirrels in a park, or visit a zoo to learn about animals."
+    }
+   ]
+  },
+  {
+   "id": "cdc22-act-m60-23",
+   "sourceId": "cdc-ltsae-5-years",
+   "referenceAgeMonths": 60,
+   "source": "Try to make time for active play each day. Your child will have more fun if she can choose the activity. For example, give her choices, such as playing music and dancing together, playing outside, or taking a walk together.",
+   "replacements": [
+    [
+     "she",
+     "they"
+    ],
+    [
+     "her",
+     "them"
+    ]
+   ],
+   "display": "Try to make time for active play each day. Your child will have more fun if they can choose the activity. For example, give them choices, such as playing music and dancing together, playing outside, or taking a walk together.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Try to make time for active play each day."
+    },
+    {
+     "role": "step",
+     "text": "Your child will have more fun if they can choose the activity."
+    },
+    {
+     "role": "step",
+     "text": "For example, give them choices, such as playing music and dancing together, playing outside, or taking a walk together."
+    }
+   ],
+   "timingLanguage": [
+    "each day"
+   ]
+  },
+  {
+   "id": "cdc22-act-m60-25",
+   "sourceId": "cdc-ltsae-5-years",
+   "referenceAgeMonths": 60,
+   "source": "Help your child be ready for new places and meeting new people. For example, you can read stories or role play (pretend play) to help her get ready for Kindergarten.",
+   "replacements": [
+    [
+     "her",
+     "them"
+    ]
+   ],
+   "display": "Help your child be ready for new places and meeting new people. For example, you can read stories or role play (pretend play) to help them get ready for Kindergarten.",
+   "segments": [
+    {
+     "role": "step",
+     "text": "Help your child be ready for new places and meeting new people."
+    },
+    {
+     "role": "step",
+     "text": "For example, you can read stories or role play (pretend play) to help them get ready for Kindergarten."
+    }
+   ]
+  }
+ ],
+ "activities": [
+  {
+   "id": "cdc22-act-a001",
+   "title": "Back-and-forth “talking”",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m2-01",
+    "cdc22-act-m4-01"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a002",
+   "title": "Talk, read and sing",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m2-02"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a003",
+   "title": "Cuddling and holding",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m2-03"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a004",
+   "title": "Tummy time with toys",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m2-07"
+   ],
+   "materials": [
+    {
+     "phrase": "toys at eye level",
+     "example": false
+    }
+   ],
+   "safetySensitive": true
+  },
+  {
+   "id": "cdc22-act-a005",
+   "title": "Find the rattle sound",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m2-13"
+   ],
+   "materials": [
+    {
+     "phrase": "a rattle",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a006",
+   "title": "Talk and play during daily care",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m2-16"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a007",
+   "title": "Copy your baby’s sounds",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m2-18"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a008",
+   "title": "Mirror time",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m2-19"
+   ],
+   "materials": [
+    {
+     "phrase": "a baby-safe mirror",
+     "example": false
+    }
+   ],
+   "safetySensitive": true
+  },
+  {
+   "id": "cdc22-act-a009",
+   "title": "Bright pictures and faces",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m2-20"
+   ],
+   "materials": [
+    {
+     "phrase": "pictures with bright colors or faces",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a010",
+   "title": "Reach and kick play",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m4-02"
+   ],
+   "materials": [
+    {
+     "phrase": "a blanket with safe toys",
+     "example": true
+    }
+   ],
+   "safetySensitive": true
+  },
+  {
+   "id": "cdc22-act-a011",
+   "title": "Talk, read and sing",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m4-04"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a012",
+   "title": "Easy-to-hold toys",
+   "appCategory": "fine-motor",
+   "recordIds": [
+    "cdc22-act-m4-07"
+   ],
+   "materials": [
+    {
+     "phrase": "safe toys to play with that are easy to hold",
+     "example": false
+    },
+    {
+     "phrase": "rattles or cloth books with colorful pictures for their age",
+     "example": true
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a013",
+   "title": "Follow the moving toy",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m4-10"
+   ],
+   "materials": [
+    {
+     "phrase": "a bright-colored toy",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a014",
+   "title": "Sing-along movement play",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m4-11"
+   ],
+   "safetySensitive": true
+  },
+  {
+   "id": "cdc22-act-a015",
+   "title": "Supported bouncing on your lap",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m4-12"
+   ],
+   "safetySensitive": true
+  },
+  {
+   "id": "cdc22-act-a016",
+   "title": "Peek-a-boo",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m4-13"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a017",
+   "title": "Sound conversations",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m4-15"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a018",
+   "title": "Using your baby’s name",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m4-16"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a019",
+   "title": "Floor play every day",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m4-17",
+    "cdc22-act-m6-15"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a020",
+   "title": "Hold, talk and smile",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m4-18"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a021",
+   "title": "Quiet reading and singing time",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m4-19"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a022",
+   "title": "Back-and-forth play",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m6-01"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a023",
+   "title": "“Read” colorful pictures",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m6-02"
+   ],
+   "materials": [
+    {
+     "phrase": "colorful pictures in magazines or books",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a024",
+   "title": "Name new things",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m6-03"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a025",
+   "title": "Songs and music",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m6-04"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a026",
+   "title": "Point and talk",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m6-06"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a027",
+   "title": "Roll to reach toys",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m6-07"
+   ],
+   "materials": [
+    {
+     "phrase": "toys just out of reach",
+     "example": false
+    }
+   ],
+   "safetySensitive": true
+  },
+  {
+   "id": "cdc22-act-a028",
+   "title": "Supported sitting",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m6-12"
+   ],
+   "materials": [
+    {
+     "phrase": "toys to look at",
+     "example": false
+    }
+   ],
+   "safetySensitive": true
+  },
+  {
+   "id": "cdc22-act-a029",
+   "title": "Supported standing",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m6-13"
+   ],
+   "safetySensitive": true
+  },
+  {
+   "id": "cdc22-act-a030",
+   "title": "New sounds and voices",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m6-14"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a031",
+   "title": "Drop-and-return game",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m6-16"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a032",
+   "title": "Repeat sounds, add words",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m9-01"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a033",
+   "title": "Crawl, scoot or roll to reach toys",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m9-02"
+   ],
+   "materials": [
+    {
+     "phrase": "toys on the ground or on a play mat",
+     "example": false
+    }
+   ],
+   "safetySensitive": true
+  },
+  {
+   "id": "cdc22-act-a034",
+   "title": "Wave “bye-bye” and simple signs",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m9-03"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a035",
+   "title": "Peek-a-boo with a cloth",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m9-04"
+   ],
+   "materials": [
+    {
+     "phrase": "a cloth",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a036",
+   "title": "Dump and fill",
+   "appCategory": "fine-motor",
+   "recordIds": [
+    "cdc22-act-m9-05"
+   ],
+   "materials": [
+    {
+     "phrase": "blocks",
+     "example": false
+    },
+    {
+     "phrase": "a container",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a037",
+   "title": "My turn, your turn",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m9-06"
+   ],
+   "materials": [
+    {
+     "phrase": "a toy",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a038",
+   "title": "“Read” by naming pictures",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m9-07"
+   ],
+   "materials": [
+    {
+     "phrase": "books or magazines",
+     "example": true
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a039",
+   "title": "Drop-it game",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m9-17"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a040",
+   "title": "Describe what your baby sees",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m9-19"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a041",
+   "title": "Find the hidden toy",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m9-20"
+   ],
+   "materials": [
+    {
+     "phrase": "a toy under a blanket",
+     "example": true
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a042",
+   "title": "Naming feelings",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m9-22"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a043",
+   "title": "Safe places to pull up",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m9-23"
+   ],
+   "materials": [
+    {
+     "phrase": "things that they can pull up on safely",
+     "example": false
+    }
+   ],
+   "safetySensitive": true
+  },
+  {
+   "id": "cdc22-act-a044",
+   "title": "Build on what your baby says",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m12-03"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a045",
+   "title": "Answer pointing with words",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m12-06"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a046",
+   "title": "Point out interesting things",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m12-07"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a047",
+   "title": "Pots-and-pans music",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m12-12"
+   ],
+   "materials": [
+    {
+     "phrase": "pots and pans or a small musical instrument like a drum or cymbals",
+     "example": true
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a048",
+   "title": "Touch-and-lift books",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m12-15"
+   ],
+   "materials": [
+    {
+     "phrase": "books with things they can feel or flaps they can lift",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a049",
+   "title": "Blocks and hand toys",
+   "appCategory": "fine-motor",
+   "recordIds": [
+    "cdc22-act-m12-16"
+   ],
+   "materials": [
+    {
+     "phrase": "blocks and other toys that encourage your baby to use their hands",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a050",
+   "title": "Push toys for walking practice",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m12-18"
+   ],
+   "materials": [
+    {
+     "phrase": "empty boxes, a \"kiddie chair,\" or \"push toys,\"",
+     "example": true
+    }
+   ],
+   "safetySensitive": true
+  },
+  {
+   "id": "cdc22-act-a051",
+   "title": "Walking practice",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m12-19"
+   ],
+   "materials": [
+    {
+     "phrase": "furniture that is safe",
+     "example": false
+    }
+   ],
+   "safetySensitive": true
+  },
+  {
+   "id": "cdc22-act-a052",
+   "title": "Repeat and add to words",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m15-01"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a053",
+   "title": "Name it and wait",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m15-02"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a054",
+   "title": "Everyday helper",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m15-03"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a055",
+   "title": "What do you do with it?",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m15-05"
+   ],
+   "materials": [
+    {
+     "phrase": "a hat",
+     "example": true
+    },
+    {
+     "phrase": "a book or a cup",
+     "example": true
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a056",
+   "title": "Songs with gestures",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m15-06"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a057",
+   "title": "Stack and knock down blocks",
+   "appCategory": "fine-motor",
+   "recordIds": [
+    "cdc22-act-m15-11"
+   ],
+   "materials": [
+    {
+     "phrase": "blocks",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a058",
+   "title": "Name things throughout the day",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m15-15"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a059",
+   "title": "Family picture book",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m15-16"
+   ],
+   "materials": [
+    {
+     "phrase": "pictures of people and pets in your child's life",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a060",
+   "title": "Sing and dance together",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m15-17"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a061",
+   "title": "A new book after a favorite",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m15-18"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a062",
+   "title": "Simple hide and seek",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m15-19"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a063",
+   "title": "Cleanup song",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m15-20"
+   ],
+   "materials": [
+    {
+     "phrase": "a basket",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a064",
+   "title": "Simple gestures and signs",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m15-21"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a065",
+   "title": "Stuffed-animal pretend talk",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m15-22"
+   ],
+   "materials": [
+    {
+     "phrase": "a stuffed animal",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a066",
+   "title": "Bubble popping",
+   "appCategory": "fine-motor",
+   "recordIds": [
+    "cdc22-act-m15-23"
+   ],
+   "materials": [
+    {
+     "phrase": "bubbles",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a067",
+   "title": "Pretend feeding play",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m18-02"
+   ],
+   "materials": [
+    {
+     "phrase": "a spoon",
+     "example": false
+    },
+    {
+     "phrase": "their stuffed animal",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a068",
+   "title": "Noticing others’ feelings",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m18-03",
+    "cdc22-act-m48-05"
+   ],
+   "materials": [
+    {
+     "phrase": "a teddy",
+     "example": true
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a069",
+   "title": "Ask “What is that?”",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m18-04"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a070",
+   "title": "Talk at eye level",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m18-11"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a071",
+   "title": "Name body parts",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m18-12"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a072",
+   "title": "Add to your child’s words",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m18-14"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a073",
+   "title": "Balls, cars and containers",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m18-15"
+   ],
+   "materials": [
+    {
+     "phrase": "balls",
+     "example": false
+    },
+    {
+     "phrase": "toy cars",
+     "example": false
+    },
+    {
+     "phrase": "blocks or other items",
+     "example": false
+    },
+    {
+     "phrase": "containers",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a074",
+   "title": "Picture books with simple words",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m18-16"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a075",
+   "title": "Bubbles, taking turns",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m18-17"
+   ],
+   "materials": [
+    {
+     "phrase": "bubbles",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a076",
+   "title": "Push and pull toys",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m18-19"
+   ],
+   "materials": [
+    {
+     "phrase": "toys that your child can push or pull safely",
+     "example": false
+    }
+   ],
+   "safetySensitive": true
+  },
+  {
+   "id": "cdc22-act-a077",
+   "title": "Pretend-play props",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m18-20"
+   ],
+   "materials": [
+    {
+     "phrase": "a doll and a baby blanket",
+     "example": true
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a078",
+   "title": "Help with word sounds",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m24-01"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a079",
+   "title": "Mealtime helper",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m24-03"
+   ],
+   "materials": [
+    {
+     "phrase": "plastic cups or napkins",
+     "example": true
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a080",
+   "title": "Kick, roll and throw balls",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m24-04"
+   ],
+   "materials": [
+    {
+     "phrase": "balls to kick, roll, and throw",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a081",
+   "title": "Cause-and-effect toys",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m24-05"
+   ],
+   "materials": [
+    {
+     "phrase": "toys where they can push a button and something happens",
+     "example": true
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a082",
+   "title": "Dress-up play",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m24-06"
+   ],
+   "materials": [
+    {
+     "phrase": "grown-up clothes, such as shoes, hats, and shirts",
+     "example": true
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a083",
+   "title": "Simple chores",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m24-10"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a084",
+   "title": "“Ready, set, go” swing game",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m24-11",
+    "cdc22-act-m30-16"
+   ],
+   "materials": [
+    {
+     "phrase": "a swing",
+     "example": true
+    }
+   ],
+   "safetySensitive": true
+  },
+  {
+   "id": "cdc22-act-a085",
+   "title": "Crayons and finger paint",
+   "appCategory": "fine-motor",
+   "recordIds": [
+    "cdc22-act-m24-12"
+   ],
+   "materials": [
+    {
+     "phrase": "crayons",
+     "example": false
+    },
+    {
+     "phrase": "finger paint on paper",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a086",
+   "title": "Sand and water play",
+   "appCategory": "fine-motor",
+   "recordIds": [
+    "cdc22-act-m24-14"
+   ],
+   "materials": [
+    {
+     "phrase": "sand toys or plastic containers, spoons, or a funnel",
+     "example": false
+    }
+   ],
+   "safetySensitive": true
+  },
+  {
+   "id": "cdc22-act-a087",
+   "title": "Simple puzzles",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m24-15",
+    "cdc22-act-m30-11"
+   ],
+   "materials": [
+    {
+     "phrase": "simple puzzles with shapes, colors, or animals",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a088",
+   "title": "Explore new places",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m24-16"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a089",
+   "title": "Body-part songs",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m24-17"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a090",
+   "title": "Build and knock down towers",
+   "appCategory": "fine-motor",
+   "recordIds": [
+    "cdc22-act-m24-19"
+   ],
+   "materials": [
+    {
+     "phrase": "blocks",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a091",
+   "title": "Helping hands",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m24-20"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a092",
+   "title": "Free play",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m30-01"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a093",
+   "title": "Who, what and where questions",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m30-04"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a094",
+   "title": "Learning to play together",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m30-05"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a095",
+   "title": "Drawing lines and circles",
+   "appCategory": "fine-motor",
+   "recordIds": [
+    "cdc22-act-m30-06"
+   ],
+   "materials": [
+    {
+     "phrase": "crayons on paper, shaving cream on a tray, or chalk on a sidewalk",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a096",
+   "title": "Playing with other children",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m30-07",
+    "cdc22-act-m48-08",
+    "cdc22-act-m60-14"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a097",
+   "title": "Describing words",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m30-10"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a098",
+   "title": "Climbing and running at the park",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m30-12"
+   ],
+   "safetySensitive": true
+  },
+  {
+   "id": "cdc22-act-a099",
+   "title": "Big-box pretend play",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m30-15"
+   ],
+   "materials": [
+    {
+     "phrase": "large boxes",
+     "example": false
+    },
+    {
+     "phrase": "stickers",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a100",
+   "title": "Name colors, body parts and pictures",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m30-17"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a101",
+   "title": "Kick a ball back and forth",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m30-18"
+   ],
+   "materials": [
+    {
+     "phrase": "a ball",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a102",
+   "title": "Follow the leader",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m30-20"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a103",
+   "title": "Reading and library visits",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m30-21"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a104",
+   "title": "Pretend cooking",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m30-22"
+   ],
+   "materials": [
+    {
+     "phrase": "safe things from your kitchen",
+     "example": true
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a105",
+   "title": "Turning pages",
+   "appCategory": "fine-motor",
+   "recordIds": [
+    "cdc22-act-m30-23"
+   ],
+   "materials": [
+    {
+     "phrase": "a book or magazine",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a106",
+   "title": "Solving problems together",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m36-01"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a107",
+   "title": "Words for feelings",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m36-02"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a108",
+   "title": "Talk about the story",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m36-04"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a109",
+   "title": "Counting games",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m36-05"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a110",
+   "title": "Longer sentences",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m36-06"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a111",
+   "title": "Helping make meals",
+   "appCategory": "fine-motor",
+   "recordIds": [
+    "cdc22-act-m36-07"
+   ],
+   "safetySensitive": true
+  },
+  {
+   "id": "cdc22-act-a112",
+   "title": "Two- and three-step instructions",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m36-08"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a113",
+   "title": "Songs and rhymes",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m36-10"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a114",
+   "title": "Activity box",
+   "appCategory": "fine-motor",
+   "recordIds": [
+    "cdc22-act-m36-11"
+   ],
+   "materials": [
+    {
+     "phrase": "an \"activity box\" with paper, crayons, and coloring books",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a115",
+   "title": "Playing with other children",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m36-12"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a116",
+   "title": "Playdough",
+   "appCategory": "fine-motor",
+   "recordIds": [
+    "cdc22-act-m36-13"
+   ],
+   "materials": [
+    {
+     "phrase": "playdough",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a117",
+   "title": "Opposites game",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m36-15"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a118",
+   "title": "Matching games",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m36-16"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a119",
+   "title": "Outdoor play, child leads",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m36-17"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a120",
+   "title": "Getting ready for new places",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m36-18",
+    "cdc22-act-m48-01"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a121",
+   "title": "Name and age",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m36-19"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a122",
+   "title": "What happens next?",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m48-02"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a123",
+   "title": "Colors, shapes and sizes",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m48-03"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a124",
+   "title": "Using words to ask",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m48-04"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a125",
+   "title": "Imaginative play",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m48-11"
+   ],
+   "materials": [
+    {
+     "phrase": "dress-up clothes, pots and pans to pretend cook, or blocks to build with",
+     "example": true
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a126",
+   "title": "Answering “why” questions",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m48-12"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a127",
+   "title": "Counting things",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m48-13"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a128",
+   "title": "Skills for playing with others",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m48-15"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a129",
+   "title": "Outdoor games with friends",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m48-16"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a130",
+   "title": "Complete sentences",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m48-17"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a131",
+   "title": "Helping with chores",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m48-18"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a132",
+   "title": "Stop-and-go games",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m48-19"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a133",
+   "title": "Dance and copy moves",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m48-20"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a134",
+   "title": "Working it out with friends",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m48-21"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a135",
+   "title": "First, second, finally",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m48-22"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a136",
+   "title": "Tic-tac-toe and matching games",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m48-24"
+   ],
+   "materials": [
+    {
+     "phrase": "Tic-Tac-Toe or matching games",
+     "example": true
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a137",
+   "title": "Active play every day",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m48-25",
+    "cdc22-act-m60-23"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a138",
+   "title": "Library trips",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m48-27"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a139",
+   "title": "Ask “why” and “how”",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m60-02"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a140",
+   "title": "Puzzles and building blocks",
+   "appCategory": "fine-motor",
+   "recordIds": [
+    "cdc22-act-m60-03"
+   ],
+   "materials": [
+    {
+     "phrase": "puzzles and building blocks",
+     "example": true
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a141",
+   "title": "Words about time",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m60-04"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a142",
+   "title": "Doing it themselves",
+   "appCategory": "fine-motor",
+   "recordIds": [
+    "cdc22-act-m60-05"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a143",
+   "title": "Talking about feelings",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m60-06"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a144",
+   "title": "Rhyming games",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m60-07"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a145",
+   "title": "Games with rules",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m60-08"
+   ],
+   "materials": [
+    {
+     "phrase": "simple board games, card games, or Simon Says",
+     "example": true
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a146",
+   "title": "Telling the story from pictures",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m60-12"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a147",
+   "title": "Memory and attention games",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m60-13"
+   ],
+   "materials": [
+    {
+     "phrase": "card games, Tic Tac Toe, I Spy, or Hot and Cold",
+     "example": true
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a148",
+   "title": "Dress-up, school and house",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m60-17"
+   ],
+   "materials": [
+    {
+     "phrase": "items they can use to play dress up, school, or house",
+     "example": false
+    }
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a149",
+   "title": "Creative art box",
+   "appCategory": "fine-motor",
+   "recordIds": [
+    "cdc22-act-m60-18"
+   ],
+   "materials": [
+    {
+     "phrase": "a box of crayons, paper, paint, child scissors, and glue",
+     "example": false
+    }
+   ],
+   "safetySensitive": true
+  },
+  {
+   "id": "cdc22-act-a150",
+   "title": "Swings and monkey bars",
+   "appCategory": "gross-motor",
+   "recordIds": [
+    "cdc22-act-m60-19"
+   ],
+   "safetySensitive": true
+  },
+  {
+   "id": "cdc22-act-a151",
+   "title": "Ask about the pictures",
+   "appCategory": "language-communication",
+   "recordIds": [
+    "cdc22-act-m60-21"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a152",
+   "title": "Explore what they love",
+   "appCategory": "cognitive",
+   "recordIds": [
+    "cdc22-act-m60-22"
+   ],
+   "safetySensitive": false
+  },
+  {
+   "id": "cdc22-act-a153",
+   "title": "Getting ready for kindergarten",
+   "appCategory": "social-emotional",
+   "recordIds": [
+    "cdc22-act-m60-25"
+   ],
+   "safetySensitive": false
+  }
+ ]
+}

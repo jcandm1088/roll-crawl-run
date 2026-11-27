@@ -32,6 +32,7 @@ describe('schema', () => {
       [
         'backups', 'children', 'completions', 'customItems', 'eventCompletions', 'events', 'idAliases', 'journal',
         'mergeBases', 'meta', 'milestoneEvents', 'milestoneRecords', 'photos', 'referenceAnnotations', 'settings',
+        'itemEvents', 'trackerState', // added in v3 (Checkpoint 2b)
       ].sort(),
     );
   });
@@ -46,9 +47,14 @@ describe('schema', () => {
     expect(await db.count('milestoneRecords')).toBe(4);
   });
 
-  it('enforces one completion per item and occurrence date', async () => {
-    await db.put('completions', { id: 'a', childId: 'c1', customItemId: 'ex1', occurrenceDate: '2025-03-01' });
-    await expect(db.put('completions', { id: 'b', childId: 'c1', customItemId: 'ex1', occurrenceDate: '2025-03-01' })).rejects.toThrow();
+  // Updated at Checkpoint 2b (schema v3, Decision D1): the logical key of an exercise session is
+  // (item, slot), so one day can hold several scheduled sessions and additional sessions, while one
+  // slot can still never be recorded twice. (Previously: one completion per item and date.)
+  it('enforces one session per item and slot, allowing several sessions on one date', async () => {
+    await db.put('completions', { id: 'a', childId: 'c1', customItemId: 'ex1', occurrenceDate: '2025-03-01', slotKey: '2025-03-01#1' });
+    await db.put('completions', { id: 'b', childId: 'c1', customItemId: 'ex1', occurrenceDate: '2025-03-01', slotKey: '2025-03-01#2' });
+    await db.put('completions', { id: 'x', childId: 'c1', customItemId: 'ex1', occurrenceDate: '2025-03-01', slotKey: 'extra:1' });
+    await expect(db.put('completions', { id: 'c', childId: 'c1', customItemId: 'ex1', occurrenceDate: '2025-03-01', slotKey: '2025-03-01#1' })).rejects.toThrow();
     await db.put('eventCompletions', { id: 'a', childId: 'c1', eventId: 'e1', occurrenceDate: '2025-03-01' });
     await expect(db.put('eventCompletions', { id: 'b', childId: 'c1', eventId: 'e1', occurrenceDate: '2025-03-01' })).rejects.toThrow();
   });

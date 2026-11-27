@@ -32,16 +32,34 @@ export function useApp(): AppState {
   return ctx;
 }
 
-type LoadState = { status: 'loading' } | { status: 'error'; message: string } | { status: 'ready'; db: RcrDB; meta: Meta; settings: Settings; children: Child[] };
+type LoadState =
+  | { status: 'loading' }
+  | { status: 'error'; message: string }
+  /** The storage upgrade is waiting for another open copy of the app to close (nothing is reset). */
+  | { status: 'blocked' }
+  /** A newer version was opened in another window; this copy closed its storage connection. */
+  | { status: 'superseded' }
+  | { status: 'ready'; db: RcrDB; meta: Meta; settings: Settings; children: Child[] };
 
-export function AppProvider({ children: content, fallback, errorView }: { children: ComponentChildren; fallback: ComponentChildren; errorView: (message: string) => ComponentChildren }) {
+export type StorageNotice = 'blocked' | 'superseded';
+
+export function AppProvider({ children: content, fallback, errorView, noticeView }: {
+  children: ComponentChildren;
+  fallback: ComponentChildren;
+  errorView: (message: string) => ComponentChildren;
+  /** Parent-friendly instructions when an upgrade is waiting for, or was taken over by, another copy of the app. */
+  noticeView?: (notice: StorageNotice) => ComponentChildren;
+}) {
   const [state, setState] = useState<LoadState>({ status: 'loading' });
 
   useEffect(() => {
     let cancelled = false;
     (async () => {
       try {
-        const db = await openRcrDb();
+        const db = await openRcrDb(undefined, undefined, {
+          onBlocked: () => { if (!cancelled) setState((s) => (s.status === 'loading' ? { status: 'blocked' } : s)); },
+          onBlocking: () => { if (!cancelled) setState({ status: 'superseded' }); },
+        });
         const meta = await ensureMeta(db);
         let settings = await getSettings(db);
         const kids = await listChildren(db);
@@ -146,5 +164,6 @@ export function AppProvider({ children: content, fallback, errorView }: { childr
 
   if (state.status === 'loading') return <>{fallback}</>;
   if (state.status === 'error') return <>{errorView(state.message)}</>;
+  if (state.status === 'blocked' || state.status === 'superseded') return <>{noticeView ? noticeView(state.status) : fallback}</>;
   return <AppContext.Provider value={value}>{content}</AppContext.Provider>;
 }

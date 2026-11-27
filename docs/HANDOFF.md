@@ -2,7 +2,7 @@
 
 **This is the single authoritative, current-state handoff.** It replaces the earlier handoff notes. The original end-of-Checkpoint-1 handoff is kept unchanged as a historical record in `docs/reviews/CHECKPOINT_1_HANDOFF.md`; statements there describe the project as it was at commit `aa8c869` and are no longer current.
 
-*Last updated: 2026-11-27 (Checkpoint 2a human acceptance closeout; preserved on `claude/sharp-franklin-vrbgmd`).*
+*Last updated: 2026-11-27 (Checkpoint 2b implemented; local commit on `claude/upbeat-thompson-skpm8j`, not pushed). Earlier: Checkpoint 2a human acceptance closeout, preserved on `claude/sharp-franklin-vrbgmd`.*
 
 ## 1. Status at a glance
 
@@ -10,7 +10,7 @@
 |---|---|
 | **Checkpoint 1** — Design & Foundation | ✅ **Completed, accepted and deployed** |
 | **Checkpoint 2a** — Verified Milestone Tracking, the Growth UX refinement (R-002, plan R11) and the human acceptance refinements (R-004 to R-008, plan R12) | ✅ **Accepted by the owner for Mac usability (2026-11-27;** local build of `bf790b5`, macOS, Node.js 26, Safari). **Pending:** physical iPhone acceptance, offline editing on a device, manual legacy-data upgrade verification. Not merged into `main`, not deployed |
-| **Checkpoint 2b** — Goals & Exercises (CDC activities, recurrence, completions, charts) | ⏳ **Planned, not started.** Needs the owner's explicit authorization |
+| **Checkpoint 2b** — Goals, Exercises & Historical Progress | 🧪 **Implemented, awaiting the owner's acceptance** (authorized 2026-11-27). One local commit on `claude/upbeat-thompson-skpm8j` on top of `53d6212`. **Not pushed, merged or deployed.** Tested only in automated headless Chromium. Database version 3 |
 | **Checkpoints 3–6** — Calendar, Journal & Resources, Backups/Sharing/Reports, Device polish | ⏳ **Planned, not started.** Checkpoints 3 and 5 have pending decisions (section 5) |
 | **Deferred** | Project license; GitHub Actions version upgrades; live multi-device sync and other 🔮 Future items in the plan |
 
@@ -24,11 +24,20 @@
 | **Remote `main`** | `aa8c869352cdd734eafb0ed8b7219069d4457241` (Checkpoint 1: Deployment Acceptance and Handoff; documentation only, so no redeploy was needed) |
 | **Remote `checkpoint-2a`** | `73d9f6fc356b3f792a9f71cc8f38ff421e13581d` (Checkpoint 2a: Verified Milestone Tracking), a direct child of `aa8c869`. This is the **recovered original commit** (section 6) |
 | Branch `claude/beautiful-allen-1vjobt` (remote) | `170cc99` “Checkpoint 2a: Growth UX Refinement”, preserved with the owner's authorization |
+| Session branch `claude/upbeat-thompson-skpm8j` (local) | Fast-forwarded to `53d6212` (the accepted 2a baseline, 12 commits), then the local commit “Checkpoint 2b: Personal Goals, Exercises and Historical Progress”. **Not pushed** (the owner's authorization excludes pushing); the commit hash is in the implementation report |
 | Session branch `claude/sharp-franklin-vrbgmd` (remote) | Fast-forwarded to `170cc99`, then “Checkpoint 2a: Human Acceptance Refinements” (`8843a2506b0e284b365ec048406d9b6b92d0503b`) and “Checkpoint 2a: Final Review and Erasure Regression Coverage”. Preserved on this remote branch with the owner's explicit authorization (2026-11-27) after a publication safety review. Normal push, no force; not merged; no deployment |
 
 **History:** `a4e12b5` → `ade3171` → `820bb0e` → `873ed1c` → `e40287f` → `aa8c869` → `73d9f6f` → `9ca6149` → `170cc99` → `8843a25` (Human Acceptance Refinements) → Final Review and Erasure Regression Coverage (eleven commits).
 
 `main` is not to receive Checkpoint 2a until the owner accepts it and authorizes the merge. Pushing never deploys: deployment is a separate manual workflow (section 7).
+
+## 3d. Checkpoint 2b — Goals, Exercises & Historical Progress (implemented, awaiting acceptance)
+- **What:** plan R13, Decisions #89–#106, `docs/reviews/CHECKPOINT_2B_IMPLEMENTATION_REPORT.md` (requirement-by-requirement report), `docs/reviews/CHECKPOINT_2B_ACTIVITY_INVENTORY.md`, `docs/reviews/CHECKPOINT_2B_IMPLEMENTATION_PLAN.md` (approved plan, preserved).
+- **Data:** database version 3 (additive; two new stores; new session index). Upgrade from a real build of the accepted 2a (`53d6212`) is covered by an automated test: every existing store byte-identical, milestone Progress and Home unchanged.
+- **Content:** 153 recommended activities from 162 CDC tips (12 registered pages), gender-neutral display with CDC's original viewable, safety sentences kept at the point of use.
+- **Results:** see BUILD_LOG (three consecutive full runs).
+- **Human acceptance:** checklist GE1–GE24 in TESTING_CHECKLIST. Nothing has been tested in Safari, on a Mac or on an iPhone.
+- **Next, each needing separate owner authorization:** owner acceptance; preserving the commit on a remote branch (this session may push only to `claude/upbeat-thompson-skpm8j`); merging into `main`; deployment; Checkpoint 3.
 
 ## 3c. Human acceptance closeout (2026-11-27)
 - **Accepted for Mac usability.** The owner installed, built and ran the final build locally (macOS, Node.js 26, Safari) and accepts Checkpoint 2a for Mac usability.
@@ -109,11 +118,12 @@ Acceptance is complete only when the owner says so. Defects found during accepta
 | Physical iPhone acceptance, offline editing on a device, manual legacy-data upgrade verification | Full acceptance on iPhone | Needs a deployment or a local-network test the owner sets up |
 | Merge Checkpoint 2a into `main`, and deploy | iPhone testing, Checkpoint 2b | Separate owner authorization |
 | ~~Gender-neutral display wording vs CDC's condition 3~~ | — | **Resolved:** owner determination, Decision #86 |
-| Legacy personal entries: optional conversion to goals, permanent deletion | Checkpoint 2b | Current preservation approach retained until then; no automatic migration |
+| ~~Legacy personal entries: optional conversion to goals, permanent deletion~~ | — | **Built at 2b** (D9, D10): explicit Move to My Goals and Delete permanently; nothing automatic |
 | ~~Remote preservation of the acceptance-refinement work~~ | — | **Done:** `claude/sharp-franklin-vrbgmd` (owner-authorized) |
 | Remote preservation of the refinement commit | Avoiding loss in a conversation transfer | Push to the session branch only with authorization |
 | Option B educational excerpts | Optional | Deferred (D-10) |
-| Authorization to begin Checkpoint 2b | Checkpoint 2b | Supporting activities to come from verified CDC tips |
+| ~~Authorization to begin Checkpoint 2b~~ | — | **Given 2026-11-27**; implemented |
+| Owner acceptance of Checkpoint 2b; remote preservation; merge; deployment | Checkpoint 3 | Each needs separate authorization |
 | Pathways.org terms review | Any collection or analysis of Pathways.org content | Domain is reachable but its content must not be collected until terms are reviewed and approved |
 | Alternative well-child visit and vaccine reference sources | Checkpoint 3 | AAP/Bright Futures and the AAP immunization schedule are blocked by the AAP exclusion. CDC/ACIP not yet retrieved |
 | Partner-sharing theme behavior (plan R5) | Checkpoint 5 | The proposed rule needs the owner's confirmation |

@@ -200,6 +200,26 @@ Compiled on 2026-11-26 from the review documents, decisions and earlier entries 
 
 | 27 | **Deleted entries shown twice (R-009)** | Human-discovered usability finding (design preference; deferred) | In Mac acceptance, the owner found that a deleted entry's placeholder and its separate timeline entry were repetitive. | Recorded as R-009 (low priority, deferred). Checkpoint 2a accepted for Mac usability regardless. |
 
+**Checkpoint 2b (2026-11-27).** Planning-stage items are risks or documentation problems identified before implementation, **not** observed application defects.
+
+| # | Challenge | Class | What happened | Outcome |
+|---|---|---|---|---|
+| 28 | **Completion index allowed one session per day** | Proactively identified architectural limitation (planning) | The v1 schema's unique `[customItemId, occurrenceDate]` index could not hold the approved multiple and additional sessions. | Schema v3 replaces it with a unique `[customItemId, slotKey]` (D1). |
+| 29 | **Personal history could have contaminated milestone history** | Proactively identified risk (planning) | Milestone code reads every `milestoneEvents` entry for a child (e.g. Home's Recent milestones), so goal events stored there would have appeared as milestones. | Separate `itemEvents` store; regression tests compare milestone results and Recent milestones before and after personal activity. |
+| 30 | **Blocked database upgrade** | Proactively identified risk (planning) | `openRcrDb` had no `blocked`/`blocking` handling; an old open tab could silently stall the first-ever schema change after 2a. | Parent-friendly “Almost ready” and “A newer version is open” notices; nothing is reset (unit and e2e tests). |
+| 31 | **Inappropriate future-age activity defaults** | Proactively identified safety-relevant design risk (planning) | The three-month interval rule would have shown, e.g., a 7-month-old CDC's tips for 9-month-olds (such as pulling up to stand). | Owner approved CDC's 12 ages with the most recently reached age as default, and an intro for under 2 months / before the due date (D2). |
+| 32 | **Inconsistent frequency and duration documentation** | Documentation error (AI, planning) | The plan said CDC gives no frequencies or durations, but eight tips contain “every day”, “each day”, “for a few minutes” or “a few seconds”. Found by the owner's secondary reviewer. | Corrected in the plan, inventory and source register; the words stay in CDC's text and are never turned into targets. |
+| 33 | **Materials extraction quality** | Content-quality defect in a draft (AI, planning) | The draft inventory extracted isolated words (“toys, cloth, books, pictures”), losing qualifiers and the example/required distinction. Found in owner review. | Curated CDC phrases with qualifiers, examples marked, omitted where unhelpful; build validation checks each phrase appears in CDC's text. |
+| 34 | **Incomplete gender-neutral adaptation of secondary fields** | Content-quality defect in a draft (AI, planning) | The draft's separately extracted purpose and safety sentences quoted CDC's gendered source wording. Found in owner review. | Purpose and safety are now sentences of the validated display text; page guidance adapted too; tests check every field. |
+| 35 | **Repeated Safety card on the adopted exercise page** | Confirmed defect (new code, found by an e2e test) | The collapsed “CDC's original activity” section repeated the Safety card already shown on the page (a strict-mode selector failure exposed it). | The original-activity section no longer repeats safety. |
+| 36 | **“2 months-old” wording** | Confirmed defect (new code, found in screenshot review) | The activity source line built CDC's heading as “your 2 months-old”. | Uses CDC's form (“2-month-old”, “1-year-old”). |
+| 37 | **Correcting a session's value and date was two transactions** | AI self-correction (code review before testing) | Editing then moving a session could have left a half-applied correction if the second step failed. | One atomic move carries the corrected values. |
+| 38 | **Stale revision in chained stopwatch/counter writes** | AI self-correction (code review before testing) | The first draft read the tracker revision from a stale render, so rapid taps could have been refused as conflicts. | A revision reference updated on every successful write. |
+| 39 | **New-test defects** | Testing defect (AI-generated tests) | Among others: a blocked-upgrade test that built an incomplete v2 schema; an unhandled expected rejection in the failed-upgrade test; navigating before a save's own navigation finished; a gender check that read CDC's collapsed original wording; ambiguous labels and nested `summary` selectors; comparing `innerText` with `textContent`; a non-waiting read right after navigation that failed intermittently (once in one full run). | All corrected to retrying, specific assertions before the final runs. |
+| 40 | **Serial update suite understated failures** | Testing weakness | `update.spec.ts` runs serially, so after its first failure the later upgrade tests were skipped rather than reported as failures; their version-2 assertions only surfaced when run individually. | All update tests run and pass; noted for future triage. |
+| 41 | **Screenshot capture artifacts** | Environmental limitation (screenshot tooling), plus one AI mistake | Full-page captures of scrolled pages drew the sticky top bar mid-page; Claude's first fix (absolute top bar) overlapped the content instead. | Scroll to top before capturing; only the bottom bar is repositioned. |
+| 42 | **Bundle size larger than estimated** | Estimate error (AI, planning) | The plan estimated +50–70 KB; the validated activity content (source, display and sentence segments) brought the bundle from about 255 KB to about 512 KB (66 → 116 KB gzip). | Accepted for offline reliability; recorded in KNOWN_LIMITATIONS. |
+
 **Still unresolved:**
 - The one-time “server not responding” delay on the first iPhone load (cause unknown).
 - R-001, the onboarding name-input overflow (pending investigation).
@@ -337,3 +357,33 @@ Environment: Linux cloud container, Node 22, headless Chromium (Playwright; 390�
 **Note:** the README states Node.js 22, which is the version used for automated testing. My successful local build used Node.js 26. This is recorded only as an observation; no change was made.
 
 **Automated tests:** none run for this documentation-only closeout (not required). The last full results are in the entry above.
+
+## Draft entry — Checkpoint 2b: Goals, Exercises & Historical Progress (drafted by Claude Code; edit before submitting)
+**Date:** 2026-11-27
+**What I asked Claude Code to do:**
+- Plan Checkpoint 2b (goals, exercises, historical progress) from the approved product design; then, after reviewing the plan with my secondary reviewer, implement it as one phase with decisions D1–D16 and content corrections.
+
+**What it produced:**
+- A planning proposal with a CDC activity inventory; then the implementation: database version 3, My Goals, Exercises (three origins, three tracking methods, schedules up to 24 sessions a day), a count-up stopwatch and repetition counter, Browse Exercises with 153 CDC activities, Today's routine and the Home card, Personal progress and Progress over time, and legacy personal entry conversion and deletion.
+- Tests, screenshots (`docs/screenshots/checkpoint-2b/`), documentation and review records (`docs/reviews/CHECKPOINT_2B_*`).
+
+**What I corrected or redirected:** (to be completed by the owner) — the decisions D1–D16, including CDC reference ages instead of intervals with an intro for very young children, 1–24 sessions, a count-up stopwatch design, and the inventory corrections (frequency wording, materials, gender-neutral secondary fields, safety after adoption, no repetition).
+
+### Baseline (before any change; 2026-11-27)
+`53d6212`, Node 22.23.5: type check and build passed; **282 unit + 155 end-to-end = 437 passed**; database version 2.
+
+### Automated results (run by Claude Code in this conversation)
+Environment: Linux cloud container, Node 22.23.5, headless Chromium (Playwright; 390×844 phone project plus the desktop responsive project). Playwright retries are not enabled, so no failure was hidden by a retry. **No Safari, Mac, iPhone or Android testing was performed.**
+
+| Check | Run 1 | Run 2 | Run 3 |
+|---|---|---|---|
+| Type check | Passed | Passed | Passed |
+| Unit tests (17 files) | **360 passed** | **360 passed** | **360 passed** |
+| Production build (includes content validation) | Passed (JS 512.39 kB, 116.36 kB gzip) | Passed | Passed |
+| End-to-end tests | **201 passed** | **201 passed** | **201 passed** |
+| **Total** | **561 passed** | **561 passed** | **561 passed** |
+
+- **New:** 78 unit tests (schemaV3 9, personalGoals 10, exercises 20, stopwatchCharts 9, activities 22, legacyEntries 8) and 46 end-to-end tests (goals-exercises 12, goals-exercises-quality 33, one new upgrade test from a real build of `53d6212`).
+- **Changed intentionally:** 3 unit and 4 end-to-end tests (see `docs/reviews/CHECKPOINT_2B_IMPLEMENTATION_REPORT.md` §6). None removed.
+- **During development (before the final runs):** test defects and two confirmed defects in new code were found and fixed (challenges #35–#41). One intermittent failure was caused by a non-waiting assertion in a new test (fixed).
+- **Coverage notes:** accessibility (axe, WCAG 2.1 AA) on 14 new screens; colour contrast on the main new screens in all five themes; no horizontal overflow at 320 px on every new screen; offline creation and recording after caching; two open copies; simulated clocks for the stopwatch, midnight and clock anomalies.

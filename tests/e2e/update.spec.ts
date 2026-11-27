@@ -5,6 +5,7 @@
  * waits for the "new version" banner, taps Refresh, and checks the data.
  */
 import { expect, test } from '@playwright/test';
+import { seedLegacyPersonalEntry } from './helpers';
 import { execFileSync } from 'node:child_process';
 import { createServer, type Server } from 'node:http';
 import { readFile } from 'node:fs/promises';
@@ -19,6 +20,8 @@ const DEPLOYED_CHECKPOINT_1 = 'aa8c869352cdd734eafb0ed8b7219069d4457241';
 const ORIGINAL_CHECKPOINT_2A = '73d9f6fc356b3f792a9f71cc8f38ff421e13581d';
 /** The Checkpoint 2a Growth UX refinement, before the human acceptance refinements (R-004–R-008). */
 const GROWTH_UX_REFINEMENT = '170cc9911322c9aa7f4bb8c973dc6d62e07d549d';
+/** The accepted Checkpoint 2a baseline (Mac usability acceptance), database version 2. */
+const ACCEPTED_CHECKPOINT_2A = '53d6212d9a7d99854e7195df7979a9a5758b88de';
 
 const ROOT = join(process.cwd(), '.tmp-update-test');
 const PORT = 4190;
@@ -58,6 +61,11 @@ test.beforeAll(() => {
   execFileSync('sh', ['-c', `git archive ${GROWTH_UX_REFINEMENT} | tar -x -C "${uxSrc}"`]);
   symlinkSync(join(process.cwd(), 'node_modules'), join(uxSrc, 'node_modules'));
   execFileSync('npx', ['vite', 'build', '--outDir', join(ROOT, 'ux'), '--emptyOutDir'], { cwd: uxSrc, stdio: 'ignore' });
+  const accSrc = join(ROOT, 'acc-src');
+  mkdirSync(accSrc, { recursive: true });
+  execFileSync('sh', ['-c', `git archive ${ACCEPTED_CHECKPOINT_2A} | tar -x -C "${accSrc}"`]);
+  symlinkSync(join(process.cwd(), 'node_modules'), join(accSrc, 'node_modules'));
+  execFileSync('npx', ['vite', 'build', '--outDir', join(ROOT, 'acc'), '--emptyOutDir'], { cwd: accSrc, stdio: 'ignore' });
   server = createServer(async (req, res) => {
     const path = normalize(decodeURIComponent((req.url ?? '/').split('?')[0]!)).replace(/^(\.\.[/\\])+/, '');
     const file = join(ROOT, current, path.endsWith('/') ? `${path}index.html` : path);
@@ -165,7 +173,8 @@ test('updating from the previous approved version keeps all data and gives each 
   await page.getByRole('radio', { name: /Sample Child B/ }).click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'lavender'); // B unaffected
   const dbVersionAfter = await page.evaluate(() => new Promise<number>((r) => { const q = indexedDB.open('roll-crawl-run'); q.onsuccess = () => { r(q.result.version); q.result.close(); }; }));
-  expect(dbVersionAfter).toBe(2);
+  // Updated at Checkpoint 2b: the current version uses database version 3 (Decision D1; was 2).
+  expect(dbVersionAfter).toBe(3);
 });
 
 test('updating from the deployed Checkpoint 1 keeps profiles, photo, themes and settings, and milestone tracking works', async ({ page }) => {
@@ -275,8 +284,12 @@ test('updating from the original Checkpoint 2a keeps milestone records, history 
   await Promise.all([page.waitForEvent('load'), page.getByRole('button', { name: 'Refresh' }).click()]);
   await page.goto(`${base}#/growth`);
   await expect(page.getByTestId('section-subtitle').first()).toHaveText('See how far we’ve come.', { timeout: 20_000 }); // refined version running
-  expect(await dump()).toBe(before); // byte-identical records, events, personal versions and profile; same database version
+  // Updated at Checkpoint 2b: the database is upgraded to version 3 (D1). Records, events, personal versions
+  // and profile must still be byte-identical; only the version number differs.
+  const afterCp2a = JSON.parse(await dump());
   expect(JSON.parse(before).version).toBe(2);
+  expect(afterCp2a.version).toBe(3);
+  expect({ ...afterCp2a, version: 2 }).toEqual(JSON.parse(before));
   await page.goto(`${base}#/growth/progress`);
   await expect(page.getByTestId('progress-all').getByTestId('fraction')).toHaveText(progressBefore!);
   await page.goto(`${base}#/growth/library`);
@@ -412,8 +425,16 @@ test('updating from the Growth UX refinement (170cc99) keeps notes, observations
   await Promise.all([page.waitForEvent('load'), page.getByRole('button', { name: 'Refresh' }).click()]);
   await page.goto(`${base}#/growth/milestone/cdc22-m15-se-02`);
   await expect(page.getByTestId('notes-observations')).toBeVisible({ timeout: 20_000 }); // new version running
-  expect(await dump()).toBe(before); // every store byte-identical: nothing migrated, converted, merged or deleted
-  expect(JSON.parse(before).version).toBe(2);
+  // Updated at Checkpoint 2b: version 3 adds two empty stores (D1). Every existing store is byte-identical:
+  // nothing migrated, converted, merged or deleted.
+  const b0 = JSON.parse(before);
+  const a0 = JSON.parse(await dump());
+  expect(b0.version).toBe(2);
+  expect(a0.version).toBe(3);
+  expect([...a0.stores].sort()).toEqual([...b0.stores, 'itemEvents', 'trackerState'].sort());
+  for (const n of b0.stores) expect(a0[n], n).toEqual(b0[n]);
+  expect(a0.itemEvents).toEqual([]);
+  expect(a0.trackerState).toEqual([]);
 
   // Notes & Observations for A's milestone: the undated note is labelled honestly; dated entries keep their dates.
   const entries = page.getByTestId('entry');
@@ -472,4 +493,111 @@ test('updating from the Growth UX refinement (170cc99) keeps notes, observations
   await expect(page.getByTestId('entries')).toHaveCount(0);
   await page.goto(`${base}#/growth/library`);
   await expect(page.getByTestId('personal-entries')).toHaveCount(0);
+});
+
+test('updating from the accepted Checkpoint 2a (53d6212) upgrades to database version 3 and keeps every record; 2b features work', async ({ page }) => {
+  test.setTimeout(240_000);
+  current = 'acc';
+  const base = `http://localhost:${PORT}/`;
+  await page.clock.setFixedTime(new Date('2026-11-27T10:00:00'));
+  await page.goto(base);
+  await page.getByRole('button', { name: 'Get started' }).click();
+  await page.getByLabel('Date of birth').fill('2025-07-10');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByLabel('Name or nickname').fill('Sample Child A');
+  for (let i = 0; i < 3; i++) await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByRole('button', { name: 'Start using the app' }).click();
+  await expect(page.getByRole('heading', { name: 'Sample Child A' })).toBeVisible();
+  const saved = () => expect(page.getByTestId('saved')).toBeVisible();
+  const save = async (id: string, status: string, label: string, date: string) => {
+    await page.goto(`${base}#/growth/milestone/${id}`);
+    await page.getByRole('radio', { name: status }).click();
+    await page.getByLabel(label, { exact: true }).fill(date);
+    await page.getByRole('button', { name: 'Save status' }).click();
+    await saved();
+  };
+  await save('cdc22-m12-mp-03', 'Achieved', 'Date achieved', '2026-07-01');
+  await save('cdc22-m15-lc-01', 'Emerging', 'Date', '2026-10-01');
+  await page.goto(`${base}#/growth/milestone/cdc22-m15-se-02`);
+  await page.getByLabel('Note or observation').fill('Fictional accepted-2a observation');
+  await page.getByTestId('add-entry').click();
+  await saved();
+  await seedLegacyPersonalEntry(page, { title: 'Fictional legacy entry', derivedFromDefId: 'cdc22-m15-se-05', appCategory: 'social-emotional', referenceAgeMonths: 15 });
+  await page.goto(`${base}#/growth/progress`);
+  await expect(page.getByTestId('progress-all').getByTestId('fraction')).toHaveText(/^1 of \d+ achieved$/);
+  const progressBefore = await page.getByTestId('progress-all').getByTestId('fraction').textContent();
+  const byAreaBefore = await page.locator('[data-testid^="area-link-"]').allInnerTexts();
+  await page.goto(`${base}#/home`);
+  await expect(page.getByTestId('home-recent').locator('li')).toHaveCount(2);
+  const recentBefore = await page.getByTestId('home-recent').innerText();
+
+  const dump = () => page.evaluate(() => new Promise<string>((resolve) => {
+    const r = indexedDB.open('roll-crawl-run');
+    r.onsuccess = () => {
+      const names = [...r.result.objectStoreNames];
+      const tx = r.result.transaction(names, 'readonly');
+      const out: Record<string, unknown> = { version: r.result.version, stores: names };
+      for (const n of names) { const q = tx.objectStore(n).getAll(); q.onsuccess = () => { out[n] = JSON.parse(JSON.stringify(q.result, (_k, v) => (v instanceof Blob ? `blob:${v.size}` : v))); }; }
+      tx.oncomplete = () => { r.result.close(); resolve(JSON.stringify(out)); };
+    };
+  }));
+  const before = JSON.parse(await dump());
+  expect(before.version).toBe(2);
+  await page.evaluate(() => navigator.serviceWorker.ready);
+  await page.reload();
+  await expect.poll(() => page.evaluate(() => !!navigator.serviceWorker.controller)).toBe(true);
+
+  current = 'b';
+  await page.evaluate(async () => (await navigator.serviceWorker.getRegistration())?.update());
+  await expect(page.getByText('A new version is available.')).toBeVisible({ timeout: 20_000 });
+  await Promise.all([page.waitForEvent('load'), page.getByRole('button', { name: 'Refresh' }).click()]);
+  await page.goto(`${base}#/growth/goals`);
+  await expect(page.getByTestId('section-my-goals')).toBeVisible({ timeout: 20_000 }); // 2b running
+
+  const after = JSON.parse(await dump());
+  expect(after.version).toBe(3);
+  for (const n of before.stores) expect(after[n], n).toEqual(before[n]); // every existing record byte-identical
+  expect(after.itemEvents).toEqual([]);
+  expect(after.trackerState).toEqual([]);
+
+  // Existing milestone calculations and Home are unchanged.
+  await page.goto(`${base}#/growth/progress`);
+  await expect(page.getByTestId('progress-all').getByTestId('fraction')).toHaveText(progressBefore!);
+  expect(await page.locator('[data-testid^="area-link-"]').allInnerTexts()).toEqual(byAreaBefore);
+  await page.goto(`${base}#/home`);
+  await expect.poll(() => page.getByTestId('home-recent').innerText()).toBe(recentBefore);
+  await page.goto(`${base}#/growth/milestone/cdc22-m15-se-02`);
+  await expect(page.getByTestId('entries')).toContainText('Fictional accepted-2a observation');
+
+  // New features work on the upgraded data.
+  await page.goto(`${base}#/growth/goals/new`);
+  await page.getByLabel('Goal name').fill('Fictional upgraded goal');
+  await page.getByTestId('save-goal').click();
+  await expect(page.getByTestId('goal-title')).toHaveText('Fictional upgraded goal');
+  await page.goto(`${base}#/growth/exercises/new`);
+  await page.getByLabel('Exercise name').fill('Fictional upgraded exercise');
+  await page.getByTestId('rule-daily').click();
+  await page.getByTestId('save-exercise').click();
+  await expect(page.getByTestId('exercise-title')).toHaveText('Fictional upgraded exercise');
+  await page.goto(`${base}#/growth/exercises`);
+  await page.getByTestId('routine-complete').click();
+  await expect(page.getByTestId('daily-count')).toHaveText('1 of 1 session done');
+  await page.goto(`${base}#/home`);
+  await expect.poll(() => page.getByTestId('home-recent').innerText()).toBe(recentBefore); // personal history never appears in Recent milestones
+
+  // The legacy entry is still there, and can be moved to My Goals explicitly.
+  await page.goto(`${base}#/growth/library`);
+  await page.getByRole('button', { name: /Your personal entries \(1\)/ }).click();
+  await page.getByTestId('personal-entry-row').click();
+  await page.getByTestId('manage-legacy').locator('summary').click();
+  await page.getByTestId('move-to-goals').click();
+  await expect(page.getByTestId('move-preview')).toContainText('goal you’re working toward');
+  await page.getByTestId('confirm-move').click();
+  await expect(page.getByTestId('goal-title')).toHaveText('Fictional legacy entry');
+  await expect(page.getByTestId('goal-dates')).toHaveText('Start date not recorded');
+  await page.goto(`${base}#/growth/library`);
+  await expect(page.getByTestId('personal-entries')).toHaveCount(0);
+  await page.goto(`${base}#/growth/progress`);
+  await expect(page.getByTestId('progress-all').getByTestId('fraction')).toHaveText(progressBefore!);
+  await expect(page.getByTestId('pp-active')).toHaveText('2');
 });

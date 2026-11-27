@@ -221,7 +221,7 @@ function PersonalEntries({ items, recordFor, onOpen }: { items: readonly Persona
     <div class="card section" style={{ padding: 0, overflow: 'hidden' }} data-testid="personal-entries">
       <Accordion title={`Your personal entries (${items.length})`} summary="Added with an earlier version of the app" variant="subtle" level={2} testId="acc-personal-entries">
         <div class="stack small">
-          <p class="muted">These are kept just as you left them, and they aren’t counted in Progress. You can still open, update or hide them. New personal goals and activities will have their own place in Goals & Exercises, coming soon.</p>
+          <p class="muted">These are kept just as you left them, and they aren’t counted in Progress. You can still open, update or hide them, move them to My Goals, or delete them. New personal goals and achievements live in My Goals (Goals & Exercises).</p>
           <ul class="ms-list" onClickCapture={onOpen}>
             {items.map((p) => {
               const rec = recordFor(p.id);

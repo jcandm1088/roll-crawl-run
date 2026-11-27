@@ -287,3 +287,35 @@ Still applicable: **H1–H5, H7–H9, H11, H13–H18** from the previous checkli
   - offline editing on a device;
   - manual verification of an upgrade with legacy data;
   - the update from the deployed version (H18; needs an authorized deployment).
+
+## Checkpoint 2b — human acceptance checklist (GE1–GE24)
+Record only actual results. **Mac** = local production build in Safari (`npm ci && npm run build && npx vite preview`). **iPhone** = needs a deployment or a local-network test the owner sets up. Use fictional data. Before starting, keep the Checkpoint 2a data you already have (it exercises the upgrade).
+
+| # | Check | Where | Result | Date | Notes |
+|---|---|---|---|---|---|
+| GE1 | Upgrade: open the 2b build on the browser that has your 2a data. Milestones, notes, Progress figures, themes and photos are unchanged | Mac | | | |
+| GE2 | Growth still shows Progress, Milestone Library, Goals & Exercises, What to Expect in that order; Goals & Exercises now opens My Goals and Exercises | Mac | | | |
+| GE3 | My Goals: create a goal with just a name; it appears under Working toward. No bars or percentages | Mac | | | |
+| GE4 | Mark it accomplished with a past date; correct the date; reopen it; archive it; delete it (two steps) | Mac | | | |
+| GE5 | Record an achievement without a goal; no start date appears anywhere; it shows under Accomplishments | Mac | | | |
+| GE6 | Inspiration: start a goal from a milestone; the milestone's status in the Library doesn't change. The example ideas are labelled as app-written | Mac | | | |
+| GE7 | Create a simple exercise (every day, 2 sessions), a stopwatch exercise and a repetitions exercise “from a doctor or specialist” | Mac | | | |
+| GE8 | Today's routine: tap Done, Undo, Done again; the bar matches; “+” records an additional session without passing 100% | Mac | | | |
+| GE9 | Stopwatch: Start, Pause, Resume, Reset; with no target; with a target it shows a gentle “Target reached” and keeps counting; Save records the time shown | Mac | | | |
+| GE10 | Stopwatch running: switch to another app or tab for a minute, come back: the time is right. Close and reopen the app: the recovery notice offers Keep running / Pause / Enter duration manually | Mac, iPhone | | | |
+| GE11 | Counter: −1 stops at 0; reload mid-count keeps the count; target prompts without saving | Mac | | | |
+| GE12 | Exercise page: record a past session; correct a session's value and date; remove and restore it | Mac | | | |
+| GE13 | Change a schedule after recording sessions today: today's sessions are kept; yesterday's history is unchanged; pause and resume work | Mac | | | |
+| GE14 | 24 sessions a day: the routine shows a count, not 24 controls | Mac | | | |
+| GE15 | Browse Exercises opens at the child's most recent CDC age, all areas collapsed; empty areas say so; All ages works | Mac | | | |
+| GE16 | A child under 2 months (or before the due date) gets the calm intro instead of a default age | Mac | | | |
+| GE17 | Tummy time activity: safety sentences highlighted; add it; change its instructions: it says “Adapted by you”, and CDC's original and safety are still shown, including in the stopwatch | Mac | | | |
+| GE18 | Home shows Today's exercises only on days with scheduled sessions, with the same numbers as Exercises; View today's routine goes straight there | Mac | | | |
+| GE19 | Progress: existing cards unchanged; Personal progress counts are right; Progress over time shows Milestones, Goals, Exercises, 6 months and 1 year, and the table | Mac | | | |
+| GE20 | A legacy personal entry (from earlier testing): Move to My Goals keeps its notes; another: Delete permanently; Progress unchanged | Mac | | | |
+| GE21 | Second child: nothing from the first child appears; each keeps its own theme | Mac | | | |
+| GE22 | All five themes: the new pages read well | Mac | | | |
+| GE23 | iPhone: one-handed use of Done, Start/Pause, +1 and Save is comfortable; nothing overflows | iPhone | | | |
+| GE24 | iPhone, airplane mode after install: create a goal and an exercise, record a session, relaunch: everything is there | iPhone | | | |
+
+Automated coverage for these items is listed in `docs/BUILD_LOG.md` (Checkpoint 2b entry). Physical-device behaviour (GE10 on iPhone, GE23, GE24) can only be confirmed by hand.

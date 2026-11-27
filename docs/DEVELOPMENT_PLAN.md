@@ -1,6 +1,8 @@
 # Development Plan — Roll, Crawl, RUN: Tracking Growth Together (Revision 2)
 
-> **Current status (2026-11-26):** Checkpoint 1 is completed, accepted and deployed (`e40287f`). Checkpoint 2a, including the Growth UX refinement (R11), is implemented and awaiting the owner's acceptance testing (see R9–R11); it is preserved on the remote branch `checkpoint-2a` (`73d9f6f`), not merged into `main` and not deployed. Checkpoint 2b and Checkpoints 3–6 are planned and not started. The current-state handoff is `docs/HANDOFF.md`.
+> **Current status (2026-11-27):** Checkpoint 1 is completed, accepted and deployed (`e40287f`). Checkpoint 2a is accepted for Mac usability (physical iPhone acceptance pending); not merged, not deployed. Checkpoint 2b (R13) is implemented locally and awaiting the owner's acceptance; not pushed, merged or deployed. Checkpoints 3–6 are planned and not started. The current-state handoff is `docs/HANDOFF.md`.
+>
+> *Previous status line (2026-11-26, kept as recorded):* Checkpoint 2a, including the Growth UX refinement (R11), was implemented and awaiting the owner's acceptance testing.
 >
 > *Historical status at the end of Checkpoint 1 (kept as recorded):*
 > - Checkpoint 1 is implemented, **accepted** after the owner's Mac Safari testing, and **deployed** at https://jcandm1088.github.io/roll-crawl-run/ (repository: https://github.com/jcandm1088/roll-crawl-run).
@@ -29,6 +31,23 @@
 **Checkpoint 1 build list:** scaffold (Vite/TS/Preact, Vitest, Playwright); fonts self-hosted (fetched from npm `@fontsource` packages, OFL); icon/wordmark (SVG → PNG sizes generated with Playwright); design tokens + 5 themes + contrast test; app shell (top bar with child chip + settings, bottom nav, hash router); placeholder tabs clearly labeled "Coming in a later checkpoint"; onboarding (DOB, name/photo, corrected age, theme, privacy); profiles create/edit/switch/delete (typed confirmation; backup purge option present but backups feature labeled pending); age domain (chronological + corrected with safeguards); IndexedDB schema v1 for all planned stores with logical-key indexes and atomic transaction helper; repositories for meta/settings/children/photos; storage-persistence status; privacy disclosures in Settings; manifest + basic service worker (precache, update banner); unit + e2e tests; mobile screenshots via Playwright at deviceScaleFactor 2; docs skeletons (README, BUILD_LOG template, TESTING_CHECKLIST, KNOWN_LIMITATIONS, DECISIONS, SOURCE_REGISTER). Code lives in `/home/user/roll-crawl-run` (git init locally; no push until you provide the remote).
 
 ---
+
+## R13 — Checkpoint 2b: Goals, Exercises & Historical Progress (implemented; awaiting owner acceptance) — supersedes conflicting §4.3, §6.5–6.7, R9 and R11 text
+**Authorization:** owner implementation authorization of 2026-11-27 (D1–D16 with modifications). Plan: `docs/reviews/CHECKPOINT_2B_IMPLEMENTATION_PLAN.md`. Decisions #89–#106.
+
+**Built (one implementation phase):**
+- **Goals & Exercises** is live: My Goals (“Set personal goals and celebrate achievements.”) and Exercises (“Discover activities and build your own routines.”) as separate pages.
+- **My Goals:** Create a goal · Record an achievement · Working toward · Accomplishments · Looking for inspiration? Goals (name, area, start, optional target as the parent's plan, description, Notes & Observations, related milestone, related exercises; accomplish, correct date, reopen, archive, delete) and standalone achievements (no goal or start date is created). No bars, percentages or streaks.
+- **Exercises:** Create exercise · Browse Exercises · Today's routine · My exercises. Origins: CDC activity tips (provenance kept), the parent's own, a doctor's or specialist's instructions entered by the parent. Tracking: simple, count-up stopwatch, repetitions. Schedules: as needed, every day, selected days, 1–24 sessions per scheduled day; versioned from today; pause/resume; archive; delete. Sessions: record, undo, correct, move, backdate, additional sessions.
+- **Browse Exercises:** CDC's 12 ages plus All ages, five collapsed area accordions, activity pages with CDC wording (gender-neutral), purpose, highlighted safety, page guidance, materials, source and original wording.
+- **Today's routine** and the conditional **Home card** (same calculation).
+- **Progress:** unchanged, plus a Personal progress card (accomplishments, active goals, sessions this month) and **Progress over time** (Milestones / Goals / Exercises; 6 months or 1 year; text table).
+- **Legacy personal entries:** Move to My Goals or Delete permanently, on request only.
+- **Database version 3** (additive), blocked-upgrade notices.
+
+**Unchanged:** the four Growth destinations and order; Home (apart from the card), Milestone Library, What to Expect, Calendar, Journal, Resources, Settings, onboarding and profiles; milestone ids, content, calculations and the Progress denominator; themes, typography and navigation; no new dependencies, no AI, services, accounts or analytics.
+
+**Not done (out of scope):** Calendar integration, reminders and clock times (Checkpoint 3); sharing and backups (Checkpoint 5); R-001, R-003, R-009.
 
 ## R12 — Checkpoint 2a human acceptance refinements (implemented; awaiting owner acceptance) — supersedes conflicting R9 and R11 text
 **Why:** the owner's hands-on review of the Growth UX refinement (`170cc99`) found five usability improvements, **R-004 to R-008**. That build had passed all **387 automated tests** (252 unit, 135 end-to-end) in three consecutive runs. The tests verified the specification; the owner judged how it felt to a parent.

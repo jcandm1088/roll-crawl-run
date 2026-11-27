@@ -50,10 +50,20 @@ Every developmental or medical item in the app must trace to a row here. Before 
 
 **Excluded sources (owner decision, Checkpoint 2a):** AAP and HealthyChildren.org content is excluded, because AAP's terms restrict automated access and AI use. Those domains were removed from the development environment. Pathways.org may not be collected or analyzed until its terms are reviewed and approved.
 
+**Recommended activities (Checkpoint 2b, 2026-11-27):**
+- **Source:** the same 12 registered pages (`cdc-ltsae-2-months` … `cdc-ltsae-5-years`), section “Tips and activities — What you can do for your [age]” (content last reviewed May 15, 2026; last updated May 16, 2026; unchanged from the 2a register). No new source was added.
+- **Reuse review first:** CDC “Use of Agency Materials” was re-read on 2026-11-27 before retrieval (last reviewed Oct 28, 2026; conditions 1–4, new-window links and the logo restriction unchanged).
+- **Retrieval:** 2026-11-27, headless Chromium, text only (no images, videos, PDFs or logos); copies kept only in the session scratchpad, not in the repository. No AAP, HealthyChildren or Pathways.org content was accessed.
+- **Content used:** 162 of the 255 tips, grouped into 153 activities; exact CDC wording kept (`src/content/activities.cdc-2022.json`, locked by `activity-ids.lock.json`, validated at build time). Full record: `docs/reviews/CHECKPOINT_2B_ACTIVITY_INVENTORY.md`.
+- **Adaptations (disclosed, original viewable):** gender-neutral pronouns and agreement (D4, following the owner's #86 reasoning), including CDC's page guidance; one typographical correction (“helps you child” → “helps your child”).
+- **App-created (labelled):** titles, app areas, grouping, materials phrases, sentence roles, safety-sensitive flag.
+- **Attribution as implemented:** a source note on Browse; on every activity page the CDC page link (new window), review date, non-endorsement, free availability and the original wording; adopted exercises keep “From CDC's activity tips” only while the instructions are unedited (“Adapted by you from a CDC activity” afterwards, with CDC's original and safety still available).
+- **Goal inspiration ideas** are eight app-written examples, labelled as not CDC recommendations (no source claimed).
+
 ## Pending verification
 | Planned source | For | Status |
 |---|---|---|
-| CDC "Learn the Signs. Act Early." tips and activities (per age page) | Checkpoint 2b supporting activities (owner-approved source) | Not yet extracted — the pages are accessible; extraction is deferred to 2b |
+| CDC "Learn the Signs. Act Early." tips and activities (per age page) | Checkpoint 2b supporting activities (owner-approved source) | **Done at Checkpoint 2b** — see “Recommended activities” below |
 | AAP HealthyChildren.org, "Corrected Age for Preemies" | — | **Excluded** (AAP terms). Its content is not used. The app describes only the corrected-age arithmetic |
 | AAP/Bright Futures periodicity schedule | Checkpoint 3 well-child references | **Blocked by the AAP exclusion** — needs an owner decision before Checkpoint 3 |
 | CDC/ACIP child immunization schedule | Checkpoint 3 vaccination references | Not yet retrieved |

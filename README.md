@@ -2,12 +2,14 @@
 
 A private, local-first, installable web app (PWA) that helps parents document their child's development, appointments, and reflections. It runs entirely in the browser: no account, no server, no analytics, and no AI.
 
-> **Status (2026-11-26):**
+> **Status (2026-11-27):**
 > - **Checkpoint 1 — completed, accepted and deployed.** Live app: https://jcandm1088.github.io/roll-crawl-run/ (deployed commit `e40287f`). Repository: https://github.com/jcandm1088/roll-crawl-run.
-> - **Checkpoint 2a — implemented, awaiting the owner's acceptance testing.** Verified CDC milestone tracking, refined after the owner's first hands-on review: Growth with Progress (review), the Milestone Library (record; 159 CDC milestones), Goals & Exercises (coming soon) and What to Expect at Every Age (a read-only guide), plus milestone history and one Notes & Observations section per milestone. A second owner review led to the human acceptance refinements (gender-neutral wording, plainer language, no personal-version creation, the age-settings link). The original 2a commit is on `checkpoint-2a` (`73d9f6f`); the Growth UX refinement is on `claude/beautiful-allen-1vjobt` (`170cc99`); the acceptance refinements are a local commit. **Not** merged into `main` and **not** deployed.
-> - **Planned, not started:** Checkpoint 2b (Goals & Exercises, charts) and Checkpoints 3–6 (Calendar, Journal, Resources, backups and sharing, reports). These appear in the app as labeled placeholders.
+> - **Checkpoint 2a** (history): Verified CDC milestone tracking, refined after the owner's first hands-on review: Growth with Progress (review), the Milestone Library (record; 159 CDC milestones), Goals & Exercises (coming soon) and What to Expect at Every Age (a read-only guide), plus milestone history and one Notes & Observations section per milestone. A second owner review led to the human acceptance refinements (gender-neutral wording, plainer language, no personal-version creation, the age-settings link). The original 2a commit is on `checkpoint-2a` (`73d9f6f`); the Growth UX refinement is on `claude/beautiful-allen-1vjobt` (`170cc99`); the acceptance refinements are a local commit. **Not** merged into `main` and **not** deployed.
+> - **Checkpoint 2a accepted for Mac usability (2026-11-27);** physical iPhone acceptance pending.
+> - **Checkpoint 2b — implemented locally, awaiting the owner's acceptance.** Goals & Exercises: My Goals (personal goals and standalone achievements, inspiration), Exercises (CDC activity tips, the parent's own and provider-directed exercises; simple, stopwatch and repetition tracking; schedules up to 24 sessions a day; Today's routine and a Home card), a Personal progress summary and Progress over time charts, and optional conversion or deletion of legacy personal entries. Database version 3. Not pushed, merged or deployed; tested only in headless Chromium.
+> - **Planned, not started:** Checkpoints 3–6 (Calendar, Journal, Resources, backups and sharing, reports). These appear in the app as labeled placeholders.
 > - **Owner's hands-on testing (Checkpoint 1):** Mac Safari acceptance passed. On a physical iPhone, Home Screen install, later launches, local persistence, and offline launch and navigation passed. The first iPhone load showed a one-time “server not responding” delay whose cause has not been established. Checkpoint 2a has **not** yet been tested in Safari or on an iPhone.
-> - **Automated tests:** 252 unit and 135 end-to-end tests (headless Chromium) after the Growth UX refinement; 228 and 111 at the original Checkpoint 2a; 185 and 80 at Checkpoint 1.
+> - **Automated tests:** see `docs/BUILD_LOG.md` for Checkpoint 2b results. Earlier: 282 unit and 155 end-to-end at the accepted 2a; 252 unit and 135 end-to-end tests (headless Chromium) after the Growth UX refinement; 228 and 111 at the original Checkpoint 2a; 185 and 80 at Checkpoint 1.
 > - **Current state and next steps:** `docs/HANDOFF.md`.
 
 ## Important limitations
@@ -60,8 +62,8 @@ The app uses relative paths and hash routes, so it works at `https://<username>.
 ## Project structure
 
 ```
-src/domain/      pure, deterministic logic (dates, age, intervals, contrast)
-src/content/     bundled, versioned CDC milestone content, source register, locked IDs, guide text
+src/domain/      pure, deterministic logic (dates, age, intervals, schedules, stopwatch, charts, contrast)
+src/content/     bundled, versioned CDC milestone and activity content, source register, locked IDs, guide text
 src/data/        IndexedDB schema, transactions, repositories (only layer touching storage)
 src/state/       app state and theme application
 src/ui/          components, screens, styles, theme tokens

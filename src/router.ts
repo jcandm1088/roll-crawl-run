@@ -21,6 +21,25 @@ export type Route =
   | { name: 'growthLibrary'; preset: LibraryPreset | null }
   | { name: 'growthAbout' }
   | { name: 'growthMilestone'; key: string }
+  // Checkpoint 2b — Goals & Exercises and Progress over time
+  | { name: 'goals' }
+  | { name: 'myGoals' }
+  /** Prefill from inspiration: a milestone to start from, or an idea number. */
+  | { name: 'goalNew'; milestone?: string; idea?: number }
+  | { name: 'achievementNew' }
+  | { name: 'goalItem'; id: string }
+  | { name: 'goalEdit'; id: string }
+  | { name: 'goalIdeas' }
+  /** focus 'today': open with Today's routine in view (Home shortcut). */
+  | { name: 'exercises'; focus?: 'today' }
+  /** activity: adopting a recommended activity. */
+  | { name: 'exerciseNew'; activity?: string }
+  /** age: a CDC reference age in months, 'all', or null for the child's default. */
+  | { name: 'exerciseBrowse'; age: number | 'all' | null }
+  | { name: 'activity'; id: string }
+  | { name: 'exerciseItem'; id: string }
+  | { name: 'exerciseEdit'; id: string }
+  | { name: 'progressHistory'; view: 'milestones' | 'goals' | 'exercises' }
   | { name: 'calendar' }
   | { name: 'journal' }
   | { name: 'resources' }
@@ -42,7 +61,12 @@ export function parseHash(hash: string): Route {
     case 'home':
       return { name: 'home' };
     case 'growth':
-      if (b === 'progress') return { name: 'growthProgress' };
+      if (b === 'progress') {
+        if (parts[2] === 'history') return { name: 'progressHistory', view: parts[3] === 'goals' || parts[3] === 'exercises' ? parts[3] : 'milestones' };
+        return { name: 'growthProgress' };
+      }
+      if (b === 'goals') return parseGoals(parts.slice(2));
+      if (b === 'exercises') return parseExercises(parts.slice(2));
       if (b === 'library') {
         const view = parts[2];
         const area = parts[3];
@@ -76,8 +100,68 @@ export function parseHash(hash: string): Route {
   }
 }
 
+const dec = (v: string) => { try { return decodeURIComponent(v); } catch { return v; } };
+
+function parseGoals(p: string[]): Route {
+  const [c, d, e] = p;
+  if (c === undefined) return { name: 'goals' };
+  if (c === 'my') return { name: 'myGoals' };
+  if (c === 'ideas') return { name: 'goalIdeas' };
+  if (c === 'new') {
+    if (d === 'milestone' && e) return { name: 'goalNew', milestone: dec(e) };
+    if (d === 'idea' && e && /^\d+$/.test(e)) return { name: 'goalNew', idea: Number(e) };
+    return { name: 'goalNew' };
+  }
+  if (c === 'achievement' && d === 'new') return { name: 'achievementNew' };
+  if (c === 'item' && d) return e === 'edit' ? { name: 'goalEdit', id: dec(d) } : { name: 'goalItem', id: dec(d) };
+  return { name: 'goals' };
+}
+
+function parseExercises(p: string[]): Route {
+  const [c, d, e] = p;
+  if (c === undefined) return { name: 'exercises' };
+  if (c === 'today') return { name: 'exercises', focus: 'today' };
+  if (c === 'new') return d ? { name: 'exerciseNew', activity: dec(d) } : { name: 'exerciseNew' };
+  if (c === 'browse') {
+    if (d === 'all') return { name: 'exerciseBrowse', age: 'all' };
+    const n = d === undefined ? null : Number(d);
+    return { name: 'exerciseBrowse', age: n !== null && Number.isInteger(n) && n > 0 && n <= 60 ? n : null };
+  }
+  if (c === 'activity' && d) return { name: 'activity', id: dec(d) };
+  if (c === 'item' && d) return e === 'edit' ? { name: 'exerciseEdit', id: dec(d) } : { name: 'exerciseItem', id: dec(d) };
+  return { name: 'exercises' };
+}
+
 export function href(route: Route): string {
   switch (route.name) {
+    case 'goals':
+      return '#/growth/goals';
+    case 'myGoals':
+      return '#/growth/goals/my';
+    case 'goalNew':
+      return route.milestone ? `#/growth/goals/new/milestone/${encodeURIComponent(route.milestone)}` : route.idea !== undefined ? `#/growth/goals/new/idea/${route.idea}` : '#/growth/goals/new';
+    case 'achievementNew':
+      return '#/growth/goals/achievement/new';
+    case 'goalItem':
+      return `#/growth/goals/item/${encodeURIComponent(route.id)}`;
+    case 'goalEdit':
+      return `#/growth/goals/item/${encodeURIComponent(route.id)}/edit`;
+    case 'goalIdeas':
+      return '#/growth/goals/ideas';
+    case 'exercises':
+      return route.focus === 'today' ? '#/growth/exercises/today' : '#/growth/exercises';
+    case 'exerciseNew':
+      return route.activity ? `#/growth/exercises/new/${encodeURIComponent(route.activity)}` : '#/growth/exercises/new';
+    case 'exerciseBrowse':
+      return route.age === null ? '#/growth/exercises/browse' : `#/growth/exercises/browse/${route.age}`;
+    case 'activity':
+      return `#/growth/exercises/activity/${encodeURIComponent(route.id)}`;
+    case 'exerciseItem':
+      return `#/growth/exercises/item/${encodeURIComponent(route.id)}`;
+    case 'exerciseEdit':
+      return `#/growth/exercises/item/${encodeURIComponent(route.id)}/edit`;
+    case 'progressHistory':
+      return `#/growth/progress/history/${route.view}`;
     case 'privacy':
     case 'storage':
     case 'install':

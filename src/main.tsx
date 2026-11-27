@@ -6,7 +6,7 @@ import '@fontsource/inter/latin-400.css';
 import '@fontsource/inter/latin-500.css';
 import '@fontsource/inter/latin-600.css';
 import './ui/styles/base.css';
-import { AppProvider } from './state/app';
+import { AppProvider, type StorageNotice } from './state/app';
 import { App } from './app';
 import { AppMark } from './ui/components/Brand';
 import { registerServiceWorker } from './sw/register';
@@ -36,8 +36,32 @@ function StorageError({ message }: { message: string }) {
   );
 }
 
+/** An update is waiting for (or was taken over by) another open copy of the app. Nothing is reset or lost. */
+function StorageNoticeView({ notice }: { notice: StorageNotice }) {
+  return (
+    <div class="onboarding">
+      <div class="onboarding-body stack-lg" data-testid="storage-notice" data-notice={notice}>
+        <AppMark size={64} />
+        {notice === 'blocked' ? (
+          <>
+            <h1 class="title-1">Almost ready</h1>
+            <p class="muted">Roll, Crawl, RUN is finishing an update, but it’s still open in another window or tab.</p>
+            <p class="small muted">Please close the other copies of the app. This page will continue by itself. Your information is safe and nothing has been changed.</p>
+          </>
+        ) : (
+          <>
+            <h1 class="title-1">A newer version is open</h1>
+            <p class="muted">The app was updated in another window or tab, so this copy has paused to keep your information safe.</p>
+            <button type="button" class="btn btn-primary btn-block" onClick={() => window.location.reload()}>Reload</button>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 render(
-  <AppProvider fallback={<Loading />} errorView={(m) => <StorageError message={m} />}>
+  <AppProvider fallback={<Loading />} errorView={(m) => <StorageError message={m} />} noticeView={(n) => <StorageNoticeView notice={n} />}>
     <App />
   </AppProvider>,
   document.getElementById('app')!,
