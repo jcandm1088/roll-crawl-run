@@ -14,17 +14,7 @@ interface TabInfo {
   items: Array<[IconName, string, string]>;
 }
 
-const TABS: Record<'calendar' | 'journal' | 'resources', TabInfo> = {
-  calendar: {
-    title: 'Calendar',
-    intro: 'Your family’s appointments and routines in one place.',
-    checkpoint: 3,
-    items: [
-      ['calendar', 'This month at a glance', 'The Calendar tab will open straight to the current month, with today highlighted and upcoming events below.'],
-      ['clock', 'Repeating events', 'Daily, weekly, and monthly routines.'],
-      ['shield', 'Checkup and vaccine schedules', 'Optional general schedules for reference — never a substitute for your provider’s plan.'],
-    ],
-  },
+const TABS: Record<'journal' | 'resources', TabInfo> = {
   journal: {
     title: 'Journal',
     intro: 'A private space for your thoughts, and notes to share with your child’s care team.',

@@ -1,0 +1,349 @@
+{
+  "contentVersion": "cdc-child-schedule-2025-07-02.app-1",
+  "schedule": {
+    "organization": "CDC",
+    "title": "Recommended Immunizations for Birth Through 6 Years Old, United States, 2025",
+    "pageTitle": "Recommended Vaccines for Young Children",
+    "scheduleDate": "2025-07-02",
+    "retrieved": "2026-11-27",
+    "currencyChecked": "2026-11-27"
+  },
+  "sources": [
+    {
+      "id": "cdc-imz-child-easyread",
+      "role": "display",
+      "title": "Recommended Vaccines for Young Children",
+      "url": "https://www.cdc.gov/vaccines/imz-schedules/child-easyread.html"
+    },
+    {
+      "id": "cdc-imz-child-age",
+      "role": "cross-check",
+      "title": "Child and Adolescent Immunization Schedule by Age",
+      "url": "https://www.cdc.gov/vaccines/hcp/imz-schedules/child-adolescent-age.html"
+    },
+    {
+      "id": "cdc-imz-child-notes",
+      "role": "cross-check",
+      "title": "Child Immunization Schedule Notes",
+      "url": "https://www.cdc.gov/vaccines/hcp/imz-schedules/child-adolescent-notes.html"
+    },
+    {
+      "id": "cdc-imz-child-addendum",
+      "role": "cross-check",
+      "title": "Child Immunization Schedule Addendum",
+      "url": "https://www.cdc.gov/vaccines/hcp/imz-schedules/child-adolescent-addendum.html"
+    }
+  ],
+  "vaccines": [
+    { "id": "hepb", "label": "Hepatitis B" },
+    { "id": "rv", "label": "Rotavirus" },
+    { "id": "dtap", "label": "DTaP" },
+    { "id": "hib", "label": "Hib" },
+    { "id": "pcv", "label": "Pneumococcal" },
+    { "id": "ipv", "label": "Polio" },
+    { "id": "mmr", "label": "MMR" },
+    { "id": "var", "label": "Chickenpox" },
+    { "id": "hepa", "label": "Hepatitis A" }
+  ],
+  "references": [
+    {
+      "id": "cdc25-hepb-1",
+      "vaccine": "hepb",
+      "dose": "Dose 1",
+      "age": { "kind": "birth" },
+      "ageLabel": "Birth",
+      "cdcCell": "Dose 1",
+      "cdcColumns": ["Birth"],
+      "qualification": "CDC’s notes for health care providers describe different timing for babies who weigh less than 2,000 grams at birth, and different care when the mother has, or may have, hepatitis B. The birth hospital and your child’s provider decide this."
+    },
+    {
+      "id": "cdc25-hepb-2",
+      "vaccine": "hepb",
+      "dose": "Dose 2",
+      "age": { "kind": "range", "fromMonths": 1, "throughMonths": 2 },
+      "ageLabel": "1–2 months",
+      "cdcCell": "Dose 2",
+      "cdcColumns": ["1 Month", "2 Months"]
+    },
+    {
+      "id": "cdc25-hepb-3",
+      "vaccine": "hepb",
+      "dose": "Dose 3",
+      "age": { "kind": "range", "fromMonths": 6, "throughMonths": 18 },
+      "ageLabel": "6–18 months",
+      "cdcCell": "Dose 3",
+      "cdcColumns": ["6 Months", "7 Months", "8 Months", "12 Months", "15 Months", "18 Months"],
+      "qualification": "CDC’s notes for health care providers say a fourth dose is permitted when a combination vaccine is used after the birth dose."
+    },
+    {
+      "id": "cdc25-rv-1",
+      "vaccine": "rv",
+      "dose": "Dose 1",
+      "age": { "kind": "single", "months": 2 },
+      "ageLabel": "2 months",
+      "cdcCell": "Dose 1",
+      "cdcColumns": ["2 Months"],
+      "qualification": "CDC’s notes for health care providers say this series should not be started at or after age 15 weeks, 0 days."
+    },
+    {
+      "id": "cdc25-rv-2",
+      "vaccine": "rv",
+      "dose": "Dose 2",
+      "age": { "kind": "single", "months": 4 },
+      "ageLabel": "4 months",
+      "cdcCell": "Dose 2",
+      "cdcColumns": ["4 Months"],
+      "qualification": "The series has two or three doses, depending on the vaccine used. CDC’s notes for health care providers say the maximum age for the final dose is 8 months, 0 days."
+    },
+    {
+      "id": "cdc25-dtap-1",
+      "vaccine": "dtap",
+      "dose": "Dose 1",
+      "age": { "kind": "single", "months": 2 },
+      "ageLabel": "2 months",
+      "cdcCell": "Dose 1",
+      "cdcColumns": ["2 Months"]
+    },
+    {
+      "id": "cdc25-dtap-2",
+      "vaccine": "dtap",
+      "dose": "Dose 2",
+      "age": { "kind": "single", "months": 4 },
+      "ageLabel": "4 months",
+      "cdcCell": "Dose 2",
+      "cdcColumns": ["4 Months"]
+    },
+    {
+      "id": "cdc25-dtap-3",
+      "vaccine": "dtap",
+      "dose": "Dose 3",
+      "age": { "kind": "single", "months": 6 },
+      "ageLabel": "6 months",
+      "cdcCell": "Dose 3",
+      "cdcColumns": ["6 Months"]
+    },
+    {
+      "id": "cdc25-dtap-4",
+      "vaccine": "dtap",
+      "dose": "Dose 4",
+      "age": { "kind": "range", "fromMonths": 15, "throughMonths": 18 },
+      "ageLabel": "15–18 months",
+      "cdcCell": "Dose 4",
+      "cdcColumns": ["15 Months", "18 Months"]
+    },
+    {
+      "id": "cdc25-dtap-5",
+      "vaccine": "dtap",
+      "dose": "Dose 5",
+      "age": { "kind": "range", "fromMonths": 48, "throughMonths": 83 },
+      "ageLabel": "4–6 years",
+      "cdcCell": "Dose 5",
+      "cdcColumns": ["4-6 Years"]
+    },
+    {
+      "id": "cdc25-hib-1",
+      "vaccine": "hib",
+      "dose": "Dose 1",
+      "age": { "kind": "single", "months": 2 },
+      "ageLabel": "2 months",
+      "cdcCell": "Dose 1",
+      "cdcColumns": ["2 Months"]
+    },
+    {
+      "id": "cdc25-hib-2",
+      "vaccine": "hib",
+      "dose": "Dose 2",
+      "age": { "kind": "single", "months": 4 },
+      "ageLabel": "4 months",
+      "cdcCell": "Dose 2",
+      "cdcColumns": ["4 Months"]
+    },
+    {
+      "id": "cdc25-hib-booster",
+      "vaccine": "hib",
+      "dose": "Dose 3 or 4",
+      "age": { "kind": "range", "fromMonths": 12, "throughMonths": 15 },
+      "ageLabel": "12–15 months",
+      "cdcCell": "Dose 4",
+      "cdcColumns": ["12 Months", "15 Months"],
+      "qualification": "CDC’s schedule for parents labels this “Dose 4”. Its schedule for health care providers says “3rd or 4th dose”, because the number of doses depends on the vaccine used."
+    },
+    {
+      "id": "cdc25-pcv-1",
+      "vaccine": "pcv",
+      "dose": "Dose 1",
+      "age": { "kind": "single", "months": 2 },
+      "ageLabel": "2 months",
+      "cdcCell": "Dose 1",
+      "cdcColumns": ["2 Months"]
+    },
+    {
+      "id": "cdc25-pcv-2",
+      "vaccine": "pcv",
+      "dose": "Dose 2",
+      "age": { "kind": "single", "months": 4 },
+      "ageLabel": "4 months",
+      "cdcCell": "Dose 2",
+      "cdcColumns": ["4 Months"]
+    },
+    {
+      "id": "cdc25-pcv-3",
+      "vaccine": "pcv",
+      "dose": "Dose 3",
+      "age": { "kind": "single", "months": 6 },
+      "ageLabel": "6 months",
+      "cdcCell": "Dose 3",
+      "cdcColumns": ["6 Months"]
+    },
+    {
+      "id": "cdc25-pcv-4",
+      "vaccine": "pcv",
+      "dose": "Dose 4",
+      "age": { "kind": "range", "fromMonths": 12, "throughMonths": 15 },
+      "ageLabel": "12–15 months",
+      "cdcCell": "Dose 4",
+      "cdcColumns": ["12 Months", "15 Months"]
+    },
+    {
+      "id": "cdc25-ipv-1",
+      "vaccine": "ipv",
+      "dose": "Dose 1",
+      "age": { "kind": "single", "months": 2 },
+      "ageLabel": "2 months",
+      "cdcCell": "Dose 1",
+      "cdcColumns": ["2 Months"]
+    },
+    {
+      "id": "cdc25-ipv-2",
+      "vaccine": "ipv",
+      "dose": "Dose 2",
+      "age": { "kind": "single", "months": 4 },
+      "ageLabel": "4 months",
+      "cdcCell": "Dose 2",
+      "cdcColumns": ["4 Months"]
+    },
+    {
+      "id": "cdc25-ipv-3",
+      "vaccine": "ipv",
+      "dose": "Dose 3",
+      "age": { "kind": "range", "fromMonths": 6, "throughMonths": 18 },
+      "ageLabel": "6–18 months",
+      "cdcCell": "Dose 3",
+      "cdcColumns": ["6 Months", "7 Months", "8 Months", "12 Months", "15 Months", "18 Months"]
+    },
+    {
+      "id": "cdc25-ipv-4",
+      "vaccine": "ipv",
+      "dose": "Dose 4",
+      "age": { "kind": "range", "fromMonths": 48, "throughMonths": 83 },
+      "ageLabel": "4–6 years",
+      "cdcCell": "Dose 4",
+      "cdcColumns": ["4-6 Years"],
+      "qualification": "CDC’s notes for health care providers say the final dose is given on or after age 4 years and at least 6 months after the previous dose."
+    },
+    {
+      "id": "cdc25-mmr-1",
+      "vaccine": "mmr",
+      "dose": "Dose 1",
+      "age": { "kind": "range", "fromMonths": 12, "throughMonths": 15 },
+      "ageLabel": "12–15 months",
+      "cdcCell": "Dose 1",
+      "cdcColumns": ["12 Months", "15 Months"]
+    },
+    {
+      "id": "cdc25-mmr-2",
+      "vaccine": "mmr",
+      "dose": "Dose 2",
+      "age": { "kind": "range", "fromMonths": 48, "throughMonths": 83 },
+      "ageLabel": "4–6 years",
+      "cdcCell": "Dose 2",
+      "cdcColumns": ["4-6 Years"]
+    },
+    {
+      "id": "cdc25-var-1",
+      "vaccine": "var",
+      "dose": "Dose 1",
+      "age": { "kind": "range", "fromMonths": 12, "throughMonths": 15 },
+      "ageLabel": "12–15 months",
+      "cdcCell": "Dose 1",
+      "cdcColumns": ["12 Months", "15 Months"]
+    },
+    {
+      "id": "cdc25-var-2",
+      "vaccine": "var",
+      "dose": "Dose 2",
+      "age": { "kind": "range", "fromMonths": 48, "throughMonths": 83 },
+      "ageLabel": "4–6 years",
+      "cdcCell": "Dose 2",
+      "cdcColumns": ["4-6 Years"]
+    },
+    {
+      "id": "cdc25-hepa-series",
+      "vaccine": "hepa",
+      "dose": "2 doses",
+      "age": { "kind": "range", "fromMonths": 12, "throughMonths": 23 },
+      "ageLabel": "12–23 months",
+      "cdcCell": "2 doses separated by 6 months",
+      "cdcColumns": ["12 Months", "15 Months", "18 Months", "19 Months", "20–23 Months"],
+      "qualification": "CDC’s schedule says: “2 doses separated by 6 months”. The app does not work out a date for either dose."
+    }
+  ],
+  "discussion": [
+    {
+      "id": "cdc25-talk-rsv-infant",
+      "label": "RSV antibody",
+      "ageLabel": "Birth through 7 months",
+      "cdcText": "Depends on mother’s RSV vaccine status",
+      "cdcKey": "ALL children should be immunized at this age",
+      "appNote": "CDC’s notes for health care providers also tie the timing to the RSV season and the month of birth."
+    },
+    {
+      "id": "cdc25-talk-rsv-older",
+      "label": "RSV antibody",
+      "ageLabel": "8 through 19 months",
+      "cdcText": "Depends on child’s health status",
+      "cdcKey": "SOME children should get this dose of vaccine or preventive antibody at this age",
+      "appNote": null
+    },
+    {
+      "id": "cdc25-talk-rv-3",
+      "label": "Rotavirus, dose 3",
+      "ageLabel": "6 months",
+      "cdcText": "Dose 3",
+      "cdcKey": "SOME children should get this dose of vaccine or preventive antibody at this age",
+      "appNote": "Whether a third dose is part of the series depends on the vaccine used."
+    },
+    {
+      "id": "cdc25-talk-hib-3",
+      "label": "Hib, dose 3",
+      "ageLabel": "6 months",
+      "cdcText": "Dose 3",
+      "cdcKey": "SOME children should get this dose of vaccine or preventive antibody at this age",
+      "appNote": "Whether a dose is given at 6 months depends on the vaccine used."
+    },
+    {
+      "id": "cdc25-talk-flu",
+      "label": "Influenza (flu)",
+      "ageLabel": "6 months and older",
+      "cdcText": "Every year. Two doses for some children",
+      "cdcKey": "ALL children should be immunized at this age",
+      "appNote": "The app does not place a yearly date on the calendar."
+    },
+    {
+      "id": "cdc25-talk-covid",
+      "label": "COVID-19",
+      "ageLabel": "6 months and older",
+      "cdcText": "Parents/caregivers should talk to their health care provider to decide if this vaccine is right for their child",
+      "cdcKey": "Parents/caregivers should talk to their health care provider to decide if this vaccine is right for their child",
+      "appNote": null
+    }
+  ],
+  "moreGuidance": {
+    "cdcIntro": "Talk to your child’s health care provider for more guidance if:",
+    "cdcItems": [
+      "Your child has any medical condition that puts them at higher risk for infection.",
+      "Your child is traveling outside the United States. Visit CDC Travelers’ Health for more information.",
+      "Your child misses a vaccine recommended for their age."
+    ]
+  }
+}

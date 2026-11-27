@@ -9,6 +9,7 @@ import { AboutMilestonesScreen, LibraryScreen } from './ui/screens/growth/Librar
 import { MilestoneDetailScreen } from './ui/screens/growth/MilestoneDetail';
 import { ProfileForm, ProfilesList } from './ui/screens/profiles/Profiles';
 import { AboutInfo, InstallInfo, PrivacyInfo, Settings, StorageInfo } from './ui/screens/settings/Settings';
+import { CalendarScreen } from './ui/screens/calendar/Calendar';
 import { UpdateBanner } from './ui/components/UpdateBanner';
 import { ExerciseDetailScreen, ExerciseFormScreen, ExercisesScreen } from './ui/screens/personal/Exercises';
 import { ActivityDetailScreen, BrowseScreen } from './ui/screens/personal/Browse';
@@ -78,6 +79,7 @@ function renderRoute(route: Route) {
     case 'progressHistory':
       return renderPersonalRoute(route);
     case 'calendar':
+      return <Screen nav current="calendar"><CalendarScreen openAdd={route.add === true} /></Screen>;
     case 'journal':
     case 'resources':
       return <Screen nav current={route.name}><TabPlaceholder tab={route.name} /></Screen>;

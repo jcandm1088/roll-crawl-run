@@ -9,7 +9,7 @@ export function defaultSettings(): Settings {
     theme: DEFAULT_THEME,
     childThemes: {},
     activeChildId: null,
-    layers: { personal: true, wellVisits: true, vaccines: false, therapy: true },
+    layers: { personal: true, medical: true, vaccines: false, wellVisits: true, therapy: true },
     vaccineSchedule: null,
     notificationsEnabled: false,
     familyCalendar: false,

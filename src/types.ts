@@ -65,11 +65,36 @@ export interface Meta {
   lastBackupAt: string | null;
 }
 
+/**
+ * Calendar overlay preferences, stored per device. The Simplified Calendar (Checkpoint 3) uses exactly
+ * three: `vaccines` (off by default), `medical` and `personal`. `wellVisits` and `therapy` are inert
+ * fields kept only so older stored settings stay readable; they are not overlays and nothing reads them.
+ */
 export interface LayerVisibility {
   personal: boolean;
-  wellVisits: boolean; // on by default (Q3)
-  vaccines: boolean; // off until the parent enables it and chooses a source (Q2/Q3)
-  therapy: boolean;
+  medical: boolean;
+  vaccines: boolean; // Recommended vaccine schedule: off until the parent turns it on
+  wellVisits: boolean; // inert (earlier plan)
+  therapy: boolean; // inert (earlier plan)
+}
+
+export type CalendarEventKind = 'medical' | 'personal';
+
+/**
+ * A parent-entered calendar event (stored in the `events` store, one child each). Deleting an event
+ * removes the record outright: no title, note or location is kept (owner decision, Checkpoint 3).
+ */
+export interface CalendarEvent extends RecordEnvelope {
+  deletedAt: null;
+  recordType: 'calendarEvent';
+  childId: string;
+  kind: CalendarEventKind;
+  title: string;
+  date: LocalDate;
+  /** Optional wall-clock time, "HH:MM" (24-hour). No time zone is attached. */
+  time: string | null;
+  location: string;
+  notes: string;
 }
 
 export interface Settings {

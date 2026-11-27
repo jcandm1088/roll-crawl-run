@@ -1,6 +1,8 @@
 # Development Plan — Roll, Crawl, RUN: Tracking Growth Together (Revision 2)
 
-> **Current status (2026-11-27, after the 2b-R closeout):** Checkpoint 1 is completed, accepted and deployed (`e40287f`). Checkpoints 2a, 2b and 2b-R are accepted by the owner in Mac Safari (2b-R: GR1–GR15 passed against `b45af43`); all physical-iPhone checks are deferred to Checkpoint 6. Nothing after Checkpoint 1 is merged or deployed. **Submission scope (R15):** Checkpoint 3 (Simplified Calendar) is next, then Checkpoint 4 (Journal; Resources removed from navigation) and Checkpoint 6 (final testing, deployment, iPhone acceptance). Checkpoint 5 and Resources are deferred until after submission. The current-state handoff is `docs/HANDOFF.md`.
+> **Current status (2026-11-27, Checkpoint 3):** Checkpoint 3 (Simplified Calendar, R16) is implemented in a local commit on `claude/great-dijkstra-wwi9g1` and awaits the owner's acceptance; not pushed, merged or deployed. Checkpoints 1–2b-R are as described below. Next, each needing authorization: acceptance of Checkpoint 3, then Checkpoint 4 (Journal; Resources removed from navigation) and Checkpoint 6. The current-state handoff is `docs/HANDOFF.md`.
+>
+> *Previous status line (2026-11-27, after the 2b-R closeout, kept as recorded):* **Current status (2026-11-27, after the 2b-R closeout):** Checkpoint 1 is completed, accepted and deployed (`e40287f`). Checkpoints 2a, 2b and 2b-R are accepted by the owner in Mac Safari (2b-R: GR1–GR15 passed against `b45af43`); all physical-iPhone checks are deferred to Checkpoint 6. Nothing after Checkpoint 1 is merged or deployed. **Submission scope (R15):** Checkpoint 3 (Simplified Calendar) is next, then Checkpoint 4 (Journal; Resources removed from navigation) and Checkpoint 6 (final testing, deployment, iPhone acceptance). Checkpoint 5 and Resources are deferred until after submission. The current-state handoff is `docs/HANDOFF.md`.
 >
 > *Previous status line (2026-11-27, Checkpoint 2b-R implementation, kept as recorded):* **Current status (2026-11-27, Checkpoint 2b-R):** Checkpoint 1 is completed, accepted and deployed (`e40287f`). Checkpoint 2a is accepted for Mac usability (physical iPhone acceptance pending); not merged, not deployed. Checkpoint 2b (R13) passed the owner's initial Mac Safari acceptance (64 of 65 applicable checks; preserved on `claude/upbeat-thompson-skpm8j` at `64202e2`). The resulting refinements R-010 to R-017 (R14, Checkpoint 2b-R) are implemented in a local commit and await the owner's acceptance; not pushed, merged or deployed. Physical iPhone acceptance of 2a and 2b is pending. Checkpoints 3–6 are planned and not started. The current-state handoff is `docs/HANDOFF.md`.
 >
@@ -33,6 +35,26 @@
 **Visual direction (CP1):** premium, warm, calm, adult-oriented; no cartoon imagery, not clinical, not generic dashboard. Five cohesive theme systems (Earth default, Sky, Blush, Lavender, Sage) sharing typography, spacing, iconography, components, buttons, navigation. Fraunces (display) + Inter (UI), subject to review. Initial app icon + wordmark preserving "Roll, Crawl, RUN: Tracking Growth Together". Safe-area insets, ≥44–48px targets.
 
 **Checkpoint 1 build list:** scaffold (Vite/TS/Preact, Vitest, Playwright); fonts self-hosted (fetched from npm `@fontsource` packages, OFL); icon/wordmark (SVG → PNG sizes generated with Playwright); design tokens + 5 themes + contrast test; app shell (top bar with child chip + settings, bottom nav, hash router); placeholder tabs clearly labeled "Coming in a later checkpoint"; onboarding (DOB, name/photo, corrected age, theme, privacy); profiles create/edit/switch/delete (typed confirmation; backup purge option present but backups feature labeled pending); age domain (chronological + corrected with safeguards); IndexedDB schema v1 for all planned stores with logical-key indexes and atomic transaction helper; repositories for meta/settings/children/photos; storage-persistence status; privacy disclosures in Settings; manifest + basic service worker (precache, update banner); unit + e2e tests; mobile screenshots via Playwright at deviceScaleFactor 2; docs skeletons (README, BUILD_LOG template, TESTING_CHECKLIST, KNOWN_LIMITATIONS, DECISIONS, SOURCE_REGISTER). Code lives in `/home/user/roll-crawl-run` (git init locally; no push until you provide the remote).
+
+---
+
+## R16 — Checkpoint 3: Simplified Calendar (implemented; awaiting owner acceptance) — supersedes conflicting §6.8–6.11, R3 Q1–Q3/Q5/Q11 and R4 Calendar text
+**Authorization:** owner, 2026-11-27, after the initialization and preparation reports (Decisions #125–#137). Report: `docs/reviews/CHECKPOINT_3_IMPLEMENTATION_REPORT.md`.
+
+**Built:**
+- **Calendar tab:** month grid (Sunday first), previous/next month, today and selected-day indicators, “Go to today”, the selected day's events, Upcoming (today and later; five shown, “Show all”), one **Add event** action.
+- **Three independent overlays**, remembered per device: Recommended vaccine schedule (off by default), Medical appointments, Personal. Hiding only filters the view.
+- **Parent-entered events:** medical appointments (including therapy sessions entered by hand) and personal events; title, date, optional time, location and notes; create, view, edit, delete (confirmation; removed outright).
+- **Vaccine schedule reference:** CDC's July 2, 2025 schedule (parent-facing page, cross-checked against the professional table, notes and addendum), bundled for offline use. 26 dated references for nine vaccines; six undated provider-discussion items. A single age is one marker on that age's anniversary; an inclusive range runs from its first age's anniversary through the last day of its last age; all from the chronological date of birth. One marked day per reference. Attribution, non-endorsement, source version, retrieval date, original link (new window) and the provider statement are shown.
+- **Related screens:** Settings “Calendar” describes what exists; Home's “New event” is live and “Coming up” lists the next three events (Decision #136).
+- **Data:** the existing `events` store; **database version 3 unchanged**; atomic, validated writes; child isolation; profile deletion and reset covered.
+- **R-014:** test-only timing correction (Decision #131).
+
+**Unchanged:** Growth, milestones, goals, exercises, history, profiles, themes, typography, navigation (five tabs), onboarding; no new dependencies, services, accounts, analytics or AI.
+
+**Not done (out of scope):** goals/exercises integration, therapy or well-child scheduling, recurrence, reminders, notifications, vaccine administration tracking, eligibility or catch-up calculation, family aggregation, calendar export, backup/restore, sharing, synchronization. Journal and the removal of Resources belong to Checkpoint 4.
+
+**Required later:** recheck the schedule's currency at Checkpoint 6 (Decision #125); physical-iPhone acceptance at Checkpoint 6.
 
 ---
 

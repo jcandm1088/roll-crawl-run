@@ -67,14 +67,32 @@ Every developmental or medical item in the app must trace to a row here. Before 
 
 **Attribution presentation (R-011):** CDC attribution for activities is centralized in each activity page's Source section (CDC page link, review date, non-endorsement, free availability, original wording) and in the Browse Exercises source note. No attribution or non-endorsement statement was removed; only repeated agency names in the badge, reference-age line and safety text were.
 
+**Recommended vaccine schedule reference (Checkpoint 3, 2026-11-27):**
+
+| Source ID | Organization | Title | URL | Version | Retrieved | Content used |
+|---|---|---|---|---|---|---|
+| `cdc-imz-child-easyread` | CDC | Recommended Vaccines for Young Children (“Recommended Immunizations for Birth Through 6 Years Old, United States, 2025”) | https://www.cdc.gov/vaccines/imz-schedules/child-easyread.html | July 2, 2025 | 2026-11-27 | **Display source:** vaccine names, dose labels, age columns, the three-part key, conditional wording, “Talk to your child's health care provider” list |
+| `cdc-imz-child-age` | CDC | Child and Adolescent Immunization Schedule by Age (Table 1) | https://www.cdc.gov/vaccines/hcp/imz-schedules/child-adolescent-age.html | July 2, 2025 (addendum updated July 2, 2025) | 2026-11-27 | Cross-check of every age; “3rd or 4th dose” wording for Hib |
+| `cdc-imz-child-notes` | CDC | Child Immunization Schedule Notes | https://www.cdc.gov/vaccines/hcp/imz-schedules/child-adolescent-notes.html | Reviewed July 2, 2025 | 2026-11-27 | Cross-check; qualifications (hepatitis B birth dose, rotavirus age limits, Hib and rotavirus product-dependent series, polio final dose, hepatitis A interval, RSV season); “a dash should be read as through” |
+| `cdc-imz-child-addendum` | CDC | Child Immunization Schedule Addendum | https://www.cdc.gov/vaccines/hcp/imz-schedules/child-adolescent-addendum.html | Reviewed July 2, 2025 | 2026-11-27 | Cross-check only: one change outside the app's ages (meningococcal, age 10+); note on the May 29, 2025 COVID-19 change |
+
+- **Current applicability and legal circumstances.** On the retrieval date every schedule page carried a banner: a preliminary order of March 16, 2026 in *American Academy of Pediatrics et al. v. Kennedy et al.*, No. 1:25-cv-11916 (D. Mass.) stayed all ACIP votes from June, September and December 2025 and the Acting CDC Director's January 5, 2026 memo revising the childhood schedule, and the July 2, 2025 schedule “is the current CDC” schedule. The owner approved using that version (Decision #125). The order is preliminary, so the applicable schedule may change. **Recheck at Checkpoint 6**; report any change before incorporating it. Neither the order nor the stayed revision was read; the record relies on CDC's statement. The secondary reviewer independently consulted the pages and the addendum.
+- **Reuse review first:** “Use of Agency Materials” (https://www.cdc.gov/other/agencymaterials.html, last reviewed October 28, 2026) was re-read on 2026-11-27 before any schedule page was retrieved. Conditions 1–4, new-window links and the logo restriction are unchanged from the milestone review. CDC also asks re-posters to check back for revisions.
+- **Access record:** a plain command-line request returned **403 “Access Denied”** from CDC's content network; the pages were then loaded in headless Chromium (text only; images, media and fonts blocked), as at Checkpoints 2a and 2b. Six distinct pages, three loaded twice, plus one guessed address that returned 404. Copies are in the session scratchpad only. Claude Code did not retrieve `robots.txt`; the secondary reviewer reports that it does not generally exclude these paths. Neither is treated as permission: the basis for reuse is the terms page. No access restriction was circumvented.
+- **Content used:** 26 dated references for nine vaccines (ages CDC marks for all children, independent of product) and six undated provider-discussion items (`src/content/vaccines.cdc-2025.json`, `contentVersion: cdc-child-schedule-2025-07-02.app-1`, validated at build time by `validateVaccines`). Full tables: `docs/reviews/CHECKPOINT_3_IMPLEMENTATION_REPORT.md` §3.
+- **Not used:** Table 2 (catch-up), Table 3 (medical indications), the Appendix, dose intervals, product instructions, seasonal product wording, disease descriptions, images and logos. High-risk and travel-only recommendations are not shown as items.
+- **App-created (labelled):** every calendar date (worked out from the date of birth), the grouping into “reference ages”, the short notes on conditional items, and the explanation of how dates are shown.
+- **Attribution as implemented:** the overlay's “Source and how this is shown” section (Source: CDC; schedule title and date; retrieval date; link opening in a new window; free availability; that the copy does not update itself; non-endorsement by CDC, HHS and the U.S. Government; not reviewed by CDC or a clinician); “CDC schedule reference · not an appointment” wherever a reference appears; and the provider statement.
+- **Excluded sources not accessed:** AAP, HealthyChildren.org, Pathways.org. CDC's notes cite the AAP *Red Book*; it was not opened or used.
+
 ## Pending verification
 | Planned source | For | Status |
 |---|---|---|
 | CDC "Learn the Signs. Act Early." tips and activities (per age page) | Checkpoint 2b supporting activities (owner-approved source) | **Done at Checkpoint 2b** — see “Recommended activities” below |
 | AAP HealthyChildren.org, "Corrected Age for Preemies" | — | **Excluded** (AAP terms). Its content is not used. The app describes only the corrected-age arithmetic |
-| AAP/Bright Futures periodicity schedule | Checkpoint 3 well-child references | **Blocked by the AAP exclusion** — needs an owner decision before Checkpoint 3 |
-| CDC/ACIP child immunization schedule | Checkpoint 3 vaccination references | Not yet retrieved |
-| AAP child immunization schedule | Checkpoint 3 vaccination references | **Blocked by the AAP exclusion** — needs an owner decision before Checkpoint 3 |
+| AAP/Bright Futures periodicity schedule | — | **Not used.** Excluded (AAP terms), and the well-child reference schedule was removed from the Calendar's scope (Decision #119) |
+| CDC child immunization schedule (July 2, 2025) | Checkpoint 3 vaccine schedule reference | **Done at Checkpoint 3** — see “Recommended vaccine schedule reference” below |
+| AAP child immunization schedule | — | **Not used.** Excluded (AAP terms); the app uses CDC's schedule only (Decisions #125, #126) |
 
 ## Software and fonts (licenses)
 | Item | License |

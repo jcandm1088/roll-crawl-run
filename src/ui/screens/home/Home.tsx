@@ -6,7 +6,7 @@ import { formatLongDate } from '../../../domain/dates';
 import { Avatar, childDisplayName } from '../../components/Avatar';
 import { Icon } from '../../components/Icon';
 import { PlaceholderCard } from '../../components/Placeholder';
-import { href } from '../../../router';
+import { href, navigate } from '../../../router';
 import { useChildMilestones } from '../../../state/milestones';
 import { currentProgress, getMilestone } from '../../../domain/milestones';
 import { displayTextOf } from '../../../domain/milestoneDisplay';
@@ -16,6 +16,9 @@ import type { Child } from '../../../types';
 import { useChildPersonal } from '../../../state/personal';
 import { routineFor } from '../../../domain/schedule';
 import { DailyBar } from '../personal/Tracker';
+import { useChildEvents } from '../../../state/calendar';
+import { homeUpcoming } from '../../../domain/calendar';
+import { EventList, overlaysOf } from '../calendar/Calendar';
 
 /**
  * Age on Home, in plain language. The standard (chronological) age needs no
@@ -87,16 +90,15 @@ export function Home() {
             <Icon name="sprout" />
             <span>Record a milestone</span>
           </a>
-          {[
-            ['notebook', 'Journal entry'],
-            ['calendar', 'New event'],
-          ].map(([icon, label]) => (
-            <div class="quick-action" key={label as string} aria-disabled="true" aria-label={`${label} — coming soon`}>
-              <Icon name={icon as 'sprout'} />
-              <span>{label}</span>
-              <span class="xsmall" style={{ fontWeight: 500 }}>Coming soon</span>
-            </div>
-          ))}
+          <div class="quick-action" aria-disabled="true" aria-label="Journal entry — coming soon">
+            <Icon name="notebook" />
+            <span>Journal entry</span>
+            <span class="xsmall" style={{ fontWeight: 500 }}>Coming soon</span>
+          </div>
+          <a class="quick-action active" href={href({ name: 'calendar', add: true })} data-testid="qa-new-event">
+            <Icon name="calendar" />
+            <span>New event</span>
+          </a>
         </div>
       </div>
 
@@ -104,13 +106,34 @@ export function Home() {
 
       <HomeMilestoneCards />
 
+      <HomeComingUp />
+
       <div class="section">
         <h2 class="title-2 section-title">Coming next</h2>
-        <PlaceholderCard icon="calendar" title="Coming up">Appointments and activities for the days ahead.</PlaceholderCard>
         <PlaceholderCard icon="heart" title="Daily encouragement">
           A gentle note for each day.
         </PlaceholderCard>
       </div>
+    </div>
+  );
+}
+
+/** The next few calendar events (parent-entered only; the same overlay choices as the Calendar). */
+function HomeComingUp() {
+  const { activeChild, settings } = useApp();
+  const today = useToday();
+  const { events } = useChildEvents(activeChild);
+  if (!activeChild || events === null) return null;
+  const next = homeUpcoming(events, overlaysOf(settings.layers), today);
+  return (
+    <div class="section" data-testid="home-coming-up">
+      <h2 class="title-2 section-title">Coming up</h2>
+      {next.length === 0 ? (
+        <div class="card"><p class="small muted">No upcoming events.</p></div>
+      ) : (
+        <EventList events={next} today={today} showDate onOpen={() => navigate({ name: 'calendar' })} testId="home-events" />
+      )}
+      <p class="small" style={{ margin: 'var(--space-3) var(--space-1) 0' }}><a class="text-link" href={href({ name: 'calendar' })} data-testid="home-open-calendar">Open Calendar</a></p>
     </div>
   );
 }

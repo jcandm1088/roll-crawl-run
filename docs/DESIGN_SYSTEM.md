@@ -158,3 +158,12 @@ History: Fraunces produced undesirable letterforms (J, f) in functional headings
 - **Your personal entries:** a subtle, collapsed accordion at the end of the Library, shown only when entries exist. It contains an explanation and rows labelled “Personal entry · by 12 months [· hidden]”.
 - **Age settings note (Progress):** inside the age card, below the age panel, a muted sentence followed by an outline **Manage age settings** button.
 - **Library view control:** “Up to now (N)”, “Upcoming (N)”, “All (159)”.
+
+## Calendar (Checkpoint 3)
+- **Page:** shared `PageHeader`; one primary **Add event** button; the month card; “Show on the calendar”; the selected day; Upcoming; and, when the vaccine overlay is on, the “Recommended vaccine schedule” card.
+- **Month card:** previous/next icon buttons either side of the month name (section-heading style, one line); a seven-column table of day buttons, 48 px tall. **Today:** 2 px primary outline and a heavier, underlined number. **Selected:** `--primary-soft` fill. Neither relies on color alone.
+- **Markers (8 px, under the day number; 10 px in chips and lists):** filled circle `--primary` = medical appointment; filled square `--text` = personal; hollow diamond (1.5 px `--text` outline, rotated square) = vaccine schedule reference. Every marker has a text equivalent.
+- **Overlay chips:** the existing `.chip` with `aria-pressed`, each led by its marker. A line below says hiding never deletes.
+- **Events:** the existing `.list.card.list-card` rows: marker, title (600), a muted line “date · time · type · location”, chevron.
+- **Vaccine references:** dashed outline panels (`.vax-ref`, `.vax-next`), never the solid card used for events, under the eyebrow “CDC schedule reference · not an appointment”. Lists use a left rule (`.vax-list`). Longer explanations sit in collapsed `more-details` disclosures.
+- **Forms:** bottom sheets with the existing fields, radio `label.choice` for the type, primary Save, quiet Cancel. Delete confirmation: Cancel is primary and focused (as for sessions, #112).

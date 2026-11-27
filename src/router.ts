@@ -41,7 +41,8 @@ export type Route =
   | { name: 'exerciseItem'; id: string }
   | { name: 'exerciseEdit'; id: string }
   | { name: 'progressHistory'; view: 'milestones' | 'goals' | 'exercises' }
-  | { name: 'calendar' }
+  /** add: opened from Home's “New event”; the Calendar opens with the Add event form. */
+  | { name: 'calendar'; add?: boolean }
   | { name: 'journal' }
   | { name: 'resources' }
   | { name: 'settings' }
@@ -86,6 +87,7 @@ export function parseHash(hash: string): Route {
       }
       return { name: 'growth' };
     case 'calendar':
+      return b === 'add' ? { name: 'calendar', add: true } : { name: 'calendar' };
     case 'journal':
     case 'resources':
       return { name: a };
@@ -180,6 +182,8 @@ export function href(route: Route): string {
       return `#/growth/milestone/${encodeURIComponent(route.key)}`;
     case 'growthExpect':
       return route.interval === null ? '#/growth/expect' : `#/growth/expect/${route.interval}`;
+    case 'calendar':
+      return route.add ? '#/calendar/add' : '#/calendar';
     case 'profileEdit':
       return `#/profiles/${encodeURIComponent(route.id)}${route.section === 'age' ? '/age' : ''}`;
     default:

@@ -395,6 +395,9 @@ test('browsing the guide writes nothing: records, history, progress and preferen
   await start(page, { name: 'Sample Child A', dob: '2026-08-20' }); // 3 months
   await seedRecords(page);
   await page.goto('./#/growth/progress');
+  // Wait for the seeded records to be loaded before reading (one achieved is seeded); an immediate read can
+  // see the not-yet-loaded “0 of 11” (test timing correction, Checkpoint 3; the comparison is unchanged).
+  await expect(overall(page)).toHaveText(/^[1-9]\d* of \d+ achieved$/);
   const before = { overall: await overall(page).textContent(), history: 0 };
   await page.goto('./#/growth/milestone/cdc22-m02-se-01');
   await expect(page.getByTestId('history')).toBeVisible(); // records loaded (the history renders only after loading)
@@ -429,7 +432,7 @@ test('browsing the guide writes nothing: records, history, progress and preferen
   }
   expect(guideChanges.filter((s) => !shellChanges.includes(s))).toEqual([]);
   await page.goto('./#/growth/progress');
-  expect(await overall(page).textContent()).toBe(before.overall);
+  await expect(overall(page)).toHaveText(before.overall!); // retried until the records have loaded; same expected value
   await page.goto('./#/growth/milestone/cdc22-m02-se-01');
   await expect(page.getByTestId('history-entry')).toHaveCount(before.history);
 });

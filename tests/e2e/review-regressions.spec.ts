@@ -119,7 +119,8 @@ test('child selector keyboard: focus starts on the current child, arrows move, T
 // Settings accordions
 // ---------------------------------------------------------------------------
 
-const SECTIONS = ['Your Data', 'Calendar & Reminders', 'This Device', 'About'];
+// Checkpoint 3: “Calendar & Reminders” became “Calendar” (reminders are not part of the Simplified Calendar).
+const SECTIONS = ['Your Data', 'Calendar', 'This Device', 'About'];
 
 test('Settings: Profiles and Appearance are open; the four other sections start collapsed', async ({ page }) => {
   await completeOnboarding(page);

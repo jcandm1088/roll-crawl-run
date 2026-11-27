@@ -66,6 +66,10 @@ function milestoneContentPlugin(): Plugin {
       const { validateGoalIdeas } = await import('./src/domain/goalIdeas');
       const ideaErrors = validateGoalIdeas();
       if (ideaErrors.length) this.error(`Goal idea validation failed:\n${ideaErrors.join('\n')}`);
+      // Recommended vaccine schedule reference (Checkpoint 3): bundled CDC snapshot, no dated conditional items.
+      const { validateVaccines } = await import('./src/domain/vaccineSchedule');
+      const vaccineErrors = validateVaccines();
+      if (vaccineErrors.length) this.error(`Vaccine schedule validation failed:\n${vaccineErrors.join('\n')}`);
     },
   };
 }

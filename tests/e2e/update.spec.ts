@@ -23,6 +23,9 @@ const GROWTH_UX_REFINEMENT = '170cc9911322c9aa7f4bb8c973dc6d62e07d549d';
 /** The accepted Checkpoint 2a baseline (Mac usability acceptance), database version 2. */
 const ACCEPTED_CHECKPOINT_2A = '53d6212d9a7d99854e7195df7979a9a5758b88de';
 
+/** The accepted Checkpoint 2b-R implementation (human-accepted in Mac Safari), database version 3, before the Calendar. */
+const ACCEPTED_CHECKPOINT_2B_R = 'b45af4326085b822a2b932ef21c4ee96b3954f84';
+
 const ROOT = join(process.cwd(), '.tmp-update-test');
 const PORT = 4190;
 const TYPES: Record<string, string> = {
@@ -66,6 +69,11 @@ test.beforeAll(() => {
   execFileSync('sh', ['-c', `git archive ${ACCEPTED_CHECKPOINT_2A} | tar -x -C "${accSrc}"`]);
   symlinkSync(join(process.cwd(), 'node_modules'), join(accSrc, 'node_modules'));
   execFileSync('npx', ['vite', 'build', '--outDir', join(ROOT, 'acc'), '--emptyOutDir'], { cwd: accSrc, stdio: 'ignore' });
+  const brSrc = join(ROOT, 'cp2br-src');
+  mkdirSync(brSrc, { recursive: true });
+  execFileSync('sh', ['-c', `git archive ${ACCEPTED_CHECKPOINT_2B_R} | tar -x -C "${brSrc}"`]);
+  symlinkSync(join(process.cwd(), 'node_modules'), join(brSrc, 'node_modules'));
+  execFileSync('npx', ['vite', 'build', '--outDir', join(ROOT, 'cp2br'), '--emptyOutDir'], { cwd: brSrc, stdio: 'ignore' });
   server = createServer(async (req, res) => {
     const path = normalize(decodeURIComponent((req.url ?? '/').split('?')[0]!)).replace(/^(\.\.[/\\])+/, '');
     const file = join(ROOT, current, path.endsWith('/') ? `${path}index.html` : path);
@@ -600,4 +608,139 @@ test('updating from the accepted Checkpoint 2a (53d6212) upgrades to database ve
   await page.goto(`${base}#/growth/progress`);
   await expect(page.getByTestId('progress-all').getByTestId('fraction')).toHaveText(progressBefore!);
   await expect(page.getByTestId('pp-active')).toHaveText('2');
+});
+
+test('updating from the accepted Checkpoint 2b-R (b45af43) keeps every record at database version 3; the Calendar works on the existing data', async ({ page }) => {
+  test.setTimeout(240_000);
+  current = 'cp2br';
+  const base = `http://localhost:${PORT}/`;
+  await page.clock.setFixedTime(new Date('2026-11-27T10:00:00'));
+  await page.goto(base);
+  await page.getByRole('button', { name: 'Get started' }).click();
+  await page.getByLabel('Date of birth').fill('2025-07-10');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByLabel('Name or nickname').fill('Sample Child A');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByTestId('theme-lavender').click();
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByRole('button', { name: 'Start using the app' }).click();
+  await expect(page.getByRole('heading', { name: 'Sample Child A' })).toBeVisible();
+  // The accepted 2b-R build: the Calendar is still a placeholder there.
+  await page.goto(`${base}#/calendar`);
+  await expect(page.getByText('Preview only.', { exact: false }).first()).toBeVisible();
+
+  // Existing data: a milestone, an observation, a goal, an exercise with a session, a second child.
+  const saved = () => expect(page.getByTestId('saved')).toBeVisible();
+  await page.goto(`${base}#/growth/milestone/cdc22-m12-mp-03`);
+  await page.getByRole('radio', { name: 'Achieved' }).click();
+  await page.getByLabel('Date achieved', { exact: true }).fill('2026-07-01');
+  await page.getByRole('button', { name: 'Save status' }).click();
+  await saved();
+  await page.getByLabel('Note or observation').fill('Fictional 2b-R observation');
+  await page.getByTestId('add-entry').click();
+  await saved();
+  await page.goto(`${base}#/growth/goals/new`);
+  await page.getByLabel('Goal name').fill('Fictional 2b-R goal');
+  await page.getByTestId('save-goal').click();
+  await expect(page.getByTestId('goal-title')).toHaveText('Fictional 2b-R goal');
+  await page.goto(`${base}#/growth/exercises/new`);
+  await page.getByLabel('Exercise name').fill('Fictional 2b-R exercise');
+  await page.getByTestId('rule-daily').click();
+  await page.getByTestId('save-exercise').click();
+  await expect(page.getByTestId('exercise-title')).toHaveText('Fictional 2b-R exercise');
+  await page.goto(`${base}#/growth/exercises`);
+  await page.getByTestId('routine-complete').click();
+  await expect(page.getByTestId('daily-count')).toHaveText('1 of 1 session done');
+  await page.goto(`${base}#/profiles/new`);
+  await page.getByLabel('Name or nickname (optional)').fill('Sample Child B');
+  await page.getByLabel('Date of birth').fill('2023-04-10');
+  await page.getByTestId('theme-sage').click();
+  await page.getByRole('button', { name: 'Add child' }).click();
+  await expect(page.getByTestId('child-chip')).toContainText('Sample Child B');
+  await page.getByTestId('child-chip').click();
+  await page.getByRole('radio', { name: /Sample Child A/ }).click();
+  await expect(page.getByTestId('child-chip')).toContainText('Sample Child A');
+  await page.goto(`${base}#/growth/progress`);
+  const progressBefore = await page.getByTestId('progress-all').getByTestId('fraction').textContent();
+  await page.goto(`${base}#/home`);
+  await expect(page.getByTestId('home-recent').locator('li')).not.toHaveCount(0);
+  const recentBefore = await page.getByTestId('home-recent').innerText();
+
+  const dump = () => page.evaluate(() => new Promise<string>((resolve) => {
+    const r = indexedDB.open('roll-crawl-run');
+    r.onsuccess = () => {
+      const names = [...r.result.objectStoreNames];
+      const tx = r.result.transaction(names, 'readonly');
+      const out: Record<string, unknown> = { version: r.result.version, stores: names };
+      for (const n of names) { const q = tx.objectStore(n).getAll(); q.onsuccess = () => { out[n] = JSON.parse(JSON.stringify(q.result, (_k, v) => (v instanceof Blob ? `blob:${v.size}` : v))); }; }
+      tx.oncomplete = () => { r.result.close(); resolve(JSON.stringify(out)); };
+    };
+  }));
+  const before = JSON.parse(await dump());
+  expect(before.version).toBe(3);
+  expect(before.events).toEqual([]);
+  expect(before.customItems.length).toBeGreaterThanOrEqual(2);
+  expect(before.completions.length).toBe(1);
+  await page.evaluate(() => navigator.serviceWorker.ready);
+  await page.reload();
+  await expect.poll(() => page.evaluate(() => !!navigator.serviceWorker.controller)).toBe(true);
+
+  current = 'b';
+  await page.evaluate(async () => (await navigator.serviceWorker.getRegistration())?.update());
+  await expect(page.getByText('A new version is available.')).toBeVisible({ timeout: 20_000 });
+  await Promise.all([page.waitForEvent('load'), page.getByRole('button', { name: 'Refresh' }).click()]);
+  await page.goto(`${base}#/calendar`);
+  await expect(page.getByTestId('calendar')).toBeVisible({ timeout: 20_000 }); // the Calendar is running
+
+  // Same database version, same stores, every record byte-identical. No migration ran.
+  const after = JSON.parse(await dump());
+  expect(after.version).toBe(3);
+  expect(after.stores).toEqual(before.stores);
+  for (const n of before.stores) expect(after[n], n).toEqual(before[n]);
+
+  // Defaults on existing settings: medical and personal shown, vaccine schedule off; the theme is kept.
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'lavender');
+  await expect(page.getByTestId('overlay-medical')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByTestId('overlay-personal')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByTestId('overlay-vaccines')).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.getByTestId('no-upcoming')).toBeVisible();
+
+  // The Calendar works on the upgraded data, and changes only the events store and the overlay preference.
+  await page.getByTestId('add-event').click();
+  await page.getByLabel('Title').fill('Fictional upgraded appointment');
+  await page.getByLabel('Date', { exact: true }).fill('2026-12-01');
+  await page.getByTestId('save-event').click();
+  await expect(page.getByTestId('saved-text')).toHaveText('Event saved for December 1, 2026.');
+  await page.getByTestId('overlay-vaccines').click();
+  await expect(page.getByTestId('vaccine-info')).toBeVisible();
+  const later = JSON.parse(await dump());
+  expect(later.version).toBe(3);
+  for (const n of before.stores.filter((x: string) => x !== 'events' && x !== 'settings')) expect(later[n], n).toEqual(before[n]);
+  expect(later.events).toHaveLength(1);
+  expect(later.events[0]).toMatchObject({ recordType: 'calendarEvent', title: 'Fictional upgraded appointment', date: '2026-12-01', kind: 'medical' });
+  const { layers: layersBefore, updatedAt: _b, ...restBefore } = before.settings[0];
+  const { layers: layersAfter, updatedAt: _a, ...restAfter } = later.settings[0];
+  expect(restAfter).toEqual(restBefore); // themes, active child and every other setting unchanged
+  expect(layersAfter).toEqual({ ...layersBefore, medical: true, vaccines: true }); // earlier fields kept, inert
+
+  // Previously accepted features are unchanged.
+  await page.goto(`${base}#/growth/progress`);
+  await expect(page.getByTestId('progress-all').getByTestId('fraction')).toHaveText(progressBefore!);
+  await page.goto(`${base}#/home`);
+  await expect.poll(() => page.getByTestId('home-recent').innerText()).toBe(recentBefore);
+  await expect(page.getByTestId('home-coming-up')).toContainText('Fictional upgraded appointment');
+  await page.goto(`${base}#/growth/milestone/cdc22-m12-mp-03`);
+  await expect(page.getByTestId('entries')).toContainText('Fictional 2b-R observation');
+  await page.goto(`${base}#/growth/goals/my`);
+  await expect(page.locator('body')).toContainText('Fictional 2b-R goal');
+  await page.goto(`${base}#/growth/exercises`);
+  await expect(page.getByTestId('daily-count')).toHaveText('1 of 1 session done');
+  // The other child's calendar is empty, and their theme is theirs.
+  await page.goto(`${base}#/calendar`); // the child selector is on the main tabs
+  await page.getByTestId('child-chip').click();
+  await page.getByRole('radio', { name: /Sample Child B/ }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'sage');
+  await page.goto(`${base}#/calendar`);
+  await expect(page.getByTestId('no-upcoming')).toBeVisible();
 });

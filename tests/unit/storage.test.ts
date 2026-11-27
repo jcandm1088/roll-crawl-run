@@ -116,7 +116,9 @@ describe('meta and settings', () => {
     const s = await getSettings(db);
     expect(s.theme).toBe('earth');
     expect(s.notificationsEnabled).toBe(false);
-    expect(s.layers).toEqual({ personal: true, wellVisits: true, vaccines: false, therapy: true });
+    // Checkpoint 3: the Simplified Calendar added the `medical` overlay preference (on by default). The vaccine
+    // schedule is still off by default; `wellVisits` and `therapy` are kept as inert fields for older settings.
+    expect(s.layers).toEqual({ personal: true, medical: true, vaccines: false, wellVisits: true, therapy: true });
     expect(s.vaccineSchedule).toBeNull();
   });
 

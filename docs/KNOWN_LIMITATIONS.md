@@ -1,10 +1,10 @@
 # Known Limitations
 
-Last updated 2026-11-27 (Checkpoint 2b-R closeout and submission scope revision). Earlier sections are kept as dated records; where a later statement supersedes an earlier one, the earlier one is marked. Items marked *(planned)* are scheduled for later checkpoints. Refinements and suspected defects awaiting correction are tracked in `docs/REFINEMENT_BACKLOG.md`.
+Last updated 2026-11-27 (Checkpoint 3, Simplified Calendar; implemented, awaiting the owner's acceptance). Earlier sections are kept as dated records; where a later statement supersedes an earlier one, the earlier one is marked. Items marked *(planned)* are scheduled for later checkpoints. Refinements and suspected defects awaiting correction are tracked in `docs/REFINEMENT_BACKLOG.md`.
 
 ## Not built yet (placeholders)
 - ~~Goals & Exercises, recurring activities, CDC activities, and charts *(Checkpoint 2b)*~~ Built at Checkpoint 2b (awaiting the owner's acceptance).
-- Calendar, well-child and vaccination references *(Checkpoint 3)*
+- ~~Calendar, well-child and vaccination references *(Checkpoint 3)*~~ The Simplified Calendar was built at Checkpoint 3 (awaiting the owner's acceptance). There is no well-child reference schedule (removed from scope, Decision #119).
 - Journal, resources, motivational messages, notification settings *(Checkpoint 4)*
 - Backups, partner sharing, import and merge, reports, calendar export *(Checkpoint 5)*
 - Backup features (create, restore, history, reminders) *(Checkpoint 5)*. The app says that changes save automatically on this device and that backups are separate and not yet available.
@@ -19,7 +19,7 @@ Last updated 2026-11-27 (Checkpoint 2b-R closeout and submission scope revision)
 
 ## Content and sources
 - **Developmental content:** the 159 CDC milestones (Checkpoint 2a) are included. There is no other developmental or medical content.
-- *(Superseded at Checkpoint 2a.)* At Checkpoint 1 the build environment could not reach cdc.gov, healthychildren.org, aap.org, or pathways.org. The dedicated `roll-crawl-run` environment now allows only cdc.gov, www.cdc.gov, pathways.org, www.pathways.org and jcandm1088.github.io. AAP and HealthyChildren are excluded; Pathways.org content may not be collected until its terms are approved. Checkpoint 3 well-child and vaccine sources still need an owner decision (see SOURCE_REGISTER.md).
+- *(Superseded at Checkpoint 2a.)* At Checkpoint 1 the build environment could not reach cdc.gov, healthychildren.org, aap.org, or pathways.org. The dedicated `roll-crawl-run` environment now allows only cdc.gov, www.cdc.gov, pathways.org, www.pathways.org and jcandm1088.github.io. AAP and HealthyChildren are excluded; Pathways.org content may not be collected until its terms are approved. ~~Checkpoint 3 well-child and vaccine sources still need an owner decision.~~ *Resolved at Checkpoint 3:* the vaccine schedule reference uses CDC only; there is no well-child schedule (see SOURCE_REGISTER.md).
 - The corrected-age explanation describes only the arithmetic. It gives no clinical guidance on when or how long to use corrected age.
 
 ## PWA and offline
@@ -58,7 +58,7 @@ Last updated 2026-11-27 (Checkpoint 2b-R closeout and submission scope revision)
 - **Removed observations keep their text** in this device's history until erased permanently, the profile is deleted, or the app is reset. The app says so where removal happens.
 - **Older than five:** there are no sourced milestones beyond age 5; existing records and personal versions still work.
 - **Limits of corrected age:** the app applies only the parent's chosen basis. It has no clinical guidance on when to stop using corrected age (AAP content excluded).
-- **Checkpoint 3 sources:** AAP/Bright Futures and the AAP immunization schedule are blocked by the AAP exclusion and need an owner decision.
+- ~~**Checkpoint 3 sources:** AAP/Bright Futures and the AAP immunization schedule are blocked by the AAP exclusion and need an owner decision.~~ *Resolved:* AAP sources are not used; the Calendar's vaccine reference is CDC's schedule, and the well-child schedule was removed from scope.
 - **Partner sharing isn't built yet.** The data is designed for it: stable IDs, logical keys, append-only events, device provenance, and state snapshots.
 
 ## Refinement backlog
@@ -124,5 +124,25 @@ Last updated 2026-11-27 (Checkpoint 2b-R closeout and submission scope revision)
 - **No supported backup or restoration.** The submission version has no backup, export or restore feature (Checkpoint 5 is deferred until after submission). Everything lives only in this browser's storage on this device; if that data is lost — browser data cleared, the app removed, the device lost or replaced — it **cannot be recovered**. The app's existing notice that backups aren't available yet remains accurate.
 - **No partner sharing, synchronization or provider reports** (deferred with Checkpoint 5).
 - **No Resources tab** in the submission version (deferred); CDC attribution and source information remain on the relevant screens and in About.
-- **Calendar (Checkpoint 3, planned) is record-keeping only:** no reminders, notifications, recurring events, export, well-child schedule, therapy or exercise scheduling, personalized vaccine eligibility or catch-up advice, or compliance tracking.
+- **Calendar (Checkpoint 3, built) is record-keeping only:** no reminders, notifications, recurring events, export, well-child schedule, therapy or exercise scheduling, personalized vaccine eligibility or catch-up advice, or compliance tracking.
 - **Physical-device acceptance is consolidated in Checkpoint 6:** until then, iPhone behaviour of Checkpoints 2a, 2b and 2b-R (layout, installed-app upgrade, offline editing) is unverified.
+
+## Checkpoint 3 (Simplified Calendar)
+- **Not yet reviewed by the owner.** Tested only in automated headless Chromium on Linux. Not tested in Safari, on a Mac, an iPhone or Android; not pushed, merged or deployed.
+- **Vaccine schedule reference:**
+  - It is a fixed copy of CDC's July 2, 2025 schedule, retrieved November 27, 2026. It does not update itself. CDC's pages said this was its current schedule because of a preliminary court order (March 16, 2026); that can change. **Recheck at Checkpoint 6.**
+  - It is general reference information, not medical advice. It has had no clinical review, and CDC has not reviewed or endorsed the app.
+  - Dates are a display convention worked out from the date of birth. They are not appointments, due dates or deadlines. The app does not know which vaccines a child has had, and does not work out eligibility, catch-up timing or minimum intervals.
+  - Only ages CDC marks for all children, independent of the product, are dated. RSV antibody, influenza, COVID-19, the third rotavirus dose and the 6-month Hib dose are listed without dates. High-risk and travel recommendations are not listed individually.
+  - CDC's catch-up table, medical-indication table, appendix, and the notes on contraindications are not included; the app links to CDC.
+  - For a child older than seven, every reference is in the past.
+- **Events:**
+  - No recurring events, reminders, notifications, export to the phone's calendar, or links to goals and exercises.
+  - Deleting an event is permanent (a confirmation is the safeguard). Nothing about it is kept.
+  - Tapping outside the form, or switching child, closes the form and discards what was typed; there is no “discard changes?” prompt.
+  - A time is stored as typed, with no time zone. Supported dates are 1990 to 2100.
+  - Overlay choices are stored per device, not per child.
+- **Layout:** at 320 px the day cells are about 37 px wide (48 px tall), below the 44 px touch guideline in width; at 390 px they are about 47 px wide.
+- **Browser controls:** the date and time fields use the browser's own pickers, which look and behave differently in Safari and on iPhone; this has not been checked there.
+- **Bundle size:** about 562 KB (132 KB gzip), up from 529 KB (123 KB), for the Calendar and the schedule content.
+- **Home** now has a live “New event” action and a “Coming up” card (Decision #136, for the owner's confirmation). “Journal entry” and “Daily encouragement” remain placeholders.

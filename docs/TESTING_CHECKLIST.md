@@ -382,3 +382,76 @@ Reported by the owner for the local build of `64202e2` in Mac Safari (port 4179)
 **Deferred to Checkpoint 6 (consolidated final acceptance), not completed:** GR16; all physical-iPhone checks from 2a (HA16, HA17, H16–H18 and related G-items), 2b (GE10 on iPhone, GE23, GE24) and 2b-R; installed-app upgrade testing; device-level offline editing.
 
 **Automated results (Claude Code, headless Chromium; separate from the human results):** three consecutive complete cycles of 379 unit and 219 end-to-end tests each, no retries (BUILD_LOG, Checkpoint 2b-R). No new automated run was made for this documentation-only closeout.
+
+## Checkpoint 3 — automated (headless Chromium; results in BUILD_LOG)
+- **Unit:** `calendar.test.ts` (29: month grids, leap years and month ends, navigation limits, event validation, ordering and upcoming rules, overlay filtering, vaccine content validation and tamper detection, source meaning checked against independently typed professional-note ages, qualifications, undated conditional items, single-age and inclusive-range dates, time-zone independence, one grid mark per reference) and `eventsRepo.test.ts` (18: database version 3 and stores unchanged, create/view/edit/delete, outright deletion, idempotent retry, failed writes, unrecognised records untouched, child isolation, profile deletion, full reset, no effect on other records, overlay preferences).
+- **End-to-end:** `calendar.spec.ts` (28): current month, today and selection; month and year navigation; midnight rollover; create, view, edit and delete; validation; simulated storage failures for save, edit and delete; upcoming order; three independent overlays and non-destructive hiding; marker shapes; vaccine single ages and ranges; birth-dose qualifications; provider-discussion items without dates and source disclosure; corrected age has no effect; month-end and leap-day birthdays; profile isolation and switching with a form open; profile deletion and full reset; reload and reopen; offline viewing and editing; Home and Settings; keyboard use; all five themes with axe; 320 and 390 px. `update.spec.ts` (+1): update from the accepted 2b-R build with every record byte-identical at version 3.
+- **Changed intentionally:** the placeholder-tab test (Calendar is built), the Settings section list (“Calendar”), the default-settings unit test (`medical`), the Checkpoint 1 offline test's link selector (exact). **Corrected (test timing only):** the R-014 measurement helper and the 2a “guide writes nothing” progress reads.
+- **Not covered by automation:** Safari, iPhone, Android; native date and time pickers; the on-screen keyboard with the bottom sheet; an installed-app update on a device.
+
+## Checkpoint 3 — human acceptance checklist (owner; record actual results)
+**Mac** = local production build of the Checkpoint 3 commit in Safari. Use fictional data. **iPhone** items are deferred to Checkpoint 6 unless you choose to test over the local network. Leave Result blank until tested.
+
+### A. Update and existing data
+| # | Check | Where | Result | Date | Notes |
+|---|---|---|---|---|---|
+| CAL1 | Update from your 2b-R build: profiles, themes, milestones, goals, exercises, sessions and history are unchanged | Mac | | | |
+| CAL2 | The Calendar tab opens (no “Preview only”); Journal and Resources are still placeholders | Mac | | | |
+
+### B. Month view
+| # | Check | Where | Result | Date | Notes |
+|---|---|---|---|---|---|
+| CAL3 | The current month opens with today clearly marked and selected; the weekday columns are right for this month | Mac | | | |
+| CAL4 | Previous and next move one month at a time, across December/January; “Go to today” returns | Mac | | | |
+| CAL5 | Tapping a day selects it and shows that day below; today and the selected day are easy to tell apart | Mac | | | |
+
+### C. Events
+| # | Check | Where | Result | Date | Notes |
+|---|---|---|---|---|---|
+| CAL6 | Add a medical appointment with only a title and date: it appears on its day, in Upcoming, and as a circle on the grid | Mac | | | |
+| CAL7 | Add a personal event with a time, location and notes: it appears with a square; opening it shows every detail | Mac | | | |
+| CAL8 | Add a therapy session as a medical appointment: the wording makes sense | Mac | | | |
+| CAL9 | Edit an event (title, type, date, time, location, notes): the calendar follows it to the new date | Mac | | | |
+| CAL10 | Delete an event: a confirmation appears; Cancel keeps it; Delete removes it everywhere | Mac | | | |
+| CAL11 | Try to save with no title, then with no date: a clear message appears and what you typed stays | Mac | | | |
+| CAL12 | Upcoming shows today and later in order, not past events; “Show all” appears with more than five | Mac | | | |
+| CAL13 | Safari's date and time pickers work as you expect in the form | Mac | | | |
+
+### D. Show on the calendar
+| # | Check | Where | Result | Date | Notes |
+|---|---|---|---|---|---|
+| CAL14 | The vaccine schedule is off at first; Medical appointments and Personal are on | Mac | | | |
+| CAL15 | Hide Medical appointments: only those disappear; a note says events are hidden; showing them again brings them back unchanged | Mac | | | |
+| CAL16 | Each of the three can be switched without affecting the others; the choice is still there after closing and reopening the app | Mac | | | |
+
+### E. Recommended vaccine schedule
+| # | Check | Where | Result | Date | Notes |
+|---|---|---|---|---|---|
+| CAL17 | Turn it on for a 4-month-old (born July 20, 2026, viewed in November 2026): one diamond on November 20, not a month of labels | Mac | | | |
+| CAL18 | Select that day: “CDC schedule reference · not an appointment”, “Reference age reached on this day: 4 months”, five vaccines; it does not look like an appointment | Mac | | | |
+| CAL19 | “Next on the CDC vaccine schedule: age 6 months” shows January 20, 2027 and takes you there; hepatitis B dose 3 shows “6–18 months” with “January 20, 2027 through February 19, 2028” | Mac | | | |
+| CAL20 | A day in the middle of a range (e.g. March 15, 2027) has no diamond, but shows the ranges that include it | Mac | | | |
+| CAL21 | The date of birth (July 20, 2026) shows the hepatitis B birth dose with its birth-weight and maternal-status note | Mac | | | |
+| CAL22 | “Ask your child's provider about” lists RSV antibody (two entries), rotavirus dose 3, Hib dose 3, influenza and COVID-19, with CDC's words and no dates | Mac | | | |
+| CAL23 | The provider statement is clear: your child's healthcare provider determines the schedule; the app doesn't track vaccines | Mac | | | |
+| CAL24 | “Source and how this is shown”: CDC, schedule title and July 2, 2025, retrieval date, non-endorsement, free at cdc.gov; the link opens CDC in a new window | Mac | | | |
+| CAL25 | A child using corrected age shows the same vaccine dates as their date of birth gives | Mac | | | |
+| CAL26 | Overall: the vaccine information reads as reference, is not alarming, and doesn't crowd the calendar | Mac | | | |
+
+### F. Profiles and data safety
+| # | Check | Where | Result | Date | Notes |
+|---|---|---|---|---|---|
+| CAL27 | Two children: each calendar shows only that child's events | Mac | | | |
+| CAL28 | Open Add event, type something, tap outside to close, switch child: nothing was saved for either child | Mac | | | |
+| CAL29 | (Optional, fictional data only) Delete a test profile: its events are gone; the other child's remain | Mac | | | |
+
+### G. Related screens, themes and layout
+| # | Check | Where | Result | Date | Notes |
+|---|---|---|---|---|---|
+| CAL30 | Home: “New event” opens the add form; “Coming up” lists the next events; do you want these Home changes kept? | Mac | | | |
+| CAL31 | Settings → Calendar describes the Calendar as it is (no reminders, no phone-calendar export) | Mac | | | |
+| CAL32 | All five themes: the grid, today, the selected day, the three markers and the vaccine panels read well | Mac | | | |
+| CAL33 | A narrow window (about 320–390 px wide): nothing is cut off; days are easy to tap | Mac | | | |
+| CAL34 | Keyboard: arrow keys move between days; Add event, the form and Delete work without a mouse | Mac | | | |
+| CAL35 | With Wi-Fi off after loading once: the Calendar opens and events can be added, edited and deleted | Mac | | | |
+| CAL36 | iPhone: the month grid, the form with the on-screen keyboard, the date and time pickers and the vaccine panels are comfortable; nothing overflows | iPhone | Deferred | — | Checkpoint 6 consolidated final acceptance |

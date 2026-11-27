@@ -41,7 +41,20 @@ async function newExercise(page: Page, title: string, opts: { method?: string; r
   await expect(page.getByTestId('exercise-title')).toHaveText(title);
 }
 
-const box = async (l: Locator) => (await l.boundingBox())!;
+/**
+ * Waits until no finite CSS animation is still running anywhere in the document. Sheets slide in over
+ * 240 ms (`sheet-in`, 24 px) and screens over the same time (`screen-in`, 6 px); a rectangle read while
+ * one is running is a moving target. This waits on the animations themselves (no fixed delay).
+ */
+const settle = (page: Page) => page.evaluate(async () => {
+  const running = document.getAnimations().filter((a) => a.playState === 'running' && Number.isFinite(a.effect?.getComputedTiming().endTime as number));
+  await Promise.all(running.map((a) => a.finished.catch(() => undefined)));
+});
+/** Bounding box after entrance animations have finished. */
+const box = async (l: Locator) => {
+  await settle(l.page());
+  return (await l.boundingBox())!;
+};
 const noOverflow = async (page: Page, label: string) => {
   expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), label).toBeLessThanOrEqual(0);
   const over = await page.evaluate(() => [...document.querySelectorAll('input, select, button, a.btn, svg')].filter((el) => {
@@ -54,8 +67,16 @@ const noOverflow = async (page: Page, label: string) => {
 async function expectAlignedDuration(page: Page, group: Locator, count: number) {
   const inputs = group.locator('input');
   await expect(inputs).toHaveCount(count);
-  const boxes = await Promise.all(Array.from({ length: count }, (_, i) => box(inputs.nth(i))));
-  const labels = await Promise.all(Array.from({ length: count }, (_, i) => box(group.locator('label').nth(i))));
+  // All rectangles are read together, in one browser evaluation and after entrance animations, so
+  // every field and label is measured in the same frame (R-014 timing correction, Checkpoint 3).
+  await settle(page);
+  const rects = await group.evaluate((el) => {
+    const r = (e: Element) => { const b = e.getBoundingClientRect(); return { x: b.x, y: b.y, width: b.width, height: b.height }; };
+    return { boxes: [...el.querySelectorAll('input')].map(r), labels: [...el.querySelectorAll('label')].map(r) };
+  });
+  const { boxes, labels } = rects;
+  expect(boxes).toHaveLength(count);
+  expect(labels).toHaveLength(count);
   const vw = page.viewportSize()!.width;
   for (const b of boxes) {
     expect(Math.abs(b.y - boxes[0]!.y)).toBeLessThan(1);

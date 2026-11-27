@@ -134,3 +134,10 @@ A living list of refinements and suspected defects that are recorded but not yet
 - **R-010 to R-017:** closed as human-accepted (owner, Mac Safari, GR1–GR15 PASS).
 - **Deferred:** R-001, R-003, R-009 and R-018 stay deferred — after submission, or reassessed during Checkpoint 6 iPhone use (R-018). R-001 (onboarding field overflow on a phone) may be observed again during Checkpoint 6 iPhone acceptance; any correction still needs authorization.
 - **Earlier status lines** in this file that say “Corrected (awaiting verification)” or “iPhone pending” for R-002 and R-004 to R-008 are kept as recorded; their iPhone checks are part of Checkpoint 6.
+
+---
+
+## Checkpoint 3 note (2026-11-27)
+- **R-014 test timing (not a product refinement):** the intermittent failure of the R-014 layout test found at initialization was a measurement taken during a sheet's entrance animation. Corrected in the test helper only (BUILD_LOG #53). No application change; R-014 itself stays closed as human-accepted.
+- **R-001, R-003, R-009 and R-018 remain deferred** and were not changed.
+- **For the owner's review at acceptance (not yet backlog items):** tapping outside the event form discards what was typed (same as the app's other sheets); the Home “Coming up” card and live “New event” action (Decision #136).

@@ -124,7 +124,8 @@ test('deleting the only profile asks for a new child instead of breaking', async
 test('later-checkpoint tabs are clearly marked as not available', async ({ page }) => {
   await completeOnboarding(page);
   // Checkpoint 2a: Growth is now implemented (covered in growth.spec.ts); the remaining placeholder tabs are checked here.
-  for (const tab of ['Calendar', 'Journal', 'Resources']) {
+  // Checkpoint 3: the Calendar is now implemented (covered in calendar.spec.ts), so it is no longer a placeholder.
+  for (const tab of ['Journal', 'Resources']) {
     await page.getByRole('link', { name: tab, exact: true }).click();
     await expect(page.getByRole('heading', { name: tab, level: 1 })).toBeVisible();
     await expect(page.getByText('Preview only.', { exact: false }).first()).toBeVisible();
@@ -163,7 +164,7 @@ test('works offline after the first load (service worker)', async ({ page, conte
   await context.setOffline(true);
   await page.reload();
   await expect(page.getByRole('heading', { name: 'Sample Child A' })).toBeVisible();
-  await page.getByRole('link', { name: 'Calendar' }).click();
+  await page.getByRole('link', { name: 'Calendar', exact: true }).click(); // exact: Home now also has an “Open Calendar” link (Checkpoint 3)
   await expect(page.getByRole('heading', { name: 'Calendar', level: 1 })).toBeVisible();
   // Creating a profile works offline.
   await page.goto('./#/profiles/new').catch(() => undefined);

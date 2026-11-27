@@ -445,3 +445,63 @@ Environment: Linux cloud container, Node 22.23.5, headless Chromium (Playwright;
 - **Scope revision:** submission deadline about 12 hours (up to 36); the several-days-of-use requirement was removed by the professor. Remaining: Checkpoint 3 (Simplified Calendar), Checkpoint 4 (Journal; Resources removed from navigation), Checkpoint 6 (final testing, deployment, iPhone acceptance). Checkpoint 5 and Resources deferred until after submission. The submission version will have no supported backup or restoration (KNOWN_LIMITATIONS).
 
 **What I corrected or redirected:** (to be completed by the owner) — narrowing the Calendar to a standalone record-keeping feature with a default-off vaccine overlay, removing Resources from the submission, and deferring Checkpoint 5 to fit the deadline.
+
+## Draft entry — Checkpoint 3: Simplified Calendar (drafted by Claude Code; edit before submitting)
+**Date:** 2026-11-27
+**What I asked Claude Code to do:**
+- Start a fresh conversation from the exact accepted commit, verify the baseline, and stop.
+- Prepare Checkpoint 3 without implementing it: investigate one intermittent test failure, verify a vaccine schedule source and its reuse terms, and check whether the existing event store was enough.
+- Then build the Simplified Calendar under my decisions on seven questions, correct the test, update the documentation, and stop for my acceptance.
+
+**What it produced:**
+- A Calendar tab with a month grid, month navigation, today and selected-day indicators, the selected day's events, Upcoming, and one Add event action.
+- Three independent overlays: Recommended vaccine schedule (off by default), Medical appointments, Personal.
+- Parent-entered events with create, view, edit and delete, in the existing `events` store (database version 3 unchanged).
+- A bundled, validated copy of CDC's July 2, 2025 childhood schedule shown as reference ages from the date of birth, with undated provider-discussion items, attribution and limitations.
+- A test-only correction for the R-014 timing defect, 47 new unit and 29 new end-to-end tests, screenshots (`docs/screenshots/checkpoint-3/`), a review report (`docs/reviews/CHECKPOINT_3_IMPLEMENTATION_REPORT.md`) and an acceptance checklist (CAL1–CAL36).
+
+**What I corrected or redirected:** (to be completed by the owner) — I modified Claude Code's proposal to show a single recommended age as a month-long window (it became a one-day reference marker); chose outright deletion over tombstones; kept overlay choices device-wide; and required the legal circumstances of the schedule to be recorded with a recheck at Checkpoint 6.
+
+### Workspace recovery and baseline (this conversation, 2026-11-27)
+- The new workspace started on `claude/great-dijkstra-wwi9g1` at `aa8c869` (the same as `main`). The authoritative branch `claude/vigilant-keller-w6ss5f` was fetched and the session branch **fast-forwarded to the exact commit** `3da76c71f1c71a7818594bacc33167f67d638f81` (15 commits, parent `b45af43`, clean tree). No history was rewritten; `main` (`aa8c869`) was not touched.
+- **Baseline, one cycle (Node 22.23.5):** type check, build and content validation passed; **379 of 379 unit**; **218 of 219 end-to-end**. The one failure was the R-014 layout test (challenge #53). Reported without changing anything.
+- **Preservation push versus deployment:** a push to a non-`main` branch only preserves a commit on GitHub. It does not change `main` or the published app. Deployment is the separate manual workflow from `main`. During this conversation the environment's stop hook asked for a push after each turn; each request was declined because pushes need my authorization. At the time of writing the Checkpoint 3 commit is local only.
+
+### Development challenges and lessons learned (continued from #52)
+| # | Challenge | Class | What happened | Outcome |
+|---|---|---|---|---|
+| 53 | **Intermittent R-014 layout assertion** | Test defect (pre-existing) | The baseline failed 218/219: duration labels “on one line” measured 4.10 px apart. It then failed 1 of 10 in parallel and 0 of 10 with one worker. The helper read each field and label in a separate browser round-trip while the sheet was still sliding in (24 px over 240 ms). A scratch diagnostic showed 0 px spread when all labels were read in one frame and offsets of up to 5.94 px (including 4.09 px) when read one at a time; fonts were loaded. Three earlier consecutive clean cycles had not shown it. | The helper waits for the animations themselves to finish and reads all rectangles in one evaluation; the shared `box()` helper waits the same way (two more measurements in that file had the same exposure). No tolerance, assertion or application change. 60 of 60 in parallel. **The cause is inferred from a matching reproduction, not from a trace of the original failure.** |
+| 54 | **Stale source documentation after the scope revision** | Documentation discrepancy | SOURCE_REGISTER and KNOWN_LIMITATIONS still listed the well-child schedule and AAP immunization schedule as pending Checkpoint 3 decisions, although Decision #119 had removed well-child references and AAP stays excluded. | Corrected in the Checkpoint 3 documentation update, as instructed, not in a separate commit. |
+| 55 | **Which vaccine schedule currently applies** | Source uncertainty (external) | CDC's schedule pages carried a banner: a preliminary court order of March 16, 2026 stayed the 2025 ACIP votes and a January 5, 2026 revision, so the July 2, 2025 schedule is CDC's current one. An older schedule being “current” by court order was not something to resolve silently. | Reported before any implementation. I approved the July 2, 2025 version; the circumstances are in SOURCE_REGISTER; a currency recheck is required at Checkpoint 6. |
+| 56 | **CDC refused a command-line request** | Environment or tooling limitation | A plain request for CDC's terms page returned 403 “Access Denied”. | The terms page was read first, then each page was loaded once in headless Chromium as text only, the method used at 2a and 2b. Recorded in SOURCE_REGISTER. No restricted or third-party material was collected. |
+| 57 | **A single age shown as a month-long window** | Design proposal corrected in review | Claude Code's preparation report proposed showing “2 months” as the whole month of age, to avoid looking like an appointment date. | I rejected this as an unsupported clinical window. A single age is one labelled reference marker on that age's anniversary; only ranges CDC states are shown as ranges. |
+| 58 | **Flattened table text lost the age ranges** | Proactively identified risk | The page text gave “Dose 3” with no way to tell which age columns it spanned. | The table structure (column spans and CDC's key classes) was read from the page and compared with the professional table and notes; a unit test checks the ages against values typed independently from the notes. |
+| 59 | **Keyboard focus lost between months** | Application defect (new code) | The new keyboard test failed: after an arrow key moved into another month, the focused day was removed and focus returned only after the next paint, so a quick second key press was ignored. | Focus is restored in a layout effect, in the same commit that draws the new month. |
+| 60 | **Defects in newly written tests** | Test defects | Four: one expected “next reference” to follow the selected day (it follows today); one reloaded before a preference had been saved; two navigated while a deletion or onboarding was still finishing. | Corrected before the final runs. The calendar suite then passed 84 of 84 over three repeats. |
+| 61 | **Existing tests that encoded the old requirement** | Requirement change | The first full cycle failed 425/426 unit: a default-settings test listed the exact overlay fields. The restarted cycle failed 1 end-to-end: the Checkpoint 1 offline test clicked a link named “Calendar”, which now also matched Home's new “Open Calendar” link. Two other tests named the Calendar as a placeholder and the Settings section as “Calendar & Reminders”. | Each updated with the reason in place; none removed. The three-cycle sequence was restarted from cycle 1 both times. |
+| 62 | **Stale placeholders next to a working Calendar** | Scope judgement | Home still offered “New event — coming soon” and a “Coming up” placeholder; Settings still listed reminders and phone-calendar export as coming soon. | Settings now describes what exists (authorized). Home's action is live and “Coming up” lists the next three events (Decision #136); this goes slightly beyond the Calendar tab and is flagged for my confirmation. |
+| 63 | **Intermittent “guide writes nothing” test** | Test defect (pre-existing) | In the third attempt, cycle 1 passed and cycle 2 failed 247/248: a 2a test read the overall progress text immediately after navigating and saw “0 of 11 achieved” (records not yet loaded) instead of “1 of 10 achieved”. Growth code was not changed at Checkpoint 3. Like #47, #52 and #53, it is a single immediate read racing a load. | Both reads now use a retrying assertion with the same expected value (8 of 8 in parallel). The sequence was restarted from cycle 1. **Lesson:** the suite still contains immediate, non-retrying reads; others may surface under load. |
+
+### Automated results (run by Claude Code in this conversation)
+Environment: Linux cloud container, Node 22.23.5, headless Chromium (Playwright; 390×844 phone project plus the desktop responsive project), no retries. **No Safari, Mac, iPhone or Android testing was performed.**
+
+**Attempts not counted (each restarted from cycle 1 after one failure):**
+1. Cycle 1: 425 of 426 unit (default-settings test, #61).
+2. Cycle 1: 426 unit, 247 of 248 end-to-end (Checkpoint 1 offline test's link selector, #61).
+3. Cycle 1 passed (426 + 248); cycle 2: 426 unit, 247 of 248 end-to-end (pre-existing intermittent 2a test, #63).
+
+**Final sequence — three consecutive complete cycles:**
+
+| Check | Run 1 | Run 2 | Run 3 |
+|---|---|---|---|
+| Type check | Passed | Passed | Passed |
+| Production build (includes milestone, guide, display, activity, goal-idea and vaccine-schedule validation) | Passed (JS 562.19 kB, 132.00 kB gzip) | Passed | Passed |
+| Unit tests (21 files) | **426 passed** | **426 passed** | **426 passed** |
+| End-to-end tests | **248 passed** | **248 passed** | **248 passed** |
+| **Total** | **674 passed** | **674 passed** | **674 passed** |
+
+- **New:** 47 unit tests (`calendar.test.ts` 29, `eventsRepo.test.ts` 18) and 29 end-to-end tests (`calendar.spec.ts` 28, `update.spec.ts` +1).
+- **Changed intentionally:** the placeholder-tab test, the Settings section list, the default-settings unit test, the Checkpoint 1 offline link selector. **Corrected for timing only:** the R-014 helper (#53) and the 2a “guide writes nothing” reads (#63). None removed.
+- **Targeted runs before the cycles:** the four tests using the corrected R-014 helpers, 60 of 60 in parallel; the calendar suite, 84 of 84 over three repeats; the corrected 2a test, 8 of 8.
+- **Bundle:** 529.04 → 562.19 kB (122.74 → 132.00 kB gzip).
+- **Screenshots:** `docs/screenshots/checkpoint-3/` (seven; 390 px, 320 px and 1280 px; Earth, Sage and Lavender), produced by `scripts/checkpoint-3-screenshots.mjs` with fictional data.
