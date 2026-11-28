@@ -1,6 +1,8 @@
 # Development Plan — Roll, Crawl, RUN: Tracking Growth Together (Revision 2)
 
-> **Current status (2026-11-28, CP6-R):** the owner's physical iPhone acceptance of the published version passed 10 checks, failed P4 (date and time fields wider than the screen; R-029) and left P10 (offline) untested. R-029 is corrected in the shared stylesheet and republished. **Remaining: the owner's iPhone retest of P4**, and the owner's submission materials.
+> **Current status (2026-11-28, FINAL): the submission-version application is complete, accepted and published.** Live at https://jcandm1088.github.io/roll-crawl-run/ from commit `831a0dd`. The owner's physical iPhone acceptance is complete: all 12 requirements satisfied (P4 failed at first and passed after the R-029 correction; P10 was untested at first and then passed). Checkpoint 5 and the other deferred items remain deferred. **No further development is authorized** (R25).
+
+> *Previous status line (kept as recorded):* **Current status (2026-11-28, CP6-R):** the owner's physical iPhone acceptance of the published version passed 10 checks, failed P4 (date and time fields wider than the screen; R-029) and left P10 (offline) untested. R-029 is corrected in the shared stylesheet and republished. **Remaining: the owner's iPhone retest of P4**, and the owner's submission materials.
 
 > *Previous status line (kept as recorded):* **Current status (2026-11-28, Checkpoint 6 — published):** the completed submission version is **published** at https://jcandm1088.github.io/roll-crawl-run/ from commit `6b6a2d2` on `main` (R24), after the owner streamlined Checkpoint 6. **Remaining: the owner's physical iPhone acceptance** and the owner's submission materials. Checkpoint 5 and the other deferred items stay deferred. The current-state handoff is `docs/HANDOFF.md`.
 
@@ -51,6 +53,14 @@
 **Visual direction (CP1):** premium, warm, calm, adult-oriented; no cartoon imagery, not clinical, not generic dashboard. Five cohesive theme systems (Earth default, Sky, Blush, Lavender, Sage) sharing typography, spacing, iconography, components, buttons, navigation. Fraunces (display) + Inter (UI), subject to review. Initial app icon + wordmark preserving "Roll, Crawl, RUN: Tracking Growth Together". Safe-area insets, ≥44–48px targets.
 
 **Checkpoint 1 build list:** scaffold (Vite/TS/Preact, Vitest, Playwright); fonts self-hosted (fetched from npm `@fontsource` packages, OFL); icon/wordmark (SVG → PNG sizes generated with Playwright); design tokens + 5 themes + contrast test; app shell (top bar with child chip + settings, bottom nav, hash router); placeholder tabs clearly labeled "Coming in a later checkpoint"; onboarding (DOB, name/photo, corrected age, theme, privacy); profiles create/edit/switch/delete (typed confirmation; backup purge option present but backups feature labeled pending); age domain (chronological + corrected with safeguards); IndexedDB schema v1 for all planned stores with logical-key indexes and atomic transaction helper; repositories for meta/settings/children/photos; storage-persistence status; privacy disclosures in Settings; manifest + basic service worker (precache, update banner); unit + e2e tests; mobile screenshots via Playwright at deviceScaleFactor 2; docs skeletons (README, BUILD_LOG template, TESTING_CHECKLIST, KNOWN_LIMITATIONS, DECISIONS, SOURCE_REGISTER). Code lives in `/home/user/roll-crawl-run` (git init locally; no push until you provide the remote).
+
+---
+
+## R25 — Final acceptance and project closeout (owner, 2026-11-28)
+- **Checkpoint 6 as it actually ran:** streamlined publication of `6b6a2d2` (R24) → the owner's iPhone acceptance (10 passed, P4 failed, P10 untested) → R-029, a CSS-only correction to native date and time fields, republished as `831a0dd` → the owner's iPhone reacceptance (P4a–P4d and P10 passed).
+- **Result:** every submission-version checkpoint (1, 2a, 2b, 2b-R, 3, 4, 6) is accepted; all 12 physical iPhone requirements are satisfied; no open refinement or known defect (Decisions #195–#198).
+- **Not part of the submission version, deferred:** Checkpoint 5 (backup and restoration, partner sharing, provider reports, exports), Resources, Journal photographs (R-023), R-001, R-003, R-009, R-018, a project license.
+- **No further development is authorized.** Any later work starts from a new authorization and `docs/HANDOFF.md`.
 
 ---
 

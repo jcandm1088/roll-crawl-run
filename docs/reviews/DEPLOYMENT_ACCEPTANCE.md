@@ -47,3 +47,8 @@ At the deployed commit: 185 unit tests and 80 end-to-end tests passed in headles
 - **Installed app, physical iPhone (owner):** 10 passed (including the update from the installed Checkpoint 1 app and preservation of existing data), P4 failed, P10 not tested. Details in TESTING_CHECKLIST.
 - **R-029 correction** republished through the same workflow from the commit that contains this note. The workflow result and the live check are in the delivery report.
 - **Owner's retest of P4 on the iPhone: not yet performed.**
+
+## Final deployment and device acceptance (2026-11-28)
+- **Deployed commit:** `831a0dd7086943a5f4549cb6209be4285e0b07dd` (workflow run 3, succeeded; https://github.com/jcandm1088/roll-crawl-run/actions/runs/46104965974). The public app's files were byte-identical to a local build of that commit.
+- **Owner's reacceptance on the installed iPhone app:** P4a–P4d and P10 passed; no further observations. All 12 physical iPhone requirements are satisfied.
+- **Not redeployed afterwards:** the later commit on `main` is documentation only.

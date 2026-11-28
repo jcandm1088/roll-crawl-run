@@ -335,3 +335,9 @@ Details are in `docs/reviews/CHECKPOINT_1_FINAL.md`.
 192. **Physical iPhone acceptance of the published version (`6b6a2d2`, installed app):** P1–P3, P5–P9, P11 and P12 passed (10); **P4 failed** (date and time fields wider than the screen); P10 (offline) was not tested and is not marked passed. The installed Checkpoint 1 app updated to the final version with existing data preserved.
 193. **R-029 authorized and corrected in the shared stylesheet only** (REFINEMENT_BACKLOG). Verification was streamlined: a focused layout test at 320 and 390 px, type check, build, and targeted end-to-end files; no complete regression cycle. Republication through the existing workflow is authorized.
 194. **P4 stays failed until the owner retests on the iPhone.** The automated checks run in Chromium, which does not reproduce the iOS behavior.
+
+## Final acceptance and project closeout (owner, 2026-11-28)
+195. **Physical iPhone reacceptance (installed app, published `831a0dd`):** P4a–P4d and P10 passed; no further observations. With the ten items passed earlier, **all 12 physical iPhone acceptance requirements are satisfied.** The record keeps P4's original failure and P10's original untested status, followed by their successful reacceptance.
+196. **R-029 is formally accepted and closed.**
+197. **The submission-version application is complete.** Deployed commit: `831a0dd7086943a5f4549cb6209be4285e0b07dd`. The final repository commit is a documentation-only closeout on top of it; the application is not redeployed.
+198. **No further development is authorized.** Standing limitations, tests never performed and deferred enhancements are preserved as recorded (KNOWN_LIMITATIONS, TESTING_CHECKLIST, REFINEMENT_BACKLOG). The portfolio document, idea statement, personal build log, use log and home-screen screenshot are the owner's.

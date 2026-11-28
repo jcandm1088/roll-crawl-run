@@ -726,3 +726,34 @@ Reported by the owner for the local build of `64202e2` in Mac Safari (port 4179)
 ## CP6-R — owner's iPhone retest (**not yet performed**)
 - **P4-R** After updating the installed app (open it online; tap Refresh when offered, or close it fully and reopen): the date and time fields on a milestone, a goal, an exercise, a Calendar event, a Journal entry, the Journal's From/To filters and a child's profile sit inside the screen, line up with the other fields, and the page no longer scrolls sideways. Empty and filled fields both fit. The pickers still open and set a value.
 - **P10** (offline) remains untested.
+
+## CP6-R — owner's physical iPhone reacceptance (owner report, 2026-11-28, published `831a0dd`, installed app)
+*Reported by the owner. Claude Code did not observe these tests. The owner reported P4a, P4b, P4c and P4d as PASS without describing them; the “What” column maps them to the four numbered steps of the retest given to the owner, which is Claude Code's reading, not the owner's wording.*
+
+| Item | What | Result |
+|---|---|---|
+| P4a | The installed app updated to the corrected version | PASS |
+| P4b | Date and time fields checked across the app (milestone, goal, exercise, Calendar event, Journal entry and filters, profile) | PASS |
+| P4c | Fields sit inside the screen, line up with other fields, no sideways scrolling; empty and filled | PASS |
+| P4d | The native pickers still open and set a value | PASS |
+| P10 | Offline launch, navigation and editing | PASS |
+
+**Additional observations: none.**
+
+## Final acceptance — complete testing history of the physical iPhone requirements (P1–P12)
+| Item | First test (published `6b6a2d2`) | Reacceptance (published `831a0dd`) | Final |
+|---|---|---|---|
+| P1, P2, P3, P5, P6, P7, P8, P9, P11, P12 | PASS | — | PASS |
+| P4 (layout and touch) | **FAIL** — date and time fields wider than the screen (R-029) | PASS (P4a–P4d) | PASS after correction |
+| P10 (offline) | **N/A — not tested** | PASS | PASS |
+
+**All 12 physical iPhone acceptance requirements are satisfied. The submission-version application is complete (2026-11-28).**
+
+**Kinds of evidence across the project, kept separate:** the owner's Mac Safari acceptance of each checkpoint; the owner's physical iPhone acceptance (above); delegated secondary review by ChatGPT; automated results by Claude Code in headless Chromium (BUILD_LOG). None substitutes for another.
+
+**Never performed by a person, on any device (standing; not passed):**
+- Journal J5 (a reflection with only text), J7 (validation messages), J26 (reload and reopen), J27 (offline), J29 (narrow width), J30 (keyboard only), J31 (finding source information), as separately itemized Mac checks. *(The iPhone tests P7, P9 and P10 exercised Journal creation, persistence and offline use on the device; the itemized Mac checks themselves were not run.)*
+- Calendar keyboard-only operation and offline editing as itemized Mac checks (CAL34, CAL35).
+- Android; a second device; larger text sizes; the optional JR12.
+
+**Not run at the end (owner's streamlined scope):** a complete regression cycle after `aa695b9` (the R-029 correction had targeted tests only), a final accessibility pass, a repeated publication audit. No automated run was made for the documentation-only closeout commits.

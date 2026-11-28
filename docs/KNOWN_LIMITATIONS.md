@@ -1,6 +1,6 @@
 # Known Limitations
 
-Last updated 2026-11-28 (Checkpoint 4 and refinements R-024 to R-028 formally accepted; preserved on `claude/awesome-ritchie-b198ya`). Earlier sections are kept as dated records; where a later statement supersedes an earlier one, the earlier one is marked. Items marked *(planned)* are scheduled for later checkpoints. Refinements and suspected defects awaiting correction are tracked in `docs/REFINEMENT_BACKLOG.md`.
+Last updated 2026-11-28 (final closeout: the submission version is complete, accepted and published at `831a0dd`). The final section lists what still stands. Earlier sections are kept as dated records; where a later statement supersedes an earlier one, the earlier one is marked. Items marked *(planned)* are scheduled for later checkpoints. Refinements and suspected defects awaiting correction are tracked in `docs/REFINEMENT_BACKLOG.md`.
 
 ## Not built yet (placeholders)
 - ~~Goals & Exercises, recurring activities, CDC activities, and charts *(Checkpoint 2b)*~~ Built at Checkpoint 2b (awaiting the owner's acceptance).
@@ -213,3 +213,25 @@ Last updated 2026-11-28 (Checkpoint 4 and refinements R-024 to R-028 formally ac
 - **R-029's correction is unverified on a device.** It follows the known behavior of iOS Safari's date and time controls, but it could not be reproduced or confirmed in this environment (Chromium only; no WebKit). The owner's iPhone retest decides it.
 - **Offline use on the iPhone (P10) has not been tested** for the final version.
 - *(Supersedes “Never tested on a physical iPhone” in the Publication section: the owner has now tested the installed final version; see TESTING_CHECKLIST.)*
+
+## Final closeout (2026-11-28) — what still stands
+*Resolved since the sections above: R-029 is verified on the owner's iPhone, and offline use on the iPhone (P10) has passed. Everything below remains true of the published submission version.*
+
+**The app**
+- **No backup or restoration.** Data lives only in the browser's storage on one device. Clearing website data, deleting the app or losing the device loses it.
+- **Not encrypted or password-protected;** not a medical record system; no HIPAA or clinical-security claim.
+- **No sharing, exports, provider reports, synchronization, Resources or Journal photographs** (deferred).
+- **No automatic drafts:** unsaved writing is lost if the page is reloaded or closed. Deleted entries and events cannot be recovered.
+- **The vaccine schedule is a dated snapshot** (CDC, July 2, 2025, current under a preliminary court order when checked on 2026-11-28). It does not update itself; the app still shows the 2026-11-27 check date.
+- **Organizing and documentation only:** it does not diagnose, screen or advise.
+- **The version label is 0.1.1** for both Checkpoint 1 and the final version.
+- **No project license** has been chosen.
+
+**The evidence**
+- **One iPhone, one Mac, one person.** Not tested on Android, another iPhone model, an iPad, or with larger text sizes.
+- **Never performed by a person as itemized checks:** Journal J5, J7, J26, J27, J29, J30, J31; Calendar CAL34, CAL35 (TESTING_CHECKLIST).
+- **No complete regression cycle after `aa695b9`.** The last was 475 unit and 292 end-to-end tests there. The R-029 correction had targeted tests, and its only device verification is the owner's retest. No final accessibility pass or repeated publication audit was run.
+- **Automated tests ran in headless Chromium on Linux only,** never in WebKit or Safari.
+- **Not clinically reviewed.** Sources and permissions are as recorded in SOURCE_REGISTER; nothing is endorsed by CDC, HHS or the U.S. Government.
+
+**Deferred refinements:** R-001, R-003, R-009, R-018, R-023 (REFINEMENT_BACKLOG).

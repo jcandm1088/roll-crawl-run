@@ -873,3 +873,24 @@ See “Checkpoint 6 — publication checks” in TESTING_CHECKLIST. **No Safari,
 | # | Challenge | Class | What happened | Outcome |
 |---|---|---|---|---|
 | 88 | **A defect only a real iPhone could show** | Application layout defect (iOS only), found by physical-device testing | Native date and time fields on iOS Safari keep an intrinsic minimum width and their own appearance, so the shared `width: 100%` did not contain them. Every earlier check ran in desktop Safari or headless Chromium, where the fields behave. 767 automated tests, including “no sideways scrolling” checks at 320 px, passed with the defect present. | Corrected in the shared stylesheet; republished; awaiting my retest. **Lesson:** emulated phone widths test my layout, not the phone's own controls. Physical-device testing found in minutes what no simulated check could. |
+
+## Draft entry — Final acceptance and project closeout (drafted by Claude Code; edit before submitting)
+**Date:** 2026-11-28
+**What happened:**
+- **I retested the corrected app on my iPhone** (installed app, published `831a0dd`): the update arrived, every date and time field now fits the screen and lines up with the other fields, the pickers still work, and offline use works. P4a–P4d and P10 passed. I had no further observations.
+- **All 12 physical iPhone requirements are satisfied.** The record keeps what actually happened: P4 failed the first time and passed after the R-029 correction; P10 was not tested the first time and passed the second.
+- **R-029 is closed. The submission version is complete.**
+- **Actual testing history, kept separate:**
+  - *Mine, Mac Safari:* acceptance of each checkpoint, with the failures and untested items recorded in TESTING_CHECKLIST.
+  - *Mine, physical iPhone:* 10 of 12 on the first published version; the remaining two on the corrected version.
+  - *Delegated secondary review (ChatGPT):* source and screenshot reviews, and two diagnoses that proved right (the routing state behind R-026; the shared input styling behind R-029).
+  - *Automated (Claude Code, headless Chromium):* the last complete cycle was 475 unit and 292 end-to-end tests on `aa695b9`; R-029 had targeted tests only. No run was made for this documentation-only closeout.
+- **Still true, and written down rather than tidied away:** no backup; one iPhone and one Mac; several itemized checks never performed by a person; no final full regression after the last two changes; deferred features unbuilt.
+- **Preservation:** this documentation-only closeout was pushed to `main` and `claude/awesome-ritchie-b198ya` with my authorization (normal pushes). The app was not redeployed.
+
+### Development challenges and lessons learned (continued from #88)
+| # | Challenge | Class | What happened | Outcome |
+|---|---|---|---|---|
+| 89 | **A correction that could only be verified by me** | Verification limit | Claude Code could not reproduce the iPhone defect or confirm its own fix: its environment has Chromium only. It said so, shipped the well-understood correction with a guard test, and left P4 recorded as failed until I checked. | My retest passed. **Lesson:** the honest status of an unverifiable fix is “corrected, not verified”, and the person with the device closes it. |
+
+**What I corrected or redirected:** (to be completed by the owner)

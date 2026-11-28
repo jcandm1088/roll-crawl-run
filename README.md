@@ -2,11 +2,12 @@
 
 A private, local-first, installable web app (PWA) that helps parents document their child's development, appointments, and reflections. It runs entirely in the browser: no account, no server, no analytics, and no AI.
 
-> **Status (2026-11-28): the completed submission version is published.**
-> - **Live app:** https://jcandm1088.github.io/roll-crawl-run/ (first published from commit `6b6a2d2`; republished with the R-029 correction). Home, Growth, Calendar and Journal are all live.
-> - **Accepted by the owner in Mac Safari, checkpoint by checkpoint, and tested on a physical iPhone** (10 of 12 checks passed; one layout defect in date and time fields, R-029, has been corrected and republished and awaits the owner's retest; offline use was not tested). There is no backup or restore: data lives only on the device.
-> - **Deferred until after submission:** backups, sharing, provider reports, Resources, Journal photographs.
-> - Current state: `docs/HANDOFF.md`. *The dated notes below are the project's history and are superseded where they conflict with the lines above.*
+> **Status (2026-11-28): complete, accepted and published.**
+> - **Live app:** https://jcandm1088.github.io/roll-crawl-run/ (deployed commit `831a0dd`). Home, Growth, Calendar and Journal.
+> - **Accepted by the owner** in Mac Safari, checkpoint by checkpoint, and on a physical iPhone as an installed app: all 12 device requirements satisfied. One iPhone layout defect in date and time fields was found there, corrected and re-verified on the device.
+> - **What it does not have:** backup or restore (data lives only on the device, unencrypted), sharing, provider reports, Resources, Journal photographs. These are deferred, not built.
+> - **What was not tested:** see `docs/KNOWN_LIMITATIONS.md` (final section) and `docs/TESTING_CHECKLIST.md`. Automated tests ran in headless Chromium only.
+> - No further development is planned for the submission version. Current state: `docs/HANDOFF.md`. *The dated notes below are the project's history and are superseded where they conflict with the lines above.*
 >
 > **Earlier status notes (2026-11-27 and 2026-11-28, kept as history):**
 > - **Checkpoint 1 — completed, accepted and deployed.** Live app: https://jcandm1088.github.io/roll-crawl-run/ (deployed commit `e40287f`). Repository: https://github.com/jcandm1088/roll-crawl-run.

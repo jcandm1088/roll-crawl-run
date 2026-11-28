@@ -2,9 +2,26 @@
 
 **This is the single authoritative, current-state handoff.** It replaces the earlier handoff notes. The original end-of-Checkpoint-1 handoff is kept unchanged as a historical record in `docs/reviews/CHECKPOINT_1_HANDOFF.md`; statements there describe the project as it was at commit `aa8c869` and are no longer current.
 
-*Last updated: 2026-11-28 (Checkpoint 6: the submission version is **published**; documentation-only record). **Start at section 0.***
+*Last updated: 2026-11-28 (**final closeout: the submission version is complete, accepted and published; no further development is authorized**). **Start at section 0.***
 
-## 0. Published with the R-029 correction — awaiting the owner's iPhone retest of P4
+## 0. FINAL — complete, accepted and published
+**Published app:** https://jcandm1088.github.io/roll-crawl-run/ — **deployed commit `831a0dd7086943a5f4549cb6209be4285e0b07dd`** (workflow run 3, 2026-11-28).
+**Repository:** https://github.com/jcandm1088/roll-crawl-run — `main` and `claude/awesome-ritchie-b198ya` are at the same commit: the documentation-only “Final Acceptance and Project Closeout” on top of `831a0dd` (27 commits; exact hash in the owner's closeout confirmation; verify with `git ls-remote`). The deployed app is `831a0dd`; the closeout changed no application file and was not deployed.
+
+**Acceptance:** every submission-version checkpoint (1, 2a, 2b, 2b-R, 3, 4, 6) is accepted. Physical iPhone: all 12 requirements satisfied (P4 failed first and passed after R-029; P10 was untested first and then passed). R-002 to R-029: none open.
+
+**No further development is authorized.** The owner's remaining work is the submission itself (portfolio document, idea statement, personal build log, use log, home-screen screenshot).
+
+**If work ever resumes, it needs a new authorization. Start with:**
+- **What stands:** KNOWN_LIMITATIONS, “Final closeout — what still stands” (no backup; unencrypted local data; dated vaccine snapshot; version label still 0.1.1; no project license).
+- **Never performed by a person:** TESTING_CHECKLIST, final acceptance section (J5, J7, J26, J27, J29, J30, J31; CAL34, CAL35; other devices).
+- **Deferred, not to be built without authorization:** Checkpoint 5 (backup and restoration, partner sharing and synchronization, provider reports, exports; Personal Reflections excluded from every export by default, Decision #165); Resources and daily encouragement; Journal photographs (R-023); R-001, R-003, R-009, R-018.
+- **Baseline to re-establish first:** one complete cycle (the last was 475 unit + 292 end-to-end on `aa695b9`; R-029 added one layout test in two projects). Diagnose any odd failure rather than re-running it (BUILD_LOG #80).
+- **Rules that held throughout:** no push, merge or deployment without explicit authorization for that action; deployment is the manual workflow from `main` (section 7); fictional data only; never claim human or device testing that did not happen; headless Chromium is not Safari or an iPhone; a finding outside the authorized scope is reported, not fixed.
+
+*(Sections 0h to 0a below are earlier records, newest first, kept as written; section 0 supersedes them.)*
+
+## 0h. Published with the R-029 correction — awaiting the owner's iPhone retest of P4 *(since passed)*
 **Owner's iPhone acceptance of the published version (2026-11-28):** 10 PASS (P1–P3, P5–P9, P11, P12), **P4 FAIL**, P10 not tested. The installed Checkpoint 1 app updated and kept its data.
 **R-029** (native date and time fields wider than the screen on iPhone): corrected in `src/ui/styles/base.css` only, with a layout test in `tests/e2e/responsive.spec.ts`; republished from the commit “CP6-R: iPhone Date and Time Field Width Correction” on `main` (26 commits; exact hash and workflow result in the delivery report). **Not verified on a device: Chromium can't reproduce it. P4 stays failed until the owner's retest (P4-R).** P10 (offline) remains untested.
 **If the retest still fails:** report what the owner sees (which fields, by how much, empty or filled) before changing anything else.
@@ -184,7 +201,7 @@
 | **Checkpoint 2b-R** — Human Acceptance Refinements R-010 to R-017 | ✅ **Accepted for continued development** (owner, Mac Safari, 2026-11-27): **all 15 applicable Mac checks (GR1–GR15) passed** against `b45af43`. GR16 (iPhone) deferred to Checkpoint 6. Preserved on remote `claude/vigilant-keller-w6ss5f`. Not merged or deployed. Database version 3 |
 | **Checkpoint 3** — Simplified Calendar (plan R16) with refinements R-019 to R-022 (plan R17) | ✅ **Formally accepted for the submission version** (2026-11-27), subject to final physical-device and publication checks. Owner, Mac Safari: CAL1–CAL33 and CR1–CR5, CR7–CR9 PASS; CAL34–CAL35 not human-tested; CR6 failed on the medical symbol's shape and was corrected; CR6b PASS through delegated secondary review (ChatGPT; not an owner Safari test); CAL36 deferred to Checkpoint 6. **Preserved on remote `claude/great-dijkstra-wwi9g1`.** Not merged, not deployed. Database version 3 |
 | **Checkpoint 4** — Journal and four-tab navigation (plan R19) with refinements R-024 to R-028 (plans R20–R22) | ✅ **Formally accepted for the submission version** (2026-11-28), subject to final physical-device and publication checks. Owner, Mac Safari: original acceptance 23 PASS, J11 FAIL (resolved by R-025), 7 not human-tested, J32 deferred; combined reacceptance 17 of 17 PASS. Automated: 475 unit + 292 end-to-end. **Preserved on remote `claude/awesome-ritchie-b198ya`.** Not merged, not deployed. Database version 3 |
-| **Checkpoint 6** — Final verification, publication and consolidated physical iPhone acceptance (no new features) | 🟡 **Published 2026-11-28** by the owner's streamlined scope (R24): `main` fast-forwarded and commit `6b6a2d2` deployed and verified. **Pending: the owner's physical iPhone acceptance (P1–P12)** |
+| **Checkpoint 6** — Final verification, publication and consolidated physical iPhone acceptance (no new features) | ✅ **Complete (2026-11-28).** Streamlined publication (R24); owner's physical iPhone acceptance: all 12 requirements satisfied after the R-029 correction (R25). **Deployed commit `831a0dd`** |
 | **Checkpoint 5** — Backups, export/restore, partner sharing, provider reports; and **Resources** | ⏸ **Deferred until after submission** (not abandoned) |
 | **Deferred** | Checkpoint 5 and Resources (after submission); R-018 (shading), R-001, R-003, R-009; project license; GitHub Actions version upgrades; live multi-device sync and other 🔮 Future items in the plan |
 
@@ -194,7 +211,7 @@
 |---|---|
 | Repository | https://github.com/jcandm1088/roll-crawl-run (public) |
 | Published app | https://jcandm1088.github.io/roll-crawl-run/ |
-| **Deployed version** | **`6b6a2d2fe30c9eaff308b876f75477bbddff3589`** (the completed submission version; deployed 2026-11-28, workflow run 2). Before that: `e40287f` (Checkpoint 1) |
+| **Deployed version** | **`831a0dd7086943a5f4549cb6209be4285e0b07dd`** (final; R-029 correction; workflow run 3, 2026-11-28). Before that: `6b6a2d2` (run 2, 2026-11-28) and `e40287f` (Checkpoint 1, run 1) |
 | **Remote `main`** | Fast-forwarded on 2026-11-28 from `aa8c869352cdd734eafb0ed8b7219069d4457241` to `6b6a2d2` (deployed), then one documentation-only commit recording the publication (no redeploy needed) |
 | **Remote `checkpoint-2a`** | `73d9f6fc356b3f792a9f71cc8f38ff421e13581d` (Checkpoint 2a: Verified Milestone Tracking), a direct child of `aa8c869`. This is the **recovered original commit** (section 6) |
 | Branch `claude/beautiful-allen-1vjobt` (remote) | `170cc99` “Checkpoint 2a: Growth UX Refinement”, preserved with the owner's authorization |
