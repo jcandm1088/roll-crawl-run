@@ -680,8 +680,7 @@ p > .cal-mark-vaccines { margin-right: 8px; vertical-align: 0; }
 .journal-count { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2) var(--space-3); margin-top: var(--space-2); }
 .journal-feed { margin-top: var(--space-4); }
 .journal-feed > li + li { margin-top: var(--space-3); }
-.journal-card { padding: 0; overflow: hidden; border-left: 4px solid var(--border-strong); }
-.journal-card-reflection { border-left-color: var(--primary); }
+.journal-card { padding: 0; overflow: hidden; border-left: 4px solid var(--primary); }
 .journal-open {
   display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2); width: 100%; min-height: var(--touch);
   padding: var(--space-4); border: 0; background: transparent; color: var(--text); font: inherit; text-align: left; cursor: pointer;
@@ -719,3 +718,11 @@ p > .cal-mark-vaccines { margin-right: 8px; vertical-align: 0; }
   /* Two date fields side by side don't fit on the narrowest phones: stack them. */
   .journal-filters .input-row { flex-direction: column; }
 }
+/* R-025: a Care Note's whole card is tinted (the theme's own soft tint, the darkest established surface
+   color), so the two types can be told apart at a glance in a mixed feed. Personal Reflections keep the
+   light card. Labels and icons remain, so color is never the only cue. */
+.journal-card-care { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 35%, var(--primary-soft)); border-left-color: var(--on-primary-soft); }
+.journal-card-care .journal-open { color: var(--text); }
+.journal-card-care .journal-type-care, .journal-card-care .tag-mini { background: var(--surface); }
+.journal-card-care .text-link { color: var(--on-primary-soft); }
+.journal-card-care > .journal-question { background: var(--surface); border-top: 1px solid color-mix(in srgb, var(--primary) 35%, var(--primary-soft)); }

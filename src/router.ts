@@ -12,6 +12,19 @@ export function replaceRoute(route: Route): void {
   window.history.replaceState(window.history.state, '', href(route));
 }
 
+const ROUTE_CONSUMED = 'rcr:route-consumed';
+
+/**
+ * For one-time addresses such as #/journal/new (“open with a new entry”): replaces the address with the
+ * plain one AND tells the app, so the one-time request is used exactly once. Replacing the address alone
+ * does not fire `hashchange`, which would leave the app still holding the one-time route; a screen that
+ * remounts later (for example when the active child changes) would then act on it again (R-026).
+ */
+export function consumeRoute(route: Route): void {
+  replaceRoute(route);
+  window.dispatchEvent(new Event(ROUTE_CONSUMED));
+}
+
 export type Route =
   | { name: 'home' }
   | { name: 'growth' }
@@ -203,13 +216,19 @@ export function useRoute(): Route {
       setRoute(parseHash(window.location.hash));
       window.scrollTo(0, 0);
     };
+    // An address replaced in place (consumeRoute): same screen, so no scrolling to the top.
+    const onConsumed = () => setRoute(parseHash(window.location.hash));
     window.addEventListener('hashchange', onChange);
+    window.addEventListener(ROUTE_CONSUMED, onConsumed);
     // The hash may have changed between the first render and this listener being attached.
     setRoute((current) => {
       const latest = parseHash(window.location.hash);
       return JSON.stringify(latest) === JSON.stringify(current) ? current : latest;
     });
-    return () => window.removeEventListener('hashchange', onChange);
+    return () => {
+      window.removeEventListener('hashchange', onChange);
+      window.removeEventListener(ROUTE_CONSUMED, onConsumed);
+    };
   }, []);
   return route;
 }

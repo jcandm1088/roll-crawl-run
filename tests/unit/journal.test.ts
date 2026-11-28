@@ -6,7 +6,7 @@ import { describe, expect, it } from 'vitest';
 import type { JournalEntry } from '../../src/types';
 import {
   allTags, compareEntries, EMPTY_FILTER, filterEntries, formatTags, isFiltering, isJournalEntry, isUnansweredQuestion, JOURNAL_BODY_MAX, JOURNAL_TAG_MAX, JOURNAL_TAGS_MAX,
-  JOURNAL_TITLE_MAX, JournalInputError, moreFilterCount, parseTags, sortEntries, typeSingular, validateJournalInput, type JournalFilter, type JournalInput,
+  JOURNAL_TITLE_MAX, JournalInputError, inView, moreFilterCount, parseTags, sortEntries, typeSingular, validateJournalInput, type JournalFilter, type JournalInput, type JournalView,
 } from '../../src/domain/journal';
 import { href, parseHash } from '../../src/router';
 
@@ -137,8 +137,8 @@ describe('search and filters', () => {
   });
 
   it('filters by entry type', () => {
-    expect(titles({ type: 'reflection' })).toEqual(['First giggles', 'Park day']);
-    expect(titles({ type: 'care' })).toEqual(['Sleep question', 'The provider suggested more floor time.', 'Feeding question']);
+    expect(titles({ view: 'reflection' })).toEqual(['First giggles', 'Park day']);
+    expect(titles({ view: 'care' })).toEqual(['Sleep question', 'The provider suggested more floor time.', 'Feeding question']);
   });
 
   it('filters by an inclusive date range, open on either side', () => {
@@ -157,22 +157,64 @@ describe('search and filters', () => {
   });
 
   it('the unanswered-question filter shows only Care Notes flagged as questions and not yet answered', () => {
-    expect(titles({ unansweredOnly: true })).toEqual(['Sleep question']);
+    expect(titles({ view: 'unanswered' })).toEqual(['Sleep question']);
     expect(list.filter(isUnansweredQuestion)).toHaveLength(1);
     expect(isUnansweredQuestion(entry({ type: 'reflection', isProviderQuestion: true }))).toBe(false); // never for a Personal Reflection
   });
 
+  it('the four primary views follow the inclusion table: unanswered questions are a subset of Care Notes, not a third type (R-024)', () => {
+    const reflection = entry({ type: 'reflection', body: 'reflection' });
+    const ordinary = entry({ type: 'care', body: 'ordinary care note' });
+    const open = entry({ type: 'care', body: 'unanswered question', isProviderQuestion: true });
+    const answered = entry({ type: 'care', body: 'answered question', isProviderQuestion: true, answered: true });
+    const four = [reflection, ordinary, open, answered];
+    const table: Array<[JournalEntry, Record<JournalView, boolean>]> = [
+      [reflection, { all: true, reflection: true, care: false, unanswered: false }],
+      [ordinary, { all: true, reflection: false, care: true, unanswered: false }],
+      [open, { all: true, reflection: false, care: true, unanswered: true }],
+      [answered, { all: true, reflection: false, care: true, unanswered: false }],
+    ];
+    for (const [e, row] of table) for (const view of ['all', 'reflection', 'care', 'unanswered'] as JournalView[]) {
+      expect(inView(e, view), `${e.body} in ${view}`).toBe(row[view]);
+      expect(filterEntries(four, filter({ view })).includes(e), `${e.body} listed in ${view}`).toBe(row[view]);
+    }
+    expect(filterEntries(four, filter({ view: 'care' }))).toHaveLength(3); // all Care Notes together, whatever their question status
+    expect(filterEntries(four, filter({ view: 'all' }))).toHaveLength(4);
+    // Answering moves a note out of the unanswered view only; un-answering brings it back. Its type never changes.
+    const nowAnswered = { ...open, answered: true };
+    expect(inView(nowAnswered, 'unanswered')).toBe(false);
+    expect(inView(nowAnswered, 'care')).toBe(true);
+    expect(inView(nowAnswered, 'all')).toBe(true);
+    expect(inView({ ...nowAnswered, answered: false }, 'unanswered')).toBe(true);
+    expect(nowAnswered.type).toBe('care');
+  });
+
+  it('a filter holds exactly one view, so a contradictory combination cannot be expressed', () => {
+    expect(Object.keys(EMPTY_FILTER).sort()).toEqual(['from', 'tags', 'text', 'to', 'view']);
+    expect(EMPTY_FILTER.view).toBe('all');
+    for (const view of ['reflection', 'care', 'unanswered'] as JournalView[]) expect(isFiltering(filter({ view }))).toBe(true);
+  });
+
+  it('search, dates and tags work with each of the four views', () => {
+    expect(titles({ view: 'all', text: 'giggles' })).toEqual(['First giggles', 'Park day']);
+    expect(titles({ view: 'reflection', tags: ['family'], from: '2026-11-01' })).toEqual(['First giggles']);
+    expect(titles({ view: 'care', tags: ['sleep'] })).toEqual(['Sleep question', 'The provider suggested more floor time.']);
+    expect(titles({ view: 'care', text: 'question', to: '2026-10-31' })).toEqual(['Feeding question']);
+    expect(titles({ view: 'unanswered', tags: ['sleep'], from: '2026-11-21' })).toEqual(['Sleep question']);
+    expect(titles({ view: 'unanswered', text: 'feeding' })).toEqual([]); // that question is answered
+  });
+
   it('filters combine', () => {
-    expect(titles({ text: 'question', type: 'care', from: '2026-11-01', tags: ['sleep'], unansweredOnly: true })).toEqual(['Sleep question']);
-    expect(titles({ text: 'question', type: 'reflection' })).toEqual([]);
-    expect(titles({ type: 'care', tags: ['sleep'], to: '2026-11-20' })).toEqual(['The provider suggested more floor time.']);
+    expect(titles({ text: 'question', view: 'unanswered', from: '2026-11-01', tags: ['sleep'] })).toEqual(['Sleep question']);
+    expect(titles({ text: 'question', view: 'reflection' })).toEqual([]);
+    expect(titles({ view: 'care', tags: ['sleep'], to: '2026-11-20' })).toEqual(['The provider suggested more floor time.']);
     expect(moreFilterCount(filter({ from: '2026-11-01', tags: ['a', 'b'] }))).toBe(3);
-    expect(isFiltering(filter({ unansweredOnly: true }))).toBe(true);
+    expect(isFiltering(filter({ view: 'unanswered' }))).toBe(true);
   });
 
   it('filtering never changes the entries', () => {
     const before = JSON.stringify(list);
-    filterEntries(list, filter({ text: 'giggles', type: 'reflection', tags: ['family'] }));
+    filterEntries(list, filter({ text: 'giggles', view: 'reflection', tags: ['family'] }));
     expect(JSON.stringify(list)).toBe(before);
   });
 });

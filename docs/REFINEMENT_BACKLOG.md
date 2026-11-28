@@ -176,3 +176,25 @@ A living list of refinements and suspected defects that are recorded but not yet
 - **R-023 respected:** the Journal has no photographs, attachments or supporting storage for them. Status unchanged: Deferred.
 - **No new refinement items** were opened by the implementation. Items for the owner's attention at acceptance are listed as decisions (#155–#168), notably the removal of Home's “Daily encouragement” placeholder (#168).
 - **Deferred, unchanged:** R-001, R-003, R-009, R-018, R-023.
+
+## R-024 to R-026 — Checkpoint 4 human acceptance refinements (owner's Mac Safari acceptance of `7e9eb87`, 2026-11-28)
+| ID | Owner's observation | Refinement | Class | Status |
+|---|---|---|---|---|
+| R-024 | “Unanswered questions” could stay on while “Personal Reflections” was selected: an impossible combination and an empty feed, met in ordinary use and found unintuitive | Four mutually exclusive primary views (All, Personal Reflections, Care Notes, Unanswered questions). Entry membership still overlaps: unanswered questions are a subset of Care Notes (Decision #170). Search, dates and tags combine with any view and are kept when the view changes | Usability / interaction design | Implemented; awaiting owner reacceptance |
+| R-025 | J11 failed: Personal Reflections and Care Notes looked nearly identical; labels, icons and slightly different edges were not enough at a glance | The whole Care Note card is tinted with the theme's soft tint; Personal Reflections keep the light card; five themes (Decision #171) | Visual design (acceptance failure) | Implemented; awaiting owner reacceptance |
+| R-026 | On the Journal, switching to another child unexpectedly opened a New Journal Entry editor. Not seen on Growth or Calendar in ordinary switching. Stopped after a profile was deleted and another created | Cause found and reproduced: after Home's “Journal entry” shortcut the app still held the one-time “new entry” request, and a child switch acted on it again. The request is now consumed once (Decision #172) | **Application defect** | Corrected; awaiting owner reacceptance. Remaining uncertainty below |
+
+- **R-025 and R-018.** Insufficient shade disparity between surfaces is a **recurring owner observation** (first recorded as R-018 at the 2b acceptance, and now for Journal cards). R-025 addresses Journal cards only. **R-018 stays deferred and is not implemented elsewhere.**
+- **R-026, what is and isn't established.** Established by reproduction on the unmodified `7e9eb87` build: open the Journal through Home's shortcut, save or cancel, stay on the Journal, switch children: the editor opens, and again on switching back, until the Journal is left and re-entered. Entering through the Journal tab never did this. **Not established:** that this is the exact sequence the owner followed (the owner's original steps were not recorded). It fits everything observed: only on the Journal; only sometimes (only after the shortcut); and gone after deleting and creating profiles (which involves leaving the Journal, clearing the held request). No other path to the symptom was found in the code, but one cannot be ruled out by inspection alone.
+- **No record could be written to the wrong child by this defect:** the reopened editor belonged to the newly active child, and the save-path and repository checks were unaffected.
+
+## R-027 — Calendar: “New event” shortcut reopens the Add event form after a child switch (proposed; not authorized)
+- **Source:** found by Claude Code while inspecting the Calendar for the R-026 cause, as the owner asked (2026-11-28). Not reported by the owner; the owner noted that ordinary switching on the Calendar did not show it.
+- **Reproduction (unmodified `7e9eb87`, headless Chromium):** with two children, tap Home → “New event”; save or cancel; stay on the Calendar; switch children. The Add event form opens, and again on switching back, until the Calendar is left and re-entered. Entering through the Calendar tab does not do this.
+- **Cause:** the same as R-026. `Calendar.tsx` replaces `#/calendar/add` with `#/calendar` in the address only; the app's route state keeps `add: true`, and the child-keyed Calendar remounts with it.
+- **Present since:** Checkpoint 3 (accepted). The form that opens belongs to the newly active child, so nothing can be saved to the wrong child.
+- **Proposed correction:** one line in `Calendar.tsx` (use the new `consumeRoute`, as the Journal now does) and one regression test mirroring the R-026 test.
+- **Status:** **Not changed. Awaiting the owner's separate authorization.**
+
+## Checkpoint 4-R note (2026-11-28)
+- **Deferred, unchanged:** R-001, R-003, R-009, R-018, R-023. **Proposed, not authorized:** R-027.

@@ -111,36 +111,47 @@ export const sortEntries = (entries: JournalEntry[]): JournalEntry[] => [...entr
 
 export const isUnansweredQuestion = (e: JournalEntry): boolean => e.type === 'care' && e.isProviderQuestion && !e.answered;
 
+/**
+ * The four primary views (R-024). Exactly one is selected at a time. They are ways of looking at the two
+ * entry types, not a third type: “unanswered” is a subset of Care Notes, so a Care Note with a provider
+ * question, answered or not, is always in “care” and “all” as well.
+ */
+export type JournalView = 'all' | JournalEntryType | 'unanswered';
+
+export function inView(e: JournalEntry, view: JournalView): boolean {
+  if (view === 'all') return true;
+  if (view === 'unanswered') return isUnansweredQuestion(e);
+  return e.type === view;
+}
+
 export interface JournalFilter {
   /** Words to find in the title or the text (every word must appear; capitals don't matter). */
   text: string;
-  type: 'all' | JournalEntryType;
+  view: JournalView;
   /** Inclusive date range; "" leaves that side open. */
   from: string;
   to: string;
   /** Every selected tag must be on the entry. */
   tags: string[];
-  unansweredOnly: boolean;
 }
 
-export const EMPTY_FILTER: JournalFilter = { text: '', type: 'all', from: '', to: '', tags: [], unansweredOnly: false };
+export const EMPTY_FILTER: JournalFilter = { text: '', view: 'all', from: '', to: '', tags: [] };
 
-export const isFiltering = (f: JournalFilter): boolean => f.text.trim() !== '' || f.type !== 'all' || f.from !== '' || f.to !== '' || f.tags.length > 0 || f.unansweredOnly;
+export const isFiltering = (f: JournalFilter): boolean => f.text.trim() !== '' || f.view !== 'all' || f.from !== '' || f.to !== '' || f.tags.length > 0;
 
 /** How many of the filters behind “More filters” (dates and tags) are in use. */
 export const moreFilterCount = (f: JournalFilter): number => (f.from ? 1 : 0) + (f.to ? 1 : 0) + f.tags.length;
 
 const fold = (s: string): string => s.toLocaleLowerCase('en');
 
-/** The entries every active filter allows, in feed order. All filters combine (AND). Never changes a record. */
+/** The entries in the selected view that the search, dates and tags also allow, in feed order. Never changes a record. */
 export function filterEntries(entries: JournalEntry[], f: JournalFilter): JournalEntry[] {
   const words = fold(f.text).split(/\s+/).filter(Boolean);
   const from = isValidLocalDate(f.from) ? f.from : null;
   const to = isValidLocalDate(f.to) ? f.to : null;
   const wanted = f.tags.map(tagKey);
   return sortEntries(entries.filter((e) => {
-    if (f.type !== 'all' && e.type !== f.type) return false;
-    if (f.unansweredOnly && !isUnansweredQuestion(e)) return false;
+    if (!inView(e, f.view)) return false;
     if (from && compareDates(e.date, from) < 0) return false;
     if (to && compareDates(e.date, to) > 0) return false;
     if (wanted.length) {

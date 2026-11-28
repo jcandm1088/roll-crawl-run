@@ -2,9 +2,30 @@
 
 **This is the single authoritative, current-state handoff.** It replaces the earlier handoff notes. The original end-of-Checkpoint-1 handoff is kept unchanged as a historical record in `docs/reviews/CHECKPOINT_1_HANDOFF.md`; statements there describe the project as it was at commit `aa8c869` and are no longer current.
 
-*Last updated: 2026-11-27 (Checkpoint 4, Journal, implemented in a local commit; awaiting the owner's review and acceptance; **not pushed**). **Start at section 0.** Earlier the same day: Checkpoint 3 formal acceptance closeout; documentation-only commit on `claude/great-dijkstra-wwi9g1`, pushed with the owner's authorization). **Start here for Checkpoint 4: section 0.** Earlier the same day: Checkpoint 3 implemented (`c5017da`), refined (`77d263b`), medical symbol corrected (`c8aa0c5`).*
+*Last updated: 2026-11-28 (Checkpoint 4-R: Journal acceptance refinements R-024 to R-026 in a second local commit; awaiting the owner's reacceptance; **not pushed**). **Start at section 0.** Before that: 2026-11-27, Checkpoint 4 implemented locally. Earlier the same day: Checkpoint 3 formal acceptance closeout; documentation-only commit on `claude/great-dijkstra-wwi9g1`, pushed with the owner's authorization). **Start here for Checkpoint 4: section 0.** Earlier the same day: Checkpoint 3 implemented (`c5017da`), refined (`77d263b`), medical symbol corrected (`c8aa0c5`).*
 
-## 0. Checkpoint 4 (Journal) — implemented, awaiting acceptance
+## 0. Checkpoint 4-R — Journal acceptance refinements, awaiting reacceptance
+**Where it is:** two local commits on the session branch `claude/awesome-ritchie-b198ya`, on top of the authoritative `8122feb062f1eee96514f23b53fce020fdc438a0`: `7e9eb87b4180e4926aeac52eabf09980634a7b15` “Checkpoint 4: Journal and Four-Tab Navigation” (20), then “Checkpoint 4-R: Journal Human Acceptance Refinements” (21; its exact hash is in the delivery report in the conversation). **Not pushed, not merged, not deployed.** Until a preservation push is authorized both exist only in that conversation's workspace and the owner's ZIP archives.
+
+**Owner's Mac Safari acceptance of `7e9eb87` (2026-11-28):** 23 PASS; **J11 FAIL**; J5, J7, J26, J27, J29, J30, J31 **not human-tested** (carried to final acceptance, not passed); J32 deferred to Checkpoint 6. Overall design approved; required date approved. Table in TESTING_CHECKLIST.
+
+**Refinements (plan R20, Decisions #169–#174, `docs/reviews/CHECKPOINT_4_R_REFINEMENT_REPORT.md`):**
+- **R-024** four single-selection views; unanswered questions are a subset of Care Notes (inclusion table, #170).
+- **R-025** tinted Care Note cards in all five themes (#171).
+- **R-026** editor reopening after a child switch: reproduced on the unmodified build, corrected in the router (`consumeRoute`, #172). The owner's original steps were not recorded, so one residual uncertainty is documented (REFINEMENT_BACKLOG).
+- **Unchanged:** database version 3, stored records, deletion, validation, the Calendar.
+
+**Open item needing a decision: R-027.** The Calendar's “New event” shortcut has the same defect (confirmed, not changed). Proposed: one line in `Calendar.tsx` plus one regression test.
+
+**Tests:** 475 unit and 286 end-to-end (761); targeted runs and one complete clean cycle, as authorized (BUILD_LOG).
+
+**Next, each needing the owner's separate authorization:** reacceptance (JR1–JR13 in TESTING_CHECKLIST); a decision on R-027; formal Checkpoint 4 closeout; a preservation push; merging into `main`; deployment. Checkpoint 5 stays deferred; Checkpoint 6 has not begun.
+
+**Carried to final acceptance / Checkpoint 6:** the seven untested Journal items; J32; Calendar keyboard operation and offline editing confirmed by a person; physical-iPhone acceptance for 2a, 2b, 2b-R, 3 and 4; installed-app upgrade and device offline editing; the vaccine schedule currency recheck; the fuller final regression.
+
+**Standing rules:** no push, merge or deployment without the owner's explicit authorization for that action; the environment's stop hook asks for a push after every turn and is declined unless authorized; fictional data only; never claim human or device testing that did not happen; parent-first wording; when a visual description has two readings, ask or show both first; do not widen scope on a related finding, report it.
+
+## 0b. Checkpoint 4 (Journal) — as implemented on 2026-11-27 *(kept as recorded; superseded by section 0 where they differ)*
 **Where it is:** one local commit, “Checkpoint 4: Journal and Four-Tab Navigation”, on the session branch `claude/awesome-ritchie-b198ya`, directly on top of the authoritative `8122feb062f1eee96514f23b53fce020fdc438a0` (20 commits). **Not pushed, not merged, not deployed.** The exact hash is in the delivery report in the conversation (a commit can't contain its own hash). Until a preservation push is authorized, the commit exists only in that conversation's workspace and in the ZIP the owner was given.
 
 **Recovery that preceded it:** the session branch was fast-forwarded to the exact authoritative HEAD (parent `c8aa0c5`, 19 commits, clean tree, `main` still `aa8c869`). Baseline on that commit: type check, build and content validation passed; **427 unit and 251 end-to-end** (the first complete cycle on the final Calendar code).
@@ -71,7 +92,7 @@
 | **Checkpoint 2b** — Goals, Exercises & Historical Progress | ✅ **Initial owner acceptance in Mac Safari: 64 of 65 applicable checks passed** (2026-11-27; Phase G not applicable). Preserved on remote `claude/upbeat-thompson-skpm8j` at `64202e2`. Not merged or deployed. Database version 3. iPhone pending |
 | **Checkpoint 2b-R** — Human Acceptance Refinements R-010 to R-017 | ✅ **Accepted for continued development** (owner, Mac Safari, 2026-11-27): **all 15 applicable Mac checks (GR1–GR15) passed** against `b45af43`. GR16 (iPhone) deferred to Checkpoint 6. Preserved on remote `claude/vigilant-keller-w6ss5f`. Not merged or deployed. Database version 3 |
 | **Checkpoint 3** — Simplified Calendar (plan R16) with refinements R-019 to R-022 (plan R17) | ✅ **Formally accepted for the submission version** (2026-11-27), subject to final physical-device and publication checks. Owner, Mac Safari: CAL1–CAL33 and CR1–CR5, CR7–CR9 PASS; CAL34–CAL35 not human-tested; CR6 failed on the medical symbol's shape and was corrected; CR6b PASS through delegated secondary review (ChatGPT; not an owner Safari test); CAL36 deferred to Checkpoint 6. **Preserved on remote `claude/great-dijkstra-wwi9g1`.** Not merged, not deployed. Database version 3 |
-| **Checkpoint 4** — Journal (Resources tab removed from the submission version; plan R19) | 🟡 **Implemented in a local commit; awaiting the owner's secondary review and Mac acceptance** (section 0). Automated: 472 unit + 280 end-to-end, three consecutive cycles. Not pushed, merged or deployed. Database version 3 |
+| **Checkpoint 4** — Journal (Resources tab removed from the submission version; plan R19) | 🟡 **Tested by the owner in Mac Safari (23 PASS, J11 FAIL, 7 not tested); refinements R-024 to R-026 implemented in a second local commit and awaiting reacceptance** (section 0). Automated: 475 unit + 286 end-to-end. Not pushed, merged or deployed. Database version 3 |
 | **Checkpoint 6** — Final testing, deployment and consolidated physical iPhone acceptance | ⏳ Planned, not started |
 | **Checkpoint 5** — Backups, export/restore, partner sharing, provider reports; and **Resources** | ⏸ **Deferred until after submission** (not abandoned) |
 | **Deferred** | Checkpoint 5 and Resources (after submission); R-018 (shading), R-001, R-003, R-009; project license; GitHub Actions version upgrades; live multi-device sync and other 🔮 Future items in the plan |

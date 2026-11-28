@@ -569,3 +569,48 @@ Reported by the owner for the local build of `64202e2` in Mac Safari (port 4179)
 - **J30** Keyboard only (Tab, Shift+Tab, Enter, Space, Escape): create an entry, open it, mark it answered, delete it. Focus is always visible and stays inside open forms.
 - **J31** Source information is still easy to find without Resources: Settings → About, Growth → Milestone Library → About these milestones, and the Calendar's Source section.
 - **J32 (iPhone, deferred to Checkpoint 6)** Installed app: writing a long entry with the on-screen keyboard, dictation, the date picker, offline use, and the four-tab bar above the home indicator.
+
+## Checkpoint 4 — human acceptance (owner report, Mac Safari, 2026-11-28, against `7e9eb87`)
+*Reported by the owner. Claude Code did not observe these tests.*
+
+| Result | Items |
+|---|---|
+| **PASS (23)** | J1, J2, J3, J4, J6, J8, J9, J10, J12, J13, J14, J15, J16, J17, J18, J19, J20, J21, J22, J23, J24, J25, J28 |
+| **FAIL (1)** | **J11** — insufficient visual distinction between Personal Reflections and Care Notes (→ R-025) |
+| **N/A — not human-tested (7)** | J5, J7, J26, J27, J29, J30, J31. Carried to final acceptance. **Not passed.** |
+| **Deferred** | J32 (iPhone) → Checkpoint 6 |
+
+**Owner's additional observations:**
+- Leaving out the date prevents saving. The owner approves this; no change requested.
+- The “Unanswered questions” toggle could stay on with “Personal Reflections” selected, giving an empty feed (→ R-024).
+- **Recorded separately from the isolation checks (J23–J25 passed):** on the Journal, switching children through the top selector unexpectedly opened a New Journal Entry editor, intermittently. Growth and Calendar did not show it in ordinary switching. It stopped after one profile was deleted and another created (→ R-026).
+
+## Checkpoint 4-R — automated (headless Chromium; results in BUILD_LOG)
+- **Unit (+3, 475):** the four-view inclusion table and the answered/unanswered transitions; a filter holds exactly one view; search, dates and tags with each view. The existing filter tests were re-expressed for the single view field (same expectations).
+- **End-to-end (+6, 286), all in `journal.spec.ts`:** R-024 single selection, inclusion table, transitions, count and unchanged stored fields; R-024 search, dates and tags with all four views and kept across view changes; R-025 mixed feed; R-026 after the Home shortcut with save and with cancel (child switches both ways, repeated shortcut use, unsaved-change protection, tab, reload, Back and Forward, entry ownership); R-026 the tab's own button. The five theme tests now also check the Care Note and Personal Reflection card backgrounds, their lightness ratio, the question strip and text color in each theme, with axe.
+- **Existing Journal tests changed because the authorized behavior changed:** where a test turned the unanswered filter off by pressing it again, it now chooses another view (provider-question and keyboard tests); the combined-filter test notes that the unanswered view replaces the Care Notes view. Expectations about entries shown are otherwise unchanged. The isolation test additionally checks that the selected view does not carry to another child.
+- **The R-026 tests were run against the old route handling and failed there** (2 of 3; the third covers the unaffected tab path), then passed with the correction.
+
+## Checkpoint 4-R — owner reacceptance checklist (three refinements only; record actual results)
+**Mac** = local production build of the Checkpoint 4-R commit in Safari. Fictional data. *Claude Code has not performed any of these.*
+
+### R-024 — primary views
+- **JR1** The four views (All, Personal Reflections, Care Notes, Unanswered questions (n)) behave as one choice: selecting one deselects the other; one is always selected.
+- **JR2** Select Unanswered questions, then Personal Reflections: reflections appear; no empty, contradictory result.
+- **JR3** Care Notes shows every Care Note together: ordinary notes, unanswered questions and answered questions.
+- **JR4** In Unanswered questions, “Mark answered” removes the note from that view; it is still under Care Notes and All, unchanged. “Mark unanswered” brings it back. The number in the chip stays right.
+- **JR5** Type a search, set a date and pick a tag; switch between all four views: the search, date and tag stay as set and keep narrowing the feed. “Clear search and filters” resets everything.
+
+### R-025 — telling the two types apart
+- **JR6** In a mixed feed, Care Notes and Personal Reflections are obvious at a glance without reading the labels (this was J11).
+- **JR7** Check all five themes (Earth, Sky, Blush, Lavender, Sage): the distinction is clear, text is comfortable to read, and it still feels like a personal notebook.
+- **JR8** On a Care Note with a question, the “Question for the provider” strip stands apart from the note's text and its button is clear.
+
+### R-026 — no unexpected editor
+- **JR9** With two children: Home → “Journal entry”, save the entry, stay on the Journal, switch to the other child and back. No editor opens.
+- **JR10** Repeat JR9 but cancel the entry instead of saving.
+- **JR11** Home → “Journal entry” still opens a new entry every time; the Journal tab and “New Journal Entry” work as before; closing a form with unsaved text still asks.
+
+### Optional
+- **JR12** Any of the seven untested items (J5, J7, J26, J27, J29, J30, J31) you choose to check now rather than at final acceptance.
+- **JR13 (decision, not a test)** Whether to authorize the equivalent Calendar correction (R-027).

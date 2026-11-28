@@ -3,8 +3,9 @@
  *
  * - One feed, newest entry date first, holding two kinds of entry: Personal Reflections and Care Notes.
  *   Each has its own label, icon and a subtle treatment built from the theme's existing colors.
- * - Search (title and text) and filters (type, unanswered provider questions, dates, tags) only choose
- *   what is shown. They never change a record.
+ * - Four primary views, one selected at a time (R-024): All, Personal Reflections, Care Notes and
+ *   Unanswered questions. The last is a subset of Care Notes, not a third kind of entry. Search, dates and
+ *   tags combine with whichever view is selected. None of this changes a record.
  * - A Care Note can be flagged as a question for the provider and marked answered or unanswered. Marking
  *   it answered changes that one field: the note stays in the feed exactly as written.
  * - All state is per child: the inner screen is keyed by the child's id, so switching profiles closes any
@@ -26,6 +27,7 @@ import {
 } from '../../../domain/journal';
 import { createEntry, deleteEntry, setAnswered, updateEntry, type JournalContext } from '../../../data/repositories/journalRepo';
 import { newId } from '../../../data/envelope';
+import { consumeRoute } from '../../../router';
 import { PageHeader } from '../../components/PageHeader';
 import { Sheet } from '../../components/Sheet';
 import { Icon, type IconName } from '../../components/Icon';
@@ -82,9 +84,11 @@ function JournalInner({ child, openNew }: { child: Child; openNew: boolean }) {
   const focusNew = useRef(false);
   const ctx: JournalContext = { deviceId: app.meta.deviceId, childId: child.id, today };
 
-  // Opened from “Journal entry” on Home (#/journal/new): keep the address as the plain Journal afterwards.
+  // Opened from “Journal entry” on Home (#/journal/new): the request is used once. The address becomes the
+  // plain Journal and the app's own route state follows it, so a later remount of this screen (a child
+  // switch) can't open the form again (R-026).
   useEffect(() => {
-    if (openNew) window.history.replaceState(null, '', '#/journal');
+    if (openNew) consumeRoute({ name: 'journal' });
   }, [openNew]);
 
   // After a deletion the control that opened the entry is gone: move focus to a stable place.
@@ -148,14 +152,15 @@ function JournalInner({ child, openNew }: { child: Child; openNew: boolean }) {
               <Icon name="search" size={20} />
               <input class="input" type="search" aria-label="Search journal" placeholder="Search titles and text" value={filter.text} data-testid="journal-search" onInput={(e) => patch({ text: (e.target as HTMLInputElement).value })} />
             </div>
-            <div class="chips" role="group" aria-label="Show" style={{ marginTop: 'var(--space-3)' }}>
-              <button type="button" class="chip" aria-pressed={filter.type === 'all'} data-testid="filter-type-all" onClick={() => patch({ type: 'all' })}>All</button>
+            <div class="chips" role="group" aria-label="Show (one at a time)" style={{ marginTop: 'var(--space-3)' }}>
+              {/* One view at a time. Choosing a view never clears the search, dates or tags. */}
+              <button type="button" class="chip" aria-pressed={filter.view === 'all'} data-testid="filter-type-all" onClick={() => patch({ view: 'all' })}>All</button>
               {JOURNAL_TYPES.map((t) => (
-                <button key={t.id} type="button" class="chip" aria-pressed={filter.type === t.id} data-testid={`filter-type-${t.id}`} onClick={() => patch({ type: t.id })}>
+                <button key={t.id} type="button" class="chip" aria-pressed={filter.view === t.id} data-testid={`filter-type-${t.id}`} onClick={() => patch({ view: t.id })}>
                   <Icon name={TYPE_ICON[t.id]} size={16} /> {t.label}
                 </button>
               ))}
-              <button type="button" class="chip" aria-pressed={filter.unansweredOnly} data-testid="filter-unanswered" onClick={() => patch({ unansweredOnly: !filter.unansweredOnly })}>
+              <button type="button" class="chip" aria-pressed={filter.view === 'unanswered'} data-testid="filter-unanswered" onClick={() => patch({ view: 'unanswered' })}>
                 Unanswered questions ({unanswered})
               </button>
             </div>
@@ -197,7 +202,7 @@ function JournalInner({ child, openNew }: { child: Child; openNew: boolean }) {
           {shown.length === 0 ? (
             <section class="card journal-empty" data-testid="journal-no-results" aria-labelledby="journal-none-h">
               <h2 id="journal-none-h" class="title-3">No matching entries</h2>
-              <p class="small muted">{filter.unansweredOnly && unanswered === 0 ? 'There are no unanswered questions for the provider.' : 'Nothing matches the current search and filters.'}</p>
+              <p class="small muted">{filter.view === 'unanswered' && unanswered === 0 ? 'There are no unanswered questions for the provider.' : 'Nothing matches the current search and filters.'}</p>
             </section>
           ) : (
             <ul class="list journal-feed" data-testid="journal-feed" aria-label="Journal entries">

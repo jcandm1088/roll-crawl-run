@@ -653,3 +653,57 @@ Environment: Linux cloud container, Node 22.23.5, headless Chromium, no retries.
 - **Only documentation changed after the final sequence began** (these documents and regenerated screenshots).
 - **Screenshots:** `docs/screenshots/checkpoint-4/` (12), from the final build.
 - **Not tested by anyone yet:** Safari, Mac, iPhone, Android, an installed app.
+
+## Draft entry — Checkpoint 4-R: Journal acceptance refinements (drafted by Claude Code; edit before submitting)
+**Date:** 2026-11-28
+**Tool:** Claude Code (cloud session); secondary review by ChatGPT
+**What happened:**
+- I tested Checkpoint 4 (`7e9eb87`) in Mac Safari: **23 passed, J11 failed, 7 not tested** (J5, J7, J26, J27, J29, J30, J31), J32 deferred. I approve the Journal's overall design and the required date.
+- I found three things: the two entry types looked too alike (J11); the unanswered filter could contradict the type filter; and, intermittently, switching children on the Journal opened a new-entry editor I hadn't asked for.
+- ChatGPT, reviewing the source, proposed a cause for the third: the Home shortcut's address was corrected with `replaceState`, which doesn't notify the app's router, so the app kept “open a new entry” and acted on it again when the Journal remounted for another child.
+
+**What I asked for:** record my results as they are; make the four views a single choice without making unanswered questions a third kind of entry; tint Care Note cards so the types differ at a glance in all five themes; investigate and reproduce the editor issue before changing anything, and report on the Calendar separately without changing it.
+
+**What it produced:**
+- **Reproduction first, on the unmodified build:** the hypothesis was confirmed. After the Home shortcut (saved or cancelled) a child switch reopened the editor, each time, until the Journal was left; the Journal tab's own button never did.
+- **R-026 corrected at the cause:** a one-time address is now consumed in the router's state as well as the address bar.
+- **R-024:** four single-selection views with the inclusion table I specified; stored records unchanged.
+- **R-025:** tinted Care Note cards from existing theme colors.
+- **Calendar:** the same defect confirmed for “New event”; **not changed**; recorded as R-027 for my decision.
+- 3 new unit and 6 new end-to-end tests; a report, a reacceptance checklist (JR1–JR13), 8 screenshots and a ZIP.
+
+**What I corrected or redirected:** (to be completed by the owner) — I failed J11; I clarified that mutually exclusive selections must not become mutually exclusive membership.
+
+### Development challenges and lessons learned (continued from #74)
+| # | Challenge | Class | What happened | Outcome |
+|---|---|---|---|---|
+| 75 | **A one-time shortcut address was used more than once** | Application defect (Checkpoint 4; the same pattern in the Calendar since Checkpoint 3) | Home's “Journal entry” opens `#/journal/new`. The Journal then replaced the address with `#/journal`, but replacing an address doesn't fire the event the router listens to, so the app still believed it was at “new”. The Journal screen is rebuilt when the active child changes, and each rebuild opened the form again. The Checkpoint 4 test of the shortcut checked the address, a reload and the form, but never switched children afterwards, so it passed. I met it intermittently in real use; ChatGPT identified the likely cause from the source; Claude Code reproduced it on the unmodified build before changing anything. | Corrected in the router (`consumeRoute`). Regression tests cover save and cancel, both directions, repeated use, reload, Back and Forward; they fail on the old handling and pass on the new. **Lesson:** a test of “the address looks right” is not a test of “the app's state is right”; and a second reviewer reading the source found in minutes what the test suite had not. |
+| 76 | **Two filters that could contradict each other** | Design defect in Claude Code's Checkpoint 4 choice (#160) | “Unanswered questions” was an independent toggle beside the type filter, so “Personal Reflections + Unanswered” was selectable and always empty. The tests had even asserted that combination as correct behavior. | Replaced by four single-selection views (R-024). **Lesson:** combinable filters need a check that every combination can mean something. |
+| 77 | **“Distinct” in the tests was not distinct to the eye** | Requirement shortfall (failed J11) | The Checkpoint 4 tests proved the two card types had different edge and badge colors. They did not, and could not, prove a person would notice. Shade disparity is something I had already raised once (R-018). | Whole-card tint for Care Notes (R-025); the theme tests now also require a minimum lightness step between the two cards. Whether it is enough is mine to judge at reacceptance. |
+| 78 | **A finding outside the authorized scope** | Scope control | The Calendar has the R-026 defect too. Fixing it would have been one line. | Left unchanged, reproduced, documented as R-027 with a proposed correction, for my separate authorization. |
+
+### Automated results (run by Claude Code in this conversation)
+Environment: Linux cloud container, Node 22.23.5, headless Chromium, no retries. **No Safari, Mac, iPhone or Android testing was performed by Claude Code.**
+
+**Before changing anything (unmodified `7e9eb87` build):** a scripted reproduction of R-026. Six runs: Journal via Home shortcut (save, cancel), Journal via the tab's button (save, cancel), Calendar via Home shortcut (save, cancel). The editor reopened after a child switch in all four shortcut runs and in neither tab run.
+
+**Targeted runs:**
+
+| Check | Result |
+|---|---|
+| Type check | Passed |
+| `journal.test.ts` after the filter change (27 tests) | **27 of 27** |
+| `journal.spec.ts` with the refinements and the 6 new tests (34 tests: all Journal behavior, the four views, question transitions, combined filters, Home shortcut, profile switching and isolation, five themes with axe, 320 and 390 px, keyboard, unsaved changes) | **34 of 34 on the first run** |
+| The three R-026 tests against the **old** route handling (temporarily restored) | **2 failed, 1 passed**, as expected: the two shortcut tests fail without the correction; the tab test is unaffected. Correction then restored |
+
+**One complete cycle on the finished code, from a clean build, no retries (the cadence authorized for this round):**
+
+| Type check | Build with content validation (JS 582.69 kB, 136.81 kB gzip) | Unit (23 files) | End-to-end |
+|---|---|---|---|
+| Passed | Passed | **475 of 475** | **286 of 286** (6.2 min) |
+
+- **Totals:** 761 automated tests (752 before; +3 unit, +6 end-to-end). Nothing skipped, disabled or retried. **No failure occurred in any run during this refinement** other than the deliberate old-behavior check above.
+- **Database:** version 3; the stored Journal record's fields are asserted unchanged.
+- **Only documentation changed after the complete cycle began.**
+- **Screenshots:** `docs/screenshots/checkpoint-4-r/` (8), from the final code.
+- **Not tested by anyone yet:** the refinements in Safari; anything on an iPhone.

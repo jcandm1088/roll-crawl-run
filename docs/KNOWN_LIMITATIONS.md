@@ -1,6 +1,6 @@
 # Known Limitations
 
-Last updated 2026-11-27 (Checkpoint 4, Journal, implemented locally and awaiting the owner's acceptance; Checkpoint 3 formally accepted). Earlier sections are kept as dated records; where a later statement supersedes an earlier one, the earlier one is marked. Items marked *(planned)* are scheduled for later checkpoints. Refinements and suspected defects awaiting correction are tracked in `docs/REFINEMENT_BACKLOG.md`.
+Last updated 2026-11-28 (Checkpoint 4-R: Journal refinements R-024 to R-026 implemented locally, awaiting the owner's reacceptance). Earlier sections are kept as dated records; where a later statement supersedes an earlier one, the earlier one is marked. Items marked *(planned)* are scheduled for later checkpoints. Refinements and suspected defects awaiting correction are tracked in `docs/REFINEMENT_BACKLOG.md`.
 
 ## Not built yet (placeholders)
 - ~~Goals & Exercises, recurring activities, CDC activities, and charts *(Checkpoint 2b)*~~ Built at Checkpoint 2b (awaiting the owner's acceptance).
@@ -171,3 +171,11 @@ Last updated 2026-11-27 (Checkpoint 4, Journal, implemented locally and awaiting
 - **Focus in a form:** pressing Tab on the last control returns to the first control in the sheet, which in the entry form is the first type option even when the other is selected (the selection does not change).
 - **Resources is not in the submission version.** There is no resource library or daily encouragement. Source attribution remains in Settings → About, Growth → About these milestones, each milestone and activity, and the Calendar.
 - **Human testing:** nothing in Checkpoint 4 has been tested by a person, in Safari or on an iPhone, at the time of this commit. Automated results are from headless Chromium on Linux.
+
+## Checkpoint 4-R (Journal refinements R-024 to R-026)
+- **Known, not corrected: the Calendar's “New event” shortcut (R-027).** After using Home → “New event”, staying on the Calendar and switching children reopens the Add event form until the Calendar is left and re-entered. The form belongs to the active child, so nothing is saved to the wrong child. Present since Checkpoint 3; a one-line correction is proposed and awaits authorization.
+- **R-026's cause is established by reproduction, but the owner's original steps were not recorded,** so it is not proven that this was the only way the symptom could arise (REFINEMENT_BACKLOG).
+- **One primary view at a time.** Personal Reflections and Care Notes can't be shown together without the rest; “All” does that. There is no view for answered questions alone; they appear under Care Notes with their status.
+- **Not human-tested in Checkpoint 4 (carried to final acceptance):** J5 (a reflection with only text), J7 (validation messages), J26 (reload and reopen), J27 (offline), J29 (narrow width), J30 (keyboard), J31 (source information). They pass in automated tests in headless Chromium, which is not the same thing. J32 (iPhone) is deferred to Checkpoint 6.
+- **The refinements themselves have not been seen by a person** at the time of this commit.
+- *(Supersedes one line of the Checkpoint 4 section: “nothing in Checkpoint 4 has been tested by a person” was true of that commit; the owner has since tested it in Mac Safari.)*

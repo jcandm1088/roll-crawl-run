@@ -257,8 +257,11 @@ test('the two entry types stay distinct in one feed; Personal Reflections never 
   });
   const [r, k] = [await look(reflection), await look(care)];
   expect(r.icon).not.toBe(k.icon); // different icons
-  expect(r.edge).not.toBe(k.edge); // and a different, subtle treatment
+  expect(r.edge).not.toBe(k.edge);
   expect(r.badge).not.toBe(k.badge);
+  // R-025: the whole Care Note card is tinted; the Personal Reflection keeps the light card.
+  const cardBg = (c: ReturnType<typeof card>) => c.evaluate((el) => getComputedStyle(el).backgroundColor);
+  expect(await cardBg(care)).not.toBe(await cardBg(reflection));
   // Provider-question controls: on the Care Note only.
   await expect(care.getByTestId('entry-question')).toBeVisible();
   await expect(reflection.getByTestId('entry-question')).toHaveCount(0);
@@ -579,11 +582,12 @@ test('search by title and text, and filter by type, date and tags, alone and com
   await expect(page.getByTestId('more-filters').locator('summary')).toHaveText('Dates and tags (2 in use)');
   await tagChips.filter({ hasText: 'therapy' }).click();
 
-  // Everything together: text + type + date + tag + unanswered.
+  // Everything together: text + date + tag + the unanswered view (which replaces the Care Notes view, R-024).
   await search.fill('expected');
   await page.getByTestId('filter-type-care').click();
   await page.getByLabel('From').fill('2026-11-01');
   await page.getByTestId('filter-unanswered').click();
+  await expect(page.getByTestId('filter-type-care')).toHaveAttribute('aria-pressed', 'false');
   await expect.poll(() => feed(page)).toEqual(['Sleep question']);
   await expect(page.getByTestId('journal-count')).toHaveText('Showing 1 of 5 entries');
   await search.fill('giggles');
@@ -639,7 +643,8 @@ test('provider questions: flag a Care Note, review unanswered ones, mark answere
   await card(page, 'Sleep question').getByTestId('toggle-answered').click();
   await expect.poll(() => feed(page)).toEqual([FLOOR]);
   await expect(unanswered).toHaveText('Unanswered questions (1)');
-  await unanswered.click();
+  await page.getByTestId('filter-type-all').click(); // R-024: another view is chosen; pressing the same one again changes nothing
+  await expect(unanswered).toHaveAttribute('aria-pressed', 'false');
   await expect.poll(() => feed(page)).toEqual(['First giggles', 'Sleep question', FLOOR, 'Feeding question', 'Park day']); // still in the ordinary feed, in its place
   const sleep = card(page, 'Sleep question');
   await expect(sleep.getByTestId('question-status')).toHaveText('Question for the provider · Answered');
@@ -696,8 +701,12 @@ test('each child has their own journal; search, tags and an open editor never cr
   await page.getByRole('searchbox', { name: 'Search journal' }).fill('tangerine');
   await expect.poll(() => feed(page)).toEqual(['Fictional B question']);
 
-  // Switching refreshes the Journal, and the search and filters start again.
+  // Switching refreshes the Journal, and the search, filters and selected view start again.
+  await page.getByTestId('filter-unanswered').click();
+  await expect.poll(() => feed(page)).toEqual(['Fictional B question']);
   await switchTo(page, 'Sample Child A');
+  await expect(page.getByTestId('filter-type-all')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByTestId('filter-unanswered')).toHaveAttribute('aria-pressed', 'false');
   await expect(page.locator('.page-intro')).toHaveText('Memories and care notes for Sample Child A.');
   await expect.poll(() => feed(page)).toEqual(['Fictional A memory']);
   await expect(page.getByRole('searchbox', { name: 'Search journal' })).toHaveValue('');
@@ -972,7 +981,12 @@ test('keyboard and focus: write, open, answer and delete an entry without a poin
   await page.keyboard.press('Enter');
   await expect(page.getByTestId('filter-unanswered')).toHaveAttribute('aria-pressed', 'true');
   await expect(page.getByRole('status').filter({ hasText: 'Showing' })).toHaveText('Showing 1 of 1 entry');
-  await page.keyboard.press('Enter');
+  await page.keyboard.press('Enter'); // pressing the selected view again leaves it selected (one is always chosen)
+  await expect(page.getByTestId('filter-unanswered')).toHaveAttribute('aria-pressed', 'true');
+  await page.getByTestId('filter-type-all').focus();
+  await page.keyboard.press('Space');
+  await expect(page.getByTestId('filter-type-all')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByTestId('filter-unanswered')).toHaveAttribute('aria-pressed', 'false');
 
   // Delete by keyboard: Cancel is first; confirming moves focus to New Journal Entry.
   await open.focus();
@@ -1015,6 +1029,28 @@ for (const theme of ['earth', 'sky', 'blush', 'lavender', 'sage']) {
     expect(r.bg).not.toBe(k.bg);
     const primary = await page.evaluate(() => { const p = document.createElement('span'); p.style.color = 'var(--primary)'; document.body.append(p); const c = getComputedStyle(p).color; p.remove(); return c; });
     expect(r.edge).toBe(primary);
+    // R-025: in this theme the whole Care Note card (every Care Note, question or not) is the theme's soft tint and
+    // clearly darker than the Personal Reflection's light card; the question strip is a lighter panel inside it.
+    const shade = await page.evaluate(() => {
+      const token = (name: string) => { const p = document.createElement('span'); p.style.color = `var(${name})`; document.body.append(p); const c = getComputedStyle(p).color; p.remove(); return c; };
+      const lum = (rgb: string) => { const [r, g, b] = rgb.match(/[\d.]+/g)!.slice(0, 3).map((v) => { const s = Number(v) / 255; return s <= 0.04045 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4; }); return 0.2126 * r! + 0.7152 * g! + 0.0722 * b!; };
+      const bg = (el: Element) => getComputedStyle(el).backgroundColor;
+      const cards = [...document.querySelectorAll('[data-testid="journal-entry"]')];
+      const care = cards.filter((c) => c.getAttribute('data-type') === 'care');
+      const refl = cards.filter((c) => c.getAttribute('data-type') === 'reflection');
+      const strip = care[0]!.querySelector('[data-testid="entry-question"]')!;
+      return {
+        soft: token('--primary-soft'), surface: token('--surface'),
+        care: care.map(bg), refl: refl.map(bg), strip: bg(strip),
+        ratio: (lum(bg(refl[0]!)) + 0.05) / (lum(bg(care[0]!)) + 0.05),
+        text: care.map((c) => getComputedStyle(c.querySelector('[data-testid="entry-excerpt"]')!).color), textToken: token('--text'),
+      };
+    });
+    expect(shade.care).toEqual([shade.soft, shade.soft]);
+    expect(shade.refl).toEqual([shade.surface]);
+    expect(shade.strip).toBe(shade.surface);
+    expect(shade.ratio).toBeGreaterThan(1.25); // a visible step in lightness, not a near-identical shade
+    expect(shade.text).toEqual([shade.textToken, shade.textToken]);
 
     await page.getByTestId('more-filters').locator('summary').click();
     await page.getByTestId('filter-tag').first().click();
@@ -1100,3 +1136,254 @@ for (const width of [320, 390]) {
     await noOverflow(page, 'delete confirmation');
   });
 }
+
+// ---------------------------------------------------------------------------
+// Checkpoint 4-R: acceptance refinements R-024 (primary views), R-025 (card distinction), R-026 (shortcut state)
+// ---------------------------------------------------------------------------
+
+async function seedFour(page: Page) {
+  await addEntry(page, { date: '2026-11-10', title: 'Reflection', body: 'Fictional reflection, marmalade.', tags: 'shared' });
+  await addEntry(page, { type: 'care', date: '2026-11-12', title: 'Ordinary note', body: 'Fictional ordinary care note, marmalade.', tags: 'shared' });
+  await addEntry(page, { type: 'care', date: '2026-11-14', title: 'Open question', body: 'Fictional unanswered question, marmalade?', tags: 'shared, q', question: true });
+  await addEntry(page, { type: 'care', date: '2026-11-16', title: 'Answered question', body: 'Fictional answered question.', tags: 'q', question: true, answered: true });
+}
+const VIEWS = ['filter-type-all', 'filter-type-reflection', 'filter-type-care', 'filter-unanswered'] as const;
+const pressed = (page: Page) => Promise.all(VIEWS.map((v) => page.getByTestId(v).getAttribute('aria-pressed')));
+
+test('R-024: four primary views, one selected at a time; unanswered questions are a subset of Care Notes, never a separate kind', async ({ page }) => {
+  await start(page);
+  await seedFour(page);
+  const [all, reflections, careNotes, unanswered] = VIEWS.map((v) => page.getByTestId(v));
+  await expect(page.getByRole('group', { name: 'Show (one at a time)' }).getByRole('button')).toHaveText(['All', 'Personal Reflections', 'Care Notes', 'Unanswered questions (1)']);
+  expect(await pressed(page)).toEqual(['true', 'false', 'false', 'false']);
+
+  // The inclusion table, view by view. Exactly one view is selected after every click.
+  const everything = ['Answered question', 'Open question', 'Ordinary note', 'Reflection'];
+  expect(await feed(page)).toEqual(everything); // All: every type and question status
+  await unanswered!.click();
+  expect(await pressed(page)).toEqual(['false', 'false', 'false', 'true']);
+  await expect.poll(() => feed(page)).toEqual(['Open question']);
+  // Personal Reflections straight after Unanswered questions: no contradiction, no empty feed.
+  await reflections!.click();
+  expect(await pressed(page)).toEqual(['false', 'true', 'false', 'false']);
+  await expect.poll(() => feed(page)).toEqual(['Reflection']);
+  await expect(page.getByTestId('journal-no-results')).toHaveCount(0);
+  // Care Notes straight after Unanswered questions: all Care Notes together (ordinary, answered and unanswered).
+  await unanswered!.click();
+  await careNotes!.click();
+  expect(await pressed(page)).toEqual(['false', 'false', 'true', 'false']);
+  await expect.poll(() => feed(page)).toEqual(['Answered question', 'Open question', 'Ordinary note']);
+  await expect(page.getByTestId('journal-entry').getByTestId('entry-type')).toHaveText(['Care Note', 'Care Note', 'Care Note']);
+  await all!.click();
+  expect(await pressed(page)).toEqual(['true', 'false', 'false', 'false']);
+  await expect.poll(() => feed(page)).toEqual(everything);
+  // Pressing the selected view again keeps it selected: there is always exactly one.
+  await all!.click();
+  expect(await pressed(page)).toEqual(['true', 'false', 'false', 'false']);
+  await unanswered!.click();
+  await unanswered!.click();
+  expect(await pressed(page)).toEqual(['false', 'false', 'false', 'true']);
+
+  // Marking answered: leaves the unanswered view, stays in Care Notes and All, and nothing else about it changes.
+  const before = (await stored(page)).find((e) => e.title === 'Open question')!;
+  await card(page, 'Open question').getByTestId('toggle-answered').click();
+  await expect(unanswered!).toHaveText('Unanswered questions (0)');
+  await expect(page.getByTestId('journal-no-results')).toContainText('There are no unanswered questions for the provider.');
+  await careNotes!.click();
+  await expect.poll(() => feed(page)).toEqual(['Answered question', 'Open question', 'Ordinary note']);
+  await expect(card(page, 'Open question').getByTestId('question-status')).toHaveText('Question for the provider · Answered');
+  await all!.click();
+  await expect.poll(() => feed(page)).toEqual(everything);
+  const answered = (await stored(page)).find((e) => e.id === before.id)!;
+  expect(answered).toEqual({ ...before, answered: true, rev: (before.rev as number) + 1, updatedAt: answered.updatedAt, lastModifiedBy: answered.lastModifiedBy });
+  expect(answered).toMatchObject({ type: 'care', date: '2026-11-14', body: before.body, tags: ['shared', 'q'], isProviderQuestion: true });
+  // Marking unanswered again: back in the unanswered view; still in Care Notes and All.
+  await card(page, 'Open question').getByTestId('toggle-answered').click();
+  await expect(unanswered!).toHaveText('Unanswered questions (1)');
+  await unanswered!.click();
+  await expect.poll(() => feed(page)).toEqual(['Open question']);
+  await careNotes!.click();
+  await expect.poll(() => feed(page)).toEqual(['Answered question', 'Open question', 'Ordinary note']);
+  const back = (await stored(page)).find((e) => e.id === before.id)!;
+  expect(back).toMatchObject({ type: 'care', answered: false, date: before.date, body: before.body, title: before.title, tags: before.tags, isProviderQuestion: true });
+  // The stored representation is unchanged: two entry types only, with the same fields as before.
+  const records = await stored(page);
+  expect(new Set(records.map((e) => e.type))).toEqual(new Set(['reflection', 'care']));
+  for (const e of records) expect(Object.keys(e).sort()).toEqual(['answered', 'body', 'childId', 'createdAt', 'date', 'deletedAt', 'id', 'isProviderQuestion', 'lastModifiedBy', 'originDeviceId', 'recordType', 'rev', 'tags', 'title', 'type', 'updatedAt']);
+});
+
+test('R-024: search, dates and tags combine with each of the four views and are kept when the view changes', async ({ page }) => {
+  await start(page);
+  await seedFour(page);
+  const [all, reflections, careNotes, unanswered] = VIEWS.map((v) => page.getByTestId(v));
+  const search = page.getByRole('searchbox', { name: 'Search journal' });
+  await page.getByTestId('more-filters').locator('summary').click();
+  const from = page.getByLabel('From');
+  const tag = (t: string) => page.getByTestId('filter-tag').filter({ hasText: new RegExp(`^\\s*${t}\\s*$`) });
+  const kept = async (text: string, date: string, tags: string[]) => {
+    await expect(search).toHaveValue(text);
+    await expect(from).toHaveValue(date);
+    for (const t of ['shared', 'q']) await expect(tag(t)).toHaveAttribute('aria-pressed', String(tags.includes(t)));
+  };
+
+  // Search with every view.
+  await search.fill('marmalade');
+  await expect.poll(() => feed(page)).toEqual(['Open question', 'Ordinary note', 'Reflection']);
+  await reflections!.click();
+  await expect.poll(() => feed(page)).toEqual(['Reflection']);
+  await careNotes!.click();
+  await expect.poll(() => feed(page)).toEqual(['Open question', 'Ordinary note']);
+  await unanswered!.click();
+  await expect.poll(() => feed(page)).toEqual(['Open question']);
+  await kept('marmalade', '', []);
+  // Add a date and a tag; switch through all four views: the three extra filters stay exactly as set.
+  await from.fill('2026-11-12');
+  await tag('shared').click();
+  await kept('marmalade', '2026-11-12', ['shared']);
+  await expect.poll(() => feed(page)).toEqual(['Open question']);
+  await all!.click();
+  await kept('marmalade', '2026-11-12', ['shared']);
+  await expect.poll(() => feed(page)).toEqual(['Open question', 'Ordinary note']); // the reflection is before the date
+  await reflections!.click();
+  await kept('marmalade', '2026-11-12', ['shared']);
+  await expect(page.getByTestId('journal-no-results')).toContainText('Nothing matches the current search and filters.'); // empty because of the date, and it says so
+  await careNotes!.click();
+  await kept('marmalade', '2026-11-12', ['shared']);
+  await expect.poll(() => feed(page)).toEqual(['Open question', 'Ordinary note']);
+  await expect(page.getByTestId('journal-count')).toHaveText('Showing 2 of 4 entries');
+  // Dates alone and tags alone, with different views.
+  await search.fill('');
+  await tag('shared').click();
+  await from.fill('2026-11-13');
+  await expect.poll(() => feed(page)).toEqual(['Answered question', 'Open question']);
+  await unanswered!.click();
+  await expect.poll(() => feed(page)).toEqual(['Open question']);
+  await from.fill('');
+  await tag('q').click();
+  await careNotes!.click();
+  await expect.poll(() => feed(page)).toEqual(['Answered question', 'Open question']);
+  await reflections!.click();
+  await expect(page.getByTestId('journal-no-results')).toBeVisible();
+  await kept('', '', ['q']);
+  // Clearing resets the view and every extra filter together.
+  await page.getByTestId('clear-filters').click();
+  expect(await pressed(page)).toEqual(['true', 'false', 'false', 'false']);
+  await kept('', '', []);
+  await expect.poll(() => feed(page)).toEqual(['Answered question', 'Open question', 'Ordinary note', 'Reflection']);
+  expect(await stored(page)).toHaveLength(4);
+});
+
+test('R-025: in a mixed feed every Care Note card is tinted and every Personal Reflection card is light, with labels and icons kept', async ({ page }) => {
+  await start(page);
+  await seedFour(page);
+  const cards = await page.getByTestId('journal-entry').evaluateAll((els) => els.map((el) => ({
+    type: el.getAttribute('data-type'), bg: getComputedStyle(el).backgroundColor,
+    label: el.querySelector('[data-testid="entry-type"]')!.textContent!.trim(), icon: !!el.querySelector('[data-testid="entry-type"] svg'),
+    strip: el.querySelector('[data-testid="entry-question"]') ? getComputedStyle(el.querySelector('[data-testid="entry-question"]')!).backgroundColor : null,
+  })));
+  const care = cards.filter((c) => c.type === 'care');
+  const refl = cards.filter((c) => c.type === 'reflection');
+  expect(care).toHaveLength(3);
+  expect(new Set(care.map((c) => c.bg)).size).toBe(1); // ordinary, answered and unanswered Care Notes look alike: one type
+  expect(refl[0]!.bg).not.toBe(care[0]!.bg);
+  for (const c of cards) { expect(c.icon).toBe(true); expect(c.label).toBe(c.type === 'care' ? 'Care Note' : 'Personal Reflection'); }
+  for (const c of care.filter((x) => x.strip)) expect(c.strip).not.toBe(c.bg); // the question strip stands apart from the note's text
+  // The opened entry and the editor are unchanged sheets; the tint is a feed treatment.
+  await card(page, 'Ordinary note').getByTestId('entry-open').click();
+  await expect(page.getByTestId('entry-view').getByTestId('entry-type')).toHaveText('Care Note');
+});
+
+for (const finish of ['save', 'cancel'] as const) {
+  test(`R-026: after the Home shortcut (${finish}), switching children never opens an editor; the shortcut still works every time`, async ({ page }) => {
+    await start(page);
+    await addChild(page, 'Sample Child B', '2025-01-15');
+    const hash = () => page.evaluate(() => window.location.hash);
+    const openFromHome = async () => {
+      await page.goto('./#/home');
+      await page.getByTestId('qa-journal-entry').click();
+      await expect(page.getByRole('dialog', { name: 'New journal entry' })).toBeVisible();
+      await expect.poll(hash).toBe('#/journal'); // the one-time address has been used
+    };
+    const finishIt = async (text: string) => {
+      if (finish === 'save') {
+        await bodyField(page).fill(text);
+        await page.getByTestId('save-entry').click();
+        await expect(page.getByTestId('saved-text')).toHaveText('Entry saved.');
+      } else {
+        await page.getByTestId('cancel-entry').click();
+      }
+      await expect(page.getByRole('dialog')).toHaveCount(0);
+    };
+    const noEditor = async () => {
+      await expect(page.getByTestId('journal')).toBeVisible();
+      await page.waitForTimeout(250); // anything that was going to open has opened
+      await expect(page.getByRole('dialog')).toHaveCount(0);
+      expect(await hash()).toBe('#/journal');
+    };
+
+    // B is active. Open through the shortcut, finish, stay on the Journal, switch both ways.
+    await openFromHome();
+    await finishIt('Fictional B entry from Home');
+    await switchTo(page, 'Sample Child A');
+    await noEditor();
+    await expect(page.locator('.page-intro')).toHaveText('Memories and care notes for Sample Child A.');
+    await switchTo(page, 'Sample Child B');
+    await noEditor();
+    await switchTo(page, 'Sample Child A');
+    await noEditor();
+
+    // The shortcut opens a new entry again, each time it is used, for whichever child is active.
+    await openFromHome();
+    await finishIt('Fictional A entry from Home');
+    await switchTo(page, 'Sample Child B');
+    await noEditor();
+    await openFromHome();
+    // Unsaved-change protection still applies to a shortcut-opened form.
+    await bodyField(page).fill('Fictional unsaved text');
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('dialog', { name: 'Discard your changes?' })).toBeVisible();
+    await page.getByTestId('discard-confirm').click();
+    await switchTo(page, 'Sample Child A');
+    await noEditor();
+
+    // Ordinary navigation: the tab, a reload and the browser's Back button never open an editor.
+    await page.getByRole('link', { name: 'Growth', exact: true }).click();
+    await page.getByRole('link', { name: 'Journal', exact: true }).click();
+    await noEditor();
+    await switchTo(page, 'Sample Child B');
+    await noEditor();
+    await page.reload();
+    await noEditor();
+    await page.goBack(); // to Growth: the one-time address was replaced, so it isn't in the history
+    await expect(page).not.toHaveURL(/journal\/new/);
+    await expect(page.getByRole('dialog')).toHaveCount(0);
+    await page.goForward();
+    await noEditor();
+
+    // Each entry belongs to the child who was active when it was written.
+    const records = await stored(page);
+    if (finish === 'save') {
+      expect(records.map((e) => e.body).sort()).toEqual(['Fictional A entry from Home', 'Fictional B entry from Home']);
+      expect(new Set(records.map((e) => e.childId)).size).toBe(2);
+      await expect.poll(() => feed(page)).toEqual(['Fictional B entry from Home']);
+    } else {
+      expect(records).toEqual([]);
+    }
+  });
+}
+
+test('R-026: the Journal tab’s own New Journal Entry button is unaffected, and switching afterwards opens nothing', async ({ page }) => {
+  await start(page);
+  await addChild(page, 'Sample Child B', '2025-01-15');
+  await page.getByRole('link', { name: 'Journal', exact: true }).click();
+  await addEntry(page, { body: 'Fictional B entry from the tab' });
+  await switchTo(page, 'Sample Child A');
+  await page.waitForTimeout(250);
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+  await page.getByTestId('new-entry').click();
+  await page.getByTestId('cancel-entry').click();
+  await switchTo(page, 'Sample Child B');
+  await page.waitForTimeout(250);
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+  await expect.poll(() => feed(page)).toEqual(['Fictional B entry from the tab']);
+});

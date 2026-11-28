@@ -176,3 +176,8 @@ History: Fraunces produced undesirable letterforms (J, f) in functional headings
 - **Entry, editor and confirmations:** bottom sheets. The editor uses `label.choice` radios (with the type's icon and a one-line description) and checkboxes, the existing fields, a 200 px text area, primary Save and quiet Cancel. Delete and discard confirmations put the safe choice first and focused.
 - **Navigation:** four equal bottom tabs.
 - **Sheets:** long unbroken words in a sheet's title or paragraphs now wrap (applies to every sheet).
+
+## Journal refinements (Checkpoint 4-R)
+- **Primary views (R-024):** the four `.chip` buttons are a single-selection set (`aria-pressed`, group label “Show (one at a time)”): All, Personal Reflections, Care Notes, Unanswered questions (n). Exactly one is pressed.
+- **Care Note card (R-025):** `.journal-card-care` has a `--primary-soft` background across the whole card, a soft primary border and a `--on-primary-soft` left edge. Inside it: badge and tags are `--surface` pills; body text stays `--text`; the “Read the whole entry” link is `--on-primary-soft`; the provider-question strip is a `--surface` panel with a top rule. Lowest text contrast on the tint: 5.2:1 (secondary text). **Personal Reflection card:** unchanged, `--surface` with a `--primary` edge.
+- The two card backgrounds differ by a lightness ratio of 1.27–1.35 in every theme. Type is still carried by label and icon as well.
