@@ -188,7 +188,7 @@ A living list of refinements and suspected defects that are recorded but not yet
 - **R-026, what is and isn't established.** Established by reproduction on the unmodified `7e9eb87` build: open the Journal through Home's shortcut, save or cancel, stay on the Journal, switch children: the editor opens, and again on switching back, until the Journal is left and re-entered. Entering through the Journal tab never did this. **Not established:** that this is the exact sequence the owner followed (the owner's original steps were not recorded). It fits everything observed: only on the Journal; only sometimes (only after the shortcut); and gone after deleting and creating profiles (which involves leaving the Journal, clearing the held request). No other path to the symptom was found in the code, but one cannot be ruled out by inspection alone.
 - **No record could be written to the wrong child by this defect:** the reopened editor belonged to the newly active child, and the save-path and repository checks were unaffected.
 
-## R-027 — Calendar: “New event” shortcut reopens the Add event form after a child switch (proposed; not authorized)
+## R-027 — Calendar: “New event” shortcut reopens the Add event form after a child switch (*as first recorded: proposed, not authorized; since authorized and implemented, see “R-027 — implemented” below*)
 - **Source:** found by Claude Code while inspecting the Calendar for the R-026 cause, as the owner asked (2026-11-28). Not reported by the owner; the owner noted that ordinary switching on the Calendar did not show it.
 - **Reproduction (unmodified `7e9eb87`, headless Chromium):** with two children, tap Home → “New event”; save or cancel; stay on the Calendar; switch children. The Add event form opens, and again on switching back, until the Calendar is left and re-entered. Entering through the Calendar tab does not do this.
 - **Cause:** the same as R-026. `Calendar.tsx` replaces `#/calendar/add` with `#/calendar` in the address only; the app's route state keeps `add: true`, and the child-keyed Calendar remounts with it.
@@ -198,3 +198,20 @@ A living list of refinements and suspected defects that are recorded but not yet
 
 ## Checkpoint 4-R note (2026-11-28)
 - **Deferred, unchanged:** R-001, R-003, R-009, R-018, R-023. **Proposed, not authorized:** R-027.
+
+## R-027 — implemented (2026-11-28; pending owner reacceptance)
+- **History:** the owner saw the symptom in the Journal → ChatGPT identified the suspected routing-state cause → Claude Code reproduced and confirmed it (R-026) → that investigation found the equivalent Calendar defect, present since Checkpoint 3 → the owner authorized the Calendar correction separately.
+- **Not an acceptance failure:** the owner's Checkpoint 3 acceptance did not include the affected sequence, which had not been identified.
+- **Correction:** `Calendar.tsx` calls `consumeRoute({ name: 'calendar' })` instead of replacing the address only. Nothing else changed.
+- **Evidence:** two new end-to-end tests (save and cancel) failed against the original handling and pass with the correction.
+- **Status:** Implemented; **pending owner reacceptance** (CS1–CS4 in TESTING_CHECKLIST).
+
+## R-028 — Journal: the entry form resets if the entry list finishes loading while it is open (found 2026-11-28; **not corrected; awaiting the owner's decision**)
+- **Source:** found by Claude Code during the R-027 targeted tests, when an unchanged Journal keyboard test failed. Not reported by the owner.
+- **What happens:** on arriving at the Journal the list shows “Loading…” for a moment. If the entry form is open when loading finishes, the form is rebuilt: the type returns to Personal Reflection, **anything typed is cleared**, and focus jumps back to the first control. No message is shown. Nothing wrong is saved.
+- **When it can happen:** only in the interval between arriving on the Journal and the list appearing. On a fast device with a small journal that is a few hundredths of a second, too short to type in. It lasts longer on a slow device or with many entries, and **Home's “Journal entry” shortcut always opens the form inside that interval**, so that is the realistic route: tap the shortcut, start typing at once, and the first words vanish when the list arrives.
+- **Reproduction (headless Chromium):** with the list's load artificially delayed by 1.5 seconds, text typed into the form was cleared when loading finished, through both the Home shortcut and the Journal tab's button. The same experiment on the Calendar's Add event form kept the text: **the Calendar is not affected.** Without any delay, an automated keyboard test that presses keys immediately after opening the form failed 2 of 16 times on the unmodified `c236a05` and 5 of 12 and 6 of 16 times in other batches.
+- **Cause:** the “Loading…” line, the empty state and the feed are alternatives at the same level of the screen as the form. When one replaces another, the interface library rebuilds the form beside them, discarding its contents. The Calendar's loading line sits inside its own section, so its form is not disturbed.
+- **Present since:** the Checkpoint 4 commit (`7e9eb87`). The three complete cycles then, and the cycle at 4-R, passed because the timing happened to fall the other way; the test was not wrong, it was racing a real defect.
+- **Proposed correction (tried in a throwaway experiment, then reverted; not in the commit):** put the loading line, empty state and feed inside one fixed container, so swapping them cannot disturb the form. With that change the same test passed 24 of 24. A deterministic regression test (delay the load, type, check the text survives) would be added.
+- **Classification:** application defect (data-loss of unsaved typing, narrow window). **Status: not corrected; awaiting authorization.**

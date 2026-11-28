@@ -707,3 +707,54 @@ Environment: Linux cloud container, Node 22.23.5, headless Chromium, no retries.
 - **Only documentation changed after the complete cycle began.**
 - **Screenshots:** `docs/screenshots/checkpoint-4-r/` (8), from the final code.
 - **Not tested by anyone yet:** the refinements in Safari; anything on an iPhone.
+
+## Draft entry — Checkpoint 4-R2: related Calendar routing correction (drafted by Claude Code; edit before submitting)
+**Date:** 2026-11-28
+**Tool:** Claude Code (cloud session); secondary review by ChatGPT
+**What happened:** ChatGPT's secondary review passed the three Journal refinements. Before my own reacceptance, I authorized the Calendar correction Claude Code had proposed (R-027), so that I could review everything in one local preview.
+**What I asked for:** the narrowest correction, using the mechanism already added for the Journal; regression tests shown failing on the original handling; targeted tests only; no Journal changes; stop if anything broader was needed.
+
+**What it produced:**
+- Two regression tests written first, both failing on the original Calendar handling.
+- A one-call correction in `Calendar.tsx` (plus its import and a comment). Both tests then passed.
+- **An unexpected failure in an unchanged Journal test,** which Claude Code traced to a separate, older Journal defect (R-028). It did not change the Journal: it reproduced the defect, checked that the Calendar is not affected, tried a correction in a throwaway experiment, reverted it, and reported.
+
+**What I corrected or redirected:** (to be completed by the owner)
+
+### Development challenges and lessons learned (continued from #78)
+| # | Challenge | Class | What happened | Outcome |
+|---|---|---|---|---|
+| 79 | **The Calendar's shortcut had the Journal's routing defect** | Application defect (present since Checkpoint 3; found by investigation, not by acceptance) | Same cause as #75. My Checkpoint 3 acceptance did not include the sequence that shows it, because nobody had identified it. | Corrected with the existing mechanism after separate authorization. Tests fail before and pass after. |
+| 80 | **A test that had always passed failed, and the fault was in the app** | Application defect in the Checkpoint 4 Journal (unsaved typing can be lost), exposed by test timing | During the targeted run the Journal keyboard test failed once. Repeating it showed 5 of 12 failures, then 2 of 16 on the previous, unmodified commit: not caused by the Calendar change. Recording the page's events showed the entry form being removed and rebuilt at the instant the entry list finished loading. The test opens the form and presses a key within a few hundredths of a second of arriving; whether the key landed before or after the rebuild decided the result. Every earlier run, including the three complete cycles, had fallen the lucky way. A first attempt to observe it made it vanish, because the observation itself added a delay. With the load slowed to 1.5 seconds, typed text was cleared every time; the Calendar's form kept its text. | **Not corrected** (outside this step's authorization): recorded as R-028 with a tested proposal. The test is left untouched so it keeps exposing the defect. **Lessons:** three clean runs do not prove the absence of a timing-dependent defect; an intermittent failure should be diagnosed, not re-run until it passes; and a deterministic test that slows the load would have caught this at Checkpoint 4. |
+
+### Automated results (run by Claude Code in this conversation)
+Environment: Linux cloud container, Node 22.23.5, headless Chromium, no retries. **No Safari, Mac, iPhone or Android testing was performed by Claude Code.**
+
+**Deliberately reproduced failures (expected):**
+
+| Check | Result |
+|---|---|
+| The two new R-027 tests against the **original** Calendar handling, before the correction | **2 of 2 failed**, as intended: the Add event form was open after the first child switch |
+
+**Results with the correction:**
+
+| Check | Result |
+|---|---|
+| Type check | Passed |
+| Production build with content validation (JS 582.66 kB, 136.80 kB gzip) | Passed |
+| Unit tests (23 files) | **475 of 475** |
+| Targeted end-to-end, one run: Calendar (33, including the 2 new R-027 tests), Journal (34, including the 3 R-026 tests), Checkpoint 1 (18), review regressions (22), final refinement (22), responsive (10), update (8) | **146 of 147** |
+
+**Unexpected failure (1), not caused by this change:** `journal.spec.ts` “keyboard and focus”. Diagnosed as R-028 (challenge #80).
+
+| Follow-up on that test | Result |
+|---|---|
+| Repeated 12 times with the correction in place | 7 passed, 5 failed |
+| Repeated 16 times on the unmodified previous commit `c236a05` | 14 passed, 2 failed — **the defect pre-exists this step** |
+| Slow-load reproduction: Journal via Home shortcut; Journal via the tab's button | Typed text cleared when loading finished, both times |
+| Slow-load reproduction: Calendar via Home shortcut | Typed text kept — **the Calendar is not affected** |
+| Throwaway experiment with the proposed R-028 correction (then reverted), 24 repetitions | 24 passed |
+
+- **Totals:** 475 unit and 288 end-to-end tests exist (763; +2 for R-027). **No complete end-to-end cycle was run for this step** (authorized); the Growth and goals/exercises files were not run.
+- **The targeted run was not repeated to obtain a clean result,** and the failing test was not changed, skipped or retried.
+- **Application change in the commit:** `Calendar.tsx` only. The Journal's code is byte-for-byte what it was at `c236a05`.

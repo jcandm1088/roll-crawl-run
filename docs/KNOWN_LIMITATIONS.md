@@ -179,3 +179,9 @@ Last updated 2026-11-28 (Checkpoint 4-R: Journal refinements R-024 to R-026 impl
 - **Not human-tested in Checkpoint 4 (carried to final acceptance):** J5 (a reflection with only text), J7 (validation messages), J26 (reload and reopen), J27 (offline), J29 (narrow width), J30 (keyboard), J31 (source information). They pass in automated tests in headless Chromium, which is not the same thing. J32 (iPhone) is deferred to Checkpoint 6.
 - **The refinements themselves have not been seen by a person** at the time of this commit.
 - *(Supersedes one line of the Checkpoint 4 section: “nothing in Checkpoint 4 has been tested by a person” was true of that commit; the owner has since tested it in Mac Safari.)*
+
+## Checkpoint 4-R2 (Calendar routing correction R-027)
+- *(Supersedes the R-027 line in the 4-R section.)* **R-027 is corrected:** the Calendar's “New event” shortcut no longer reopens its form after a child switch. Not yet seen by a person.
+- **Known, not corrected: R-028.** If the Journal's entry form is open at the moment the entry list finishes loading, the form is reset and anything typed is lost, without a message. The interval is normally a few hundredths of a second, but it is longer on a slow device or with many entries, and Home's “Journal entry” shortcut always opens the form inside it. Until it is corrected: after tapping the shortcut, wait for the feed (or the empty state) to appear behind the form before typing. Details and a tested proposal are in REFINEMENT_BACKLOG.
+- **One Journal test is intermittent because of R-028** (“keyboard and focus”). It is left exactly as it is, not weakened, skipped or retried, so that it keeps exposing the defect until the defect is corrected.
+- **No complete regression cycle was run for this step** (authorized: targeted end-to-end files and the full unit suite). The last complete cycle was on `c236a05`.

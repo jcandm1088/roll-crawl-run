@@ -33,6 +33,7 @@ import {
 } from '../../../domain/vaccineSchedule';
 import { createEvent, deleteEvent, updateEvent, type EventContext } from '../../../data/repositories/eventsRepo';
 import { newId } from '../../../data/envelope';
+import { consumeRoute } from '../../../router';
 import { PageHeader } from '../../components/PageHeader';
 import { Sheet } from '../../components/Sheet';
 import { Icon } from '../../components/Icon';
@@ -106,9 +107,11 @@ function CalendarInner({ child, openAdd }: { child: Child; openAdd: boolean }) {
   const gridRef = useRef<HTMLTableElement>(null);
   const ctx: EventContext = { deviceId: app.meta.deviceId, childId: child.id };
 
-  // Opened from "New event" on Home (#/calendar/add): keep the address as the plain Calendar afterwards.
+  // Opened from "New event" on Home (#/calendar/add): the request is used once. The address becomes the plain
+  // Calendar and the app's own route state follows it, so a later remount of this screen (a child switch)
+  // can't open the form again (R-027; same mechanism as the Journal's R-026).
   useEffect(() => {
-    if (openAdd) window.history.replaceState(null, '', '#/calendar');
+    if (openAdd) consumeRoute({ name: 'calendar' });
   }, [openAdd]);
 
   // Keyboard day-to-day movement: focus follows the selected day as soon as it is rendered (a layout

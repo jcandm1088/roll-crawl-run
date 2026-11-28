@@ -1,6 +1,8 @@
 # Development Plan — Roll, Crawl, RUN: Tracking Growth Together (Revision 2)
 
-> **Current status (2026-11-28, Checkpoint 4-R):** the owner's Mac Safari acceptance of Checkpoint 4 passed 23 checks, failed J11 and left 7 untested. Refinements R-024 (four single-selection views), R-025 (tinted Care Note cards) and R-026 (editor reopening after a child switch) are implemented in a second local commit (R20) and await the owner's reacceptance. Nothing is pushed, merged or deployed. Database version 3 unchanged. The current-state handoff is `docs/HANDOFF.md`.
+> **Current status (2026-11-28, Checkpoint 4-R2):** R-027 (the Calendar's “New event” shortcut reopening its form after a child switch) is corrected in a third local commit (R21). The combined owner reacceptance of R-024 to R-027 is pending. **One newly found Journal defect, R-028, is documented and not corrected; it needs the owner's decision.** Nothing is pushed, merged or deployed. Database version 3 unchanged.
+
+> *Previous status line (kept as recorded):* **Current status (2026-11-28, Checkpoint 4-R):** the owner's Mac Safari acceptance of Checkpoint 4 passed 23 checks, failed J11 and left 7 untested. Refinements R-024 (four single-selection views), R-025 (tinted Care Note cards) and R-026 (editor reopening after a child switch) are implemented in a second local commit (R20) and await the owner's reacceptance. Nothing is pushed, merged or deployed. Database version 3 unchanged. The current-state handoff is `docs/HANDOFF.md`.
 
 > *Previous status line (2026-11-27, kept as recorded):* **Current status (2026-11-27, Checkpoint 4 implemented):** Checkpoint 4 (Journal; Resources removed from the primary navigation; R19) is **implemented in a local commit and awaits the owner's secondary review and Mac acceptance**. Nothing is pushed, merged or deployed. Database version 3 is unchanged. Checkpoint 5 remains deferred until after submission; Checkpoint 6 is final acceptance and publication. The current-state handoff is `docs/HANDOFF.md`.
 
@@ -41,6 +43,14 @@
 **Visual direction (CP1):** premium, warm, calm, adult-oriented; no cartoon imagery, not clinical, not generic dashboard. Five cohesive theme systems (Earth default, Sky, Blush, Lavender, Sage) sharing typography, spacing, iconography, components, buttons, navigation. Fraunces (display) + Inter (UI), subject to review. Initial app icon + wordmark preserving "Roll, Crawl, RUN: Tracking Growth Together". Safe-area insets, ≥44–48px targets.
 
 **Checkpoint 1 build list:** scaffold (Vite/TS/Preact, Vitest, Playwright); fonts self-hosted (fetched from npm `@fontsource` packages, OFL); icon/wordmark (SVG → PNG sizes generated with Playwright); design tokens + 5 themes + contrast test; app shell (top bar with child chip + settings, bottom nav, hash router); placeholder tabs clearly labeled "Coming in a later checkpoint"; onboarding (DOB, name/photo, corrected age, theme, privacy); profiles create/edit/switch/delete (typed confirmation; backup purge option present but backups feature labeled pending); age domain (chronological + corrected with safeguards); IndexedDB schema v1 for all planned stores with logical-key indexes and atomic transaction helper; repositories for meta/settings/children/photos; storage-persistence status; privacy disclosures in Settings; manifest + basic service worker (precache, update banner); unit + e2e tests; mobile screenshots via Playwright at deviceScaleFactor 2; docs skeletons (README, BUILD_LOG template, TESTING_CHECKLIST, KNOWN_LIMITATIONS, DECISIONS, SOURCE_REGISTER). Code lives in `/home/user/roll-crawl-run` (git init locally; no push until you provide the remote).
+
+---
+
+## R21 — Checkpoint 4-R2: related Calendar routing correction, R-027 (implemented 2026-11-28; awaiting combined owner reacceptance)
+- **R-027:** Home's “New event” shortcut is now a one-time request, using the `consumeRoute` introduced for R-026. Switching children afterwards no longer reopens the Add event form (Decision #176).
+- **Unchanged:** every other Calendar behavior, the Journal, the database and stored records.
+- **Found, not corrected: R-028** (Journal entry form reset when the entry list finishes loading while it is open). Awaiting the owner's decision (Decision #178).
+- **Report:** `docs/reviews/CHECKPOINT_4_R2_CALENDAR_CORRECTION_REPORT.md`.
 
 ---
 

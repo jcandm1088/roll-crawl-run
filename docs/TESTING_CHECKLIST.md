@@ -614,3 +614,17 @@ Reported by the owner for the local build of `64202e2` in Mac Safari (port 4179)
 ### Optional
 - **JR12** Any of the seven untested items (J5, J7, J26, J27, J29, J30, J31) you choose to check now rather than at final acceptance.
 - **JR13 (decision, not a test)** Whether to authorize the equivalent Calendar correction (R-027).
+
+## Checkpoint 4-R2 — automated (headless Chromium; results in BUILD_LOG)
+- **End-to-end (+2, 288):** `calendar.spec.ts` R-027, save and cancel: after Home's “New event”, child switches in both directions never reopen the form; the shortcut opens the form again for each child; the Calendar tab, its own Add event button, a reload, Back and Forward; which child each saved event belongs to; each child's Upcoming list and Home's Upcoming Appointments.
+- **Both tests were run against the original handling first and failed there** (the form reopened on the first switch), then passed with the correction.
+- **Unit:** unchanged, 475.
+- **Run for this step:** type check; build with content validation; full unit suite; targeted end-to-end files (Calendar, Journal, Checkpoint 1, review regressions, final refinement, responsive, update). **Not run:** the Growth and goals/exercises files (no shared code changed).
+
+## Checkpoint 4-R2 — Calendar reacceptance supplement (owner; add to JR1–JR13 for the combined review)
+*Two child profiles; Mac Safari; fictional data. Claude Code has not performed these.*
+- **CS1 (save)** Home → “New event”: the Add event form opens. Save an event. Staying on the Calendar, switch to the other child and back. No form opens, and the event appears only for the child it was saved for.
+- **CS2 (cancel)** Home → “New event”, then Cancel. Switch children both ways. No form opens.
+- **CS3 (repeat)** Use Home → “New event” again, for each child: the form opens every time.
+- **CS4 (ordinary use)** The Calendar tab, its own “Add event” button, editing and deleting an event, the three “Show on the calendar” choices, the vaccine references and Home's Upcoming Appointments all behave as before.
+- **CS5 (decision, not a test)** Whether to authorize the R-028 Journal correction before final acceptance.

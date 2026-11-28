@@ -4,7 +4,21 @@
 
 *Last updated: 2026-11-28 (Checkpoint 4-R: Journal acceptance refinements R-024 to R-026 in a second local commit; awaiting the owner's reacceptance; **not pushed**). **Start at section 0.** Before that: 2026-11-27, Checkpoint 4 implemented locally. Earlier the same day: Checkpoint 3 formal acceptance closeout; documentation-only commit on `claude/great-dijkstra-wwi9g1`, pushed with the owner's authorization). **Start here for Checkpoint 4: section 0.** Earlier the same day: Checkpoint 3 implemented (`c5017da`), refined (`77d263b`), medical symbol corrected (`c8aa0c5`).*
 
-## 0. Checkpoint 4-R — Journal acceptance refinements, awaiting reacceptance
+## 0. Checkpoint 4-R2 — Calendar correction done; combined reacceptance pending; one open defect (R-028)
+**Where it is:** three local commits on `claude/awesome-ritchie-b198ya` on top of the authoritative `8122feb…`: `7e9eb87b4180e4926aeac52eabf09980634a7b15` (Checkpoint 4, 20), `c236a053d9214acbaae1706d4c76858ca010ebd9` (Checkpoint 4-R, 21), and “Checkpoint 4-R2: Calendar Shortcut Routing Correction” (22; exact hash in the delivery report). **Not pushed, merged or deployed.**
+
+**Status of each item:**
+- **R-024, R-025, R-026:** passed ChatGPT's secondary review; **owner reacceptance pending** (JR1–JR13).
+- **R-027 (Calendar “New event” shortcut):** authorized and corrected with `consumeRoute`; **owner reacceptance pending** (CS1–CS4). Report: `docs/reviews/CHECKPOINT_4_R2_CALENDAR_CORRECTION_REPORT.md`.
+- **R-028 (Journal entry form resets, losing typed text, if the list finishes loading while it is open): found, reproduced, NOT corrected.** Needs the owner's decision. A tested proposal is in REFINEMENT_BACKLOG. One Journal test (“keyboard and focus”) is intermittent because of it and has deliberately been left untouched.
+
+**Tests:** 475 unit and 288 end-to-end exist. This step ran the unit suite and targeted end-to-end files only (146 of 147; the one failure is R-028). The last complete cycle was on `c236a05` (475 + 286).
+
+**Next, each needing the owner's separate authorization:** a decision on R-028; combined reacceptance; formal Checkpoint 4 closeout; a preservation push; merging; deployment. Checkpoint 6 has not begun.
+
+*(The section below describes the state one commit earlier and is kept as recorded.)*
+
+## 0c. Checkpoint 4-R — Journal acceptance refinements, awaiting reacceptance
 **Where it is:** two local commits on the session branch `claude/awesome-ritchie-b198ya`, on top of the authoritative `8122feb062f1eee96514f23b53fce020fdc438a0`: `7e9eb87b4180e4926aeac52eabf09980634a7b15` “Checkpoint 4: Journal and Four-Tab Navigation” (20), then “Checkpoint 4-R: Journal Human Acceptance Refinements” (21; its exact hash is in the delivery report in the conversation). **Not pushed, not merged, not deployed.** Until a preservation push is authorized both exist only in that conversation's workspace and the owner's ZIP archives.
 
 **Owner's Mac Safari acceptance of `7e9eb87` (2026-11-28):** 23 PASS; **J11 FAIL**; J5, J7, J26, J27, J29, J30, J31 **not human-tested** (carried to final acceptance, not passed); J32 deferred to Checkpoint 6. Overall design approved; required date approved. Table in TESTING_CHECKLIST.

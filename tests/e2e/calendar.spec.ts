@@ -1051,3 +1051,90 @@ for (const vp of [{ width: 320, height: 760 }, { width: 390, height: 844 }, { wi
     await expect(page.getByTestId('calendar')).toBeVisible();
   });
 }
+
+// ---------------------------------------------------------------------------
+// Checkpoint 4-R2: R-027 — Home's “New event” shortcut is a one-time request (same cause as the Journal's R-026)
+// ---------------------------------------------------------------------------
+
+for (const finish of ['save', 'cancel'] as const) {
+  test(`R-027: after the Home shortcut (${finish}), switching children never reopens the Add event form; the shortcut still works every time`, async ({ page }) => {
+    await start(page);
+    await addChild(page, 'Sample Child B', '2025-01-15');
+    const hash = () => page.evaluate(() => window.location.hash);
+    const openFromHome = async () => {
+      await page.goto('./#/home');
+      await page.getByTestId('qa-new-event').click();
+      await expect(page.getByRole('dialog', { name: 'Add event' })).toBeVisible();
+      await expect.poll(hash).toBe('#/calendar'); // the one-time address has been used
+    };
+    const finishIt = async (title: string) => {
+      if (finish === 'save') {
+        await fillEvent(page, { title, date: '2026-11-30' });
+        await page.getByTestId('save-event').click();
+        await expect(page.getByTestId('saved-text')).toHaveText('Event saved for November 30, 2026.');
+      } else {
+        await page.getByTestId('cancel-event').click();
+      }
+      await expect(page.getByRole('dialog')).toHaveCount(0);
+    };
+    const noEditor = async () => {
+      await expect(page.getByTestId('calendar')).toBeVisible();
+      await page.waitForTimeout(250); // anything that was going to open has opened
+      await expect(page.getByRole('dialog')).toHaveCount(0);
+      expect(await hash()).toBe('#/calendar');
+    };
+
+    // B is active. Open through the shortcut, finish, stay on the Calendar, switch both ways.
+    await openFromHome();
+    await finishIt('Fictional B event from Home');
+    await switchTo(page, 'Sample Child A');
+    await noEditor();
+    await expect(page.getByTestId('calendar')).toContainText('Appointments and events for Sample Child A');
+    await switchTo(page, 'Sample Child B');
+    await noEditor();
+    await switchTo(page, 'Sample Child A');
+    await noEditor();
+
+    // The shortcut opens the form again, each time it is used, for whichever child is active.
+    await openFromHome();
+    await finishIt('Fictional A event from Home');
+    await switchTo(page, 'Sample Child B');
+    await noEditor();
+    await openFromHome();
+    await page.keyboard.press('Escape');
+    await switchTo(page, 'Sample Child A');
+    await noEditor();
+
+    // Ordinary navigation: the tab, the Calendar's own Add event button, a reload and Back never reopen the form.
+    await page.getByRole('link', { name: 'Growth', exact: true }).click();
+    await page.getByRole('link', { name: 'Calendar', exact: true }).click();
+    await noEditor();
+    await page.getByTestId('add-event').click();
+    await expect(page.getByRole('dialog', { name: 'Add event' })).toBeVisible();
+    await page.getByTestId('cancel-event').click();
+    await switchTo(page, 'Sample Child B');
+    await noEditor();
+    await page.reload();
+    await noEditor();
+    await page.goBack(); // to Growth: the one-time address was replaced, so it isn't in the history
+    await expect(page).not.toHaveURL(/calendar\/add/);
+    await expect(page.getByRole('dialog')).toHaveCount(0);
+    await page.goForward();
+    await noEditor();
+
+    // Each event belongs to the child who was active when it was added; each child sees only their own.
+    const events = await storedEvents(page);
+    if (finish === 'save') {
+      expect(events.map((e) => e.title).sort()).toEqual(['Fictional A event from Home', 'Fictional B event from Home']);
+      expect(new Set(events.map((e) => e.childId)).size).toBe(2);
+      await expect(page.getByTestId('upcoming-events').locator('.cal-event-title')).toHaveText(['Fictional B event from Home']);
+      await switchTo(page, 'Sample Child A');
+      await expect(page.getByTestId('upcoming-events').locator('.cal-event-title')).toHaveText(['Fictional A event from Home']);
+      await page.goto('./#/home');
+      await expect(page.getByTestId('home-coming-up')).toContainText('Fictional A event from Home');
+      await expect(page.getByTestId('home-coming-up')).not.toContainText('Fictional B event from Home');
+    } else {
+      expect(events).toEqual([]);
+    }
+  });
+}
