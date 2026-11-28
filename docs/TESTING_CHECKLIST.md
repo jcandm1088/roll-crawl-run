@@ -680,3 +680,31 @@ Reported by the owner for the local build of `64202e2` in Mac Safari (port 4179)
 - separately authorized merge and deployment, and verification of the deployed commit.
 
 **No automated run was made for the documentation-only closeout commit.**
+
+## Checkpoint 6 — publication checks (Claude Code, 2026-11-28)
+| Check | Result |
+|---|---|
+| Baseline recovered: `6b6a2d2`, parent `aa695b9`, 24 commits, clean, remote identical | Confirmed |
+| CDC schedule currency (terms page first) | July 2, 2025 schedule still stated as current |
+| Type check, production build with content validation | Passed; bundle identical to the accepted cycle's |
+| Pages workflow, relative base, manifest, service worker | Unchanged from the Checkpoint 1 deployment apart from added content validation |
+| `main` fast-forward | `aa8c869` → `6b6a2d2`, normal push |
+| Deployment workflow run 2 on `6b6a2d2` | build: success (its own type check, 475 unit tests and build); deploy: success |
+| Live app, headless Chromium | Page, manifest, service worker and icon load; app bundle and service worker byte-identical to the local build; onboarding completes; tabs are Home, Growth, Calendar, Journal; each opens; Journal and Calendar screens render; service worker active; no page errors |
+
+**Not run at Checkpoint 6 (owner's decision):** the complete unit suite by Claude Code, the end-to-end suite, a regression cycle. *The live check is automated, in headless Chromium on Linux; it is not Safari or iPhone testing.*
+
+## Checkpoint 6 — owner's physical iPhone acceptance (record actual results; **not yet performed**)
+*Use the app already installed on the iPhone. Do not delete it, clear website data or reset profiles. Fictional entries only for anything new.*
+- **P1 Update.** Open the installed app while online. When “A new version is available” appears, tap Refresh (if it doesn't appear, close the app fully and open it again). The bottom bar now shows Home, Growth, Calendar, Journal.
+- **P2 Existing data.** The child profiles, photographs, themes and anything recorded before are all still there.
+- **P3 Four tabs.** Each of Home, Growth, Calendar and Journal opens; the bar sits clear of the home indicator; Settings opens from the top right.
+- **P4 Layout and touch.** Nothing is cut off or scrolls sideways; buttons are easy to tap; sheets slide up and can be closed.
+- **P5 Keyboard.** Typing in a Journal entry and a Calendar event: the field stays visible above the keyboard; the date and time pickers work.
+- **P6 Child switching.** Switch children from the top selector on Home, Growth, Calendar and Journal: each shows that child's data and theme, and no form opens by itself (also after using Home's “Journal entry” and “New event”).
+- **P7 Journal.** Create a fictional Personal Reflection and a Care Note with a question; reopen them; mark the question answered; try the four views.
+- **P8 Calendar.** Create a fictional event; reopen and edit it; it appears under Upcoming and on Home.
+- **P9 Persistence.** Close the app fully (swipe it away) and reopen: the entries and the event are still there.
+- **P10 Offline.** Turn on Airplane Mode; open the app; move between the tabs; add or edit an entry and an event; turn Airplane Mode off.
+- **P11 Stopwatch.** Start a stopwatch exercise; switch to another app, and lock the phone, for a minute or so; return: the time is right or the recovery choices appear and make sense.
+- **P12 Screenshot.** Take the required screenshot of the app's icon on the Home Screen.

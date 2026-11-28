@@ -837,3 +837,26 @@ Environment: Linux cloud container, Node 22.23.5, headless Chromium, no retries.
 | 85 | **What three clean regression cycles did and did not show** | Testing insight | 752 tests passed three times in a row on a build that contained a visible design shortfall, a contradictory control, a routing fault and a data-loss race. Human use found two, a second reviewer's reading found the cause of one, and an intermittent failure taken seriously found the last. | Each is now covered by a test that fails on the old code. **Lesson:** automated regression shows that what was specified still works; it takes people, a second reader and curiosity about odd failures to find what was never specified. |
 
 **What I corrected or redirected:** (to be completed by the owner)
+
+## Draft entry — Checkpoint 6: streamlined final publication (drafted by Claude Code; edit before submitting)
+**Date:** 2026-11-28
+**What I decided:** to publish on the evidence I already had rather than run another long verification phase, so that I could test on my iPhone and submit. I accepted that this means the final version reached the public address before any physical-device testing of anything after Checkpoint 1.
+**What I asked for:** five essential checks, then a fast-forward of `main`, the existing deployment workflow, and proof that the public app really is the finished version; no new features, no repeated regression cycles, no more archives.
+**What it produced:**
+- Baseline recovered and verified (`6b6a2d2`, 24 commits).
+- CDC's reuse terms re-read, then the schedule pages: the July 2, 2025 schedule is still CDC's stated current schedule.
+- A production build identical to the one from the accepted test cycle; deployment configuration unchanged.
+- `main` fast-forwarded to `6b6a2d2`; deployment run 2 succeeded.
+- A live check: the public app's files match the local build byte for byte, and it shows Home, Growth, Calendar and Journal.
+- An iPhone checklist for me (P1–P12).
+
+**What I corrected or redirected:** (to be completed by the owner)
+
+### Development challenges and lessons learned (continued from #85)
+| # | Challenge | Class | What happened | Outcome |
+|---|---|---|---|---|
+| 86 | **Choosing where to stop verifying** | Project decision (owner) | The plan called for a final regression, accessibility and device-testing phase before publication. With a deadline, I chose to rely on existing evidence and publish first. | Published successfully. What that choice leaves unverified is listed plainly in KNOWN_LIMITATIONS rather than implied to be done. **Lesson:** a streamlined release is defensible when the gaps are written down. |
+| 87 | **“Pushed” is not “published”** | Verification practice | The deployment is a separate manual workflow, and a successful run still isn't proof of what the public address serves. | Claude Code compared the public app's files with a local build of the same commit and opened the live app. The version label could not help: it reads 0.1.1 for both Checkpoint 1 and the final version. |
+
+### Results (Claude Code, 2026-11-28)
+See “Checkpoint 6 — publication checks” in TESTING_CHECKLIST. **No Safari, Mac or iPhone testing was performed by Claude Code. Physical iPhone acceptance has not been performed.**

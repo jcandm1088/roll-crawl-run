@@ -36,3 +36,9 @@ These were not reported and remain **untested**:
 
 ## Automated testing (separate from the above)
 At the deployed commit: 185 unit tests and 80 end-to-end tests passed in headless Chromium (desktop and phone-sized viewports), and the production build succeeded. A local check that served the build under `/roll-crawl-run/` also passed (service worker scope, manifest, icons, offline, license files). No automated test runs on a physical device or in Safari.
+
+## Final publication (Checkpoint 6, 2026-11-28)
+- **Deployed commit:** `6b6a2d2fe30c9eaff308b876f75477bbddff3589` (`main` fast-forwarded from `aa8c869`, normal push).
+- **Workflow:** “Deploy to GitHub Pages”, run 2 (https://github.com/jcandm1088/roll-crawl-run/actions/runs/46103361953), triggered on `main` with the owner's authorization; build and deploy jobs both succeeded on 2026-11-28.
+- **Verified on the public address** (automated, headless Chromium): the app loads; its bundle and service worker are byte-identical to the local build of the same commit; the tabs are Home, Growth, Calendar, Journal.
+- **Owner's iPhone acceptance of this version: not yet performed** (P1–P12 in TESTING_CHECKLIST). The Checkpoint 1 results above are for the earlier version only.

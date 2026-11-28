@@ -2,7 +2,13 @@
 
 A private, local-first, installable web app (PWA) that helps parents document their child's development, appointments, and reflections. It runs entirely in the browser: no account, no server, no analytics, and no AI.
 
-> **Status (2026-11-27):**
+> **Status (2026-11-28): the completed submission version is published.**
+> - **Live app:** https://jcandm1088.github.io/roll-crawl-run/ (deployed commit `6b6a2d2`). Home, Growth, Calendar and Journal are all live.
+> - **Accepted by the owner in Mac Safari, checkpoint by checkpoint.** Physical iPhone acceptance of this version is pending. There is no backup or restore: data lives only on the device.
+> - **Deferred until after submission:** backups, sharing, provider reports, Resources, Journal photographs.
+> - Current state: `docs/HANDOFF.md`. *The dated notes below are the project's history and are superseded where they conflict with the lines above.*
+>
+> **Earlier status notes (2026-11-27 and 2026-11-28, kept as history):**
 > - **Checkpoint 1 — completed, accepted and deployed.** Live app: https://jcandm1088.github.io/roll-crawl-run/ (deployed commit `e40287f`). Repository: https://github.com/jcandm1088/roll-crawl-run.
 > - **Checkpoint 2a** (history): Verified CDC milestone tracking, refined after the owner's first hands-on review: Growth with Progress (review), the Milestone Library (record; 159 CDC milestones), Goals & Exercises (coming soon) and What to Expect at Every Age (a read-only guide), plus milestone history and one Notes & Observations section per milestone. A second owner review led to the human acceptance refinements (gender-neutral wording, plainer language, no personal-version creation, the age-settings link). The original 2a commit is on `checkpoint-2a` (`73d9f6f`); the Growth UX refinement is on `claude/beautiful-allen-1vjobt` (`170cc99`); the acceptance refinements are a local commit. **Not** merged into `main` and **not** deployed.
 > - **Checkpoint 2a accepted for Mac usability (2026-11-27);** physical iPhone acceptance pending.

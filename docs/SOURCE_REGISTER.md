@@ -104,3 +104,10 @@ Every developmental or medical item in the app must trace to a row here. Before 
 | idb 8.0.4 | ISC |
 
 Full notices: `THIRD_PARTY_NOTICES.md`; license texts: `public/licenses/`.
+
+## Vaccine schedule currency recheck before publication (2026-11-28)
+- **Reuse terms first:** “Use of Agency Materials” (https://www.cdc.gov/other/agencymaterials.html) re-read before any schedule page; still “Last Reviewed: October 28, 2026”; the attribution, non-endorsement and logo conditions are unchanged.
+- **Pages rechecked (text only, headless Chromium, as before; a plain request still returns 403):** Recommended Vaccines for Young Children; Child and Adolescent Immunization Schedule by Age; Child Immunization Schedule Addendum. One load each.
+- **Finding: no change.** Each page still carries the banner that, under the preliminary order of March 16, 2026 in *American Academy of Pediatrics et al. v. Kennedy et al.*, No. 1:25-cv-11916 (D. Mass.), **the July 2, 2025 schedule is the current CDC schedule**, and each is still dated July 2, 2025.
+- **Limits of this recheck:** it confirms CDC's statement of which schedule is current; the schedule's contents were not re-compared line by line, and the order itself was not read. The order is preliminary, so this can change after publication. The app's bundled copy does not update itself, and the app says so.
+- **In the app:** unchanged. It still says the schedule was checked on November 27, 2026 (Decision #191).

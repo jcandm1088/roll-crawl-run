@@ -198,3 +198,13 @@ Last updated 2026-11-28 (Checkpoint 4 and refinements R-024 to R-028 formally ac
 - **Not merged, not deployed.** The published app is still Checkpoint 1 (`e40287f`). Everything since exists on development branches only.
 - **The submission version's standing limits are unchanged:** no backup or restoration; data only on this device, unencrypted; no automatic drafts; no sharing, exports, reports, Resources or Journal photographs; the vaccine schedule is a dated snapshot whose currency must be rechecked before publication.
 - **No known open defect** at this commit.
+
+## Publication (Checkpoint 6, 2026-11-28)
+- **Published without a further verification phase, by the owner's decision.** The evidence is the 767-test cycle on `aa695b9`, Mac Safari acceptance of each checkpoint, and the checks in Decision #188. No complete regression cycle, final accessibility pass or publication audit was run at Checkpoint 6.
+- **Never tested on a physical iPhone or as an installed app before publication** (everything after Checkpoint 1). The owner's iPhone acceptance follows publication; anything it finds would need a correction and a redeployment.
+- **Never tested by a person on any device:** Journal J5, J7, J26, J27, J29, J30, J31; Calendar keyboard operation and offline editing (CAL34, CAL35).
+- **Updating an installed Checkpoint 1 app** is covered by automated tests in headless Chromium, not yet by a real installed iPhone app.
+- **The version label is still 0.1.1,** the same as Checkpoint 1. The label does not tell the two apart; four tabs with a Journal does.
+- **The vaccine schedule is a dated snapshot** under a preliminary court order (SOURCE_REGISTER). It will not update itself.
+- **`main` is one documentation-only commit ahead of the deployed commit** (the commit that records the publication). The published app is `6b6a2d2`.
+- **No project license** has been chosen. **No backup or restoration** exists in the published version.

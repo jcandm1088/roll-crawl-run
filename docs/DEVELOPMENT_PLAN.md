@@ -1,6 +1,8 @@
 # Development Plan — Roll, Crawl, RUN: Tracking Growth Together (Revision 2)
 
-> **Current status (2026-11-28, Checkpoint 4 closeout):** Checkpoint 4 (Journal; four-tab navigation) and refinements R-024 to R-028 are **formally accepted** for the submission version and preserved on `claude/awesome-ritchie-b198ya` (R23). All submission-version functional checkpoints are accepted. Not merged into `main`; not deployed. **Next: Checkpoint 6 (final verification and publication; no new features)**, in a fresh conversation, with the owner's authorization. Checkpoint 5 is deferred until after submission. The current-state handoff is `docs/HANDOFF.md`.
+> **Current status (2026-11-28, Checkpoint 6 — published):** the completed submission version is **published** at https://jcandm1088.github.io/roll-crawl-run/ from commit `6b6a2d2` on `main` (R24), after the owner streamlined Checkpoint 6. **Remaining: the owner's physical iPhone acceptance** and the owner's submission materials. Checkpoint 5 and the other deferred items stay deferred. The current-state handoff is `docs/HANDOFF.md`.
+
+> *Previous status line (kept as recorded):* **Current status (2026-11-28, Checkpoint 4 closeout):** Checkpoint 4 (Journal; four-tab navigation) and refinements R-024 to R-028 are **formally accepted** for the submission version and preserved on `claude/awesome-ritchie-b198ya` (R23). All submission-version functional checkpoints are accepted. Not merged into `main`; not deployed. **Next: Checkpoint 6 (final verification and publication; no new features)**, in a fresh conversation, with the owner's authorization. Checkpoint 5 is deferred until after submission. The current-state handoff is `docs/HANDOFF.md`.
 
 > *Previous status line (kept as recorded):* **Current status (2026-11-28, Checkpoint 4-R3):** R-028 (an open Journal entry form was reset when the list finished loading) is corrected in a fourth local commit (R22). R-024 to R-028 now await one combined owner reacceptance. No open defect is known. Nothing is pushed, merged or deployed. Database version 3 unchanged.
 
@@ -47,6 +49,16 @@
 **Visual direction (CP1):** premium, warm, calm, adult-oriented; no cartoon imagery, not clinical, not generic dashboard. Five cohesive theme systems (Earth default, Sky, Blush, Lavender, Sage) sharing typography, spacing, iconography, components, buttons, navigation. Fraunces (display) + Inter (UI), subject to review. Initial app icon + wordmark preserving "Roll, Crawl, RUN: Tracking Growth Together". Safe-area insets, ≥44–48px targets.
 
 **Checkpoint 1 build list:** scaffold (Vite/TS/Preact, Vitest, Playwright); fonts self-hosted (fetched from npm `@fontsource` packages, OFL); icon/wordmark (SVG → PNG sizes generated with Playwright); design tokens + 5 themes + contrast test; app shell (top bar with child chip + settings, bottom nav, hash router); placeholder tabs clearly labeled "Coming in a later checkpoint"; onboarding (DOB, name/photo, corrected age, theme, privacy); profiles create/edit/switch/delete (typed confirmation; backup purge option present but backups feature labeled pending); age domain (chronological + corrected with safeguards); IndexedDB schema v1 for all planned stores with logical-key indexes and atomic transaction helper; repositories for meta/settings/children/photos; storage-persistence status; privacy disclosures in Settings; manifest + basic service worker (precache, update banner); unit + e2e tests; mobile screenshots via Playwright at deviceScaleFactor 2; docs skeletons (README, BUILD_LOG template, TESTING_CHECKLIST, KNOWN_LIMITATIONS, DECISIONS, SOURCE_REGISTER). Code lives in `/home/user/roll-crawl-run` (git init locally; no push until you provide the remote).
+
+---
+
+## R24 — Checkpoint 6: streamlined final publication (owner, 2026-11-28) — supersedes the fuller Checkpoint 6 verification described in R23 and earlier
+- **Decision:** publish on the existing evidence after five essential checks (Decisions #187–#191). No new features, no repeated regression cycles, no repeated publication audit.
+- **Checks passed:** CDC schedule currency; production build and content validation; Pages configuration; fast-forward safety; no change since preservation.
+- **Published:** `main` fast-forwarded to `6b6a2d2`; deployment workflow run 2 succeeded; the live app verified (four tabs, Journal, Calendar, service worker, files identical to the local build).
+- **Not done, by the owner's choice:** a further complete regression cycle; a final accessibility pass; human testing of the seven untested Journal items and the two Calendar items before publication.
+- **Remaining:** the owner's physical iPhone acceptance (checklist P1–P12 in TESTING_CHECKLIST) and submission materials.
+- **Deferred, unchanged:** Checkpoint 5, Resources, Journal photographs (R-023), R-001, R-003, R-009, R-018, project license.
 
 ---
 
