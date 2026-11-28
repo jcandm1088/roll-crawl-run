@@ -25,6 +25,12 @@ A living list of refinements and suspected defects that are recorded but not yet
 | R-016 | Stopwatch recovery interface | Stopwatch | 2026-11-27 (owner, 2b Mac acceptance) | **Verified** (owner, Mac Safari, 2026-11-27; closed) |
 | R-017 | Full historical reporting periods | Progress over time | 2026-11-27 (owner, 2b Mac acceptance) | **Verified** (owner, Mac Safari, 2026-11-27; closed) |
 | R-018 | Greater shading distinction between backgrounds, cards and elements | Visual design · all screens | 2026-11-27 (owner suggestion, 2b Mac acceptance) | Deferred (low priority; reassess after iPhone use) |
+| R-023 | Journal photographs | Journal | 2026-11-27 (owner, Checkpoint 4 design) | Deferred (after submission) |
+| R-024 | Four single-selection Journal views | Journal · filters | 2026-11-28 (owner, Checkpoint 4 Mac acceptance) | **Verified** (owner, Mac Safari, 2026-11-28; closed) |
+| R-025 | Greater distinction between Journal entry types | Journal · visual design | 2026-11-28 (owner, J11 failed) | **Verified** (owner, Mac Safari, 2026-11-28; closed) |
+| R-026 | Journal editor reopening after a child switch | Journal · routing | 2026-11-28 (owner observation) | **Verified** (owner, Mac Safari, 2026-11-28; closed) |
+| R-027 | Calendar Add event form reopening after a child switch | Calendar · routing | 2026-11-28 (found by Claude Code's investigation) | **Verified** (owner, Mac Safari, 2026-11-28; closed) |
+| R-028 | Open Journal entry form reset when the list finished loading | Journal · unsaved writing | 2026-11-28 (found by Claude Code during R-027 testing) | **Corrected and accepted** (deterministic automated evidence; owner's ordinary writing checks passed, 2026-11-28; closed) |
 
 ---
 
@@ -228,3 +234,10 @@ A living list of refinements and suspected defects that are recorded but not yet
 - **Evidence:** four tests (two opening paths × empty and populated). On the original structure the two empty-journal tests fail and the two populated ones pass; with the correction all four pass.
 - **Appearance:** the regenerated Checkpoint 4-R screenshots are byte-for-byte identical to the committed ones.
 - **Status:** Implemented; **pending owner acceptance** (JS1–JS2 in TESTING_CHECKLIST).
+
+## Checkpoint 4 closeout (2026-11-28)
+- **R-024 to R-028: closed as accepted.** Owner, Mac Safari, against `aa695b9`: JR1–JR11, CS1–CS4, JS1–JS2, 17 of 17 passed; no further observations.
+- **R-028's evidence is of two kinds:** the defect and its correction are established by deterministic automated tests; the owner's JS1–JS2 are ordinary writing checks that passed, not a reproduction.
+- **Entries above that say “awaiting reacceptance”, “pending” or “not corrected” are kept as first recorded;** this section and the table at the top give the current status.
+- **Open refinements:** none.
+- **Deferred, unchanged (not to be implemented without authorization):** R-001 (onboarding name field overflow on a phone), R-003 (Library control density), R-009 (deleted-entry presentation), R-018 (shading distinction across the app), R-023 (Journal photographs); and, as scope rather than refinements, Resources and Checkpoint 5 (backup and restoration, partner sharing, provider reports, exports).

@@ -1,6 +1,8 @@
 # Development Plan — Roll, Crawl, RUN: Tracking Growth Together (Revision 2)
 
-> **Current status (2026-11-28, Checkpoint 4-R3):** R-028 (an open Journal entry form was reset when the list finished loading) is corrected in a fourth local commit (R22). R-024 to R-028 now await one combined owner reacceptance. No open defect is known. Nothing is pushed, merged or deployed. Database version 3 unchanged.
+> **Current status (2026-11-28, Checkpoint 4 closeout):** Checkpoint 4 (Journal; four-tab navigation) and refinements R-024 to R-028 are **formally accepted** for the submission version and preserved on `claude/awesome-ritchie-b198ya` (R23). All submission-version functional checkpoints are accepted. Not merged into `main`; not deployed. **Next: Checkpoint 6 (final verification and publication; no new features)**, in a fresh conversation, with the owner's authorization. Checkpoint 5 is deferred until after submission. The current-state handoff is `docs/HANDOFF.md`.
+
+> *Previous status line (kept as recorded):* **Current status (2026-11-28, Checkpoint 4-R3):** R-028 (an open Journal entry form was reset when the list finished loading) is corrected in a fourth local commit (R22). R-024 to R-028 now await one combined owner reacceptance. No open defect is known. Nothing is pushed, merged or deployed. Database version 3 unchanged.
 
 > *Previous status line (kept as recorded):* **Current status (2026-11-28, Checkpoint 4-R2):** R-027 (the Calendar's “New event” shortcut reopening its form after a child switch) is corrected in a third local commit (R21). The combined owner reacceptance of R-024 to R-027 is pending. **One newly found Journal defect, R-028, is documented and not corrected; it needs the owner's decision.** Nothing is pushed, merged or deployed. Database version 3 unchanged.
 
@@ -45,6 +47,23 @@
 **Visual direction (CP1):** premium, warm, calm, adult-oriented; no cartoon imagery, not clinical, not generic dashboard. Five cohesive theme systems (Earth default, Sky, Blush, Lavender, Sage) sharing typography, spacing, iconography, components, buttons, navigation. Fraunces (display) + Inter (UI), subject to review. Initial app icon + wordmark preserving "Roll, Crawl, RUN: Tracking Growth Together". Safe-area insets, ≥44–48px targets.
 
 **Checkpoint 1 build list:** scaffold (Vite/TS/Preact, Vitest, Playwright); fonts self-hosted (fetched from npm `@fontsource` packages, OFL); icon/wordmark (SVG → PNG sizes generated with Playwright); design tokens + 5 themes + contrast test; app shell (top bar with child chip + settings, bottom nav, hash router); placeholder tabs clearly labeled "Coming in a later checkpoint"; onboarding (DOB, name/photo, corrected age, theme, privacy); profiles create/edit/switch/delete (typed confirmation; backup purge option present but backups feature labeled pending); age domain (chronological + corrected with safeguards); IndexedDB schema v1 for all planned stores with logical-key indexes and atomic transaction helper; repositories for meta/settings/children/photos; storage-persistence status; privacy disclosures in Settings; manifest + basic service worker (precache, update banner); unit + e2e tests; mobile screenshots via Playwright at deviceScaleFactor 2; docs skeletons (README, BUILD_LOG template, TESTING_CHECKLIST, KNOWN_LIMITATIONS, DECISIONS, SOURCE_REGISTER). Code lives in `/home/user/roll-crawl-run` (git init locally; no push until you provide the remote).
+
+---
+
+## R23 — Checkpoint 4 formal acceptance and closeout (owner, 2026-11-28)
+**Accepted:** Checkpoint 4 and R-024 to R-028 (Decisions #182–#186). Evidence, kept separate: owner Mac Safari (23 of 31 original checks passed, J11 failed and was resolved, 7 not tested; then 17 of 17 reacceptance checks), delegated secondary review, automated results and deterministic reproductions (TESTING_CHECKLIST, BUILD_LOG).
+
+**How Checkpoint 4 reached acceptance:**
+1. Journal built on the existing store at database version 3; three consecutive clean cycles of 752 tests (R19).
+2. Owner's acceptance: 23 passed, J11 failed, 7 untested; two observations from ordinary use.
+3. R-024 to R-026 (R20): single-selection views with overlapping Care Note membership; tinted Care Note cards in five themes; the shortcut's stale route state, diagnosed by ChatGPT and reproduced and confirmed before correction.
+4. R-027 (R21): the equivalent, older Calendar defect, found by that investigation and corrected under separate authorization.
+5. R-028 (R22): a writing-loss defect exposed by an intermittent test during R-027 testing; reported, then corrected under separate authorization, with deterministic tests showing it occurred when loading gave way to an **empty** journal.
+6. One final clean cycle of 767 tests; 17 of 17 owner reacceptance checks.
+
+**Remaining sequence:** (Checkpoint 5 deferred until after submission) → **Checkpoint 6: final verification and publication.** Checkpoint 6 covers the carried-forward human and physical-device checks, final accessibility and regression verification, the vaccine schedule currency recheck, the source and publication safety audit, assignment requirement verification, and a separately authorized merge and deployment with verification of the deployed commit. It adds no features.
+
+**Deferred, unchanged:** Checkpoint 5 (backup and restoration, partner sharing, provider reports, exports), Resources, Journal photographs (R-023), R-001, R-003, R-009, R-018.
 
 ---
 

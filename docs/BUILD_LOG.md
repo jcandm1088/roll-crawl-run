@@ -814,3 +814,26 @@ Environment: Linux cloud container, Node 22.23.5, headless Chromium, no retries.
 - **Application change in the commit:** `Journal.tsx` only (one container element and a comment). Calendar, router, database and styles untouched.
 - **Only documentation changed after the complete cycle began.**
 - **Not tested by anyone yet:** R-024 to R-028 in Safari; anything on an iPhone.
+
+## Draft entry — Checkpoint 4 formal acceptance closeout (drafted by Claude Code; edit before submitting)
+**Date:** 2026-11-28
+**What happened:**
+- **I completed one combined reacceptance in Mac Safari** against `aa695b9`: all 17 checks passed (JR1–JR11, CS1–CS4, JS1–JS2). I had no further observations. I did not perform the optional extra testing (JR12).
+- **Checkpoint 4 and refinements R-024 to R-028 are formally accepted** for the submission version, subject to the final physical-device and publication checks.
+- **Actual testing history, kept separate:**
+  - *Mine, Mac Safari, original acceptance of `7e9eb87`:* 23 passed; J11 failed; J5, J7, J26, J27, J29, J30 and J31 not tested; J32 deferred.
+  - *Mine, Mac Safari, reacceptance of `aa695b9`:* 17 of 17 passed. My two writing-preservation checks were ordinary use; I did not reproduce R-028 by hand.
+  - *Delegated secondary review (ChatGPT):* the routing-state diagnosis; source and screenshot review of R-024 to R-026 and of R-027.
+  - *Automated (Claude Code, headless Chromium):* three complete cycles of 752 on `7e9eb87`; one of 761 on `c236a05`; targeted only on `dd15e9d` (146 of 147, the failure exposing R-028); one complete cycle of 767 (475 unit, 292 end-to-end) on `aa695b9`, no failures.
+- **How the checkpoint actually went:** the Journal passed three clean cycles and still had four things wrong that tests had not shown: types too alike to the eye; a filter pair that could contradict itself; a shortcut that fired twice (found by me in use, diagnosed by ChatGPT from the source, reproduced by Claude Code before it changed anything); and a form that could lose a parent's first words (exposed by one intermittent test failure that Claude Code investigated instead of re-running). The same routing fault turned out to have been in the accepted Calendar since Checkpoint 3.
+- **Carried to Checkpoint 6:** the seven untested Journal items; all physical-iPhone and installed-app checks; final accessibility and regression verification; the vaccine schedule currency recheck; the source and publication audit; assignment requirement verification; merge, deployment and verification of the deployed commit.
+- **Preservation:** after a publication safety check, the four Checkpoint 4 commits and this documentation-only closeout were pushed to `claude/awesome-ritchie-b198ya` with my authorization (normal push). `main` unchanged; no deployment.
+- **No automated run was made for this documentation-only commit.**
+
+### Development challenges and lessons learned (continued from #83)
+| # | Challenge | Class | What happened | Outcome |
+|---|---|---|---|---|
+| 84 | **Four accepted-in-progress commits held only in a temporary workspace, again** | Workflow risk (accepted, then resolved) | From the Checkpoint 4 implementation through three refinement rounds, the commits existed only in one conversation's container and the ZIP archives I kept. The stop hook asked for a push after every turn; Claude Code declined each time, as instructed. This repeats #70, whose lesson was to preserve before refining. I chose to hold again so that only accepted work reached GitHub. | Preserved at this closeout. The risk did not materialize. **Lesson, restated honestly:** this was a deliberate trade, not an oversight; the ZIP after each round was what made it tolerable. |
+| 85 | **What three clean regression cycles did and did not show** | Testing insight | 752 tests passed three times in a row on a build that contained a visible design shortfall, a contradictory control, a routing fault and a data-loss race. Human use found two, a second reviewer's reading found the cause of one, and an intermittent failure taken seriously found the last. | Each is now covered by a test that fails on the old code. **Lesson:** automated regression shows that what was specified still works; it takes people, a second reader and curiosity about odd failures to find what was never specified. |
+
+**What I corrected or redirected:** (to be completed by the owner)

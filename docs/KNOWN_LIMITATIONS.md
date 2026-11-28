@@ -1,6 +1,6 @@
 # Known Limitations
 
-Last updated 2026-11-28 (Checkpoint 4-R: Journal refinements R-024 to R-026 implemented locally, awaiting the owner's reacceptance). Earlier sections are kept as dated records; where a later statement supersedes an earlier one, the earlier one is marked. Items marked *(planned)* are scheduled for later checkpoints. Refinements and suspected defects awaiting correction are tracked in `docs/REFINEMENT_BACKLOG.md`.
+Last updated 2026-11-28 (Checkpoint 4 and refinements R-024 to R-028 formally accepted; preserved on `claude/awesome-ritchie-b198ya`). Earlier sections are kept as dated records; where a later statement supersedes an earlier one, the earlier one is marked. Items marked *(planned)* are scheduled for later checkpoints. Refinements and suspected defects awaiting correction are tracked in `docs/REFINEMENT_BACKLOG.md`.
 
 ## Not built yet (placeholders)
 - ~~Goals & Exercises, recurring activities, CDC activities, and charts *(Checkpoint 2b)*~~ Built at Checkpoint 2b (awaiting the owner's acceptance).
@@ -190,3 +190,11 @@ Last updated 2026-11-28 (Checkpoint 4-R: Journal refinements R-024 to R-026 impl
 - *(Supersedes the two R-028 lines in the 4-R2 section.)* **R-028 is corrected:** an open entry form keeps what was typed, and its focus, when the list finishes loading. The Journal keyboard test is no longer intermittent for that reason. Not yet seen by a person.
 - **Still true, by design:** nothing is saved until Save is pressed. Reloading the page, closing the tab, or the phone discarding the page while an entry is being written loses unsaved writing.
 - **No open defect is known** at this commit. R-024 to R-028 have not been tested by a person.
+
+## Checkpoint 4 closeout (2026-11-28)
+- **Accepted on Mac only.** Checkpoint 4 and R-024 to R-028 were accepted by the owner in Mac Safari. **Nothing in Checkpoint 4 has been tested on a physical iPhone or as an installed app.** *(Supersedes “not yet seen by a person” in the 4-R, 4-R2 and 4-R3 sections.)*
+- **Seven Journal checks have never been performed by a person** (J5, J7, J26, J27, J29, J30, J31): a reflection with only text, validation messages, reload and reopen, offline use, narrow width, keyboard-only use, and finding source information. They pass in automated tests in headless Chromium only.
+- **R-028 was never reproduced by hand.** Its cause, its limits (loading giving way to an empty journal) and its correction rest on deterministic automated tests.
+- **Not merged, not deployed.** The published app is still Checkpoint 1 (`e40287f`). Everything since exists on development branches only.
+- **The submission version's standing limits are unchanged:** no backup or restoration; data only on this device, unencrypted; no automatic drafts; no sharing, exports, reports, Resources or Journal photographs; the vaccine schedule is a dated snapshot whose currency must be rechecked before publication.
+- **No known open defect** at this commit.

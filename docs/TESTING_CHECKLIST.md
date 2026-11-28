@@ -638,3 +638,45 @@ Reported by the owner for the local build of `64202e2` in Mac Safari (port 4179)
 *Mac Safari; fictional data. Claude Code has not performed these. On a fast Mac the loading moment is too brief to see, so these confirm ordinary behavior rather than reproduce the defect; the defect itself is covered by the automated tests.*
 - **JS1** For a child with no journal entries yet: Home → “Journal entry”, start typing immediately. What you type stays, the cursor stays in the field, and saving works.
 - **JS2** The same from the Journal tab → “New Journal Entry”, and once more for a child who already has entries.
+
+## Checkpoint 4 — combined human reacceptance (owner report, Mac Safari, 2026-11-28, against `aa695b9`)
+*Reported by the owner. Claude Code did not observe these tests.*
+
+| Refinement | Items | Result |
+|---|---|---|
+| R-024 — Journal views | JR1, JR2, JR3, JR4, JR5 | PASS |
+| R-025 — Journal appearance | JR6, JR7, JR8 | PASS |
+| R-026 — Journal shortcut routing | JR9, JR10, JR11 | PASS |
+| R-027 — Calendar shortcut routing | CS1, CS2, CS3, CS4 | PASS |
+| R-028 — writing preservation | JS1, JS2 | PASS |
+
+**17 PASS, 0 FAIL, 0 N/A. Additional observations: none.**
+- **JR12** (optional extra testing of the seven untested items): **not performed.**
+- **JR13 / CS5** were decisions, not tests: the Calendar correction (R-027) and the Journal correction (R-028) were each authorized, implemented and accepted.
+- **JS1 and JS2 are the owner's ordinary writing checks** (type at once after opening the form; the text stays). On a fast Mac the loading moment is too brief to reproduce R-028 by hand. **The defect itself was reproduced and its correction demonstrated only by the deterministic automated tests.** The two kinds of evidence are not interchangeable.
+
+## Checkpoint 4 — formal acceptance closeout (2026-11-28)
+**Checkpoint 4 (Journal; four-tab navigation) and refinements R-024 to R-028 are formally accepted for the submission version**, subject to the final physical-device and publication checks at Checkpoint 6. The kinds of evidence are recorded separately and must not be merged:
+
+| Evidence | By whom | What | Result |
+|---|---|---|---|
+| Human acceptance | Owner, Mac Safari, against `7e9eb87` | J1–J4, J6, J8–J10, J12–J25, J28 | PASS (23) |
+| — | — | J11 | FAIL — later resolved by R-025 and passed as JR6–JR8 |
+| — | — | J5, J7, J26, J27, J29, J30, J31 | **N/A — not human-tested. Not passed.** |
+| — | — | J32 (iPhone) | Deferred to Checkpoint 6 |
+| Secondary review | ChatGPT, delegated by the owner; source and screenshot review | R-024 to R-026 (`c236a05`); R-027 (`dd15e9d`); routing-state diagnosis behind R-026 | Passed. Not owner Safari tests |
+| Human reacceptance | Owner, Mac Safari, against `aa695b9` | JR1–JR11, CS1–CS4, JS1–JS2 | PASS (17 of 17) |
+| Automated | Claude Code, headless Chromium on Linux | `7e9eb87`: three consecutive complete cycles of 472 unit + 280 end-to-end (752). `c236a05`: one complete cycle of 475 + 286 (761). `dd15e9d`: unit suite and targeted end-to-end only, 146 of 147 (the one failure exposed R-028). `aa695b9`: one complete cycle of 475 + 292 (767), no failures | As stated |
+| Deterministic reproduction | Claude Code | R-026 and R-027 tests fail on the original route handling; R-028 empty-journal tests fail on the original structure; all pass with the corrections | As stated |
+
+**Carried to Checkpoint 6 (not completed):**
+- the seven untested Journal items: J5 (a reflection with only text), J7 (validation messages), J26 (reload and reopen), J27 (offline), J29 (narrow width), J30 (keyboard), J31 (source information);
+- J32 and all physical-iPhone acceptance (2a, 2b, 2b-R, 3 and 4), including layout, touch, the on-screen keyboard and profile switching;
+- Calendar keyboard operation and offline editing confirmed by a person (CAL34, CAL35);
+- installed-app update with existing data preserved; offline launch, navigation and editing; force-close and reopen; stopwatch backgrounding and device-lock recovery;
+- final accessibility and complete regression verification;
+- the vaccine schedule currency recheck (Decision #125);
+- the source permissions, attribution and publication safety audit; assignment requirement verification;
+- separately authorized merge and deployment, and verification of the deployed commit.
+
+**No automated run was made for the documentation-only closeout commit.**
