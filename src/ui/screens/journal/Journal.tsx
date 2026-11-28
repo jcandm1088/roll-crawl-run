@@ -137,8 +137,12 @@ function JournalInner({ child, openNew }: { child: Child; openNew: boolean }) {
         <Icon name="plus" size={18} /> New Journal Entry
       </button>
 
-      {entries === null ? (
-        <p class="muted small" style={{ marginTop: 'var(--space-5)' }}>Loading…</p>
+      {/* One fixed container for the loading line, the empty state and the feed (R-028). They replace one
+          another when the list arrives; kept inside this element, that swap can't disturb the entry form
+          rendered further down, so an open form keeps its contents and focus. */}
+      <div data-testid="journal-content">
+        {entries === null ? (
+          <p class="muted small" style={{ marginTop: 'var(--space-5)' }}>Loading…</p>
       ) : all.length === 0 ? (
         <section class="card journal-empty" data-testid="journal-empty" aria-labelledby="journal-empty-h">
           <Icon name="notebook" size={28} />
@@ -241,6 +245,7 @@ function JournalInner({ child, openNew }: { child: Child; openNew: boolean }) {
           )}
         </>
       )}
+      </div>
 
       <section class="section" aria-label="Journal privacy">
         <p class="info-note" data-testid="journal-privacy"><Icon name="shield" size={18} /><span>{JOURNAL_PRIVACY}</span></p>

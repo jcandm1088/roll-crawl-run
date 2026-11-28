@@ -1387,3 +1387,110 @@ test('R-026: the Journal tab’s own New Journal Entry button is unaffected, and
   await expect(page.getByRole('dialog')).toHaveCount(0);
   await expect.poll(() => feed(page)).toEqual(['Fictional B entry from the tab']);
 });
+
+// ---------------------------------------------------------------------------
+// Checkpoint 4-R3: R-028 — an open entry form survives the entry list finishing its load
+// ---------------------------------------------------------------------------
+
+/**
+ * Holds every read of the journal list until `release()` is called, so a test controls exactly when the
+ * list “finishes loading” (no timers, no production delay: the hold exists only in this test page).
+ */
+async function holdJournalLoads(page: Page) {
+  await page.evaluate(() => {
+    const w = window as unknown as { __held: Array<() => void>; __holding: boolean };
+    w.__held = [];
+    w.__holding = true;
+    const original = IDBIndex.prototype.getAll;
+    IDBIndex.prototype.getAll = function (this: IDBIndex, ...args: Parameters<IDBIndex['getAll']>) {
+      const request = original.apply(this, args);
+      if (this.objectStore.name === 'journal') {
+        const add = request.addEventListener.bind(request);
+        request.addEventListener = ((type: string, fn: EventListener, opts?: boolean | AddEventListenerOptions) =>
+          add(type, type === 'success' ? (e: Event) => (w.__holding ? w.__held.push(() => fn(e)) : fn(e)) : fn, opts)) as typeof request.addEventListener;
+      }
+      return request;
+    };
+  });
+  return {
+    release: () => page.evaluate(() => {
+      const w = window as unknown as { __held: Array<() => void>; __holding: boolean };
+      w.__holding = false;
+      w.__held.splice(0).forEach((run) => run());
+    }),
+    held: () => page.evaluate(() => (window as unknown as { __held: unknown[] }).__held.length),
+  };
+}
+
+for (const path of ['Home shortcut', 'Journal tab'] as const) {
+  for (const journal of ['empty', 'populated'] as const) {
+    test(`R-028: a form opened from the ${path} keeps everything typed, and focus, when the ${journal} journal finishes loading behind it`, async ({ page }) => {
+      await start(page);
+      if (journal === 'populated') {
+        await addEntry(page, { title: 'Fictional earlier entry', body: 'Fictional earlier text', tags: 'earlier' });
+        await addEntry(page, { type: 'care', title: 'Fictional earlier question', body: 'Fictional earlier question?', question: true });
+      }
+      const before = await stored(page);
+      await page.getByRole('link', { name: 'Home', exact: true }).click();
+      await expect(page.getByTestId('qa-journal-entry')).toBeVisible();
+      const load = await holdJournalLoads(page);
+
+      // Open the form while the list is still loading.
+      if (path === 'Home shortcut') {
+        await page.getByTestId('qa-journal-entry').click();
+      } else {
+        await page.getByRole('link', { name: 'Journal', exact: true }).click();
+        await page.getByTestId('new-entry').click();
+      }
+      await expect(form(page)).toBeVisible();
+      await expect(page.getByTestId('journal').getByText('Loading…')).toBeVisible(); // the list has not arrived yet
+      await expect(page.getByTestId('journal-empty')).toHaveCount(0);
+      await expect(page.getByTestId('journal-feed')).toHaveCount(0);
+      await expect.poll(() => load.held()).toBeGreaterThan(0); // the read has been issued and is being held
+
+      // Fill every field, finishing with the keyboard in the text area.
+      await fillEntry(page, { type: 'care', date: '2026-11-20', title: 'Fictional title typed while loading', tags: 'loading, kept', question: true, answered: true });
+      await bodyField(page).focus();
+      await page.keyboard.type('Fictional words typed while the list was loading.');
+      await expect(bodyField(page)).toBeFocused();
+      await page.getByRole('dialog').evaluate((el) => el.setAttribute('data-same-dialog', 'yes')); // a mark that a rebuilt dialog would not carry
+
+      // The list finishes loading behind the form.
+      await load.release();
+      await expect(page.getByTestId(journal === 'empty' ? 'journal-empty' : 'journal-feed')).toBeAttached();
+      await expect(page.getByTestId('journal').getByText('Loading…')).toHaveCount(0);
+
+      // Nothing was rebuilt or reset: every value, the dialog itself and the keyboard focus are as they were.
+      await expect(page.getByRole('dialog')).toHaveAttribute('data-same-dialog', 'yes');
+      await expect(page.getByRole('dialog')).toHaveCount(1);
+      await expect(page.getByTestId('entry-type-care').locator('input')).toBeChecked();
+      await expect(dateField(page)).toHaveValue('2026-11-20');
+      await expect(titleField(page)).toHaveValue('Fictional title typed while loading');
+      await expect(bodyField(page)).toHaveValue('Fictional words typed while the list was loading.');
+      await expect(tagsField(page)).toHaveValue('loading, kept');
+      await expect(page.getByTestId('entry-question-flag').locator('input')).toBeChecked();
+      await expect(page.getByTestId('entry-answered-flag').locator('input')).toBeChecked();
+      await expect(bodyField(page)).toBeFocused();
+      await page.keyboard.type(' And these after it finished.'); // typing simply continues
+      await expect(bodyField(page)).toHaveValue('Fictional words typed while the list was loading. And these after it finished.');
+      if (journal === 'populated') await expect(page.getByTestId('known-tag')).toHaveText([/earlier/]); // suggestions arrive without disturbing the form
+
+      // Discard protection still knows there is unsaved writing; saving works and stores exactly what was typed.
+      await page.keyboard.press('Escape');
+      await expect(page.getByRole('dialog', { name: 'Discard your changes?' })).toBeVisible();
+      await page.getByTestId('discard-keep').click();
+      await expect(bodyField(page)).toHaveValue('Fictional words typed while the list was loading. And these after it finished.');
+      await page.getByTestId('save-entry').click();
+      await expect(page.getByTestId('saved-text')).toHaveText('Entry saved.');
+      const after = await stored(page);
+      expect(after).toHaveLength(before.length + 1);
+      expect(after.find((e) => e.title === 'Fictional title typed while loading')).toMatchObject({
+        type: 'care', date: '2026-11-20', body: 'Fictional words typed while the list was loading. And these after it finished.',
+        tags: ['loading', 'kept'], isProviderQuestion: true, answered: true,
+      });
+      for (const e of before) expect(after.find((x) => x.id === e.id)).toEqual(e); // earlier entries untouched
+      await expect(card(page, 'Fictional title typed while loading')).toBeVisible();
+      await expect(page.getByTestId('journal-entry')).toHaveCount(before.length + 1);
+    });
+  }
+}

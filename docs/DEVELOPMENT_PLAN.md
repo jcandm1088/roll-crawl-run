@@ -1,6 +1,8 @@
 # Development Plan — Roll, Crawl, RUN: Tracking Growth Together (Revision 2)
 
-> **Current status (2026-11-28, Checkpoint 4-R2):** R-027 (the Calendar's “New event” shortcut reopening its form after a child switch) is corrected in a third local commit (R21). The combined owner reacceptance of R-024 to R-027 is pending. **One newly found Journal defect, R-028, is documented and not corrected; it needs the owner's decision.** Nothing is pushed, merged or deployed. Database version 3 unchanged.
+> **Current status (2026-11-28, Checkpoint 4-R3):** R-028 (an open Journal entry form was reset when the list finished loading) is corrected in a fourth local commit (R22). R-024 to R-028 now await one combined owner reacceptance. No open defect is known. Nothing is pushed, merged or deployed. Database version 3 unchanged.
+
+> *Previous status line (kept as recorded):* **Current status (2026-11-28, Checkpoint 4-R2):** R-027 (the Calendar's “New event” shortcut reopening its form after a child switch) is corrected in a third local commit (R21). The combined owner reacceptance of R-024 to R-027 is pending. **One newly found Journal defect, R-028, is documented and not corrected; it needs the owner's decision.** Nothing is pushed, merged or deployed. Database version 3 unchanged.
 
 > *Previous status line (kept as recorded):* **Current status (2026-11-28, Checkpoint 4-R):** the owner's Mac Safari acceptance of Checkpoint 4 passed 23 checks, failed J11 and left 7 untested. Refinements R-024 (four single-selection views), R-025 (tinted Care Note cards) and R-026 (editor reopening after a child switch) are implemented in a second local commit (R20) and await the owner's reacceptance. Nothing is pushed, merged or deployed. Database version 3 unchanged. The current-state handoff is `docs/HANDOFF.md`.
 
@@ -43,6 +45,12 @@
 **Visual direction (CP1):** premium, warm, calm, adult-oriented; no cartoon imagery, not clinical, not generic dashboard. Five cohesive theme systems (Earth default, Sky, Blush, Lavender, Sage) sharing typography, spacing, iconography, components, buttons, navigation. Fraunces (display) + Inter (UI), subject to review. Initial app icon + wordmark preserving "Roll, Crawl, RUN: Tracking Growth Together". Safe-area insets, ≥44–48px targets.
 
 **Checkpoint 1 build list:** scaffold (Vite/TS/Preact, Vitest, Playwright); fonts self-hosted (fetched from npm `@fontsource` packages, OFL); icon/wordmark (SVG → PNG sizes generated with Playwright); design tokens + 5 themes + contrast test; app shell (top bar with child chip + settings, bottom nav, hash router); placeholder tabs clearly labeled "Coming in a later checkpoint"; onboarding (DOB, name/photo, corrected age, theme, privacy); profiles create/edit/switch/delete (typed confirmation; backup purge option present but backups feature labeled pending); age domain (chronological + corrected with safeguards); IndexedDB schema v1 for all planned stores with logical-key indexes and atomic transaction helper; repositories for meta/settings/children/photos; storage-persistence status; privacy disclosures in Settings; manifest + basic service worker (precache, update banner); unit + e2e tests; mobile screenshots via Playwright at deviceScaleFactor 2; docs skeletons (README, BUILD_LOG template, TESTING_CHECKLIST, KNOWN_LIMITATIONS, DECISIONS, SOURCE_REGISTER). Code lives in `/home/user/roll-crawl-run` (git init locally; no push until you provide the remote).
+
+---
+
+## R22 — Checkpoint 4-R3: Journal unsaved writing preservation, R-028 (implemented 2026-11-28; awaiting combined owner reacceptance)
+- **R-028:** one fixed container around the Journal's loading line, empty state and feed, so an open entry form is never rebuilt when the list arrives (Decision #180). Works for forms opened from Home's shortcut and from the Journal tab.
+- **Unchanged:** appearance, behavior, the Calendar, the router, the database, R-024 to R-027.
 
 ---
 

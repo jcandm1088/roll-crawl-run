@@ -206,7 +206,7 @@ A living list of refinements and suspected defects that are recorded but not yet
 - **Evidence:** two new end-to-end tests (save and cancel) failed against the original handling and pass with the correction.
 - **Status:** Implemented; **pending owner reacceptance** (CS1–CS4 in TESTING_CHECKLIST).
 
-## R-028 — Journal: the entry form resets if the entry list finishes loading while it is open (found 2026-11-28; **not corrected; awaiting the owner's decision**)
+## R-028 — Journal: the entry form resets if the entry list finishes loading while it is open (*as first recorded: found, not corrected; since authorized and implemented, see “R-028 — implemented” below*)
 - **Source:** found by Claude Code during the R-027 targeted tests, when an unchanged Journal keyboard test failed. Not reported by the owner.
 - **What happens:** on arriving at the Journal the list shows “Loading…” for a moment. If the entry form is open when loading finishes, the form is rebuilt: the type returns to Personal Reflection, **anything typed is cleared**, and focus jumps back to the first control. No message is shown. Nothing wrong is saved.
 - **When it can happen:** only in the interval between arriving on the Journal and the list appearing. On a fast device with a small journal that is a few hundredths of a second, too short to type in. It lasts longer on a slow device or with many entries, and **Home's “Journal entry” shortcut always opens the form inside that interval**, so that is the realistic route: tap the shortcut, start typing at once, and the first words vanish when the list arrives.
@@ -215,3 +215,16 @@ A living list of refinements and suspected defects that are recorded but not yet
 - **Present since:** the Checkpoint 4 commit (`7e9eb87`). The three complete cycles then, and the cycle at 4-R, passed because the timing happened to fall the other way; the test was not wrong, it was racing a real defect.
 - **Proposed correction (tried in a throwaway experiment, then reverted; not in the commit):** put the loading line, empty state and feed inside one fixed container, so swapping them cannot disturb the form. With that change the same test passed 24 of 24. A deterministic regression test (delay the load, type, check the text survives) would be added.
 - **Classification:** application defect (data-loss of unsaved typing, narrow window). **Status: not corrected; awaiting authorization.**
+
+## R-028 — implemented (2026-11-28; pending owner acceptance)
+- **History, in order:**
+  1. An unchanged Journal keyboard test failed unexpectedly during the R-027 targeted run.
+  2. The defect was shown to predate the Calendar correction (the same test failed 2 of 16 times on the unmodified `c236a05`).
+  3. It was reproduced deliberately by slowing the list's load: typed text was cleared when loading finished. The Calendar's form kept its text.
+  4. A correction was tried in a throwaway experiment (24 of 24 passes on the intermittent test) and reverted; the defect was reported, not fixed, because that step did not allow Journal changes.
+  5. The owner authorized the correction; it is now implemented with deterministic regression tests.
+- **Correction:** the loading line, empty state and feed sit inside one fixed container in `Journal.tsx`. Nothing else changed.
+- **What the deterministic tests established about the original structure:** the form was rebuilt when “Loading…” gave way to the **empty state** (through both the Home shortcut and the Journal tab), and was **not** rebuilt when it gave way to a populated feed. So on the original code the loss needed an empty journal for the active child; a parent's very first entry for a child, started through the shortcut, was the exposed case. *(This refines the first record above, which assumed a populated journal was equally exposed.)*
+- **Evidence:** four tests (two opening paths × empty and populated). On the original structure the two empty-journal tests fail and the two populated ones pass; with the correction all four pass.
+- **Appearance:** the regenerated Checkpoint 4-R screenshots are byte-for-byte identical to the committed ones.
+- **Status:** Implemented; **pending owner acceptance** (JS1–JS2 in TESTING_CHECKLIST).

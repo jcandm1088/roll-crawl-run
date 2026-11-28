@@ -4,7 +4,22 @@
 
 *Last updated: 2026-11-28 (Checkpoint 4-R: Journal acceptance refinements R-024 to R-026 in a second local commit; awaiting the owner's reacceptance; **not pushed**). **Start at section 0.** Before that: 2026-11-27, Checkpoint 4 implemented locally. Earlier the same day: Checkpoint 3 formal acceptance closeout; documentation-only commit on `claude/great-dijkstra-wwi9g1`, pushed with the owner's authorization). **Start here for Checkpoint 4: section 0.** Earlier the same day: Checkpoint 3 implemented (`c5017da`), refined (`77d263b`), medical symbol corrected (`c8aa0c5`).*
 
-## 0. Checkpoint 4-R2 — Calendar correction done; combined reacceptance pending; one open defect (R-028)
+## 0. Checkpoint 4-R3 — all five refinements implemented; combined owner reacceptance pending
+**Where it is:** four local commits on `claude/awesome-ritchie-b198ya` on top of the authoritative `8122feb…`: `7e9eb87…` (Checkpoint 4, 20), `c236a05…` (4-R, 21), `dd15e9d05a0da126f445a59f3c0dee1f4a8cdc5b` (4-R2, 22), and “Checkpoint 4-R3: Journal Unsaved Writing Preservation” (23; exact hash in the delivery report). **Not pushed, merged or deployed.**
+
+**Status:**
+- **R-024, R-025, R-026** (Journal views, card tint, shortcut state): passed secondary review; owner reacceptance pending (JR1–JR13).
+- **R-027** (Calendar shortcut state): passed secondary review; owner reacceptance pending (CS1–CS4).
+- **R-028** (open entry form reset when the list finished loading): corrected with one fixed container in `Journal.tsx`; deterministic tests fail before and pass after; owner acceptance pending (JS1–JS2).
+- **No open defect is known.**
+
+**Tests:** 475 unit and 292 end-to-end (767). One complete clean cycle on this commit (BUILD_LOG).
+
+**Next, each needing the owner's separate authorization:** combined reacceptance; formal Checkpoint 4 closeout; a preservation push; merging; deployment. Checkpoint 6 has not begun. The seven untested Journal items (J5, J7, J26, J27, J29, J30, J31) and J32 are still carried forward.
+
+*(The sections below describe earlier states and are kept as recorded.)*
+
+## 0d. Checkpoint 4-R2 — Calendar correction done; combined reacceptance pending; one open defect (R-028)
 **Where it is:** three local commits on `claude/awesome-ritchie-b198ya` on top of the authoritative `8122feb…`: `7e9eb87b4180e4926aeac52eabf09980634a7b15` (Checkpoint 4, 20), `c236a053d9214acbaae1706d4c76858ca010ebd9` (Checkpoint 4-R, 21), and “Checkpoint 4-R2: Calendar Shortcut Routing Correction” (22; exact hash in the delivery report). **Not pushed, merged or deployed.**
 
 **Status of each item:**

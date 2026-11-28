@@ -628,3 +628,13 @@ Reported by the owner for the local build of `64202e2` in Mac Safari (port 4179)
 - **CS3 (repeat)** Use Home → “New event” again, for each child: the form opens every time.
 - **CS4 (ordinary use)** The Calendar tab, its own “Add event” button, editing and deleting an event, the three “Show on the calendar” choices, the vaccine references and Home's Upcoming Appointments all behave as before.
 - **CS5 (decision, not a test)** Whether to authorize the R-028 Journal correction before final acceptance.
+
+## Checkpoint 4-R3 — automated (headless Chromium; results in BUILD_LOG)
+- **End-to-end (+4, 292), `journal.spec.ts` R-028:** the test page holds every read of the journal list until the test releases it (no timers; nothing added to the app). With the form opened from Home's shortcut or from the Journal tab, over an empty or a populated journal: every field is filled while “Loading…” shows; the load is released; the test then checks the same dialog element is still there, every value (type, date, title, text, tags, question flag, answered status), focus in the text area, continued typing, the discard-changes question, saving, the stored record, and that earlier entries are untouched.
+- **Against the original structure:** the two empty-journal tests fail (the dialog had been rebuilt); the two populated-journal tests pass. With the correction all four pass.
+- **The existing “keyboard and focus” test is unchanged.**
+
+## Checkpoint 4-R3 — Journal reacceptance supplement (owner; add to JR1–JR13 and CS1–CS4)
+*Mac Safari; fictional data. Claude Code has not performed these. On a fast Mac the loading moment is too brief to see, so these confirm ordinary behavior rather than reproduce the defect; the defect itself is covered by the automated tests.*
+- **JS1** For a child with no journal entries yet: Home → “Journal entry”, start typing immediately. What you type stays, the cursor stays in the field, and saving works.
+- **JS2** The same from the Journal tab → “New Journal Entry”, and once more for a child who already has entries.

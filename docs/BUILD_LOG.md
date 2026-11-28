@@ -758,3 +758,59 @@ Environment: Linux cloud container, Node 22.23.5, headless Chromium, no retries.
 - **Totals:** 475 unit and 288 end-to-end tests exist (763; +2 for R-027). **No complete end-to-end cycle was run for this step** (authorized); the Growth and goals/exercises files were not run.
 - **The targeted run was not repeated to obtain a clean result,** and the failing test was not changed, skipped or retried.
 - **Application change in the commit:** `Calendar.tsx` only. The Journal's code is byte-for-byte what it was at `c236a05`.
+
+## Draft entry — Checkpoint 4-R3: Journal unsaved writing preservation (drafted by Claude Code; edit before submitting)
+**Date:** 2026-11-28
+**Tool:** Claude Code (cloud session); secondary review by ChatGPT
+**What happened:** ChatGPT's review passed the Calendar correction. I authorized the correction of R-028, the defect Claude Code had found and reported, without fixing, during the previous step.
+**What I asked for:** the narrow fixed-container correction it had tried experimentally; deterministic tests using controlled loading delays, shown failing on the original structure; both ways of opening the form; no drafts, no production delays, no other changes; one complete cycle.
+
+**What it produced:**
+- Four deterministic tests written first. The test page holds the list's load until the test releases it, so timing no longer decides the outcome.
+- On the original structure, **2 of 4 failed**: the form was rebuilt when the list turned out to be empty, through either opening path, and survived when the list had entries. That is narrower than first reported: the exposed case was a child's first journal entry.
+- The correction: one container element in `Journal.tsx`. All four tests then passed.
+- Regenerated screenshots identical to the committed ones, byte for byte.
+
+**What I corrected or redirected:** (to be completed by the owner)
+
+### Development challenges and lessons learned (continued from #80)
+| # | Challenge | Class | What happened | Outcome |
+|---|---|---|---|---|
+| 81 | **Correcting the form reset (R-028)** | Application defect, corrected | See #80 for how it was found. With authorization, the loading line, empty state and feed were placed in one fixed container so that swapping them cannot rebuild the form beside them. | Deterministic tests fail before (2 of 4) and pass after (4 of 4). The previously intermittent keyboard test is unchanged and passes. |
+| 82 | **The first description of the defect was broader than the facts** | Diagnosis refined by a better test | From the slow-load script, Claude Code reported that any journal was exposed. The deterministic tests showed the form survived when the list had entries and was rebuilt only when it was empty. | Documentation corrected to say so, with the earlier record left in place and marked. **Lesson:** a controlled test describes a defect's boundaries better than a timing-based reproduction. |
+| 83 | **A race in the new test's own setup** | Test defect | The first version checked, immediately after opening the form, that the list's read was already being held; sometimes the app had not issued it yet, and the check failed for that reason alone. | The check now waits for the read to be issued. No assertion about the application was changed. |
+
+### Automated results (run by Claude Code in this conversation)
+Environment: Linux cloud container, Node 22.23.5, headless Chromium, no retries. **No Safari, Mac, iPhone or Android testing was performed by Claude Code.**
+
+**Deliberately reproduced failures (expected), on the original rendering structure:**
+
+| Test | Result on the original structure |
+|---|---|
+| Home shortcut, empty journal | **Failed as intended** (the dialog had been rebuilt) |
+| Journal tab, empty journal | **Failed as intended** (the dialog had been rebuilt) |
+| Home shortcut, populated journal | Passed (no rebuild occurs in this case) |
+| Journal tab, populated journal | Passed (no rebuild occurs in this case) |
+
+*A first run of these four, before the setup race (#83) was fixed, showed 3 failures: the two above and one caused by the test's own setup.*
+
+**Results with the correction:**
+
+| Check | Result |
+|---|---|
+| The four R-028 tests | **4 of 4** |
+| Regenerated Checkpoint 4-R screenshots compared with the committed files | 8 of 8 byte-for-byte identical (no visual change) |
+| Targeted end-to-end, one run: Journal (38, complete suite, including the unchanged “keyboard and focus” test and the R-024 to R-026 tests), Calendar (33, including R-027), Checkpoint 1 (18), review regressions (22), final refinement (22), responsive (10) | **143 of 143** |
+
+**One complete cycle on the finished code, from a clean build, no retries:**
+
+| Type check | Build with content validation (JS 582.71 kB, 136.80 kB gzip) | Unit (23 files) | End-to-end |
+|---|---|---|---|
+| Passed | Passed | **475 of 475** | **292 of 292** (6.8 min) |
+
+- **Totals:** 767 automated tests (763 before; +4 end-to-end). Nothing skipped, disabled or retried.
+- **Unexpected failures in this step:** none in the application. One failure in the first run of the new tests came from the test's own setup (#83).
+- **The previously intermittent test was not repeated beyond the ordinary suites,** as instructed; it passed in both the targeted run and the complete cycle.
+- **Application change in the commit:** `Journal.tsx` only (one container element and a comment). Calendar, router, database and styles untouched.
+- **Only documentation changed after the complete cycle began.**
+- **Not tested by anyone yet:** R-024 to R-028 in Safari; anything on an iPhone.

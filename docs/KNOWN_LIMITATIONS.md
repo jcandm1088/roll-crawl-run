@@ -185,3 +185,8 @@ Last updated 2026-11-28 (Checkpoint 4-R: Journal refinements R-024 to R-026 impl
 - **Known, not corrected: R-028.** If the Journal's entry form is open at the moment the entry list finishes loading, the form is reset and anything typed is lost, without a message. The interval is normally a few hundredths of a second, but it is longer on a slow device or with many entries, and Home's “Journal entry” shortcut always opens the form inside it. Until it is corrected: after tapping the shortcut, wait for the feed (or the empty state) to appear behind the form before typing. Details and a tested proposal are in REFINEMENT_BACKLOG.
 - **One Journal test is intermittent because of R-028** (“keyboard and focus”). It is left exactly as it is, not weakened, skipped or retried, so that it keeps exposing the defect until the defect is corrected.
 - **No complete regression cycle was run for this step** (authorized: targeted end-to-end files and the full unit suite). The last complete cycle was on `c236a05`.
+
+## Checkpoint 4-R3 (Journal unsaved writing preservation R-028)
+- *(Supersedes the two R-028 lines in the 4-R2 section.)* **R-028 is corrected:** an open entry form keeps what was typed, and its focus, when the list finishes loading. The Journal keyboard test is no longer intermittent for that reason. Not yet seen by a person.
+- **Still true, by design:** nothing is saved until Save is pressed. Reloading the page, closing the tab, or the phone discarding the page while an entry is being written loses unsaved writing.
+- **No open defect is known** at this commit. R-024 to R-028 have not been tested by a person.
