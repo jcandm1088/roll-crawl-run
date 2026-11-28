@@ -230,8 +230,20 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .input[aria-invalid='true'] { border-width: 2px; }
 .error-text { display: flex; gap: var(--space-2); align-items: flex-start; margin-top: var(--space-2); font-size: var(--text-sm); font-weight: 500; color: var(--text); }
 .error-text .icon { color: var(--primary); margin-top: 1px; }
+/* R-029: native date and time controls. On iOS Safari these carry an intrinsic minimum width and their own
+   appearance, so `width: 100%` alone lets them grow past their container (seen on a physical iPhone as fields
+   slightly wider than the screen, with sideways scrolling). Dropping the native appearance and the minimum
+   width makes them obey the same box as every other .input. The native pickers still open; colors, padding,
+   type size and the 48px touch height all come from .input, unchanged. */
+input[type='date'], input[type='time'], input[type='datetime-local'], input[type='month'] {
+  -webkit-appearance: none; appearance: none;
+  display: block; box-sizing: border-box; min-width: 0; max-width: 100%;
+}
+/* Without the native appearance iOS centers the value and lets an empty control lose its line height. */
+input[type='date']::-webkit-date-and-time-value, input[type='time']::-webkit-date-and-time-value { text-align: left; min-height: 1.4em; }
 .input-row { display: flex; gap: var(--space-3); }
-.input-row > * { flex: 1; }
+/* Side-by-side fields may shrink below their content's intrinsic width instead of pushing the row wider. */
+.input-row > * { flex: 1; min-width: 0; }
 /* R-013/R-014: fields side by side never take the vertical gap meant for stacked fields. */
 .input-row > .field + .field { margin-top: 0; }
 

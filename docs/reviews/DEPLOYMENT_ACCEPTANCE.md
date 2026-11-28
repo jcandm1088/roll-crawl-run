@@ -42,3 +42,8 @@ At the deployed commit: 185 unit tests and 80 end-to-end tests passed in headles
 - **Workflow:** “Deploy to GitHub Pages”, run 2 (https://github.com/jcandm1088/roll-crawl-run/actions/runs/46103361953), triggered on `main` with the owner's authorization; build and deploy jobs both succeeded on 2026-11-28.
 - **Verified on the public address** (automated, headless Chromium): the app loads; its bundle and service worker are byte-identical to the local build of the same commit; the tabs are Home, Growth, Calendar, Journal.
 - **Owner's iPhone acceptance of this version: not yet performed** (P1–P12 in TESTING_CHECKLIST). The Checkpoint 1 results above are for the earlier version only.
+
+## Owner's iPhone acceptance of the final version, and the R-029 correction (2026-11-28)
+- **Installed app, physical iPhone (owner):** 10 passed (including the update from the installed Checkpoint 1 app and preservation of existing data), P4 failed, P10 not tested. Details in TESTING_CHECKLIST.
+- **R-029 correction** republished through the same workflow from the commit that contains this note. The workflow result and the live check are in the delivery report.
+- **Owner's retest of P4 on the iPhone: not yet performed.**

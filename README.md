@@ -3,8 +3,8 @@
 A private, local-first, installable web app (PWA) that helps parents document their child's development, appointments, and reflections. It runs entirely in the browser: no account, no server, no analytics, and no AI.
 
 > **Status (2026-11-28): the completed submission version is published.**
-> - **Live app:** https://jcandm1088.github.io/roll-crawl-run/ (deployed commit `6b6a2d2`). Home, Growth, Calendar and Journal are all live.
-> - **Accepted by the owner in Mac Safari, checkpoint by checkpoint.** Physical iPhone acceptance of this version is pending. There is no backup or restore: data lives only on the device.
+> - **Live app:** https://jcandm1088.github.io/roll-crawl-run/ (first published from commit `6b6a2d2`; republished with the R-029 correction). Home, Growth, Calendar and Journal are all live.
+> - **Accepted by the owner in Mac Safari, checkpoint by checkpoint, and tested on a physical iPhone** (10 of 12 checks passed; one layout defect in date and time fields, R-029, has been corrected and republished and awaits the owner's retest; offline use was not tested). There is no backup or restore: data lives only on the device.
 > - **Deferred until after submission:** backups, sharing, provider reports, Resources, Journal photographs.
 > - Current state: `docs/HANDOFF.md`. *The dated notes below are the project's history and are superseded where they conflict with the lines above.*
 >

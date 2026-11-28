@@ -208,3 +208,8 @@ Last updated 2026-11-28 (Checkpoint 4 and refinements R-024 to R-028 formally ac
 - **The vaccine schedule is a dated snapshot** under a preliminary court order (SOURCE_REGISTER). It will not update itself.
 - **`main` is one documentation-only commit ahead of the deployed commit** (the commit that records the publication). The published app is `6b6a2d2`.
 - **No project license** has been chosen. **No backup or restoration** exists in the published version.
+
+## CP6-R (R-029, 2026-11-28)
+- **R-029's correction is unverified on a device.** It follows the known behavior of iOS Safari's date and time controls, but it could not be reproduced or confirmed in this environment (Chromium only; no WebKit). The owner's iPhone retest decides it.
+- **Offline use on the iPhone (P10) has not been tested** for the final version.
+- *(Supersedes “Never tested on a physical iPhone” in the Publication section: the owner has now tested the installed final version; see TESTING_CHECKLIST.)*

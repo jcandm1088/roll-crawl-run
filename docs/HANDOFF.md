@@ -4,7 +4,14 @@
 
 *Last updated: 2026-11-28 (Checkpoint 6: the submission version is **published**; documentation-only record). **Start at section 0.***
 
-## 0. Published — awaiting the owner's iPhone acceptance
+## 0. Published with the R-029 correction — awaiting the owner's iPhone retest of P4
+**Owner's iPhone acceptance of the published version (2026-11-28):** 10 PASS (P1–P3, P5–P9, P11, P12), **P4 FAIL**, P10 not tested. The installed Checkpoint 1 app updated and kept its data.
+**R-029** (native date and time fields wider than the screen on iPhone): corrected in `src/ui/styles/base.css` only, with a layout test in `tests/e2e/responsive.spec.ts`; republished from the commit “CP6-R: iPhone Date and Time Field Width Correction” on `main` (26 commits; exact hash and workflow result in the delivery report). **Not verified on a device: Chromium can't reproduce it. P4 stays failed until the owner's retest (P4-R).** P10 (offline) remains untested.
+**If the retest still fails:** report what the owner sees (which fields, by how much, empty or filled) before changing anything else.
+
+*(The section below describes the state before this correction.)*
+
+## 0g. Published — awaiting the owner's iPhone acceptance *(since performed; see above)*
 **Published app:** https://jcandm1088.github.io/roll-crawl-run/ — **deployed commit `6b6a2d2fe30c9eaff308b876f75477bbddff3589`** (workflow run 2, succeeded 2026-11-28). **`main`:** that commit plus one documentation-only commit recording the publication (25 commits; exact hash in the publication report). `claude/awesome-ritchie-b198ya` is at the same commit as `main`.
 
 **How it was published:** the owner streamlined Checkpoint 6 (plan R24, Decisions #187–#191): five essential checks, a fast-forward of `main`, the existing manual workflow, and a live check. No complete regression cycle or publication audit was repeated.

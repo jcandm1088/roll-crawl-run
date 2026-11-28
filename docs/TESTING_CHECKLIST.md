@@ -708,3 +708,21 @@ Reported by the owner for the local build of `64202e2` in Mac Safari (port 4179)
 - **P10 Offline.** Turn on Airplane Mode; open the app; move between the tabs; add or edit an entry and an event; turn Airplane Mode off.
 - **P11 Stopwatch.** Start a stopwatch exercise; switch to another app, and lock the phone, for a minute or so; return: the time is right or the recovery choices appear and make sense.
 - **P12 Screenshot.** Take the required screenshot of the app's icon on the Home Screen.
+
+## Checkpoint 6 — owner's physical iPhone acceptance (owner report, 2026-11-28, published `6b6a2d2`, installed app)
+*Reported by the owner. Claude Code did not observe these tests.*
+
+| Result | Items |
+|---|---|
+| **PASS (10)** | P1 (update from the installed Checkpoint 1 app), P2 (existing data preserved), P3, P5, P6, P7, P8, P9, P11, P12 |
+| **FAIL (1)** | **P4** — every date and time field extends slightly past the screen width, with unwanted sideways scrolling (→ R-029). The fields otherwise work |
+| **N/A — not tested (1)** | P10 (offline). **Not passed.** |
+
+## CP6-R — R-029 automated checks (Claude Code, headless Chromium, 2026-11-28)
+- **New test** in `responsive.spec.ts`, at 320 and 390 px (run in both test projects): every date and time control in onboarding, add and edit profile, a milestone, new goal, new achievement, new exercise, the Calendar event form and the Journal entry form and filters, empty and filled. Each must sit inside its container and the screen, line up with a neighboring field, keep its type size, padding and 44 px+ height, and carry the corrective styles; no sideways scrolling of the page or a sheet.
+- **Fails without the correction** (the corrective styles are absent) and passes with it.
+- **Important limit:** Chromium does not reproduce iOS Safari's intrinsic sizing of these controls, and WebKit is not available in this environment. **These checks did not and cannot reproduce the iPhone defect; they guard the layout and the fix's presence.** Whether the fix works on the iPhone is established only by the owner's retest.
+
+## CP6-R — owner's iPhone retest (**not yet performed**)
+- **P4-R** After updating the installed app (open it online; tap Refresh when offered, or close it fully and reopen): the date and time fields on a milestone, a goal, an exercise, a Calendar event, a Journal entry, the Journal's From/To filters and a child's profile sit inside the screen, line up with the other fields, and the page no longer scrolls sideways. Empty and filled fields both fit. The pickers still open and set a value.
+- **P10** (offline) remains untested.

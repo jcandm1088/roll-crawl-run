@@ -860,3 +860,16 @@ Environment: Linux cloud container, Node 22.23.5, headless Chromium, no retries.
 
 ### Results (Claude Code, 2026-11-28)
 See “Checkpoint 6 — publication checks” in TESTING_CHECKLIST. **No Safari, Mac or iPhone testing was performed by Claude Code. Physical iPhone acceptance has not been performed.**
+
+## Draft entry — CP6-R: final physical iPhone layout correction (drafted by Claude Code; edit before submitting)
+**Date:** 2026-11-28
+**What happened:** I tested the published app on my iPhone. The installed Checkpoint 1 app updated itself to the final version and kept my existing data. Ten of twelve checks passed. One failed: every date and time field was slightly wider than the screen, and the page could be dragged sideways. I did not test offline use.
+**What I asked for:** a narrow, centralized CSS correction, focused checks at phone widths, and republication; no global overflow hiding, no custom pickers, no full regression.
+**What it produced:** one block in the shared stylesheet; a layout test covering every date and time field in the app; republication. Claude Code told me plainly that its environment has only Chromium, which does not size these fields the way an iPhone does, so its tests could not reproduce what I saw and my retest is the real verification.
+
+**What I corrected or redirected:** (to be completed by the owner)
+
+### Development challenges and lessons learned (continued from #87)
+| # | Challenge | Class | What happened | Outcome |
+|---|---|---|---|---|
+| 88 | **A defect only a real iPhone could show** | Application layout defect (iOS only), found by physical-device testing | Native date and time fields on iOS Safari keep an intrinsic minimum width and their own appearance, so the shared `width: 100%` did not contain them. Every earlier check ran in desktop Safari or headless Chromium, where the fields behave. 767 automated tests, including “no sideways scrolling” checks at 320 px, passed with the defect present. | Corrected in the shared stylesheet; republished; awaiting my retest. **Lesson:** emulated phone widths test my layout, not the phone's own controls. Physical-device testing found in minutes what no simulated check could. |

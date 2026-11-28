@@ -31,6 +31,7 @@ A living list of refinements and suspected defects that are recorded but not yet
 | R-026 | Journal editor reopening after a child switch | Journal · routing | 2026-11-28 (owner observation) | **Verified** (owner, Mac Safari, 2026-11-28; closed) |
 | R-027 | Calendar Add event form reopening after a child switch | Calendar · routing | 2026-11-28 (found by Claude Code's investigation) | **Verified** (owner, Mac Safari, 2026-11-28; closed) |
 | R-028 | Open Journal entry form reset when the list finished loading | Journal · unsaved writing | 2026-11-28 (found by Claude Code during R-027 testing) | **Corrected and accepted** (deterministic automated evidence; owner's ordinary writing checks passed, 2026-11-28; closed) |
+| R-029 | Native date and time fields wider than the screen on iPhone | Forms · all screens | 2026-11-28 (owner, physical iPhone, P4 failed) | Corrected and republished; **awaiting the owner's iPhone retest** |
 
 ---
 
@@ -241,3 +242,9 @@ A living list of refinements and suspected defects that are recorded but not yet
 - **Entries above that say “awaiting reacceptance”, “pending” or “not corrected” are kept as first recorded;** this section and the table at the top give the current status.
 - **Open refinements:** none.
 - **Deferred, unchanged (not to be implemented without authorization):** R-001 (onboarding name field overflow on a phone), R-003 (Library control density), R-009 (deleted-entry presentation), R-018 (shading distinction across the app), R-023 (Journal photographs); and, as scope rather than refinements, Resources and Checkpoint 5 (backup and restoration, partner sharing, provider reports, exports).
+
+## R-029 — Native date and time fields wider than the screen on iPhone (owner's physical iPhone acceptance, 2026-11-28)
+- **Observation (owner, installed app on a physical iPhone, P4 failed):** every date and time field extends slightly beyond the screen width, which looks inconsistent and allows sideways scrolling. The fields work.
+- **Suspected cause (not reproduced here):** iOS Safari gives native date and time controls their own appearance and an intrinsic minimum width, so `width: 100%` from the shared `.input` style does not hold them to their container. ChatGPT's source review found the shared `.input` styling and that `.input-row` children had no minimum-width constraint. Desktop Safari and Chromium don't size these controls that way, which is why Mac acceptance and the automated layout tests never showed it.
+- **Correction (CSS only, one place):** for `input[type=date|time|datetime-local|month]`: no native appearance, `display: block`, `box-sizing: border-box`, `min-width: 0`, `max-width: 100%`; the value left-aligned with a minimum line height so an empty control keeps its shape; and `.input-row` children may shrink (`min-width: 0`). No global overflow hiding, no clipping, no custom pickers, no change to date or time logic.
+- **Classification:** visual and layout defect on iOS. **Status: corrected and republished; awaiting the owner's iPhone retest (P4-R). Not verified on a device.**

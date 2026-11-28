@@ -181,3 +181,6 @@ History: Fraunces produced undesirable letterforms (J, f) in functional headings
 - **Primary views (R-024):** the four `.chip` buttons are a single-selection set (`aria-pressed`, group label “Show (one at a time)”): All, Personal Reflections, Care Notes, Unanswered questions (n). Exactly one is pressed.
 - **Care Note card (R-025):** `.journal-card-care` has a `--primary-soft` background across the whole card, a soft primary border and a `--on-primary-soft` left edge. Inside it: badge and tags are `--surface` pills; body text stays `--text`; the “Read the whole entry” link is `--on-primary-soft`; the provider-question strip is a `--surface` panel with a top rule. Lowest text contrast on the tint: 5.2:1 (secondary text). **Personal Reflection card:** unchanged, `--surface` with a `--primary` edge.
 - The two card backgrounds differ by a lightness ratio of 1.27–1.35 in every theme. Type is still carried by label and icon as well.
+
+## Native date and time fields (R-029)
+- `input[type=date]`, `[type=time]` (and `datetime-local`, `month`) drop the native appearance and intrinsic minimum width so they obey the same box as every `.input`; values are left-aligned. Children of `.input-row` may shrink (`min-width: 0`). Type size, padding, colors and the 48 px height are unchanged.
